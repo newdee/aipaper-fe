@@ -1,4 +1,4 @@
-# home-page
+# vue_demo
 
 ## Project setup
 ```

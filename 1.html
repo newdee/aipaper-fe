@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directory Picker Example</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("pick-directory").addEventListener("click", function() {
+                window.showDirectoryPicker({startIn: "documents"}, handleDirectoryChoice);
+            });
+
+            function handleDirectoryChoice(directoryHandle) {
+                directoryHandle.readEntries().then(entries => {
+                    console.log("Selected directory entries:");
+                    entries.forEach(entry => {
+                        console.log(entry.kind + ": " + entry.name);
+                    });
+                }).catch(error => {
+                    console.error("Error reading directory:", error);
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>Directory Picker Example</h1>
+    <button id="pick-directory">Pick Directory</button>
+</body>
+</html>
