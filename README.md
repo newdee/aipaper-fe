@@ -1,24 +1,11 @@
-# vue_demo
 
-## Project setup
-```
-npm install
-```
+## 本地启动
+Vue2：
+1. npm install
+2. npm run serve
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Vue3：
+1. npm install
+2. npm run serve
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

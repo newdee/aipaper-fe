@@ -1,11 +1,34 @@
-const { defineConfig } = require('@vue/cli-service')
-module.exports = defineConfig({
-  transpileDependencies: true,
-  pages: {
-    index: {
-      entry: "src/main.js",
-      template: 'public/index.html',
-      chunks: ['chunk-libs','chunk-commons','chunk-elementUI','index','runtime','manifest']
+const CompressionPlugin = require('compression-webpack-plugin')
+
+module.exports = {
+  devServer: {
+    port: 80,
+    https: false,
+    open: false
+  },
+  lintOnSave: false,
+  productionSourceMap: false,
+  configureWebpack: {
+    plugins: [
+      new CompressionPlugin({
+        algorithm: 'gzip',
+        test: /\.js$|\.html$|\.css$/,
+        filename: '[path].gz[query]',
+        minRatio: 1,
+        threshold: 10240,
+        deleteOriginalAssets: false
+      })
+    ]
+  },
+  devServer: {
+    proxy: {
+      '/mock': {
+        target: 'http://localhost:8081',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/mock': '/mock'
+        }
+      }
     }
   }
-})
+}

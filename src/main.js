@@ -1,16 +1,41 @@
 import Vue from 'vue'
 import App from './App.vue'
-// import * as echarts from 'echarts';
-//vue全局注入echarts
-// Vue.prototype.$echarts = echarts;
-// Vue.config.productionTip = false
-// import ElementUI from 'element-ui';
-// import 'element-ui/lib/theme-chalk/index.css'
-// Vue.use(ElementUI);
+import router from './router'
+import store from './store'
+import ElementUI from 'element-ui'
+import http from './utils/request'
+import common from './utils/common'
+import constant from './utils/constant'
+import mavonEditor from 'mavon-editor'
+//引入js
+import './utils/live2d'
+import './utils/title'
+//引入css
+import './assets/css/animation.css'
+import './assets/css/index.css'
+import './assets/css/tocbot.css'
+import './assets/css/color.css'
+import './assets/css/markdown-highlight.css'
+import './assets/css/font-awesome.min.css'
+import 'mavon-editor/dist/css/index.css'
 
-//全局引入
-// import VueCron from 'vue-cron'
-// Vue.use(VueCron);//使用方式：<vueCron></vueCron>
+
+require('@/api/mock.js')
+
+import {vueBaberrage} from 'vue-baberrage'
+
+Vue.use(ElementUI)
+Vue.use(vueBaberrage)
+Vue.use(mavonEditor)
+
+Vue.prototype.$http = http
+Vue.prototype.$common = common
+Vue.prototype.$constant = constant
+
+Vue.config.productionTip = false
+
 new Vue({
-  render: h => h(App),
+  router,
+  store,
+  render: h => h(App)
 }).$mount('#app')
