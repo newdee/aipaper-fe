@@ -1,150 +1,181 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Router from 'vue-router'
 
-const originalPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err);
-}
+Vue.use(Router)
 
-Vue.use(VueRouter)
+/* Layout */
+import Layout from '@/layout'
 
-const routes = [
+/**
+ * Note: sub-menu only appear when route children.length >= 1
+ * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
+ *
+ * hidden: true                   if set true, item will not show in the sidebar(default is false)
+ * alwaysShow: true               if set true, will always show the root menu
+ *                                if not set alwaysShow, when item has more than one children route,
+ *                                it will becomes nested mode, otherwise not show the root menu
+ * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
+ * name:'router-name'             the name is used by <keep-alive> (must set!!!)
+ * meta : {
+    roles: ['admin','editor']    control the page roles (you can set multiple roles)
+    title: 'title'               the name show in sidebar and breadcrumb (recommend set)
+    icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
+    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
+    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
+  }
+ */
+
+/**
+ * constantRoutes
+ * a base page that does not have permission requirements
+ * all roles can be accessed
+ */
+export const constantRoutes = [
+  {
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true
+  },
+
+  {
+    path: '/404',
+    component: () => import('@/views/404'),
+    hidden: true
+  },
+
   {
     path: '/',
-    component: () => import('../components/home'),
+    component: Layout,
+    redirect: '/home',
     children: [{
-      path: "/",
-      name: "index",
-      component: () => import('../components/index')
-    }, {
-      path: "/sort",
-      name: "sort",
-      component: () => import('../components/sort')
-    }, {
-      path: "/article/:id",
-      name: "article",
-      component: () => import('../components/article')
-    }, {
-      path: "/weiYan",
-      name: "weiYan",
-      component: () => import('../components/weiYan')
-    }, {
-      path: "/love",
-      name: "love",
-      component: () => import('../components/love')
-    }, {
-      path: "/favorite",
-      name: "favorite",
-      component: () => import('../components/favorite')
-    }, {
-      path: "/travel",
-      name: "travel",
-      component: () => import('../components/travel')
-    }, {
-      path: "/message",
-      name: "message",
-      component: () => import('../components/message')
-    }, {
-      path: "/about",
-      name: "about",
-      component: () => import('../components/about')
-    }, {
-      path: "/user",
-      name: "user",
-      component: () => import('../components/user')
-    }, {
-      path: "/letter",
-      name: "letter",
-      component: () => import('../components/letter')
+      path: 'home',
+      name: 'home',
+      component: () => import('@/views/dashboard/index'),
+      meta: { title: 'home', icon: 'dashboard' }
     }]
   },
+
   {
-    path: '/admin',
-    redirect: '/welcome',
-    meta: {requiresAuth: true},
-    component: () => import('../components/admin/admin'),
-    children: [{
-      path: '/welcome',
-      name: 'welcome',
-      component: () => import('../components/admin/welcome')
-    }, {
-      path: '/main',
-      name: 'main',
-      component: () => import('../components/admin/main')
-    }, {
-      path: '/webEdit',
-      name: 'webEdit',
-      component: () => import('../components/admin/webEdit')
-    }, {
-      path: '/userList',
-      name: 'userList',
-      component: () => import('../components/admin/userList')
-    }, {
-      path: '/postList',
-      name: 'postList',
-      component: () => import('../components/admin/postList')
-    }, {
-      path: '/postEdit',
-      name: 'postEdit',
-      component: () => import('../components/admin/postEdit')
-    }, {
-      path: '/sortList',
-      name: 'sortList',
-      component: () => import('../components/admin/sortList')
-    }, {
-      path: '/configList',
-      name: 'configList',
-      component: () => import('../components/admin/configList')
-    }, {
-      path: '/commentList',
-      name: 'commentList',
-      component: () => import('../components/admin/commentList')
-    }, {
-      path: '/treeHoleList',
-      name: 'treeHoleList',
-      component: () => import('../components/admin/treeHoleList')
-    }, {
-      path: '/resourceList',
-      name: 'resourceList',
-      component: () => import('../components/admin/resourceList')
-    }, {
-      path: '/loveList',
-      name: 'loveList',
-      component: () => import('../components/admin/loveList')
-    }, {
-      path: '/resourcePathList',
-      name: 'resourcePathList',
-      component: () => import('../components/admin/resourcePathList')
-    }]
+    path: '/example',
+    component: Layout,
+    redirect: '/example/table',
+    name: 'Example',
+    meta: { title: 'Example', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'table',
+        name: 'Table',
+        component: () => import('@/views/table/index'),
+        meta: { title: 'Table', icon: 'table' }
+      },
+      {
+        path: 'tree',
+        name: 'Tree',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'Tree', icon: 'tree' }
+      }
+    ]
   },
+
   {
-    path: '/verify',
-    name: 'verify',
-    component: () => import('../components/admin/verify')
-  }
+    path: '/form',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Form',
+        component: () => import('@/views/form/index'),
+        meta: { title: 'Form', icon: 'form' }
+      }
+    ]
+  },
+
+  {
+    path: '/nested',
+    component: Layout,
+    redirect: '/nested/menu1',
+    name: 'Nested',
+    meta: {
+      title: 'Nested',
+      icon: 'nested'
+    },
+    children: [
+      {
+        path: 'menu1',
+        component: () => import('@/views/nested/menu1/index'), // Parent router-view
+        name: 'Menu1',
+        meta: { title: 'Menu1' },
+        children: [
+          {
+            path: 'menu1-1',
+            component: () => import('@/views/nested/menu1/menu1-1'),
+            name: 'Menu1-1',
+            meta: { title: 'Menu1-1' }
+          },
+          {
+            path: 'menu1-2',
+            component: () => import('@/views/nested/menu1/menu1-2'),
+            name: 'Menu1-2',
+            meta: { title: 'Menu1-2' },
+            children: [
+              {
+                path: 'menu1-2-1',
+                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
+                name: 'Menu1-2-1',
+                meta: { title: 'Menu1-2-1' }
+              },
+              {
+                path: 'menu1-2-2',
+                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
+                name: 'Menu1-2-2',
+                meta: { title: 'Menu1-2-2' }
+              }
+            ]
+          },
+          {
+            path: 'menu1-3',
+            component: () => import('@/views/nested/menu1/menu1-3'),
+            name: 'Menu1-3',
+            meta: { title: 'Menu1-3' }
+          }
+        ]
+      },
+      {
+        path: 'menu2',
+        component: () => import('@/views/nested/menu2/index'),
+        name: 'Menu2',
+        meta: { title: 'menu2' }
+      }
+    ]
+  },
+
+  {
+    path: 'external-link',
+    component: Layout,
+    children: [
+      {
+        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+        meta: { title: 'External Link', icon: 'link' }
+      }
+    ]
+  },
+
+  // 404 page must be placed at the end !!!
+  { path: '*', redirect: '/404', hidden: true }
 ]
 
-const router = new VueRouter({
-  mode: "history",
-  routes: routes,
-  scrollBehavior(to, from, savedPosition) {
-    return {x: 0, y: 0}
-  }
+const createRouter = () => new Router({
+  // mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRoutes
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!Boolean(localStorage.getItem("adminToken"))) {
-      next({
-        path: '/verify',
-        query: {redirect: to.fullPath}
-      });
-    } else {
-      next();
-    }
-  } else {
-    next();
-  }
-})
+const router = createRouter()
+
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
 
 export default router

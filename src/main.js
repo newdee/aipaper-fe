@@ -1,41 +1,44 @@
 import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+
+import 'normalize.css/normalize.css' // A modern alternative to CSS resets
+
 import ElementUI from 'element-ui'
-import http from './utils/request'
-import common from './utils/common'
-import constant from './utils/constant'
-import mavonEditor from 'mavon-editor'
-//引入js
-import './utils/live2d'
-import './utils/title'
-//引入css
-import './assets/css/animation.css'
-import './assets/css/index.css'
-import './assets/css/tocbot.css'
-import './assets/css/color.css'
-import './assets/css/markdown-highlight.css'
-import './assets/css/font-awesome.min.css'
-import 'mavon-editor/dist/css/index.css'
+import 'element-ui/lib/theme-chalk/index.css'
+import locale from 'element-ui/lib/locale/lang/en' // lang i18n
+import 'element-ui/lib/theme-chalk/display.css';
+import '@/styles/index.scss' // global css
 
+import App from './App'
+import store from './store'
+import router from './router'
 
-require('@/api/mock.js')
+import '@/icons' // icon
+import '@/permission' // permission control
+import '@/utils/rem'
 
-import {vueBaberrage} from 'vue-baberrage'
+/**
+ * If you don't want to use mock-server
+ * you want to use MockJs for mock api
+ * you can execute: mockXHR()
+ *
+ * Currently MockJs will be used in the production environment,
+ * please remove it before going online ! ! !
+ */
+if (process.env.NODE_ENV === 'production') {
+  const { mockXHR } = require('../mock')
+  mockXHR()
+}
 
-Vue.use(ElementUI)
-Vue.use(vueBaberrage)
-Vue.use(mavonEditor)
-
-Vue.prototype.$http = http
-Vue.prototype.$common = common
-Vue.prototype.$constant = constant
+// set ElementUI lang to EN
+Vue.use(ElementUI, { locale })
+// 如果想要中文版 element-ui，按如下方式声明
+// Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 
 new Vue({
+  el: '#app',
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
+})

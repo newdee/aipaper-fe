@@ -1,140 +1,85 @@
-import axios from "axios";
-import constant from "./constant";
-//处理url参数
-import qs from "qs";
+import axios from 'axios'
+import { MessageBox, Message } from 'element-ui'
+import store from '@/store'
+import { getToken } from '@/utils/auth'
 
-import store from "../store";
+// create an axios instance
+const service = axios.create({
+  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  // withCredentials: true, // send cookies when cross-domain requests
+  timeout: 5000 // request timeout
+})
 
+// request interceptor
+service.interceptors.request.use(
+  config => {
+    // do something before request is sent
 
-// axios.defaults.baseURL = constant.baseURL;
-
-
-// 添加请求拦截器
-axios.interceptors.request.use(function (config) {
-  // 在发送请求之前做些什么
-  return config;
-}, function (error) {
-  // 对请求错误做些什么
-  return Promise.reject(error);
-});
-
-// 添加响应拦截器
-axios.interceptors.response.use(function (response) {
-  if (response.data !== null && response.data.hasOwnProperty("code") && response.data.code !== 200) {
-    if (response.data.code === 300) {
-      store.commit("loadCurrentUser", {});
-      localStorage.removeItem("userToken");
-      store.commit("loadCurrentAdmin", {});
-      localStorage.removeItem("adminToken");
-      window.location.href = constant.webURL + "/user";
+    if (store.getters.token) {
+      // let each request carry token
+      // ['X-Token'] is a custom headers key
+      // please modify it according to the actual situation
+      config.headers['X-Token'] = getToken()
     }
-    return Promise.reject(new Error(response.data.message));
-  } else {
-    return response;
-  }
-}, function (error) {
-  // 对响应错误做点什么
-  return Promise.reject(error);
-});
-
-// 当data为URLSearchParams对象时设置为application/x-www-form-urlencoded;charset=utf-8
-// 当data为普通对象时，会被设置为application/json;charset=utf-8
-
-
-export default {
-  post(url, params = {}, isAdmin = false, json = true) {
-    let config;
-    if (isAdmin) {
-      config = {
-        headers: {"Authorization": localStorage.getItem("adminToken")}
-      };
-    } else {
-      config = {
-        headers: {"Authorization": localStorage.getItem("userToken")}
-      };
-    }
-
-    return new Promise((resolve, reject) => {
-      axios
-        .post(url, json ? params : qs.stringify(params), config)
-        .then(res => {
-          resolve(res.data);
-        })
-        .catch(err => {
-          reject(err);
-        });
-    });
+    return config
   },
+  error => {
+    // do something with request error
+    console.log(error) // for debug
+    return Promise.reject(error)
+  }
+)
 
-  get(url, params = {}, isAdmin = false) {
-    let headers;
-    if (isAdmin) {
-      headers = {"Authorization": localStorage.getItem("adminToken")};
-    } else {
-      headers = {"Authorization": localStorage.getItem("userToken")};
-    }
+// response interceptor
+service.interceptors.response.use(
+  /**
+   * If you want to get http information such as headers or status
+   * Please return  response => response
+  */
 
-    return new Promise((resolve, reject) => {
-      axios.get(url, {
-        params: params,
-        headers: headers
-      }).then(res => {
-        resolve(res.data);
-      }).catch(err => {
-        reject(err)
+  /**
+   * Determine the request status by custom code
+   * Here is just an example
+   * You can also judge the status by HTTP Status Code
+   */
+  response => {
+    const res = response.data
+
+    // if the custom code is not 20000, it is judged as an error.
+    if (res.code !== 20000) {
+      Message({
+        message: res.message || 'Error',
+        type: 'error',
+        duration: 5 * 1000
       })
-    });
-  },
 
-  upload(url, param, isAdmin = false, option) {
-    let config;
-    if (isAdmin) {
-      config = {
-        headers: {"Authorization": localStorage.getItem("adminToken"), "Content-Type": "multipart/form-data"},
-        timeout: 60000
-      };
+      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
+      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+        // to re-login
+        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
+          confirmButtonText: 'Re-Login',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          store.dispatch('user/resetToken').then(() => {
+            location.reload()
+          })
+        })
+      }
+      return Promise.reject(new Error(res.message || 'Error'))
     } else {
-      config = {
-        headers: {"Authorization": localStorage.getItem("userToken"), "Content-Type": "multipart/form-data"},
-        timeout: 60000
-      };
+      return res
     }
-    if (typeof option !== "undefined") {
-      config.onUploadProgress = progressEvent => {
-        if (progressEvent.total > 0) {
-          progressEvent.percent = progressEvent.loaded / progressEvent.total * 100;
-        }
-        option.onProgress(progressEvent);
-      };
-    }
-
-    return new Promise((resolve, reject) => {
-      axios
-        .post(url, param, config)
-        .then(res => {
-          resolve(res.data);
-        })
-        .catch(err => {
-          reject(err);
-        });
-    });
   },
-
-  uploadQiniu(url, param) {
-    let config = {
-      headers: {"Content-Type": "multipart/form-data"},
-      timeout: 60000
-    };
-
-    return new Promise((resolve, reject) => {
-      axios
-        .post(url, param, config)
-        .then(res => {
-          resolve(res.data);
-        })
-        .catch(err => {
-          reject(err);
-        });
-    });
+  error => {
+    console.log('err' + error) // for debug
+    Message({
+      message: error.message,
+      type: 'error',
+      duration: 5 * 1000
+    })
+    return Promise.reject(error)
   }
-}
+)
+
+export default service
