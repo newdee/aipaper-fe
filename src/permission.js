@@ -9,7 +9,7 @@ import getPageTitle from '@/utils/get-page-title'
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login'] // no redirect whitelist
-
+setToken("editor-token");
 router.beforeEach(async(to, from, next) => {
   // start progress bar
   NProgress.start()
@@ -19,7 +19,8 @@ router.beforeEach(async(to, from, next) => {
   
 
   // determine whether the user has logged in
-  const hasToken = getToken() ? getToken() : setToken("editor-token");
+  // const hasToken = getToken() ? getToken() : setToken("editor-token");
+  const hasToken = getToken();
 console.log('ddddd',hasToken)
   if (hasToken) {
     if (to.path === '/login' && hasToken == 'editor-token') {
