@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <el-row :gutter="10">
-      <el-col :xs="20" :sm="12">
+      <el-col :xs="21" :sm="12">
         <div class="grid-content nav_left flex items-center">
           <div class="logo-box">
             <img :src="logo" alt="" title="logo" />
@@ -16,18 +16,18 @@
         </div>
       </el-col>
 
-      <el-col :xs="4" :sm="12">
+      <el-col :xs="3" :sm="12">
         <div
-          class="grid-content bg-purple-light flex items-center operations items-align-right"
+          class="grid-content flex items-center operations items-align-right"
         >
           <div class="text-main items-center hidden-xs-only">降重/降AIGC率</div>
           <div class="text-main items-center hidden-xs-only">我的订单</div>
           <div class="text-main items-center hidden-xs-only">范文样例</div>
-          <div class="hidden-sm-and-up operation_box" @click="showDraw">
-            <i class="el-icon-s-operation"></i>
-          </div>
-          <div @click="pushLogin" class="login_box">
+          <div @click="pushLogin" class="login_box hidden-xs-only">
             <span>登录</span>
+          </div>
+          <div class="hidden-sm-and-up operation_box grid-content bg-purple-light" @click="showDraw">
+            <i class="el-icon-s-operation"></i>
           </div>
         </div>
       </el-col>
@@ -41,9 +41,12 @@
       :direction="direction"
       :before-close="handleClose"
     >
-      <div class="text-main items-center">降重/降AIGC率</div>
-      <div class="text-main items-center">我的订单</div>
-      <div class="text-main items-center">范文样例</div>
+      <div class="flex flex-star">
+        <div class="text-main items-center siderbar-item">降重/降AIGC率</div>
+        <div class="text-main items-center siderbar-item">我的订单</div>
+        <div class="text-main items-center siderbar-item">范文样例</div>
+        <div class="text-main items-center siderbar-item">登录</div>
+      </div>
     </el-drawer>
   </div>
 </template>
@@ -95,7 +98,7 @@ export default {
 @import "@/styles/variables.scss";
 .operation_box {
   font-size: 30px;
-  margin-right: 10px;
+  padding: 10px;
 }
 
 .navbar {
@@ -248,6 +251,10 @@ export default {
 .items-align-right {
   justify-content: flex-end;
 }
+.flex.flex-star {
+    justify-content: flex-start;
+    flex-direction: column;
+}
 .navbar .el-row {
   width: 100%;
   // color: red;
@@ -258,5 +265,9 @@ export default {
 }
 .text-main:hover {
   color: rgb(59 130 246 / 1);
+}
+.siderbar-item {
+    padding-left: 20px;
+    padding-bottom: 15px;
 }
 </style>

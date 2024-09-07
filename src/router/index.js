@@ -53,7 +53,13 @@ export const constantRoutes = [
       component: () => import('@/views/dashboard/index'),
       meta: { title: 'home', icon: 'dashboard' }
     }]
-  },
+    },
+  
+{
+    path: '/reduceRepetiton',
+    component: () => import('@/views/reduceRepetition/index'),
+    hidden: true
+    },
 
   {
     path: '/example',
