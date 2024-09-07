@@ -23,7 +23,7 @@
         <div
           class="grid-content flex items-center operations items-align-right"
         >
-          <div class="text-main items-center hidden-xs-only">降重/降AIGC率</div>
+          <div class="text-main items-center hidden-xs-only" @click="toView('reduceRepetiton')">降重/降AIGC率</div>
           <div class="text-main items-center hidden-xs-only">我的订单</div>
           <div
             class="text-main items-center hidden-xs-only"
@@ -106,6 +106,9 @@ export default {
     async logout() {
       await this.$store.dispatch("user/logout");
       this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+      },
+      toView(toPath) {
+        this.$router.push('/'+toPath+'');
     },
   },
 };
