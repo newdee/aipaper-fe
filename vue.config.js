@@ -41,7 +41,21 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
+    proxy: {          // 配置跨域处理, 设置代理
+      "/dev-api": {
+        //  target: `http://localhost:8090/`,
+        // target: `http://175.178.88.172:8090/`,
+        // target: `http://43.143.210.214:8090/`,
+        // target: `http://124.222.112.40:3000/`,
+        target: `http://www.mixpaper.cn:3000/`,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/dev-api': ''
+        }
+      },
+    },
+    // before: require('./mock/mock-server.js')
+    disableHostCheck: true
   },
   css: {
     loaderOptions: {

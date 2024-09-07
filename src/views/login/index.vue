@@ -170,7 +170,10 @@
                   >秒后尝试重新获取验证码
                 </div>
                 <div>
-                  <input-code @codeChange="codeChange"></input-code>
+                  <input-code
+                    :phone="phoneNum"
+                    @codeChange="codeChange"
+                  ></input-code>
                 </div>
                 <p v-if="codeEndStatus && !codeSuccess" class="codeTag">
                   <i class="el-icon-loading"></i>
@@ -196,7 +199,7 @@
         </div>
       </div>
     </div>
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="60%">
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="40%">
       <span class="lanhuParent">
         <span class="canClick">点击确定表示您已阅读并同意</span>
         <span class="lanhu" @click="openNewWindow">服务协议</span>
@@ -213,6 +216,8 @@
 
 <script>
 import inputCode from "./components/inputCode.vue";
+
+import { sms } from "@/api/login";
 export default {
   data() {
     return {
@@ -263,6 +268,7 @@ export default {
         if (val == "success") {
           // 验证码验证成功,页面跳转
           this.codeRegExrStatus = true;
+          this.$router.push({ path: "/home" || "/" });
         } else {
           // 验证码验证失败
           this.codeRegExrStatus = false;
@@ -311,8 +317,16 @@ export default {
     },
     getCode() {
       // 获取验证码
-      console.log("this.phone", this.phone);
-      this.phoneStatus = false;
+      let data = {
+        phone: this.phoneNum,
+        // phone: "13164661907",
+      };
+      console.log("this.data", data);
+
+      sms(data).then((res) => {
+        console.log("res", res);
+        this.phoneStatus = false;
+      });
     },
     checkPhoneNum(phoneNum) {
       let phoneRegex = /^1[3-9]\d{9}$/;

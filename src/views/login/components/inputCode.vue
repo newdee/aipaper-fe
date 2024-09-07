@@ -68,7 +68,7 @@ export default {
       pasteResult: [],
     };
   },
-  props: ["code"],
+  props: ["code", "phone"],
   computed: {
     input() {
       // code 是父组件传进来的默认值，必须是6位长度的数组，这里就不再做容错判断处理
@@ -105,9 +105,25 @@ export default {
       // this.input
       this.$emit("codeChange", "loading");
       let _this = this;
-      setTimeout(() => {
-        _this.$emit("codeChange", "error");
-      }, 2000);
+      let data = {
+        phone: this.phone,
+        sms_code: this.input.join(""),
+      };
+      this.$store
+        .dispatch("user/login", data)
+        .then(() => {
+          _this.$emit("codeChange", "success");
+        })
+        .catch(() => {
+          _this.$emit("codeChange", "error");
+        });
+      // login(data)
+      //   .then((res) => {
+      //     console.log("res", res);
+
+      //   })
+      //   .catch((error) => {
+      //   });
     },
     checkArray(arr) {
       // 检查数组中是否有空字符串

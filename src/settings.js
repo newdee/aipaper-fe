@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '千网论文',
+  title: 'AIPaper',
 
   /**
    * @type {boolean} true | false
