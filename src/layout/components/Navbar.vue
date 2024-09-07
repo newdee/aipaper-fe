@@ -2,7 +2,10 @@
   <div class="navbar">
     <el-row :gutter="10">
       <el-col :xs="21" :sm="12">
-        <div class="grid-content nav_left flex items-center">
+        <div
+          @click="jumpDetail('/')"
+          class="grid-content nav_left flex items-center"
+        >
           <div class="logo-box">
             <img :src="logo" alt="" title="logo" />
           </div>
@@ -22,11 +25,19 @@
         >
           <div class="text-main items-center hidden-xs-only">降重/降AIGC率</div>
           <div class="text-main items-center hidden-xs-only">我的订单</div>
-          <div class="text-main items-center hidden-xs-only">范文样例</div>
+          <div
+            class="text-main items-center hidden-xs-only"
+            @click="jumpDetail('/paperPreview')"
+          >
+            范文样例
+          </div>
           <div @click="pushLogin" class="login_box hidden-xs-only">
             <span>登录</span>
           </div>
-          <div class="hidden-sm-and-up operation_box grid-content bg-purple-light" @click="showDraw">
+          <div
+            class="hidden-sm-and-up operation_box grid-content bg-purple-light"
+            @click="showDraw"
+          >
             <i class="el-icon-s-operation"></i>
           </div>
         </div>
@@ -44,7 +55,12 @@
       <div class="flex flex-star">
         <div class="text-main items-center siderbar-item">降重/降AIGC率</div>
         <div class="text-main items-center siderbar-item">我的订单</div>
-        <div class="text-main items-center siderbar-item">范文样例</div>
+        <div
+          class="text-main items-center siderbar-item"
+          @click="jumpDetail('/paperPreview')"
+        >
+          范文样例
+        </div>
         <div class="text-main items-center siderbar-item">登录</div>
       </div>
     </el-drawer>
@@ -74,6 +90,9 @@ export default {
   methods: {
     handleClose(done) {
       done();
+    },
+    jumpDetail(path) {
+      this.$router.push(path);
     },
     pushLogin() {
       this.$router.push("/login");
@@ -252,8 +271,8 @@ export default {
   justify-content: flex-end;
 }
 .flex.flex-star {
-    justify-content: flex-start;
-    flex-direction: column;
+  justify-content: flex-start;
+  flex-direction: column;
 }
 .navbar .el-row {
   width: 100%;
@@ -267,7 +286,7 @@ export default {
   color: rgb(59 130 246 / 1);
 }
 .siderbar-item {
-    padding-left: 20px;
-    padding-bottom: 15px;
+  padding-left: 20px;
+  padding-bottom: 15px;
 }
 </style>

@@ -218,6 +218,7 @@
 import inputCode from "./components/inputCode.vue";
 
 import { sms } from "@/api/login";
+
 export default {
   data() {
     return {
