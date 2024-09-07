@@ -61,21 +61,37 @@ export const constantRoutes = [{
     component: Layout,
     redirect: '/paper/preview',
     children: [{
-      path: 'preview',
-      name: 'preview',
-      component: () => import('@/views/paperpreview/index'),
-      meta: {
-        title: '范文样例',
-        icon: 'dashboard'
+        path: 'preview',
+        name: 'preview',
+        component: () => import('@/views/paperpreview/index'),
+        meta: {
+          title: '范文样例',
+          icon: 'dashboard'
+        }
+      },
+      {
+        path: 'reduceRepetiton',
+        name: 'reduceRepetiton',
+        component: () => import('@/views/reduceRepetition/index'),
+        meta: {
+          title: '智能降重',
+          icon: 'dashboard'
+        }
       }
-    }]
+    ]
   },
+  // {
+  //   path: '/paper',
+  //   component: Layout,
+  //   redirect: '/paper/reduceRepetiton',
+  //   children: []
+  // },
 
-  {
-    path: '/reduceRepetiton',
-    component: () => import('@/views/reduceRepetition/index'),
-    hidden: true
-  },
+  // {
+  //   path: '/reduceRepetiton',
+  //   component: () => import('@/views/reduceRepetition/index'),
+  //   hidden: true
+  // },
 
   {
     path: '/example',

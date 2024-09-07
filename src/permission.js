@@ -15,7 +15,7 @@ NProgress.configure({
   showSpinner: false
 }) // NProgress Configuration
 
-const whiteList = ['/login', '/home','/reduceRepetiton', "/preview", '/paper', '/paper/preview'] // no redirect whitelist
+const whiteList = ['/login', '/home', '/paperPreview', '/reduceRepetiton', "/preview", '/paper', '/paper/preview', '/paper/reduceRepetiton'] // no redirect whitelist
 // setToken("editor-token");
 router.beforeEach(async (to, from, next) => {
   // start progress bar
@@ -58,6 +58,7 @@ router.beforeEach(async (to, from, next) => {
     }
   } else {
     /* has no token*/
+    console.log('to', to, to.path)
 
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
