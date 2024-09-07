@@ -46,12 +46,15 @@
 
     <!-- 菜单栏 -->
     <el-drawer
-      title="我的菜单"
       size="40%"
       :visible.sync="drawer"
       :direction="direction"
       :before-close="handleClose"
+      :show-close="false"
     >
+      <template slot="title">
+        <div>我的菜单</div>
+      </template>
       <div class="flex flex-star">
         <div class="text-main items-center siderbar-item">降重/降AIGC率</div>
         <div class="text-main items-center siderbar-item">我的订单</div>
@@ -82,6 +85,7 @@ export default {
       logo: require("@/assets/images/logo_paper.png"),
       drawer: false,
       direction: "rtl", //抽屉方向
+      userMenu: "我的菜单",
     };
   },
   computed: {
