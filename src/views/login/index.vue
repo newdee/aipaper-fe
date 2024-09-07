@@ -96,7 +96,7 @@
                   <div class="text center">或</div>
                 </div>
               </div>
-              <div class="open_wx_btn center login-btn">
+              <div @click="openLogin" class="open_wx_btn center login-btn">
                 <div class="wx-box center">
                   <el-tooltip
                     class="item"
@@ -170,7 +170,10 @@
                   >秒后尝试重新获取验证码
                 </div>
                 <div>
-                  <input-code @codeChange="codeChange"></input-code>
+                  <input-code
+                    :phone="phoneNum"
+                    @codeChange="codeChange"
+                  ></input-code>
                 </div>
                 <p v-if="codeEndStatus && !codeSuccess" class="codeTag">
                   <i class="el-icon-loading"></i>
@@ -215,6 +218,7 @@
 import inputCode from "./components/inputCode.vue";
 
 import { sms } from "@/api/login";
+
 export default {
   data() {
     return {
@@ -265,11 +269,18 @@ export default {
         if (val == "success") {
           // 验证码验证成功,页面跳转
           this.codeRegExrStatus = true;
+          this.$router.push({ path: "/home" || "/" });
         } else {
           // 验证码验证失败
           this.codeRegExrStatus = false;
         }
       }
+    },
+    openLogin() {
+      this.$message({
+        type: "warning",
+        message: "此功能暂未开放",
+      });
     },
     backInputPhone() {
       this.phoneStatus = true;

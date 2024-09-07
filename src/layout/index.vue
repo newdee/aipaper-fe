@@ -33,7 +33,7 @@ export default {
       return this.$store.state.app.device;
     },
     fixedHeader() {
-      return this.$store.state.settings.fixedHeader;
+      return true;
     },
     classObj() {
       return {

@@ -1,8 +1,11 @@
 <template>
   <div class="navbar">
     <el-row :gutter="10">
-      <el-col :xs="20" :sm="12">
-        <div class="grid-content nav_left flex items-center">
+      <el-col :xs="21" :sm="12">
+        <div
+          @click="jumpDetail('/')"
+          class="grid-content nav_left flex items-center"
+        >
           <div class="logo-box">
             <img :src="logo" alt="" title="logo" />
           </div>
@@ -16,18 +19,36 @@
         </div>
       </el-col>
 
-      <el-col :xs="4" :sm="12">
+      <el-col :xs="3" :sm="12">
         <div
-          class="grid-content bg-purple-light flex items-center operations items-align-right"
+          class="grid-content flex items-center operations items-align-right"
         >
-          <div class="text-main items-center hidden-xs-only">降重/降AIGC率</div>
-          <div class="text-main items-center hidden-xs-only">我的订单</div>
-          <div class="text-main items-center hidden-xs-only">范文样例</div>
-          <div class="hidden-sm-and-up operation_box" @click="showDraw">
-            <i class="el-icon-s-operation"></i>
+          <div
+            class="text-main items-center hidden-xs-only"
+            @click="jumpDetail('/paper/reduceRepetiton')"
+          >
+            降重/降AIGC率
           </div>
-          <div @click="pushLogin" class="login_box">
+          <div
+            class="text-main items-center hidden-xs-only"
+            @click="jumpDetail('/paper/reduceRepetiton')"
+          >
+            我的订单
+          </div>
+          <div
+            class="text-main items-center hidden-xs-only"
+            @click="jumpDetail('/paper/preview')"
+          >
+            范文样例
+          </div>
+          <div @click="pushLogin" class="login_box hidden-xs-only">
             <span>登录</span>
+          </div>
+          <div
+            class="hidden-sm-and-up operation_box grid-content bg-purple-light"
+            @click="showDraw"
+          >
+            <i class="el-icon-s-operation"></i>
           </div>
         </div>
       </el-col>
@@ -35,15 +56,38 @@
 
     <!-- 菜单栏 -->
     <el-drawer
-      title="我的菜单"
       size="40%"
       :visible.sync="drawer"
       :direction="direction"
       :before-close="handleClose"
+      :show-close="false"
     >
-      <div class="text-main items-center">降重/降AIGC率</div>
-      <div class="text-main items-center">我的订单</div>
-      <div class="text-main items-center">范文样例</div>
+      <template slot="title">
+        <div>我的菜单</div>
+      </template>
+      <div class="flex flex-star">
+        <div
+          class="text-main items-center siderbar-item"
+          @click="jumpDetail('/paper/reduceRepetiton')"
+        >
+          降重/降AIGC率
+        </div>
+        <div
+          class="text-main items-center siderbar-item"
+          @click="jumpDetail('/paper/reduceRepetiton')"
+        >
+          我的订单
+        </div>
+        <div
+          class="text-main items-center siderbar-item"
+          @click="jumpDetail('/paper/preview')"
+        >
+          范文样例
+        </div>
+        <div class="text-main items-center siderbar-item" @click="pushLogin">
+          登录
+        </div>
+      </div>
     </el-drawer>
   </div>
 </template>
@@ -63,6 +107,7 @@ export default {
       logo: require("@/assets/images/logo_paper.png"),
       drawer: false,
       direction: "rtl", //抽屉方向
+      userMenu: "我的菜单",
     };
   },
   computed: {
@@ -71,6 +116,9 @@ export default {
   methods: {
     handleClose(done) {
       done();
+    },
+    jumpDetail(path) {
+      this.$router.push(path);
     },
     pushLogin() {
       this.$router.push("/login");
@@ -85,6 +133,9 @@ export default {
       await this.$store.dispatch("user/logout");
       this.$router.push(`/login?redirect=${this.$route.fullPath}`);
     },
+    toView(toPath) {
+      this.$router.push("/" + toPath + "");
+    },
   },
 };
 </script>
@@ -95,7 +146,7 @@ export default {
 @import "@/styles/variables.scss";
 .operation_box {
   font-size: 30px;
-  margin-right: 10px;
+  padding: 10px;
 }
 
 .navbar {
@@ -248,6 +299,10 @@ export default {
 .items-align-right {
   justify-content: flex-end;
 }
+.flex.flex-star {
+  justify-content: flex-start;
+  flex-direction: column;
+}
 .navbar .el-row {
   width: 100%;
   // color: red;
@@ -258,5 +313,9 @@ export default {
 }
 .text-main:hover {
   color: rgb(59 130 246 / 1);
+}
+.siderbar-item {
+  padding-left: 20px;
+  padding-bottom: 15px;
 }
 </style>

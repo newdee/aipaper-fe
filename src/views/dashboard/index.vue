@@ -1,5 +1,12 @@
 <template>
-  <div class="dashboard-container">
+  <div>
+    <!--每日数据 -->
+    <webinfo></webinfo>
+    <!-- 输入框 -->
+
+    <inputcon></inputcon>
+    <!--  -->
+    <div style="height: 11500px"></div>
     <div class="dashboard-text">name: {{ name }}</div>
     <el-row :gutter="10">
       <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
@@ -15,14 +22,23 @@
         ><div class="grid-content bg-purple-light"></div
       ></el-col>
     </el-row>
+    <!-- <el-backtop
+      target=".page-component__scroll .el-scrollbar__wrap"
+    ></el-backtop> -->
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import webinfo from "./components/webinfo.vue";
+import inputcon from "./components/inputcon.vue";
 
 export default {
   name: "home",
+  components: {
+    webinfo,
+    inputcon,
+  },
   computed: {
     ...mapGetters(["name"]),
   },

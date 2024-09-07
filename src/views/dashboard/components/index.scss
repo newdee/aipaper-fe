@@ -1,0 +1,37 @@
+@import '@/styles/variables.scss';
+
+.mainCon {
+  width: 100%;
+
+  background-image: radial-gradient(circle at top left, $mainBgColor, #fff 50%, #fff);
+  padding-top: 48px;
+  .titleMain {
+    margin-top: 64px;
+    text-align: center;
+  }
+  .titlep {
+    
+    position: relative;
+    
+  }
+  .titleMainP {
+    margin-top: 24px;
+    color: #333;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .rightIcon {
+      width: 20px;
+      height: 20px;
+      background-color: #d75300;
+      position: absolute;
+      right: -17px;
+    top: -14px;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 11px;
+      line-height: 20px;
+    }
+  }
+}

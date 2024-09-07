@@ -61,8 +61,6 @@
   </div>
 </template>
 <script>
-import { login } from "@/api/login";
-
 export default {
   data() {
     return {
@@ -70,7 +68,7 @@ export default {
       pasteResult: [],
     };
   },
-  props: ["code"],
+  props: ["code", "phone"],
   computed: {
     input() {
       // code 是父组件传进来的默认值，必须是6位长度的数组，这里就不再做容错判断处理
@@ -108,17 +106,24 @@ export default {
       this.$emit("codeChange", "loading");
       let _this = this;
       let data = {
-        phone: "13164661907",
-        sms_code: "443742",
+        phone: this.phone,
+        sms_code: this.input.join(""),
       };
-      login(data)
-        .then((res) => {
-          console.log("res", res);
+      this.$store
+        .dispatch("user/login", data)
+        .then(() => {
           _this.$emit("codeChange", "success");
         })
-        .catch((error) => {
+        .catch(() => {
           _this.$emit("codeChange", "error");
         });
+      // login(data)
+      //   .then((res) => {
+      //     console.log("res", res);
+
+      //   })
+      //   .catch((error) => {
+      //   });
     },
     checkArray(arr) {
       // 检查数组中是否有空字符串

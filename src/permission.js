@@ -1,27 +1,34 @@
 import router from './router'
 import store from './store'
-import { Message } from 'element-ui'
+import {
+  Message
+} from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
-import { getToken, setToken } from '@/utils/auth' // get token from cookie
+import {
+  getToken,
+  setToken
+} from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
 
-NProgress.configure({ showSpinner: false }) // NProgress Configuration
+NProgress.configure({
+  showSpinner: false
+}) // NProgress Configuration
 
-const whiteList = ['/login'] // no redirect whitelist
-setToken("editor-token");
-router.beforeEach(async(to, from, next) => {
+const whiteList = ['/login', '/home', '/paperPreview', '/reduceRepetiton', "/preview", '/paper', '/paper/preview', '/paper/reduceRepetiton'] // no redirect whitelist
+// setToken("editor-token");
+router.beforeEach(async (to, from, next) => {
   // start progress bar
   NProgress.start()
 
   // set page title
   document.title = getPageTitle(to.meta.title)
-  
+
 
   // determine whether the user has logged in
   // const hasToken = getToken() ? getToken() : setToken("editor-token");
   const hasToken = getToken();
-console.log('ddddd',hasToken)
+  console.log('ddddd', hasToken)
   if (hasToken) {
     if (to.path === '/login' && hasToken == 'editor-token') {
       // if is logged in, redirect to the home page
@@ -29,7 +36,7 @@ console.log('ddddd',hasToken)
       NProgress.done()
     } else {
       const hasGetUserInfo = store.getters.name
-      console.log('hasGetUserInfo',hasGetUserInfo)
+      console.log('hasGetUserInfo', hasGetUserInfo)
 
       if (hasGetUserInfo) {
         next()
@@ -37,7 +44,7 @@ console.log('ddddd',hasToken)
         try {
           // get user info
           await store.dispatch('user/getInfo')
-          console.log('11',)
+          console.log('11', )
 
           next()
         } catch (error) {
@@ -51,6 +58,7 @@ console.log('ddddd',hasToken)
     }
   } else {
     /* has no token*/
+    console.log('to', to, to.path)
 
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
