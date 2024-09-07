@@ -96,7 +96,7 @@
                   <div class="text center">或</div>
                 </div>
               </div>
-              <div class="open_wx_btn center login-btn">
+              <div @click="openLogin" class="open_wx_btn center login-btn">
                 <div class="wx-box center">
                   <el-tooltip
                     class="item"
@@ -275,6 +275,12 @@ export default {
           this.codeRegExrStatus = false;
         }
       }
+    },
+    openLogin() {
+      this.$message({
+        type: "warning",
+        message: "此功能暂未开放",
+      });
     },
     backInputPhone() {
       this.phoneStatus = true;
