@@ -3,8 +3,8 @@
     <!-- 输入框及大纲生成 -->
     <div class="mainCon">
       <div class="titleMain">
-        <h1>千笔® · AIPassPaper®</h1>
-        <div class="titleMainP">
+        <h1 class="TitleH1">千笔® · AIPassPaper®</h1>
+        <div class="">
           <p class="titlep">
             <span class="mr_15">一键生成 </span> <span>无限改稿</span
             ><span class="rightIcon">新</span>
@@ -82,8 +82,9 @@
         </div>
         <!-- 生成大纲选项 -->
         <div class="submitBtn">
-          <button class="g_poin">生成大纲</button
-          ><span class="inputLine g_poin">录入大纲</span>
+          <button class="g_poin">生成大纲</button>
+
+          <span class="inputLine g_poin">录入大纲</span>
 
           <div class="threeLine">
             <el-tooltip class="item" effect="dark" content="" placement="top">
