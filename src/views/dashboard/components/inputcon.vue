@@ -13,12 +13,44 @@
         </div>
         <div class="inputBox">
           <div class="inputLeft">
+            <div class="leftEn g_poin">
+              生成英文版本
+              <span>
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-fenxiang1"></use>
+                </svg>
+              </span>
+            </div>
             <el-cascader
+              placeholder="请选择科目"
               v-model="selectValue"
               :options="options"
               :props="{ expandTrigger: 'hover' }"
               @change="handleChange"
             ></el-cascader>
+          </div>
+          <div class="inputRight">
+            <!-- <input type="text" placeholder=""> -->
+            <div class="rightLink g_poin">
+              <span class="rightLinkIcon">
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-qiehuan1"></use>
+                </svg>
+              </span>
+              切换至专业版
+              <span class="rightTip">
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-tishi"></use>
+                </svg>
+              </span>
+            </div>
+
+            <el-input
+              v-model="input"
+              maxlength="50"
+              show-word-limit
+              placeholder="请输入完整题目，题目越完整大纲越准确"
+            ></el-input>
           </div>
         </div>
       </div>

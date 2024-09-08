@@ -8,6 +8,9 @@
   .titleMain {
     margin-top: 64px;
     text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
   }
   .titlep {
     
@@ -34,4 +37,38 @@
       line-height: 20px;
     }
   }
+}
+.inputBox {
+  display: flex;
+  width: 100%;
+  margin-top: 80px;
+  max-width: 930px;
+  padding: 0 16px;
+  // align-items: center;
+  .inputLeft {
+    width: 160px;
+    margin-right: 15px;
+    position: relative;
+    .leftEn {
+      position: absolute;
+      left: 0;
+      top: -26px;
+      color: $textMain;
+      font-size: 14px;
+    }
+  }
+  .inputRight {
+    flex-grow: 1;
+    background-color: red;
+    position: relative;
+
+  }
+  .rightLink {
+    position: absolute;
+      right: 0;
+      top: -26px;
+      color: $textColor4;
+      font-size: 14px;
+  }
+
 }
