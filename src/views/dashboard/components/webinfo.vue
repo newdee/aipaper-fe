@@ -39,9 +39,11 @@
 }
 @media only screen and (max-width: 768px) {
   .info-box {
-    top: 50px;
+    top: 0px;
     width: 100%;
     justify-content: center;
+    position: relative;
+    left: 0px;
   }
   .info_left {
     margin-right: 50px;

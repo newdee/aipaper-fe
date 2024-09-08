@@ -25,20 +25,70 @@ import "@/assets/js/iconfont"
  * please remove it before going online ! ! !
  */
 if (process.env.NODE_ENV === 'production') {
-  const { mockXHR } = require('../mock')
+  const {
+    mockXHR
+  } = require('../mock')
   mockXHR()
 }
 
 // set ElementUI lang to EN
-Vue.use(ElementUI, { locale })
+Vue.use(ElementUI, {
+  locale
+})
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
 
+// 定义全局的方法
+Vue.prototype.$devf = function () {
+  // console.log('Global method called!');
+  ElementUI['Message']({
+    type: 'warning',
+    message: '功能开发中, 请联系我们的官方客服,获取上线时间.'
+  })
+  // 执行你需要的操作
+};
+
 Vue.config.productionTip = false
+
+
+
+Vue.prototype.$minWidth = 500;
+
+Vue.prototype.$setMinWindowWidth = function () {
+  // let resizing = false;
+
+  // function preventResize(e) {
+  //   if (resizing && window.innerWidth < Vue.prototype.$minWidth) {
+  //     e.preventDefault();
+  //     window.resizeTo(Vue.prototype.$minWidth, window.innerHeight);
+  //   }
+  // }
+
+  // window.addEventListener('resize', function () {
+  //   console.log('ddd', window.innerWidth)
+  //   if (window.innerWidth < Vue.prototype.$minWidth) {
+  //     // window.resizeTo(Vue.prototype.$minWidth, window.innerHeight);
+  //     // window.innerWidth = 500
+  //   }
+  //   resizing = true;
+  //   setTimeout(() => {
+  //     resizing = false;
+  //   }, 2000); // 假设 resize 事件触发的频率
+  // });
+
+  // window.addEventListener('beforeunload', preventResize);
+
+  // 提示用户最小窗口大小要求
+
+};
+
 
 new Vue({
   el: '#app',
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  beforeCreate() {
+    this.$setMinWindowWidth(); // 在 Vue 实例创建前设置窗口大小限制
+  }
 })

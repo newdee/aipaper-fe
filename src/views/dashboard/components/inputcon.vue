@@ -11,9 +11,11 @@
           </p>
           <!-- <p class="titlep">专业性更强 知识面更广 流畅性更佳</p> -->
         </div>
+        <!-- 输入框组件 -->
+
         <div class="inputBox">
           <div class="inputLeft">
-            <div class="leftEn g_poin">
+            <div @click="$devf" class="leftEn g_poin">
               生成英文版本
               <span>
                 <svg class="icon svg-icon" aria-hidden="true">
@@ -32,12 +34,12 @@
           <div class="inputRight">
             <!-- <input type="text" placeholder=""> -->
             <div class="rightLink g_poin">
-              <span class="rightLinkIcon">
+              <span @click="$devf" class="rightLinkIcon">
                 <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-qiehuan1"></use>
                 </svg>
               </span>
-              切换至专业版
+              <span @click="$devf"> 切换至专业版 </span>
               <el-tooltip
                 class="item"
                 effect="dark"
@@ -60,6 +62,45 @@
             ></el-input>
           </div>
         </div>
+        <!-- 输入框选项 -->
+        <div class="radioGroup">
+          <el-radio-group v-model="radio">
+            <el-radio :label="3">成考/自考(约8千字) </el-radio>
+            <el-radio :label="2">专科/本科(约1万字) </el-radio>
+            <el-radio :label="1">本科(约2万字) </el-radio>
+            <el-radio :label="4">研究生(约3万字) </el-radio>
+            <el-radio :label="5">在职硕士(约5万字) </el-radio>
+            <el-radio :label="6">期刊(约5千字) </el-radio>
+          </el-radio-group>
+        </div>
+        <div class="radioGroup">
+          <el-radio-group v-model="radio2">
+            <el-radio :label="3">开题报告(约5千字)</el-radio>
+            <el-radio :label="2">任务书(约5千字)</el-radio>
+            <el-radio :label="1">文献综述(约5千字)</el-radio>
+          </el-radio-group>
+        </div>
+        <!-- 生成大纲选项 -->
+        <div class="submitBtn">
+          <button class="g_poin">生成大纲</button
+          ><span class="inputLine g_poin">录入大纲</span>
+
+          <div class="threeLine">
+            <el-tooltip class="item" effect="dark" content="" placement="top">
+              <div slot="content">
+                二级大纲(1.1)：极速简约，结构清晰<br />
+                三级大纲(1.1.1)：内容丰富，深度思考
+              </div>
+              <el-switch
+                style="display: block"
+                v-model="value2"
+                :active-color="$textMain"
+                active-text="使用三级大纲"
+              >
+              </el-switch>
+            </el-tooltip>
+          </div>
+        </div>
       </div>
     </div>
     <advantage ref="advantageDia"></advantage>
@@ -78,6 +119,9 @@ export default {
       // 定义变量
       selectValue: [],
       input: "",
+      value2: "",
+      radio: 1,
+      radio2: "",
       options: [
         {
           value: "zhinan",

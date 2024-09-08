@@ -12,12 +12,27 @@
           placeholder="请输入内容"
           maxlength="1000"
           v-model="textareaIn"
+          :autosize="{ minRows: 7 }"
         >
         </el-input>
       </div>
       <div class="edit-2 flex align-center">
-        <el-button type="primary" round>降低重复率</el-button>
-        <el-button type="primary" round>降低AIGC率</el-button>
+        <el-button type="primary" round
+          >降低重复率
+          <span class="edTwoIcon">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-a-icondanxiangjiantou1"></use>
+            </svg>
+          </span>
+        </el-button>
+        <el-button type="primary" round
+          >降低AIGC率
+          <span class="edTwoIcon">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-a-icondanxiangjiantou1"></use>
+            </svg>
+          </span>
+        </el-button>
         <el-radio-group v-model="language">
           <el-radio :label="'zh'">中文</el-radio>
           <el-radio :label="'en'">英文</el-radio>
@@ -157,5 +172,9 @@ header.center h1:last-child {
   height: 100%;
   background: transparent;
   padding: 5px 15px;
+}
+.edTwoIcon {
+  // font-size: 20px;
+  color: red;
 }
 </style>
