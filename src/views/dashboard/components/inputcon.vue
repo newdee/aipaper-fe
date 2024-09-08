@@ -38,11 +38,18 @@
                 </svg>
               </span>
               切换至专业版
-              <span class="rightTip">
-                <svg class="icon svg-icon" aria-hidden="true">
-                  <use xlink:href="#icon-tishi"></use>
-                </svg>
-              </span>
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="专业版有什么优势?"
+                placement="top"
+              >
+                <span @click="openAdvantageF" class="rightTip">
+                  <svg class="icon svg-icon" aria-hidden="true">
+                    <use xlink:href="#icon-tishi"></use>
+                  </svg>
+                </span>
+              </el-tooltip>
             </div>
 
             <el-input
@@ -55,12 +62,14 @@
         </div>
       </div>
     </div>
+    <advantage ref="advantageDia"></advantage>
   </div>
 </template>
 <script>
 // import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
+import advantage from "./advantage.vue";
 
 export default {
   name: "maincon",
@@ -68,6 +77,7 @@ export default {
     return {
       // 定义变量
       selectValue: [],
+      input: "",
       options: [
         {
           value: "zhinan",
@@ -340,6 +350,7 @@ export default {
   },
   components: {
     // webinfo,
+    advantage,
   },
   mounted() {
     // 页面初始化
@@ -352,6 +363,10 @@ export default {
     // 定义方法
     handleChange(value) {
       console.log(value);
+    },
+    openAdvantageF() {
+      // this.advantageStatus = true;
+      this.$refs.advantageDia.advantageStatus = true;
     },
   },
 };
