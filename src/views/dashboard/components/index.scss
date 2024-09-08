@@ -42,6 +42,10 @@
     position: relative;
     
   }
+  .TitleH1 {
+    font-size: 48px;
+    line-height: 0;
+  }
   .titleMainP {
     margin-top: 24px;
     color: #333;
@@ -100,6 +104,7 @@
 // 提交按钮
 .submitBtn {
   margin-top: 48px;
+  position: relative;
   button {
     width: 190px;
     height: 40px;
@@ -113,6 +118,10 @@
   .inputLine {
     color: $textMain;
     font-size: 14px;
+    position: absolute;
+    top: 14px;
+    bottom: 0;
+    right: -67px;
     margin-left: 10px;
   }
   .threeLine {
