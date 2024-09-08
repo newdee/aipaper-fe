@@ -1,7 +1,18 @@
-import {  logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
-import { resetRouter } from '@/router'
-import { login } from "@/api/login";
+import {
+  logout,
+  getInfo
+} from '@/api/user'
+import {
+  getToken,
+  setToken,
+  removeToken
+} from '@/utils/auth'
+import {
+  resetRouter
+} from '@/router'
+import {
+  login
+} from "@/api/login";
 
 const getDefaultState = () => {
   return {
@@ -30,13 +41,24 @@ const mutations = {
 
 const actions = {
   // user login
-  login({ commit }, userInfo) {
-    const { phone, sms_code } = userInfo
+  login({
+    commit
+  }, userInfo) {
+    const {
+      phone,
+      sms_code
+    } = userInfo
     return new Promise((resolve, reject) => {
-      login({ phone: phone.trim(), sms_code: sms_code }).then(response => {
-        const result= response.result
+      login({
+        phone: phone.trim(),
+        sms_code: sms_code
+      }).then(response => {
+        const result = response.result
+        console.log('ddd', result)
+
         commit('SET_TOKEN', result.token)
         setToken(result.token)
+
         resolve()
       }).catch(error => {
         reject(error)
@@ -45,16 +67,24 @@ const actions = {
   },
 
   // get user info
-  getInfo({ commit, state }) {
+  getInfo({
+    commit,
+    state
+  }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
-        const { data } = response
+        const {
+          data
+        } = response
 
         if (!data) {
           return reject('Verification failed, please Login again.')
         }
 
-        const { name, avatar } = data
+        const {
+          name,
+          avatar
+        } = data
 
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
@@ -66,7 +96,10 @@ const actions = {
   },
 
   // user logout
-  logout({ commit, state }) {
+  logout({
+    commit,
+    state
+  }) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         removeToken() // must remove  token  first
@@ -80,7 +113,9 @@ const actions = {
   },
 
   // remove token
-  resetToken({ commit }) {
+  resetToken({
+    commit
+  }) {
     return new Promise(resolve => {
       removeToken() // must remove  token  first
       commit('RESET_STATE')
@@ -95,4 +130,3 @@ export default {
   mutations,
   actions
 }
-

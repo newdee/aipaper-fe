@@ -1,5 +1,30 @@
 @import '@/styles/variables.scss';
 
+
+@media only screen and (max-width: 768px) {
+  .inputBox {
+    display: block !important;
+    }
+    .inputLeft {
+      margin-bottom: 10px;
+    }
+}
+.radioGroup {
+  padding: 0 16px;
+  max-width: 930px;
+  text-align: left;
+  margin-top: 6px;
+  // line-height: 20px;
+  .el-radio {
+    margin-top: 10px;
+  color: #333639;
+  font-size: 14px !important;
+  margin-right: 25px;
+  }
+  .el-radio:last-child {
+    margin-right: 0px;
+  }
+}
 .mainCon {
   width: 100%;
 
@@ -8,11 +33,18 @@
   .titleMain {
     margin-top: 64px;
     text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
   }
   .titlep {
     
     position: relative;
     
+  }
+  .TitleH1 {
+    font-size: 48px;
+    line-height: 0;
   }
   .titleMainP {
     margin-top: 24px;
@@ -33,5 +65,66 @@
       font-size: 11px;
       line-height: 20px;
     }
+  }
+}
+.inputBox {
+  display: flex;
+  width: 100%;
+  margin-top: 80px;
+  max-width: 930px;
+  padding: 0 16px;
+  // align-items: center;
+  .inputLeft {
+    width: 160px;
+    margin-right: 15px;
+    position: relative;
+    .leftEn {
+      position: absolute;
+      left: 0;
+      top: -26px;
+      color: $textMain;
+      font-size: 14px;
+    }
+  }
+  .inputRight {
+    flex-grow: 1;
+    // background-color: red;
+    position: relative;
+
+  }
+  .rightLink {
+    position: absolute;
+      right: 0;
+      top: -26px;
+      color: $textColor4;
+      font-size: 14px;
+  }
+
+}
+// 提交按钮
+.submitBtn {
+  margin-top: 48px;
+  position: relative;
+  button {
+    width: 190px;
+    height: 40px;
+    background-color: $textMain;
+    color: #fff;
+    border-radius: 20px;
+    outline: none;
+    font-size: 16px;
+    border: none;
+  }
+  .inputLine {
+    color: $textMain;
+    font-size: 14px;
+    position: absolute;
+    top: 14px;
+    bottom: 0;
+    right: -67px;
+    margin-left: 10px;
+  }
+  .threeLine {
+    margin-top: 20px;
   }
 }

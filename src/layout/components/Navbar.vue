@@ -45,7 +45,7 @@
             <span>登录</span>
           </div>
           <div
-            class="hidden-sm-and-up operation_box grid-content bg-purple-light"
+            class="hidden-sm-and-up operation_box bg-purple-light"
             @click="showDraw"
           >
             <i class="el-icon-s-operation"></i>
@@ -61,6 +61,7 @@
       :direction="direction"
       :before-close="handleClose"
       :show-close="false"
+      append-to-body
     >
       <template slot="title">
         <div>我的菜单</div>
@@ -145,8 +146,11 @@ export default {
 <style lang="scss" scoped>
 @import "@/styles/variables.scss";
 .operation_box {
-  font-size: 30px;
-  padding: 10px;
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 5px;
+  position: relative;
+  left: 10px;
 }
 
 .navbar {

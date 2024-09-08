@@ -112,6 +112,10 @@ export default {
       this.$store
         .dispatch("user/login", data)
         .then(() => {
+          this.$message({
+            type: "success",
+            message: "登录成功！",
+          });
           _this.$emit("codeChange", "success");
         })
         .catch(() => {

@@ -25,5 +25,15 @@ $white: #ffffff;
   sideBarWidth: $sideBarWidth;
   white: $white;
 }
-// 
+// 3.0版本颜色 
 $mainBgColor: #e6f5ff;
+$textMain:#3b82f6;
+
+//4.0
+$textColor4:#d4a11c;
+
+.icon {
+  width: 1em; height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+}

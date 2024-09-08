@@ -9,15 +9,31 @@
         <el-input
           type="textarea"
           :rows="15"
-          placeholder="请输入内容"
+          placeholder="请输入文章段落，待降重、待降AIGC率均可，每次最多1000字"
           maxlength="1000"
+          show-word-limit
           v-model="textareaIn"
+          :autosize="{ minRows: 7 }"
         >
         </el-input>
       </div>
       <div class="edit-2 flex align-center">
-        <el-button type="primary" round>降低重复率</el-button>
-        <el-button type="primary" round>降低AIGC率</el-button>
+        <el-button type="primary" round
+          >降低重复率
+          <span class="edTwoIcon">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-a-icondanxiangjiantou1"></use>
+            </svg>
+          </span>
+        </el-button>
+        <el-button type="primary" round
+          >降低AIGC率
+          <span class="edTwoIcon">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-a-icondanxiangjiantou1"></use>
+            </svg>
+          </span>
+        </el-button>
         <el-radio-group v-model="language">
           <el-radio :label="'zh'">中文</el-radio>
           <el-radio :label="'en'">英文</el-radio>
@@ -31,7 +47,10 @@
                     readonly
                     v-model="textareaOut">
                 </el-input> -->
-        <textarea readonly v-model="textareaOut"></textarea>
+        <textarea readonly v-model="textareaOut" placeholder=''></textarea>
+        <div class="absolute" v-if="!textareaOut">
+            请在左侧输入待降重复率、或待降AIGC率的文章段落，点击“一键降”按钮，稍等片刻，成品会显示在这里
+        </div>
       </div>
     </div>
   </div>
@@ -77,6 +96,7 @@ header.center h1:last-child {
 
 .reduceRepetiton {
   position: relative;
+  border-top: 1px solid transparent;
 }
 
 .reduceRepetiton::before {
@@ -139,6 +159,7 @@ header.center h1:last-child {
 .edit-3 {
   border-radius: 5px;
   border: 1px solid #dcdfe6;
+  position: relative;
 }
 
 .edit-3 >>> .el-textarea textarea.el-textarea__inner {
@@ -156,5 +177,19 @@ header.center h1:last-child {
   height: 100%;
   background: transparent;
   padding: 5px 15px;
+}
+.edTwoIcon {
+  // font-size: 20px;
+  color: red;
+}
+.edit-3 .absolute {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    color: #999;
+    user-select: none;
 }
 </style>
