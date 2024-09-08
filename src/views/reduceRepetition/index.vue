@@ -77,6 +77,7 @@ header.center h1:last-child {
 
 .reduceRepetiton {
   position: relative;
+  border-top: 1px solid transparent;
 }
 
 .reduceRepetiton::before {
