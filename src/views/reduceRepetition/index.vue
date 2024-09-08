@@ -9,8 +9,9 @@
         <el-input
           type="textarea"
           :rows="15"
-          placeholder="请输入内容"
+          placeholder="请输入文章段落，待降重、待降AIGC率均可，每次最多1000字"
           maxlength="1000"
+          show-word-limit
           v-model="textareaIn"
           :autosize="{ minRows: 7 }"
         >
@@ -46,7 +47,10 @@
                     readonly
                     v-model="textareaOut">
                 </el-input> -->
-        <textarea readonly v-model="textareaOut"></textarea>
+        <textarea readonly v-model="textareaOut" placeholder=''></textarea>
+        <div class="absolute" v-if="!textareaOut">
+            请在左侧输入待降重复率、或待降AIGC率的文章段落，点击“一键降”按钮，稍等片刻，成品会显示在这里
+        </div>
       </div>
     </div>
   </div>
@@ -155,6 +159,7 @@ header.center h1:last-child {
 .edit-3 {
   border-radius: 5px;
   border: 1px solid #dcdfe6;
+  position: relative;
 }
 
 .edit-3 >>> .el-textarea textarea.el-textarea__inner {
@@ -176,5 +181,15 @@ header.center h1:last-child {
 .edTwoIcon {
   // font-size: 20px;
   color: red;
+}
+.edit-3 .absolute {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    color: #999;
+    user-select: none;
 }
 </style>
