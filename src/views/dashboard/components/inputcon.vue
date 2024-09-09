@@ -95,7 +95,6 @@
               <el-switch
                 style="display: block"
                 v-model="value2"
-                :active-color="$textMain"
                 active-text="使用三级大纲"
               >
               </el-switch>

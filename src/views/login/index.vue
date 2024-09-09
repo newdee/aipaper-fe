@@ -241,20 +241,28 @@ export default {
     // 重新获取验证码
     repeatCode() {
       // 60秒倒计时
+      let data = {
+        phone: this.phoneNum,
+        // phone: "13164661907",
+      };
+      console.log("this.data", data);
+
+      sms(data).then((res) => {
+        this.codeTimeStatus = false;
+        if (this.codeTimeStatus) return; // 如果已经在倒计时，不重复开始
+        this.secondsLeft = 60; // 重置为 60 秒
+        this.codeTimeStatus = true;
+        this.countdownInterval = setInterval(() => {
+          this.secondsLeft--;
+          if (this.secondsLeft <= 0) {
+            clearInterval(this.countdownInterval);
+            this.codeTimeStatus = false;
+            this.secondsLeft = 0;
+            // 可以在这里添加倒计时结束后的处理逻辑
+          }
+        }, 1000);
+      });
       // 请求成功
-      this.codeTimeStatus = false;
-      if (this.codeTimeStatus) return; // 如果已经在倒计时，不重复开始
-      this.secondsLeft = 60; // 重置为 60 秒
-      this.codeTimeStatus = true;
-      this.countdownInterval = setInterval(() => {
-        this.secondsLeft--;
-        if (this.secondsLeft <= 0) {
-          clearInterval(this.countdownInterval);
-          this.codeTimeStatus = false;
-          this.secondsLeft = 0;
-          // 可以在这里添加倒计时结束后的处理逻辑
-        }
-      }, 1000);
 
       // 失败
       // this.codeTimeStatus = true;
