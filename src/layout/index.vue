@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { Navbar, AppMain, MyFooter } from "./components";
 import { Navbar, AppMain } from "./components";
 import myFooter from "./components/myFooter.vue";
 import ResizeMixin from "./mixin/ResizeHandler";
@@ -25,27 +26,21 @@ export default {
   components: {
     Navbar,
     AppMain,
-    myFooter,
+    MyFooter,
   },
-  mixins: [ResizeMixin],
-  computed: {
-    sidebar() {
-      return this.$store.state.app.sidebar;
-    },
-    device() {
-      return this.$store.state.app.device;
-    },
-    fixedHeader() {
-      return true;
-    },
-    classObj() {
-      return {
-        hideSidebar: !this.sidebar.opened,
-        openSidebar: this.sidebar.opened,
-        withoutAnimation: this.sidebar.withoutAnimation,
-        mobile: this.device === "mobile",
-      };
-    },
+  device() {
+    return this.$store.state.app.device;
+  },
+  fixedHeader() {
+    return true;
+  },
+  classObj() {
+    return {
+      hideSidebar: !this.sidebar.opened,
+      openSidebar: this.sidebar.opened,
+      withoutAnimation: this.sidebar.withoutAnimation,
+      mobile: this.device === "mobile",
+    };
   },
   methods: {
     handleClickOutside() {
