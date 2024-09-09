@@ -47,9 +47,9 @@
                     readonly
                     v-model="textareaOut">
                 </el-input> -->
-        <textarea readonly v-model="textareaOut" placeholder=''></textarea>
+        <textarea readonly v-model="textareaOut" placeholder=""></textarea>
         <div class="absolute" v-if="!textareaOut">
-            请在左侧输入待降重复率、或待降AIGC率的文章段落，点击“一键降”按钮，稍等片刻，成品会显示在这里
+          请在左侧输入待降重复率、或待降AIGC率的文章段落，点击“一键降”按钮，稍等片刻，成品会显示在这里
         </div>
       </div>
     </div>
@@ -183,13 +183,15 @@ header.center h1:last-child {
   color: red;
 }
 .edit-3 .absolute {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    text-align: center;
-    color: #999;
-    user-select: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 0 60px;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  line-height: 40px;
+  color: #999;
+  user-select: none;
 }
 </style>
