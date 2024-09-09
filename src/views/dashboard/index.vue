@@ -5,9 +5,12 @@
     <!-- 输入框 -->
 
     <inputcon></inputcon>
-    <!--  -->
-    <div style="height: 11500px"></div>
-    <div class="dashboard-text">name: {{ name }}</div>
+    <!-- 推荐内容 -->
+    <recommend></recommend>
+    <!-- 大纲生成页面 -->
+
+    <div style="height: 1500px"></div>
+    <!-- <div class="dashboard-text">name: {{ name }}</div>
     <el-row :gutter="10">
       <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
         <div class="grid-content bg-purple"></div>
@@ -21,7 +24,7 @@
       <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"
         ><div class="grid-content bg-purple-light"></div
       ></el-col>
-    </el-row>
+    </el-row> -->
     <!-- <el-backtop
       target=".page-component__scroll .el-scrollbar__wrap"
     ></el-backtop> -->
@@ -32,12 +35,14 @@
 import { mapGetters } from "vuex";
 import webinfo from "./components/webinfo.vue";
 import inputcon from "./components/inputcon.vue";
+import recommend from "./components/recommend.vue";
 
 export default {
   name: "home",
   components: {
     webinfo,
     inputcon,
+    recommend,
   },
   computed: {
     ...mapGetters(["name"]),

@@ -41,9 +41,26 @@
           >
             范文样例
           </div>
-          <div @click="pushLogin" class="login_box hidden-xs-only">
-            <span>登录</span>
-          </div>
+          <templta>
+            <div
+              v-if="!hasLogin"
+              @click="pushLogin"
+              class="login_box hidden-xs-only"
+            >
+              <div class="img">登录</div>
+            </div>
+            <div
+              v-else
+              @click="showUserMenu = !showUserMenu"
+              class="login_box hidden-xs-only"
+            >
+              <div class="img">
+                <img src="@/assets/images/user/userImg.png" alt="" />
+              </div>
+              <!-- 已登录状态下拉菜单栏 -->
+              <UserMenu :showUserMenu="showUserMenu"></UserMenu>
+            </div>
+          </templta>
           <div
             class="hidden-sm-and-up operation_box bg-purple-light"
             @click="showDraw"
@@ -97,18 +114,21 @@
 import { mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
+import UserMenu from "./UserMenu.vue";
 
 export default {
   components: {
     Breadcrumb,
     Hamburger,
+    UserMenu,
   },
   data() {
     return {
       logo: require("@/assets/images/logo_paper.png"),
       drawer: false,
       direction: "rtl", //抽屉方向
-      userMenu: "我的菜单",
+      hasLogin: false,
+      showUserMenu: true,
     };
   },
   computed: {
@@ -145,6 +165,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/styles/variables.scss";
+
 .operation_box {
   font-size: 20px;
   padding: 5px;
@@ -155,30 +176,43 @@ export default {
 
 .navbar {
   padding: 0 16px;
+
   .el-col {
     height: 100%;
   }
+
   .login_box {
     font-size: 12px;
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    background: #ff8cb0;
-    text-align: center;
-    line-height: 35px;
-    color: $white;
-    // color: var(--white);
+    position: relative;
+    .img {
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      background: #ff8cb0;
+      text-align: center;
+      line-height: 35px;
+      color: $white;
+      // color: var(--white);
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
 }
+
 .web_title {
   font-size: 20px;
   font-weight: bold;
+
   span {
     font-size: 14px;
     position: relative;
     left: -5px;
   }
 }
+
 .nav_left {
   color: rgb(75 85 99);
   height: 100%;
@@ -186,27 +220,34 @@ export default {
   display: flex;
   align-items: center;
 }
+
 .logo-box {
   height: 32px;
   width: 32px;
   margin-right: 10px;
+
   img {
     width: 100%;
     height: 100%;
   }
 }
+
 .el-col {
   border-radius: 4px;
 }
+
 .bg-purple-dark {
   background: #99a9bf;
 }
+
 .bg-purple {
   background: #d3dce6;
 }
+
 .bg-purple-light {
   background: #e5e9f2;
 }
+
 .grid-content {
   border-radius: 4px;
   height: 100%;
@@ -219,7 +260,7 @@ export default {
 .navbar {
   width: 100%;
   height: 50px;
-  overflow: hidden;
+  // overflow: hidden;
   position: relative;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
@@ -297,27 +338,34 @@ export default {
 .flex {
   display: flex;
 }
+
 .items-center {
   align-items: center;
 }
+
 .items-align-right {
   justify-content: flex-end;
 }
+
 .flex.flex-star {
   justify-content: flex-start;
   flex-direction: column;
 }
+
 .navbar .el-row {
   width: 100%;
   // color: red;
   height: 50px;
 }
+
 .text-main {
   margin-right: 1.5rem;
 }
+
 .text-main:hover {
   color: rgb(59 130 246 / 1);
 }
+
 .siderbar-item {
   padding-left: 20px;
   padding-bottom: 15px;

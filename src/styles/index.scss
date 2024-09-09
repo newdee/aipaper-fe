@@ -58,7 +58,11 @@ div:focus {
     height: 0;
   }
 }
-
+li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
 // main-container global css
 .app-container {
   padding: 20px;

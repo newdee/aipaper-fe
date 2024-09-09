@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="footer">
         <!-- 底部栏 -->
         <p style="text-align: center;color:#666;">© 2024 北京智思未来科技有限公司海南分公司 关于我们 京ICP备2024042149号-5 京公网安备11010802043865</p>
     </div>
@@ -38,4 +38,10 @@ export default {
 // 媒体查询
 // @media only screen and (max-width: 939px) {
 // }
+.footer {
+    padding: 15px 0;
+}
+.footer p {
+    margin: 0px;
+}
 </style>
