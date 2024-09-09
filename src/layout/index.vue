@@ -12,8 +12,7 @@
 </template>
 
 <script>
-import { Navbar, AppMain } from "./components";
-import  myFooter from "./components/myFooter.vue";
+import { Navbar, AppMain, MyFooter } from "./components";
 import ResizeMixin from "./mixin/ResizeHandler";
 
 export default {
@@ -21,7 +20,7 @@ export default {
     components: {
         Navbar,
         AppMain,
-        myFooter
+        MyFooter
     },
     mixins: [ResizeMixin],
     computed: {
