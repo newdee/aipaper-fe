@@ -8,7 +8,9 @@
         :key="'feat' + index"
       >
         <span class="featTitle">{{ index + 1 }}</span>
-        <p :class="{ impText: index % 2 == 0 }">{{ item.text }}</p>
+        <p :class="{ impText: index % 2 == 0, impTextRed: index == 0 }">
+          {{ item.text }}
+        </p>
       </li>
     </ul>
   </div>
@@ -123,5 +125,8 @@ export default {
   align-content: center;
   flex-direction: column;
   align-items: center;
+}
+.impTextRed {
+  font-weight: bold;
 }
 </style>
