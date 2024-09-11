@@ -5,8 +5,8 @@ const defaultSettings = require('./src/settings.js')
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
-
-const name = defaultSettings.title || 'vue Admin Template' // page title
+// 配置页面title
+const name = defaultSettings.title || 'vue Admin Template' 
 // 引入等比适配插件
 const px2rem = require("postcss-px2rem");
 // 配置基本大小
