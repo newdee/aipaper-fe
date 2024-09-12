@@ -47,7 +47,7 @@ module.exports = {
         // target: `http://175.178.88.172:8090/`,
         // target: `http://43.143.210.214:8090/`,
         // target: `http://124.222.112.40:3000/`,
-        target: `http://www.mixpaper.cn:3000/`,
+        target: `http://api.mixpaper.cn:3000/`,
         changeOrigin: true,
         pathRewrite: {
           '^/dev-api': ''
