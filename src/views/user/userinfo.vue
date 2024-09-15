@@ -1,41 +1,47 @@
 <template>
-    <div class="userInfoBox">
-        <!-- 页面名称 -->
-        <div class="info">
-            <div class="info_left">
-                <span class="userNameIcon">高</span>
-            </div>
-            <div class="info_right"></div>
+    <div class="wrapper">
+        <div class="topBar">
+            <i class="el-icon-arrow-left" @click="goBack"></i>
+            账号设置
         </div>
-        <div class="info">
-            <div class="info_left">
-                <p class="infoLabel">用户名</p>
-                <p class="InfoValue">高高</p>
+        <div class="userInfoBox">
+            <!-- 页面名称 -->
+            <div class="info">
+                <div class="info_left">
+                    <span class="userNameIcon">高</span>
+                </div>
+                <div class="info_right"></div>
             </div>
-            <div class="info_right">
-                <el-button>编辑</el-button>
+            <div class="info">
+                <div class="info_left">
+                    <p class="infoLabel">用户名</p>
+                    <p class="InfoValue">高高</p>
+                </div>
+                <div class="info_right">
+                    <el-button  @click="$devf">编辑</el-button>
+                </div>
             </div>
-        </div>
-        <div class="info">
-            <div class="info_left">
-                <p class="infoLabel">手机号</p>
-                <p class="InfoValue">13612344321</p>
+            <div class="info">
+                <div class="info_left">
+                    <p class="infoLabel">手机号</p>
+                    <p class="InfoValue">13612344321</p>
+                </div>
+                <div class="info_right">
+                    <el-button  @click="$devf">编辑</el-button>
+                </div>
             </div>
-            <div class="info_right">
-                <el-button>编辑</el-button>
+            <div class="info">
+                <div class="info_left">
+                    <p class="infoLabel">密码</p>
+                    <p class="InfoValue">******</p>
+                </div>
+                <div class="info_right">
+                    <el-button  @click="$devf">编辑</el-button>
+                </div>
             </div>
-        </div>
-        <div class="info">
-            <div class="info_left">
-                <p class="infoLabel">密码</p>
-                <p class="InfoValue">******</p>
+            <div class="info">
+                <el-button @click="$devf">退出登录</el-button>
             </div>
-            <div class="info_right">
-                <el-button>编辑</el-button>
-            </div>
-        </div>
-        <div class="info">
-            <el-button>退出登录</el-button>
         </div>
     </div>
 </template>
@@ -63,6 +69,11 @@ export default {
     },
     methods: {  
         // 定义方法
+        goBack() {
+        // 使用 history.back() 方法返回上一页
+        history.back();
+        }
+
     },
 };
 </script>
@@ -76,12 +87,21 @@ export default {
 * p{
     margin: 0px;
 }
+.wrapper .topBar {
+    line-height: 3em;
+    padding: 0 2em;
+    border-bottom: 1px solid #0000001f;
+    user-select: none;
+}
+.wrapper .topBar i {
+    margin-right: 20px;
+}
 .userInfoBox {
     min-width: 400px;
     max-width: 600px;
     margin: 0 auto;
     // background: rgb(136, 134, 134);
-    padding: 30px 0;
+    padding: 20px 0;
 }
 .info {
     display: flex;
@@ -89,6 +109,9 @@ export default {
     align-items: center;
     border-bottom: 1px solid #0000001f;
     padding: 10px;
+}
+.info:first-child {
+    border-bottom: 0px;
 }
 .info:last-child {
     border-bottom: 0px;

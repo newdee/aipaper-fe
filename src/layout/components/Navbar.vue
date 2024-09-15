@@ -21,7 +21,7 @@
                     <div class="text-main items-center hidden-xs-only" @click="jumpDetail('/paper/reduceRepetiton')">
                         降重/降AIGC率
                     </div>
-                    <div class="text-main items-center hidden-xs-only" @click="jumpDetail('/paper/reduceRepetiton')">
+                    <div class="text-main items-center hidden-xs-only" @click="ordersDrawer = true">
                         我的订单
                     </div>
                     <div class="text-main items-center hidden-xs-only" @click="jumpDetail('/paper/preview')">
@@ -36,7 +36,7 @@
                             <UserMenu>
                                 <div class="img">
                                     <!-- <img src="@/assets/images/user/userImg.png" alt="" /> -->
-                                    <span>{{ user.userNmae.slice(0,1) }}</span>
+                                    <span>{{ user.userNmae.slice(0, 1) }}</span>
                                 </div>
                             </UserMenu>
                         </div>
@@ -58,7 +58,7 @@
                 <div class="text-main items-center siderbar-item" @click="jumpDetail('/paper/reduceRepetiton')">
                     降重/降AIGC率
                 </div>
-                <div class="text-main items-center siderbar-item" @click="jumpDetail('/paper/reduceRepetiton')">
+                <div class="text-main items-center siderbar-item" @click="ordersDrawer = true">
                     我的订单
                 </div>
                 <div class="text-main items-center siderbar-item" @click="jumpDetail('/paper/preview')">
@@ -69,6 +69,15 @@
                 </div>
             </div>
         </el-drawer>
+        <!-- 用户订单 -->
+        <el-drawer :visible.sync="ordersDrawer" :direction="orderDirection" :before-close="handleOrdersClose" append-to-body>
+            <template #title>
+                <div>我的订单</div>
+            </template>
+            <div class="drawBox">
+                <user-orders></user-orders>
+            </div>
+        </el-drawer>
     </div>
 </template>
 
@@ -77,22 +86,26 @@ import { mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 import UserMenu from "./UserMenu.vue";
+import UserOrders from "./UserOrders.vue";
 
 export default {
     components: {
         Breadcrumb,
         Hamburger,
         UserMenu,
+        UserOrders,
     },
     data() {
         return {
             logo: require("@/assets/images/logo_paper.png"),
             drawer: false,
             user: {
-                userNmae:'高英豪',
+                userNmae: '高英豪',
             },
-            direction: "rtl", //抽屉方向
+            direction: "rtl", //小屏菜单抽屉方向
+            orderDirection: "ltr", //用户订单抽屉方向
             hasLogin: true,
+            ordersDrawer: false,
         };
     },
     computed: {
@@ -101,6 +114,16 @@ export default {
     methods: {
         handleClose(done) {
             done();
+        },
+        handleOrdersClose(done) {
+            done();
+            // this.$confirm('确认关闭？')
+            //     .then(_ => {
+            //         done();
+            //     })
+            //     .catch(_ => { 
+            //         alert('先不关')
+            //     });
         },
         jumpDetail(path) {
             this.$router.push(path);
@@ -156,7 +179,7 @@ export default {
             background: #ff8cb0;
             text-align: center;
             line-height: 35px;
-            font-size: 20px ;
+            font-size: 20px;
             color: $white;
             // color: var(--white);
             overflow: hidden;
@@ -198,6 +221,7 @@ export default {
         height: 100%;
     }
 }
+
 .el-col {
     border-radius: 4px;
 }
@@ -335,5 +359,19 @@ export default {
 .siderbar-item {
     padding-left: 20px;
     padding-bottom: 15px;
+}
+.drawBox {
+    padding: 0 1.25rem 0 1.25rem;
+    position: relative;
+}
+.drawBox::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -14px;
+    left: 0px;
+    width: 100%;
+    height: 0px;
+    border-top: 1px solid #0000001f;
 }
 </style>

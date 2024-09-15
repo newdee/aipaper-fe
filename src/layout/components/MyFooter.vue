@@ -1,7 +1,7 @@
 <template>
     <div class="footer">
         <!-- 底部栏 -->
-        <p style="text-align: center;color:#666;">© 2024 北京智思未来科技有限公司海南分公司 关于我们 京ICP备2024042149号-5 京公网安备11010802043865</p>
+        <p style="text-align: center;color:#666;">© 2024 石家庄浅思科技有限公司 关于我们 冀ICP备2024060058号-2</p>
     </div>
 </template>
 <script>
