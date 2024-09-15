@@ -170,6 +170,7 @@ export default {
     padding: 20px;
     display: flex;
     align-items: center;
+    cursor: default;
 }
 
 .menuHeader .img {
