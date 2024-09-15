@@ -7,6 +7,7 @@
     <inputcon></inputcon>
     <!-- 推荐内容 -->
     <recommend></recommend>
+    <outline></outline>
     <!-- 大纲生成页面 -->
 
     <div style="height: 1500px"></div>
@@ -36,6 +37,7 @@ import { mapGetters } from "vuex";
 import webinfo from "./components/webinfo.vue";
 import inputcon from "./components/inputcon.vue";
 import recommend from "./components/recommend.vue";
+import outline from "./outline.vue";
 
 export default {
   name: "home",
@@ -43,6 +45,7 @@ export default {
     webinfo,
     inputcon,
     recommend,
+    outline,
   },
   computed: {
     ...mapGetters(["name"]),

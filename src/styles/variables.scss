@@ -14,6 +14,10 @@ $navBarHeight: 50px;
 
 $white: #ffffff;
 // the :export directive is the magic sauce for webpack
+
+// 公共常用色
+$colorWarning:#ea4f3d;
+
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
 :export {
   menuText: $menuText;
@@ -27,6 +31,8 @@ $white: #ffffff;
   white: $white;
   navBarHeight: $navBarHeight;
 }
+
+
 // 3.0版本颜色 
 $mainBgColor: #e6f5ff;
 $textMain:#3b82f6;
@@ -35,11 +41,8 @@ $importantColor:#d75300;
 //4.0
 $textColor4:#d4a11c;
 
-// 公共常用色
-$colorWarning:#ea4f3d;
 .icon {
   width: 1em; height: 1em;
   vertical-align: -0.15em;
   fill: currentColor;
 }
-
