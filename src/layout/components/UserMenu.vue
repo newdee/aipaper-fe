@@ -13,7 +13,8 @@
                 <div class="userMenu">
                     <div class="menuHeader">
                         <div class="img">
-                            <img src="@/assets/images/user/userImg.png" alt="">
+                            <!-- <img src="@/assets/images/user/userImg.png" alt=""> -->
+                            高
                         </div>
                         <div class="info">
                             <p class="name">用户名</p>
@@ -22,28 +23,28 @@
                     </div>
                     <div class="menuBody">
                         <div class="menuGroup menuAboutUer">
-                            <div class="menuItem">
+                            <div class="menuItem" @click="jumpDetail('/userInfo')">
                                 <i class="el-icon-house"></i>
                                 我的个人主页
                             </div>
-                            <div class="menuItem">
+                            <div class="menuItem" @click="$devf">
                                 <i class="el-icon-goods"></i>
                                 订单管理
                             </div>
                         </div>
                         <div class="menuGroup menuAboutMixPaper">
-                            <div class="menuItem">
+                            <div class="menuItem" @click="$devf">
                                 <svg class="icon svg-icon" aria-hidden="true">
                                     <use xlink:href="#icon-updatelog"></use>
                                 </svg>
                                 更新日志
                             </div>
-                            <div class="menuItem">
+                            <div class="menuItem" @click="$devf">
                                 <i class="el-icon-position"></i>
                                 <!-- <i class="el-icon-discover"></i> -->
                                 官方网站
                             </div>
-                            <div class="menuItem">
+                            <div class="menuItem" @click="$devf">
                                 <svg class="icon svg-icon" aria-hidden="true">
                                     <use xlink:href="#icon-joinus"></use>
                                 </svg>
@@ -51,13 +52,22 @@
                             </div>
                         </div>
                         <div class="menuGroup menuAboutSetting">
-                            <div class="menuItem">
-                                <svg class="icon svg-icon" aria-hidden="true">
-                                    <use xlink:href="#icon-zhongyingwen"></use>
-                                </svg>
-                                语言切换
+                            <div class="menuItem bothLeftRight">
+                                <div class="menuItem_left">
+                                    <svg class="icon svg-icon" aria-hidden="true">
+                                        <use xlink:href="#icon-zhongyingwen"></use>
+                                    </svg>
+                                    语言切换
+                                </div>
+                                <div class="menuItem_right">
+                                    中
+                                    <svg class="icon svg-icon" aria-hidden="true">
+                                        <use xlink:href="#icon-qiehuan1"></use>
+                                    </svg>
+                                    英
+                                </div>
                             </div>
-                            <div class="menuItem">
+                            <div class="menuItem logOutBox">
                                 <svg class="icon svg-icon" aria-hidden="true">
                                     <use xlink:href="#icon-logout"></use>
                                 </svg>
@@ -115,7 +125,10 @@ export default {
         popupFn() {
             console.log('129--弹窗点击事件');
 
-        }
+        },
+        jumpDetail(path) {
+            this.$router.push(path);
+        },
     },
     beforeDestroy() {
         document.removeEventListener('click', this.handleOutsideClick);
@@ -166,6 +179,11 @@ export default {
     overflow: hidden;
     margin-right: 10px;
     display: inline-block;
+    line-height: 50px;
+    font-size: 30px;
+    text-align: center;
+    background: #ff8cb0;
+    color: #fff;
 }
 
 .menuHeader .img img {
@@ -203,5 +221,12 @@ export default {
 
 .menuGroup:last-child {
     border: none;
+} 
+.menuItem.bothLeftRight{
+    display: flex;
+    justify-content: space-between;
+}
+.logOutBox {
+    color:$colorWarning;
 }
 </style>

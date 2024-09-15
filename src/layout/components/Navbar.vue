@@ -35,7 +35,8 @@
                             <!-- 已登录状态下拉菜单栏 -->
                             <UserMenu>
                                 <div class="img">
-                                    <img src="@/assets/images/user/userImg.png" alt="" />
+                                    <!-- <img src="@/assets/images/user/userImg.png" alt="" /> -->
+                                    <span>{{ user.userNmae.slice(0,1) }}</span>
                                 </div>
                             </UserMenu>
                         </div>
@@ -87,8 +88,11 @@ export default {
         return {
             logo: require("@/assets/images/logo_paper.png"),
             drawer: false,
+            user: {
+                userNmae:'高英豪',
+            },
             direction: "rtl", //抽屉方向
-            hasLogin: false,
+            hasLogin: true,
         };
     },
     computed: {
@@ -152,6 +156,7 @@ export default {
             background: #ff8cb0;
             text-align: center;
             line-height: 35px;
+            font-size: 20px ;
             color: $white;
             // color: var(--white);
             overflow: hidden;
