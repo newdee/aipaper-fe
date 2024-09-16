@@ -10,7 +10,10 @@
     <outline></outline>
     <!-- 大纲生成页面 -->
 
-    <div style="height: 1500px"></div>
+    <!-- 下载文件和官方群 -->
+    <paper-others></paper-others>
+
+    <!-- <div style="height: 1500px"></div> -->
     <!-- <div class="dashboard-text">name: {{ name }}</div>
     <el-row :gutter="10">
       <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
@@ -37,6 +40,7 @@ import { mapGetters } from "vuex";
 import webinfo from "./components/webinfo.vue";
 import inputcon from "./components/inputcon.vue";
 import recommend from "./components/recommend.vue";
+import paperOthers from "./components/paperOthers.vue";
 import outline from "./outline.vue";
 
 export default {
@@ -46,6 +50,7 @@ export default {
     inputcon,
     recommend,
     outline,
+    paperOthers,
   },
   computed: {
     ...mapGetters(["name"]),
