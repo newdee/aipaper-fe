@@ -1,5 +1,14 @@
 <template>
   <div>
+    <div class="outlineIntro">
+      <p class="introTitle">编辑大纲，生成全文</p>
+      <p class="introSubtitle">
+        🔔
+        大纲可直接<span>点击编辑</span>，点击小节右侧按钮，为小节增加<span>参考资料、数据(表)、图、公式、代码段</span>，对该小节进行<span
+          >增加、删减</span
+        >
+      </p>
+    </div>
     <!-- 大纲 -->
     <div class="outlineMain">
       <el-tree
@@ -130,6 +139,8 @@
 </template>
 
 <script>
+import mitt from "mitt";
+
 export default {
   data() {
     return {

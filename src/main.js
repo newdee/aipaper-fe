@@ -81,6 +81,7 @@ Vue.prototype.$setMinWindowWidth = function () {
   // 提示用户最小窗口大小要求
 
 };
+// eventBus.js
 
 
 new Vue({

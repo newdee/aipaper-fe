@@ -6,7 +6,19 @@
 
     <inputcon></inputcon>
     <!-- 推荐内容 -->
-    <recommend></recommend>
+    <recommend v-show="outLineStatus"></recommend>
+    <!-- <progress></progress> -->
+    <div v-show="!outLineStatus" class="progressBox">
+      <div class="pgBox">
+        <el-progress
+          :text-inside="true"
+          :stroke-width="24"
+          :percentage="currentNumber"
+          status="success"
+        ></el-progress>
+      </div>
+      <p>大纲生成中 <i class="el-icon-loading"></i>....</p>
+    </div>
     <outline></outline>
     <!-- 大纲生成页面 -->
 
@@ -41,7 +53,8 @@ import webinfo from "./components/webinfo.vue";
 import inputcon from "./components/inputcon.vue";
 import recommend from "./components/recommend.vue";
 import paperOthers from "./components/paperOthers.vue";
-import outline from "./outline.vue";
+import outline from "./outlineA.vue";
+import eventBus from "@/utils/eventBus";
 
 export default {
   name: "home",
@@ -54,6 +67,43 @@ export default {
   },
   computed: {
     ...mapGetters(["name"]),
+  },
+  data() {
+    return {
+      outLineStatus: true, //大纲生成状态
+      currentNumber: 0,
+      intervalId: null,
+    };
+  },
+  created() {
+    eventBus.on("sendOutline", this.addE); // 订阅事件
+  },
+  beforeDestroy() {
+    eventBus.off("sendOutline", this.addE); // 移除事件监听
+  },
+  methods: {
+    addE(index) {
+      alert(index);
+      this.outLineStatus = false;
+      this.countUpToHundred(index);
+    },
+    countUpToHundred(seconds) {
+      this.currentNumber = 0;
+      const targetNumber = 100;
+      const totalSteps = targetNumber - this.currentNumber;
+
+      // 计算每一步所需的时间（毫秒）
+      const stepTimeMs = (seconds * 1000) / totalSteps;
+
+      this.intervalId = setInterval(() => {
+        console.log(this.currentNumber);
+        this.currentNumber++;
+
+        if (this.currentNumber >= targetNumber) {
+          clearInterval(this.intervalId); // 达到目标数字时清除定时器
+        }
+      }, stepTimeMs);
+    },
   },
 };
 </script>
@@ -83,5 +133,14 @@ export default {
 .grid-content {
   border-radius: 4px;
   min-height: 36px;
+}
+.progressBox {
+  .pgBox {
+    width: 200px;
+  }
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

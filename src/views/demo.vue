@@ -7,6 +7,7 @@
 // import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
+// import eventBus from "@/utils/eventBus";
 
 export default {
   name: "myFooter",
@@ -19,9 +20,15 @@ export default {
     // webinfo,
   },
   mounted() {
+    // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
   },
-
+  created() {
+    // eventBus.on("sendOutline", this.addE); // 订阅事件
+  },
+  beforeDestroy() {
+    // eventBus.off("sendOutline", this.addE); // 移除事件监听
+  },
   computed: {
     // 计算属性
   },
