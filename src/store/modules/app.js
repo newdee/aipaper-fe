@@ -5,7 +5,8 @@ const state = {
     opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
     withoutAnimation: false
   },
-  device: 'desktop'
+  device: 'desktop',
+  homeData: {}
 }
 
 const mutations = {
@@ -25,6 +26,9 @@ const mutations = {
   },
   TOGGLE_DEVICE: (state, device) => {
     state.device = device
+  },
+  SET_HOME_DATA: (state, homeData) => {
+    state.homeData = JSON.parse(JSON.stringify(homeData))
   }
 }
 
@@ -37,7 +41,11 @@ const actions = {
   },
   toggleDevice({ commit }, device) {
     commit('TOGGLE_DEVICE', device)
-  }
+  },
+  setHomeData({ commit },  data ) {
+    alert('home', data)
+    commit('SET_HOME_DATA', data)
+  },
 }
 
 export default {

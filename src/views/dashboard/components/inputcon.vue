@@ -65,12 +65,12 @@
         <!-- 输入框选项 -->
         <div class="radioGroup">
           <el-radio-group v-model="radio">
-            <el-radio :label="3">成考/自考(约8千字) </el-radio>
-            <el-radio :label="2">专科/本科(约1万字) </el-radio>
-            <el-radio :label="1">本科(约2万字) </el-radio>
-            <el-radio :label="4">研究生(约3万字) </el-radio>
-            <el-radio :label="5">在职硕士(约5万字) </el-radio>
-            <el-radio :label="6">期刊(约5千字) </el-radio>
+            <el-radio
+              v-for="item in homeData.category_list"
+              :key="item.name"
+              :label="item.name"
+              >{{ item.name }}({{ item.description }})
+            </el-radio>
           </el-radio-group>
         </div>
         <div class="radioGroup">
@@ -107,7 +107,7 @@
   </div>
 </template>
 <script>
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 import advantage from "./advantage.vue";
@@ -406,7 +406,7 @@ export default {
   },
 
   computed: {
-    // 计算属性
+    ...mapGetters(["homeData"]),
   },
   methods: {
     importOut() {

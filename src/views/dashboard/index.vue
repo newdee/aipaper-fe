@@ -19,7 +19,10 @@
       </div>
       <p>大纲生成中 <i class="el-icon-loading"></i>....</p>
     </div>
-    <outline></outline>
+    <div v-show="loadingStatus">
+      <outline v-if="proDuceStatus"></outline>
+      <outline v-else></outline>
+    </div>
     <!-- 大纲生成页面 -->
 
     <!-- 下载文件和官方群 -->
@@ -70,12 +73,15 @@ export default {
     paperOthers,
   },
   computed: {
-    ...mapGetters(["name"]),
+    ...mapGetters(["name", "homeData"]),
   },
   data() {
     return {
+      loadingStatus: false,
+      proDuceStatus: true, // 大纲展示， 录入还是生成
       outLineStatus: true, //大纲生成状态
       currentNumber: 0,
+      outLineClick: "produce", // pro:生成 imp : 录入
       intervalId: null,
     };
   },
@@ -88,14 +94,20 @@ export default {
   mounted() {
     // 获取首页数据
     getHomeInfo().then((res) => {
-      console.log(res, "res");
+      console.log(res.result, "res");
+      this.$store.dispatch("app/setHomeData", res.result);
     });
   },
   methods: {
+    // 生成大纲
     addE(index) {
       this.outLineStatus = false;
+      this.outLineClick = "pro";
       this.countUpToHundred(index);
     },
+    // 渲染大纲
+    getList() {},
+    // 进度条
     countUpToHundred(seconds) {
       this.currentNumber = 0;
       const targetNumber = 100;
@@ -110,6 +122,7 @@ export default {
 
         if (this.currentNumber >= targetNumber) {
           clearInterval(this.intervalId); // 达到目标数字时清除定时器
+          this.getList();
         }
       }, stepTimeMs);
     },
@@ -144,6 +157,7 @@ export default {
   min-height: 36px;
 }
 .progressBox {
+  margin-top: 30px;
   .pgBox {
     width: 200px;
   }

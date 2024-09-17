@@ -30,34 +30,6 @@
           </div>
         </div>
       </div>
-      <div class="orderBox">
-        <el-checkbox label="复选框 B"></el-checkbox>
-        <div class="order">
-          <div class="orderNum rowBetween">
-            <div class="left">订单号：1827987236658872320</div>
-            <div class="right">2024-08-15 23:12:24</div>
-          </div>
-          <div class="orderTitle">关于全球变暖治理及发展前景</div>
-          <div class="orderOutline rowBetween handleRow">
-            <div class="left">[本科·约2万字]</div>
-            <div class="right">
-              查看大纲
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-view"></use>
-              </svg>
-            </div>
-          </div>
-          <div class="orderText rowBetween handleRow">
-            <div class="left">正文（含无限改稿）</div>
-            <div class="right">
-              改稿下载
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-download"></use>
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
     </el-checkbox-group>
     <div class="btns">
       <el-button type="primary" round @click="delList">删除订单</el-button>
