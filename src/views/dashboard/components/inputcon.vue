@@ -84,7 +84,7 @@
         <div class="submitBtn">
           <button class="g_poin" @click="sendProgress">生成大纲</button>
 
-          <span class="inputLine g_poin">录入大纲</span>
+          <span class="inputLine g_poin" @click="importOut">录入大纲</span>
 
           <div class="threeLine">
             <el-tooltip class="item" effect="dark" content="" placement="top">
@@ -113,6 +113,8 @@
 import advantage from "./advantage.vue";
 // import mitt from "mitt";
 import eventBus from "@/utils/eventBus";
+import store from "@/store/index";
+
 export default {
   name: "maincon",
   data() {
@@ -407,6 +409,9 @@ export default {
     // 计算属性
   },
   methods: {
+    importOut() {
+      store.dispatch("user/getInfo");
+    },
     sendProgress() {
       // const emitter = mitt();
       // emitter.emit("foo", { a: "b" });

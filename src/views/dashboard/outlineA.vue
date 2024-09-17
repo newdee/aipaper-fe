@@ -135,16 +135,40 @@
         </span>
       </el-dialog>
     </div>
+    <div class="outlineRepeat">
+      <p>
+        大纲不满意? 重新生成
+        <i class="el-icon-refresh"></i>
+      </p>
+    </div>
+    <!-- 付费项选择 -->
+    <div class="spendingBox">
+      <p>您将获得</p>
+      <div>
+        <p>正文</p>
+      </div>
+    </div>
+    <div class="warningP">
+      <el-checkbox v-model="checked">
+        我已阅读并同意：平台所生成的全文为范文，仅用作参考，不用作毕业论文、发表刊物等
+      </el-checkbox>
+    </div>
+    <div class="warningP generateSpan">
+      <span class="g_poin" @click="generateForm">生成全文</span>
+    </div>
   </div>
 </template>
 
 <script>
 import mitt from "mitt";
 
+// 方法
+import { getOrder } from "@/api/user";
 export default {
   data() {
     return {
       newlabel: "",
+      checked: false,
       defaultProps: {
         children: "children",
         label: "label",
@@ -344,6 +368,32 @@ export default {
         this.updateApiGroup(this.data);
       }
     },
+    // 生成全文
+    generateForm() {
+      let data = {
+        user_id: 1,
+        payment_method: "alipay",
+        total_amount: 154.75,
+        items: [
+          {
+            product_id: "1",
+            quantity: 1,
+            price: 149.85,
+          },
+          {
+            product_id: "7",
+            quantity: 1,
+            price: 4.9,
+          },
+        ],
+      };
+      getOrder(data).then((res) => {
+        console.log("res", res);
+        // if(res.)
+        let url = res.data.pay_link;
+        window.open(url, "_blank");
+      });
+    },
     handleDragStart(node, ev) {
       console.log("drag start", node);
     },
@@ -412,11 +462,51 @@ export default {
 <style lang="scss" scoped>
 // 引入scss
 @import "@/styles/variables.scss";
+.outlineRepeat {
+  text-align: center;
+  margin-top: 50px;
+  p {
+    display: inline-block;
+    padding: 0 18px;
+    line-height: 34px;
+    height: 34px;
+    border-radius: 17px;
+    font-size: 14px;
+    color: #3b82f6;
+    border: 1px solid #3b82f6;
+  }
+}
 
+.spendingBox {
+  width: 688px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  background: #fff;
+  border: 1px solid #ebeef5;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+.warningP {
+  width: 688px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
 // @import "@/index.scss";
 .warningText {
   color: #ffa500;
   font-size: 14px;
+}
+.generateSpan {
+  text-align: center;
+  span {
+    display: inline-block;
+    background: #3b82f6;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 20px;
+    padding: 0 22px;
+    color: #fff;
+  }
 }
 .outlineIntro {
   max-width: 688px;

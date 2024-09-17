@@ -1,84 +1,125 @@
 <template>
-    <div class="navbar">
-        <el-row :gutter="10">
-            <el-col :xs="21" :sm="12">
-                <div @click="jumpDetail('/')" class="grid-content nav_left flex items-center">
-                    <div class="logo-box">
-                        <img :src="logo" alt="" title="logo" />
-                    </div>
-                    <div>
-                        <span class="web_title">
-                            AIPaperPass
-                            <span>.com</span>
-                        </span>
-                        <span>AI写作指导平台</span>
-                    </div>
-                </div>
-            </el-col>
+  <div class="navbar">
+    <el-row :gutter="10">
+      <el-col :xs="21" :sm="12">
+        <div
+          @click="jumpDetail('/')"
+          class="grid-content nav_left flex items-center"
+        >
+          <div class="logo-box">
+            <img :src="logo" alt="" title="logo" />
+          </div>
+          <div>
+            <span class="web_title">
+              AIPaperPass
+              <span>.com</span>
+            </span>
+            <span>AI写作指导平台</span>
+          </div>
+        </div>
+      </el-col>
 
-            <el-col :xs="3" :sm="12">
-                <div class="grid-content flex items-center operations items-align-right">
-                    <div class="text-main items-center hidden-xs-only" @click="jumpDetail('/paper/reduceRepetiton')">
-                        降重/降AIGC率
-                    </div>
-                    <div class="text-main items-center hidden-xs-only" @click="ordersDrawer = true">
-                        我的订单
-                    </div>
-                    <div class="text-main items-center hidden-xs-only" @click="jumpDetail('/paper/preview')">
-                        范文样例
-                    </div>
-                    <template>
-                        <div v-if="!hasLogin" @click="pushLogin" class="login_box hidden-xs-only">
-                            <div class="img">登录</div>
-                        </div>
-                        <div v-else class="login_box hidden-xs-only">
-                            <!-- 已登录状态下拉菜单栏 -->
-                            <UserMenu>
-                                <div class="img">
-                                    <!-- <img src="@/assets/images/user/userImg.png" alt="" /> -->
-                                    <span>{{ user.userNmae.slice(0, 1) }}</span>
-                                </div>
-                            </UserMenu>
-                        </div>
-                    </template>
-                    <div class="hidden-sm-and-up operation_box bg-purple-light" @click="showDraw">
-                        <i class="el-icon-s-operation"></i>
-                    </div>
+      <el-col :xs="3" :sm="12">
+        <div
+          class="grid-content flex items-center operations items-align-right"
+        >
+          <div
+            class="text-main items-center hidden-xs-only"
+            @click="jumpDetail('/paper/reduceRepetiton')"
+          >
+            降重/降AIGC率
+          </div>
+          <div
+            class="text-main items-center hidden-xs-only"
+            @click="showOrderList"
+          >
+            我的订单
+          </div>
+          <div
+            class="text-main items-center hidden-xs-only"
+            @click="jumpDetail('/paper/preview')"
+          >
+            范文样例
+          </div>
+          <template>
+            <div
+              v-if="!hasLogin"
+              @click="pushLogin"
+              class="login_box hidden-xs-only"
+            >
+              <div class="img">登录</div>
+            </div>
+            <div v-else class="login_box hidden-xs-only">
+              <!-- 已登录状态下拉菜单栏 -->
+              <UserMenu>
+                <div class="img">
+                  <!-- <img src="@/assets/images/user/userImg.png" alt="" /> -->
+                  <span>{{ name.slice(0, 1) }}</span>
                 </div>
-            </el-col>
-        </el-row>
+              </UserMenu>
+            </div>
+          </template>
+          <div
+            class="hidden-sm-and-up operation_box bg-purple-light"
+            @click="showDraw"
+          >
+            <i class="el-icon-s-operation"></i>
+          </div>
+        </div>
+      </el-col>
+    </el-row>
 
-        <!-- 菜单栏 -->
-        <el-drawer size="40%" :visible.sync="drawer" :direction="direction" :before-close="handleClose"
-            :show-close="false" append-to-body>
-            <template slot="title">
-                <div>我的菜单</div>
-            </template>
-            <div class="flex flex-star">
-                <div class="text-main items-center siderbar-item" @click="jumpDetail('/paper/reduceRepetiton')">
-                    降重/降AIGC率
-                </div>
-                <div class="text-main items-center siderbar-item" @click="ordersDrawer = true">
-                    我的订单
-                </div>
-                <div class="text-main items-center siderbar-item" @click="jumpDetail('/paper/preview')">
-                    范文样例
-                </div>
-                <div class="text-main items-center siderbar-item" @click="pushLogin">
-                    登录
-                </div>
-            </div>
-        </el-drawer>
-        <!-- 用户订单 -->
-        <el-drawer :visible.sync="ordersDrawer" :direction="orderDirection" :before-close="handleOrdersClose" append-to-body>
-            <template #title>
-                <div>我的订单</div>
-            </template>
-            <div class="drawBox">
-                <user-orders></user-orders>
-            </div>
-        </el-drawer>
-    </div>
+    <!-- 菜单栏 -->
+    <el-drawer
+      size="40%"
+      :visible.sync="drawer"
+      :direction="direction"
+      :before-close="handleClose"
+      :show-close="false"
+      append-to-body
+    >
+      <template slot="title">
+        <div>我的菜单</div>
+      </template>
+      <div class="flex flex-star">
+        <div
+          class="text-main items-center siderbar-item"
+          @click="jumpDetail('/paper/reduceRepetiton')"
+        >
+          降重/降AIGC率
+        </div>
+        <div
+          class="text-main items-center siderbar-item"
+          @click="showOrderList"
+        >
+          我的订单
+        </div>
+        <div
+          class="text-main items-center siderbar-item"
+          @click="jumpDetail('/paper/preview')"
+        >
+          范文样例
+        </div>
+        <div class="text-main items-center siderbar-item" @click="pushLogin">
+          登录
+        </div>
+      </div>
+    </el-drawer>
+    <!-- 用户订单 -->
+    <el-drawer
+      :visible.sync="ordersDrawer"
+      :direction="orderDirection"
+      :before-close="handleOrdersClose"
+      append-to-body
+    >
+      <template #title>
+        <div>我的订单</div>
+      </template>
+      <div class="drawBox">
+        <user-orders :listId="listId"></user-orders>
+      </div>
+    </el-drawer>
+  </div>
 </template>
 
 <script>
@@ -87,64 +128,71 @@ import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 import UserMenu from "./UserMenu.vue";
 import UserOrders from "./UserOrders.vue";
-
+import { getToken, setToken } from "@/utils/auth"; // get token from cookie
 export default {
-    components: {
-        Breadcrumb,
-        Hamburger,
-        UserMenu,
-        UserOrders,
+  components: {
+    Breadcrumb,
+    Hamburger,
+    UserMenu,
+    UserOrders,
+  },
+  data() {
+    return {
+      listId: 0,
+      logo: require("@/assets/images/logo_paper.png"),
+      drawer: false,
+      direction: "rtl", //小屏菜单抽屉方向
+      orderDirection: "ltr", //用户订单抽屉方向
+      hasLogin: true,
+      ordersDrawer: false,
+    };
+  },
+  computed: {
+    ...mapGetters(["userInfo", "name", "avatar"]),
+  },
+  mounted() {
+    console.log("tokend", getToken());
+    this.hasLogin = getToken();
+  },
+  methods: {
+    showOrderList() {
+      this.listId = new Date().getTime();
+      console.log("this.", this.listId);
+      this.ordersDrawer = true;
     },
-    data() {
-        return {
-            logo: require("@/assets/images/logo_paper.png"),
-            drawer: false,
-            user: {
-                userNmae: '高英豪',
-            },
-            direction: "rtl", //小屏菜单抽屉方向
-            orderDirection: "ltr", //用户订单抽屉方向
-            hasLogin: true,
-            ordersDrawer: false,
-        };
+    handleClose(done) {
+      done();
     },
-    computed: {
-        ...mapGetters(["sidebar", "avatar"]),
+    handleOrdersClose(done) {
+      done();
+      // this.$confirm('确认关闭？')
+      //     .then(_ => {
+      //         done();
+      //     })
+      //     .catch(_ => {
+      //         alert('先不关')
+      //     });
     },
-    methods: {
-        handleClose(done) {
-            done();
-        },
-        handleOrdersClose(done) {
-            done();
-            // this.$confirm('确认关闭？')
-            //     .then(_ => {
-            //         done();
-            //     })
-            //     .catch(_ => { 
-            //         alert('先不关')
-            //     });
-        },
-        jumpDetail(path) {
-            this.$router.push(path);
-        },
-        pushLogin() {
-            this.$router.push("/login");
-        },
-        showDraw() {
-            this.drawer = true;
-        },
-        toggleSideBar() {
-            this.$store.dispatch("app/toggleSideBar");
-        },
-        async logout() {
-            await this.$store.dispatch("user/logout");
-            this.$router.push(`/login?redirect=${this.$route.fullPath}`);
-        },
-        toView(toPath) {
-            this.$router.push("/" + toPath + "");
-        },
+    jumpDetail(path) {
+      this.$router.push(path);
     },
+    pushLogin() {
+      this.$router.push("/login");
+    },
+    showDraw() {
+      this.drawer = true;
+    },
+    toggleSideBar() {
+      this.$store.dispatch("app/toggleSideBar");
+    },
+    async logout() {
+      await this.$store.dispatch("user/logout");
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+    },
+    toView(toPath) {
+      this.$router.push("/" + toPath + "");
+    },
+  },
 };
 </script>
 
@@ -154,224 +202,224 @@ export default {
 @import "@/styles/variables.scss";
 
 .operation_box {
-    font-size: 20px;
-    padding: 5px;
-    border-radius: 5px;
-    position: relative;
-    left: 10px;
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 5px;
+  position: relative;
+  left: 10px;
 }
 
 .navbar {
-    padding: 0 16px;
+  padding: 0 16px;
 
-    .el-col {
+  .el-col {
+    height: 100%;
+  }
+
+  .login_box {
+    font-size: 12px;
+    position: relative;
+
+    .img {
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      background: #ff8cb0;
+      text-align: center;
+      line-height: 35px;
+      font-size: 20px;
+      color: $white;
+      // color: var(--white);
+      overflow: hidden;
+
+      img {
+        width: 100%;
         height: 100%;
+      }
     }
-
-    .login_box {
-        font-size: 12px;
-        position: relative;
-
-        .img {
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            background: #ff8cb0;
-            text-align: center;
-            line-height: 35px;
-            font-size: 20px;
-            color: $white;
-            // color: var(--white);
-            overflow: hidden;
-
-            img {
-                width: 100%;
-                height: 100%;
-            }
-        }
-    }
+  }
 }
 
 .web_title {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 20px;
+  font-weight: bold;
 
-    span {
-        font-size: 14px;
-        position: relative;
-        left: -5px;
-    }
+  span {
+    font-size: 14px;
+    position: relative;
+    left: -5px;
+  }
 }
 
 .nav_left {
-    color: rgb(75 85 99);
-    height: 100%;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
+  color: rgb(75 85 99);
+  height: 100%;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
 }
 
 .logo-box {
-    height: 32px;
-    width: 32px;
-    margin-right: 10px;
+  height: 32px;
+  width: 32px;
+  margin-right: 10px;
 
-    img {
-        width: 100%;
-        height: 100%;
-    }
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .el-col {
-    border-radius: 4px;
+  border-radius: 4px;
 }
 
 .bg-purple-dark {
-    background: #99a9bf;
+  background: #99a9bf;
 }
 
 .bg-purple {
-    background: #d3dce6;
+  background: #d3dce6;
 }
 
 .bg-purple-light {
-    background: #e5e9f2;
+  background: #e5e9f2;
 }
 
 .grid-content {
-    border-radius: 4px;
-    height: 100%;
+  border-radius: 4px;
+  height: 100%;
 
-    &:hover>div {
-        cursor: pointer;
-    }
+  &:hover > div {
+    cursor: pointer;
+  }
 }
 
 .navbar {
-    width: 100%;
-    height: 50px;
-    // overflow: hidden;
-    position: relative;
-    background: #fff;
-    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  width: 100%;
+  height: 50px;
+  // overflow: hidden;
+  position: relative;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
-    .hamburger-container {
-        line-height: 46px;
-        height: 100%;
-        float: left;
+  .hamburger-container {
+    line-height: 46px;
+    height: 100%;
+    float: left;
+    cursor: pointer;
+    transition: background 0.3s;
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.025);
+    }
+  }
+
+  .breadcrumb-container {
+    float: left;
+  }
+
+  .right-menu {
+    float: right;
+    height: 100%;
+    line-height: 50px;
+
+    &:focus {
+      outline: none;
+    }
+
+    .right-menu-item {
+      display: inline-block;
+      padding: 0 8px;
+      height: 100%;
+      font-size: 18px;
+      color: #5a5e66;
+      vertical-align: text-bottom;
+
+      &.hover-effect {
         cursor: pointer;
         transition: background 0.3s;
-        -webkit-tap-highlight-color: transparent;
 
         &:hover {
-            background: rgba(0, 0, 0, 0.025);
+          background: rgba(0, 0, 0, 0.025);
         }
+      }
     }
 
-    .breadcrumb-container {
-        float: left;
+    .avatar-container {
+      margin-right: 30px;
+
+      .avatar-wrapper {
+        margin-top: 5px;
+        position: relative;
+
+        .user-avatar {
+          cursor: pointer;
+          width: 40px;
+          height: 40px;
+          border-radius: 10px;
+        }
+
+        .el-icon-caret-bottom {
+          cursor: pointer;
+          position: absolute;
+          right: -20px;
+          top: 25px;
+          font-size: 12px;
+        }
+      }
     }
-
-    .right-menu {
-        float: right;
-        height: 100%;
-        line-height: 50px;
-
-        &:focus {
-            outline: none;
-        }
-
-        .right-menu-item {
-            display: inline-block;
-            padding: 0 8px;
-            height: 100%;
-            font-size: 18px;
-            color: #5a5e66;
-            vertical-align: text-bottom;
-
-            &.hover-effect {
-                cursor: pointer;
-                transition: background 0.3s;
-
-                &:hover {
-                    background: rgba(0, 0, 0, 0.025);
-                }
-            }
-        }
-
-        .avatar-container {
-            margin-right: 30px;
-
-            .avatar-wrapper {
-                margin-top: 5px;
-                position: relative;
-
-                .user-avatar {
-                    cursor: pointer;
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 10px;
-                }
-
-                .el-icon-caret-bottom {
-                    cursor: pointer;
-                    position: absolute;
-                    right: -20px;
-                    top: 25px;
-                    font-size: 12px;
-                }
-            }
-        }
-    }
+  }
 }
 
 .flex {
-    display: flex;
+  display: flex;
 }
 
 .items-center {
-    align-items: center;
+  align-items: center;
 }
 
 .items-align-right {
-    justify-content: flex-end;
+  justify-content: flex-end;
 }
 
 .flex.flex-star {
-    justify-content: flex-start;
-    flex-direction: column;
+  justify-content: flex-start;
+  flex-direction: column;
 }
 
 .navbar .el-row {
-    width: 100%;
-    // color: red;
-    height: 50px;
+  width: 100%;
+  // color: red;
+  height: 50px;
 }
 
 .text-main {
-    margin-right: 1.5rem;
+  margin-right: 1.5rem;
 }
 
 .text-main:hover {
-    color: rgb(59 130 246 / 1);
+  color: rgb(59 130 246 / 1);
 }
 
 .siderbar-item {
-    padding-left: 20px;
-    padding-bottom: 15px;
+  padding-left: 20px;
+  padding-bottom: 15px;
 }
 .drawBox {
-    padding: 0 1.25rem 0 1.25rem;
-    position: relative;
+  padding: 0 1.25rem 0 1.25rem;
+  position: relative;
 }
 .drawBox::before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: -14px;
-    left: 0px;
-    width: 100%;
-    height: 0px;
-    border-top: 1px solid #0000001f;
+  content: "";
+  display: block;
+  position: absolute;
+  top: -14px;
+  left: 0px;
+  width: 100%;
+  height: 0px;
+  border-top: 1px solid #0000001f;
 }
 </style>

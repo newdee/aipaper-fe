@@ -18,7 +18,8 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    userInfo:{}
   }
 }
 
@@ -33,6 +34,9 @@ const mutations = {
   },
   SET_NAME: (state, name) => {
     state.name = name
+  },
+  SET_USER: (state, userInfo) => {
+    state.userInfo = userInfo
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
@@ -73,21 +77,21 @@ const actions = {
   }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
-        const {
-          data
-        } = response
+        const data = response.result.user
+        console.log(response)
+        // if (!data) {
+        //   return reject('Verification failed, please Login again.')
+        // }
 
-        if (!data) {
-          return reject('Verification failed, please Login again.')
-        }
+        // const {
+        //   name,
+        //   avatar
+        // } = data
+        commit('SET_NAME', data.name?data.name : '用户名')
+        commit('SET_USER', data)
+        // commit('SET_AVATAR', avatar)
+        commit('SET_AVATAR', 'https://gw.alicdn.com/imgextra/i1/O1CN01vmyavS1TH64dFg6YZ_!!6000000002356-0-tps-1024-1024.jpg')
 
-        const {
-          name,
-          avatar
-        } = data
-
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
         resolve(data)
       }).catch(error => {
         reject(error)

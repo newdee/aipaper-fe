@@ -117,6 +117,18 @@ export default {
             message: "登录成功！",
           });
           _this.$emit("codeChange", "success");
+          // try {
+          // // get user info
+          //   console.log('11', )
+
+          //   next()
+          // } catch (error) {
+          //   // remove token and go to login page to re-login
+          //    store.dispatch('user/resetToken')
+          //   Message.error( 'Has Error')
+          //   next(`/login?redirect=${to.path}`)
+          //   NProgress.done()
+          // }
         })
         .catch(() => {
           _this.$emit("codeChange", "error");

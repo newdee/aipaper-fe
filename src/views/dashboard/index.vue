@@ -49,6 +49,10 @@
 
 <script>
 import { mapGetters } from "vuex";
+
+// 方法
+import { getHomeInfo } from "@/api/user";
+// 组件
 import webinfo from "./components/webinfo.vue";
 import inputcon from "./components/inputcon.vue";
 import recommend from "./components/recommend.vue";
@@ -81,9 +85,14 @@ export default {
   beforeDestroy() {
     eventBus.off("sendOutline", this.addE); // 移除事件监听
   },
+  mounted() {
+    // 获取首页数据
+    getHomeInfo().then((res) => {
+      console.log(res, "res");
+    });
+  },
   methods: {
     addE(index) {
-      alert(index);
       this.outLineStatus = false;
       this.countUpToHundred(index);
     },
