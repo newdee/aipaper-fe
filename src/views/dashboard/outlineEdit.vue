@@ -60,17 +60,23 @@
             ></span>
           </div>
           <span class="iconRight">
-            <el-tooltip
-              class="item"
-              effect="dark"
-              content="编辑"
-              placement="top"
+            <el-popover
+              placement="top-start"
+              title="标题"
+              width="200"
+              trigger="hover"
+              content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。"
             >
               <i
                 @click="() => edit(node, data)"
                 class="el-icon-edit-outline g_poin"
               ></i>
-            </el-tooltip>
+              <span>dddd</span>
+              <i
+                @click="() => appendShow(node, data)"
+                class="el-icon-circle-plus-outline g_poin"
+              ></i>
+            </el-popover>
             <!-- 新增 -->
             <el-tooltip
               class="item"
@@ -156,6 +162,20 @@
     <div class="warningP generateSpan">
       <span class="g_poin" @click="generateForm">生成全文</span>
     </div>
+
+    <!-- 付款成功弹窗 -->
+    <el-dialog title="确认支付" :visible.sync="payStatus" width="30%">
+      <i>支付确认弹窗，暂定会跳转订单页</i>
+      <i>TODO：暂未增加跳转</i>
+
+      <p>您是否已成功支付？</p>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消支付</el-button>
+        <el-button type="primary" @click="dialogVisible = false"
+          >确定支付</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -169,6 +189,7 @@ export default {
     return {
       newlabel: "",
       checked: false,
+      payStatus: false,
       defaultProps: {
         children: "children",
         label: "label",
@@ -389,8 +410,9 @@ export default {
       };
       getOrder(data).then((res) => {
         console.log("res", res);
+        this.payStatus = true;
         // if(res.)
-        let url = res.data.pay_link;
+        let url = res.result.pay_link;
         window.open(url, "_blank");
       });
     },
@@ -511,6 +533,7 @@ export default {
 .outlineIntro {
   max-width: 688px;
   margin: 0 auto;
+  margin-top: 50px;
   text-align: center;
   .introTitle {
     font-size: 16px;

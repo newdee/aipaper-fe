@@ -8,7 +8,7 @@
     <!-- 推荐内容 -->
     <recommend v-show="outLineStatus"></recommend>
     <!-- <progress></progress> -->
-    <div v-show="!outLineStatus" class="progressBox">
+    <div v-show="!outLineStatus && !loadingStatus" class="progressBox">
       <div class="pgBox">
         <el-progress
           :text-inside="true"
@@ -20,7 +20,7 @@
       <p>大纲生成中 <i class="el-icon-loading"></i>....</p>
     </div>
     <div v-show="loadingStatus">
-      <outline v-if="proDuceStatus"></outline>
+      <outline-edit v-if="outLineClick == 'pro'"></outline-edit>
       <outline v-else></outline>
     </div>
     <!-- 大纲生成页面 -->
@@ -29,21 +29,6 @@
     <paper-others></paper-others>
 
     <!-- <div style="height: 1500px"></div> -->
-    <!-- <div class="dashboard-text">name: {{ name }}</div>
-    <el-row :gutter="10">
-      <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"
-        ><div class="grid-content bg-purple-light"></div
-      ></el-col>
-      <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"
-        ><div class="grid-content bg-purple"></div
-      ></el-col>
-      <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"
-        ><div class="grid-content bg-purple-light"></div
-      ></el-col>
-    </el-row> -->
     <!-- <el-backtop
       target=".page-component__scroll .el-scrollbar__wrap"
     ></el-backtop> -->
@@ -60,7 +45,8 @@ import webinfo from "./components/webinfo.vue";
 import inputcon from "./components/inputcon.vue";
 import recommend from "./components/recommend.vue";
 import paperOthers from "./components/paperOthers.vue";
-import outline from "./outlineA.vue";
+import outlineEdit from "./outlineEdit.vue";
+import outline from "./outline.vue";
 import eventBus from "@/utils/eventBus";
 
 export default {
@@ -71,6 +57,7 @@ export default {
     recommend,
     outline,
     paperOthers,
+    outlineEdit,
   },
   computed: {
     ...mapGetters(["name", "homeData"]),
@@ -87,9 +74,11 @@ export default {
   },
   created() {
     eventBus.on("sendOutline", this.addE); // 订阅事件
+    eventBus.on("clickImportOutline", this.showImportLine); // 订阅事件
   },
   beforeDestroy() {
     eventBus.off("sendOutline", this.addE); // 移除事件监听
+    eventBus.on("clickImportOutline", this.showImportLine); // 订阅事件
   },
   mounted() {
     // 获取首页数据
@@ -103,10 +92,23 @@ export default {
     addE(index) {
       this.outLineStatus = false;
       this.outLineClick = "pro";
+      this.loadingStatus = false;
+
       this.countUpToHundred(index);
     },
+    // 录入大纲
+    showImportLine() {
+      this.outLineStatus = false;
+      this.loadingStatus = true;
+      this.outLineClick = "imp";
+    },
     // 渲染大纲
-    getList() {},
+    getList() {
+      this.outLineClick = "pro";
+      this.loadingStatus = true;
+      // this.outLineStatus = false;
+      // 判断展示那个大纲
+    },
     // 进度条
     countUpToHundred(seconds) {
       this.currentNumber = 0;

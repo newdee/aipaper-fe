@@ -1,5 +1,17 @@
 <template>
   <div>
+    <div class="outlineIntro">
+      <p class="introTitle">编辑大纲，生成全文</p>
+      <p class="introSubtitle">
+        🔔
+        大纲可直接<span>点击编辑</span>，点击小节右侧按钮，为小节增加<span>参考资料、数据(表)、图、公式、代码段</span>，对该小节进行<span
+          >增加、删减</span
+        >
+      </p>
+    </div>
+    <div class="lineStyleTitle">
+      <p>题目：{{ lineTitle }}</p>
+    </div>
     <!-- 大纲 -->
     <div class="outlineMain">
       <el-tree
@@ -130,6 +142,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
@@ -141,6 +155,7 @@ export default {
       numberValidateForm: {
         appendValue: "",
       },
+
       data: [
         {
           id: 1,
@@ -218,7 +233,9 @@ export default {
       editStatus: false,
     };
   },
-
+  computed: {
+    ...mapGetters(["lineTitle"]),
+  },
   created() {
     this.generateIndexes(this.data);
   },
@@ -403,6 +420,12 @@ export default {
 @import "@/styles/variables.scss";
 
 // @import "@/index.scss";
+.lineStyleTitle {
+  font-size: 20px;
+  margin-top: 32px;
+  color: #000;
+  text-align: center;
+}
 .warningText {
   color: #ffa500;
   font-size: 14px;
@@ -410,6 +433,7 @@ export default {
 .outlineIntro {
   max-width: 688px;
   margin: 0 auto;
+  margin-top: 50px;
   text-align: center;
   .introTitle {
     font-size: 16px;

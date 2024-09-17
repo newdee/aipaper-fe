@@ -410,7 +410,8 @@ export default {
   },
   methods: {
     importOut() {
-      store.dispatch("user/getInfo");
+      // store.dispatch("user/getInfo");
+      eventBus.emit("clickImportOutline"); // 发布事件
     },
     sendProgress() {
       // const emitter = mitt();

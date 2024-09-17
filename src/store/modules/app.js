@@ -6,7 +6,8 @@ const state = {
     withoutAnimation: false
   },
   device: 'desktop',
-  homeData: {}
+  homeData: {},
+  lineTitle: '论文标题'
 }
 
 const mutations = {
@@ -43,7 +44,6 @@ const actions = {
     commit('TOGGLE_DEVICE', device)
   },
   setHomeData({ commit },  data ) {
-    alert('home', data)
     commit('SET_HOME_DATA', data)
   },
 }
