@@ -111,7 +111,7 @@
       :direction="orderDirection"
       :before-close="handleOrdersClose"
       append-to-body
-      :size="500"
+      size="500"
     >
       <template #title>
         <div>我的订单</div>
