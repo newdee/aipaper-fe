@@ -45,7 +45,7 @@
         <div v-show="phoneStatus" class="home app_router">
           <div class="loginView mainContent">
             <div>
-              <div class="loginTitle">欢迎来到AIPaper</div>
+              <div class="loginTitle">欢迎来到mixpaper</div>
               <div class="passView">
                 <div class="inputTitle">手机号登录</div>
                 <input

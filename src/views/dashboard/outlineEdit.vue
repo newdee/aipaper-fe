@@ -9,48 +9,8 @@
         >
       </p>
     </div>
-    <div class="lineStyleTitle">
-      <p>题目：{{ lineTitle }}</p>
-    </div>
     <!-- 大纲 -->
     <div class="outlineMain">
-      <div class="tipOutline">
-        <el-tooltip
-          class="item"
-          effect="dark"
-          content="重置所有章节"
-          placement="top"
-        >
-          <el-button size="mini" icon="el-icon-search" circle></el-button>
-        </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="AI生成" placement="top">
-          <el-button
-            type="primary"
-            size="mini"
-            icon="el-icon-edit"
-            circle
-          ></el-button>
-        </el-tooltip>
-        <el-tooltip
-          class="item"
-          effect="dark"
-          content="添加一级章节"
-          placement="top"
-        >
-          <el-button
-            size="mini"
-            type="success"
-            @click="addPageOne"
-            icon="el-icon-circle-plus-outline"
-            circle
-          >
-          </el-button>
-        </el-tooltip>
-        <!-- <el-button type="info" icon="el-icon-message" circle></el-button>
-        <el-button type="warning" icon="el-icon-star-off" circle></el-button>
-        <el-button type="danger" icon="el-icon-delete" circle></el-button> -->
-      </div>
-
       <el-tree
         :data="data"
         node-key="id"
@@ -100,17 +60,23 @@
             ></span>
           </div>
           <span class="iconRight">
-            <el-tooltip
-              class="item"
-              effect="dark"
-              content="编辑"
-              placement="top"
+            <el-popover
+              placement="top-start"
+              title="标题"
+              width="200"
+              trigger="hover"
+              content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。"
             >
               <i
                 @click="() => edit(node, data)"
                 class="el-icon-edit-outline g_poin"
               ></i>
-            </el-tooltip>
+              <span>dddd</span>
+              <i
+                @click="() => appendShow(node, data)"
+                class="el-icon-circle-plus-outline g_poin"
+              ></i>
+            </el-popover>
             <!-- 新增 -->
             <el-tooltip
               class="item"
@@ -175,16 +141,55 @@
         </span>
       </el-dialog>
     </div>
+    <div class="outlineRepeat">
+      <p>
+        大纲不满意? 重新生成
+        <i class="el-icon-refresh"></i>
+      </p>
+    </div>
+    <!-- 付费项选择 -->
+    <div class="spendingBox">
+      <p>您将获得</p>
+      <div>
+        <p>正文</p>
+      </div>
+    </div>
+    <div class="warningP">
+      <el-checkbox v-model="checked">
+        我已阅读并同意：平台所生成的全文为范文，仅用作参考，不用作毕业论文、发表刊物等
+      </el-checkbox>
+    </div>
+    <div class="warningP generateSpan">
+      <span class="g_poin" @click="generateForm">生成全文</span>
+    </div>
+
+    <!-- 付款成功弹窗 -->
+    <el-dialog title="确认支付" :visible.sync="payStatus" width="30%">
+      <i>支付确认弹窗，暂定会跳转订单页</i>
+      <i>TODO：暂未增加跳转</i>
+
+      <p>您是否已成功支付？</p>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消支付</el-button>
+        <el-button type="primary" @click="dialogVisible = false"
+          >确定支付</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import mitt from "mitt";
 
+// 方法
+import { getOrder } from "@/api/user";
 export default {
   data() {
     return {
       newlabel: "",
+      checked: false,
+      payStatus: false,
       defaultProps: {
         children: "children",
         label: "label",
@@ -192,7 +197,6 @@ export default {
       numberValidateForm: {
         appendValue: "",
       },
-
       data: [
         {
           id: 1,
@@ -270,29 +274,11 @@ export default {
       editStatus: false,
     };
   },
-  computed: {
-    ...mapGetters(["lineTitle"]),
-  },
+
   created() {
     this.generateIndexes(this.data);
   },
   methods: {
-    addPageOne() {
-      this.data.push({
-        id: new Date().getTime(),
-        level: 1,
-        label: "请修改标题",
-        content: "请修改标题",
-        children: [
-          {
-            id: new Date().getTime() - 100,
-            label: "请修改标题",
-            content: "请修改标题",
-          },
-        ],
-      });
-      this.generateIndexes(this.data);
-    },
     generateIndexes(nodes, parentIndex = "") {
       let counter = 1;
       nodes.forEach((node) => {
@@ -403,6 +389,33 @@ export default {
         this.updateApiGroup(this.data);
       }
     },
+    // 生成全文
+    generateForm() {
+      let data = {
+        user_id: 1,
+        payment_method: "alipay",
+        total_amount: 154.75,
+        items: [
+          {
+            product_id: "1",
+            quantity: 1,
+            price: 149.85,
+          },
+          {
+            product_id: "7",
+            quantity: 1,
+            price: 4.9,
+          },
+        ],
+      };
+      getOrder(data).then((res) => {
+        console.log("res", res);
+        this.payStatus = true;
+        // if(res.)
+        let url = res.result.pay_link;
+        window.open(url, "_blank");
+      });
+    },
     handleDragStart(node, ev) {
       console.log("drag start", node);
     },
@@ -417,7 +430,6 @@ export default {
     },
     handleDragEnd(draggingNode, dropNode, dropType, ev) {
       console.log("tree drag end: ", dropNode && dropNode.label, dropType);
-      this.generateIndexes(this.data);
     },
     handleDrop(draggingNode, dropNode, dropType, ev) {
       console.log("tree drop: ", dropNode.label, dropType);
@@ -472,17 +484,51 @@ export default {
 <style lang="scss" scoped>
 // 引入scss
 @import "@/styles/variables.scss";
-
-// @import "@/index.scss";
-.lineStyleTitle {
-  font-size: 20px;
-  margin-top: 32px;
-  color: #000;
+.outlineRepeat {
   text-align: center;
+  margin-top: 50px;
+  p {
+    display: inline-block;
+    padding: 0 18px;
+    line-height: 34px;
+    height: 34px;
+    border-radius: 17px;
+    font-size: 14px;
+    color: #3b82f6;
+    border: 1px solid #3b82f6;
+  }
 }
+
+.spendingBox {
+  width: 688px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  background: #fff;
+  border: 1px solid #ebeef5;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+.warningP {
+  width: 688px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+// @import "@/index.scss";
 .warningText {
   color: #ffa500;
   font-size: 14px;
+}
+.generateSpan {
+  text-align: center;
+  span {
+    display: inline-block;
+    background: #3b82f6;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 20px;
+    padding: 0 22px;
+    color: #fff;
+  }
 }
 .outlineIntro {
   max-width: 688px;
@@ -514,10 +560,6 @@ export default {
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   margin-top: 32px;
   padding: 16px;
-}
-.tipOutline {
-  text-align: right;
-  margin-bottom: 10px;
 }
 .custom-tree-node {
   width: 100%;

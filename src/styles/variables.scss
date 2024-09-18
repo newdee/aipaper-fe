@@ -1,6 +1,6 @@
 // sidebar
 $menuText:#bfcbd9;
-$menuActiveText:#3b82f6;
+$menuActiveText:#409EFF;
 $subMenuActiveText:#f4f4f5; //https://github.com/ElemeFE/element/issues/12951
 
 $menuBg:#304156;
@@ -14,6 +14,10 @@ $navBarHeight: 50px;
 
 $white: #ffffff;
 // the :export directive is the magic sauce for webpack
+
+// 公共常用色
+$colorWarning:#ea4f3d;
+
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
 :export {
   menuText: $menuText;
@@ -27,6 +31,8 @@ $white: #ffffff;
   white: $white;
   navBarHeight: $navBarHeight;
 }
+
+
 // 3.0版本颜色 
 $mainBgColor: #e6f5ff;
 $textMain:#3b82f6;

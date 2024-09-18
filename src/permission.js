@@ -15,7 +15,7 @@ NProgress.configure({
   showSpinner: false
 }) // NProgress Configuration
 
-const whiteList = ['/login', '/home', '/paperPreview', '/reduceRepetiton', "/preview", '/paper', '/paper/preview', '/paper/reduceRepetiton'] // no redirect whitelist
+const whiteList = ['/login', '/home', '/paperPreview', '/reduceRepetiton', "/preview", '/paper', '/paper/preview', '/paper/reduceRepetiton','/userInfo'] // no redirect whitelist
 // setToken("editor-token");
 router.beforeEach(async (to, from, next) => {
   // start progress bar
@@ -43,15 +43,14 @@ router.beforeEach(async (to, from, next) => {
       } else {
         try {
           // get user info
-          // await store.dispatch('user/getInfo')
+          store.dispatch("user/getInfo");
           console.log('11', )
 
           next()
         } catch (error) {
           // remove token and go to login page to re-login
-          await store.dispatch('user/resetToken')
           Message.error(error || 'Has Error')
-          next(`/login?redirect=${to.path}`)
+          next(`/login`)
           NProgress.done()
         }
       }

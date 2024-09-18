@@ -3,7 +3,7 @@
     <!-- 输入框及大纲生成 -->
     <div class="mainCon">
       <div class="titleMain">
-        <h1 class="TitleH1">万象写作®·AIPaper®</h1>
+        <h1 class="TitleH1">万象写作®·mixpaper®</h1>
         <div class="">
           <p class="titlep">
             <span class="mr_15">一键生成 </span> <span>无限改稿</span
@@ -65,12 +65,12 @@
         <!-- 输入框选项 -->
         <div class="radioGroup">
           <el-radio-group v-model="radio">
-            <el-radio :label="3">成考/自考(约8千字) </el-radio>
-            <el-radio :label="2">专科/本科(约1万字) </el-radio>
-            <el-radio :label="1">本科(约2万字) </el-radio>
-            <el-radio :label="4">研究生(约3万字) </el-radio>
-            <el-radio :label="5">在职硕士(约5万字) </el-radio>
-            <el-radio :label="6">期刊(约5千字) </el-radio>
+            <el-radio
+              v-for="item in homeData.category_list"
+              :key="item.name"
+              :label="item.name"
+              >{{ item.name }}({{ item.description }})
+            </el-radio>
           </el-radio-group>
         </div>
         <div class="radioGroup">
@@ -82,9 +82,9 @@
         </div>
         <!-- 生成大纲选项 -->
         <div class="submitBtn">
-          <button class="g_poin">生成大纲</button>
+          <button class="g_poin" @click="sendProgress">生成大纲</button>
 
-          <span class="inputLine g_poin">录入大纲</span>
+          <span class="inputLine g_poin" @click="importOut">录入大纲</span>
 
           <div class="threeLine">
             <el-tooltip class="item" effect="dark" content="" placement="top">
@@ -107,10 +107,13 @@
   </div>
 </template>
 <script>
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 import advantage from "./advantage.vue";
+// import mitt from "mitt";
+import eventBus from "@/utils/eventBus";
+import store from "@/store/index";
 
 export default {
   name: "maincon",
@@ -396,14 +399,25 @@ export default {
     // webinfo,
     advantage,
   },
+
   mounted() {
     // 页面初始化
+    // const emitter = mitt()
   },
 
   computed: {
-    // 计算属性
+    ...mapGetters(["homeData"]),
   },
   methods: {
+    importOut() {
+      // store.dispatch("user/getInfo");
+      eventBus.emit("clickImportOutline"); // 发布事件
+    },
+    sendProgress() {
+      // const emitter = mitt();
+      // emitter.emit("foo", { a: "b" });
+      eventBus.emit("sendOutline", 5); // 发布事件
+    },
     // 定义方法
     handleChange(value) {
       console.log(value);
