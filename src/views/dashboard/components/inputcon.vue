@@ -3,7 +3,7 @@
     <!-- 输入框及大纲生成 -->
     <div class="mainCon">
       <div class="titleMain">
-        <h1 class="TitleH1">万象写作®·AIPaper®</h1>
+        <h1 class="TitleH1">万象写作®·mixpaper®</h1>
         <div class="">
           <p class="titlep">
             <span class="mr_15">一键生成 </span> <span>无限改稿</span
