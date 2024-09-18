@@ -150,8 +150,111 @@
     <!-- 付费项选择 -->
     <div class="spendingBox">
       <p>您将获得</p>
-      <div>
-        <p>正文</p>
+      <div class="maintxt">
+        <div class="borderBox">
+          <div class="left">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-wj-zw"></use>
+            </svg>
+          </div>
+          <div class="right">
+            <p>[中文]水稻灰粉病的调查研究</p>
+            <p>本科·2万字<span>含无限改稿</span></p>
+            <p class="alignR">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-checkmark"></use>
+              </svg>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="att">
+        <div class="borderBox">
+          <div class="left">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-wj-zw"></use>
+            </svg>
+          </div>
+          <div class="right">
+            <p>[文献综述]</p>
+            <p>x1</p>
+            <p class="alignR">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-checkmark"></use>
+              </svg>
+            </p>
+          </div>
+        </div>
+        <div class="borderBox">
+          <div class="left">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-wj-zw"></use>
+            </svg>
+          </div>
+          <div class="right">
+            <p>[中英文摘要]</p>
+            <p>x1</p>
+            <p class="alignR">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-checkmark"></use>
+              </svg>
+            </p>
+          </div>
+        </div>
+        <div class="borderBox">
+          <div class="left">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-wj-zw"></use>
+            </svg>
+          </div>
+          <div class="right">
+            <p>[中英文参考文献]</p>
+            <p>x1</p>
+            <p class="alignR">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-checkmark"></use>
+              </svg>
+            </p>
+          </div>
+        </div>
+        <div class="borderBox">
+          <div class="left">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-wj-zw"></use>
+            </svg>
+          </div>
+          <div class="right">
+            <p>[致谢模板]</p>
+            <p>x1</p>
+            <p class="alignR">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-checkmark"></use>
+              </svg>
+            </p>
+          </div>
+        </div>
+      </div>
+      <p>附加服务</p>
+      <div class="adds">
+        <!-- <div class="item">
+                    <p></p>
+                </div> -->
+        <el-checkbox-group
+          class="addService"
+          v-model="checkboxGroup1"
+          size="small"
+        >
+          <el-checkbox label="1" border>
+            <div class="cusLabel">
+              <p>开题报告</p>
+              <div class="price">
+                <span>4.9元</span>
+                <span>19.9元</span>
+              </div>
+            </div>
+          </el-checkbox>
+          <el-checkbox label="2" border> 任务书 </el-checkbox>
+        </el-checkbox-group>
       </div>
     </div>
     <div class="warningP">
@@ -166,7 +269,7 @@
     <!-- 付款成功弹窗 -->
     <el-dialog title="确认支付" :visible.sync="payStatus" width="30%">
       <i>支付确认弹窗，暂定会跳转订单页</i>
-      <i>TODO：暂未增加跳转</i>
+      <p>TODO：暂未增加跳转</p>
 
       <p>您是否已成功支付？</p>
       <span slot="footer" class="dialog-footer">
@@ -181,7 +284,7 @@
 
 <script>
 import mitt from "mitt";
-
+import { getToken } from "@/utils/auth"; //
 // 方法
 import { getOrder } from "@/api/user";
 export default {
@@ -272,6 +375,7 @@ export default {
         label: "label",
       },
       editStatus: false,
+      checkboxGroup1: [],
     };
   },
 
@@ -391,6 +495,29 @@ export default {
     },
     // 生成全文
     generateForm() {
+      const hasToken = getToken();
+      console.log("hasToken", hasToken);
+      if (hasToken) {
+        this.paySend();
+      } else {
+        this.$confirm("生成全文需要登录, 是否跳转到登录页?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+          center: true,
+        })
+          .then(() => {
+            this.$router.push("/login");
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消生成",
+            });
+          });
+      }
+    },
+    paySend() {
       let data = {
         user_id: 1,
         payment_method: "alipay",
@@ -484,9 +611,11 @@ export default {
 <style lang="scss" scoped>
 // 引入scss
 @import "@/styles/variables.scss";
+
 .outlineRepeat {
   text-align: center;
   margin-top: 50px;
+
   p {
     display: inline-block;
     padding: 0 18px;
@@ -502,24 +631,124 @@ export default {
 .spendingBox {
   width: 688px;
   margin: 0 auto;
-  padding: 24px 16px;
+  padding: 24px 10px;
   background: #fff;
   border: 1px solid #ebeef5;
   border-radius: 8px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  > p {
+    font-size: 18px;
+  }
+  .borderBox {
+    border: 1px solid transparent;
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 15px 10px;
+    margin: 5px 8px;
+    .left {
+      flex: none;
+      svg.icon {
+        width: 35px;
+        height: 35px;
+      }
+    }
+    .right {
+      flex-grow: 1;
+      position: relative;
+      padding-left: 5px;
+      .alignR {
+        text-align: right;
+        position: absolute;
+        right: 0;
+        bottom: -8px;
+        svg.icon {
+          width: 14px;
+          height: 14px;
+          color: #018417;
+        }
+      }
+      p {
+        margin: 0;
+        line-height: 1.5em;
+      }
+      p:first-child {
+        padding: 5px 0;
+      }
+    }
+  }
+  .att {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .maintxt .borderBox {
+    border-color: #409eff;
+    svg.icon {
+      color: #409eff;
+    }
+  }
+  .att .borderBox {
+    border-color: #01847f;
+    font-size: 12px;
+    .right p {
+      white-space: nowrap;
+    }
+    svg.icon {
+      color: #01847f;
+    }
+  }
+
+  .addService {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    label.el-checkbox {
+      display: flex;
+      flex-direction: row-reverse;
+      padding: 10px;
+      margin: 5px 10px;
+      background-image: linear-gradient(45deg, #eef9fe, transparent);
+      border: 1px solid #a9d4ff;
+      border-radius: 5px;
+      align-items: center;
+      height: auto;
+      justify-content: space-between;
+      .cusLabel {
+        font-size: 14px;
+        p {
+          margin: 0px;
+          line-height: 1.5em;
+          color: #202020;
+        }
+        .price span:first-child {
+          color: #ee6562;
+          font-weight: 600;
+        }
+        .price span:last-child {
+          font-size: 12px;
+          color: #7e7e7e;
+          text-decoration: line-through;
+        }
+      }
+    }
+  }
 }
+
 .warningP {
   width: 688px;
   margin: 0 auto;
   margin-top: 20px;
 }
+
 // @import "@/index.scss";
 .warningText {
   color: #ffa500;
   font-size: 14px;
 }
+
 .generateSpan {
   text-align: center;
+
   span {
     display: inline-block;
     background: #3b82f6;
@@ -530,24 +759,29 @@ export default {
     color: #fff;
   }
 }
+
 .outlineIntro {
   max-width: 688px;
   margin: 0 auto;
   margin-top: 50px;
   text-align: center;
+
   .introTitle {
     font-size: 16px;
     font-weight: bold;
     color: #3b82f6;
   }
+
   .introSubtitle {
     font-size: 14px;
     line-height: 20px;
+
     span {
       color: #d75300;
     }
   }
 }
+
 .outlineMain {
   max-width: 688px;
   margin: 0 auto;
@@ -561,12 +795,14 @@ export default {
   margin-top: 32px;
   padding: 16px;
 }
+
 .custom-tree-node {
   width: 100%;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   // background: red;
   &:hover {
     .showSpan {
@@ -575,28 +811,34 @@ export default {
     }
   }
 }
+
 .iconRight {
   color: $menuActiveText;
 }
+
 .editInput {
   outline: none;
   border: none;
   height: 90%;
   width: 80%;
 }
+
 .inputBoxMain {
   // height: 100%;
   width: 100%;
 }
+
 ::v-deep .el-tree-node__content {
   height: auto !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
+
 .showSpan {
   display: inline-block;
   width: 100%;
 }
+
 // 媒体查询
 // @media only screen and (max-width: 939px) {
 // }
@@ -605,11 +847,13 @@ export default {
   font-size: 20px;
   margin-right: 5px;
 }
+
 .dialogTitle {
   display: flex;
   align-items: center;
   font-weight: bold;
 }
+
 .pageSource {
   color: #333639;
   display: inline-block;
