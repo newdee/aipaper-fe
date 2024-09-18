@@ -11,7 +11,7 @@
           </div>
           <div>
             <span class="web_title">
-              AIPaperPass
+              mixpaperPass
               <span>.com</span>
             </span>
             <span>AI写作指导平台</span>
@@ -111,6 +111,7 @@
       :direction="orderDirection"
       :before-close="handleOrdersClose"
       append-to-body
+      size="500"
     >
       <template #title>
         <div>我的订单</div>

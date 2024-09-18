@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'AIPaper',
+  title: 'mixpaper',
 
   /**
    * @type {boolean} true | false

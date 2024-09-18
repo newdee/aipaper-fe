@@ -14,6 +14,43 @@
     </div>
     <!-- 大纲 -->
     <div class="outlineMain">
+      <div class="tipOutline">
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="重置所有章节"
+          placement="top"
+        >
+          <el-button size="mini" icon="el-icon-search" circle></el-button>
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="AI生成" placement="top">
+          <el-button
+            type="primary"
+            size="mini"
+            icon="el-icon-edit"
+            circle
+          ></el-button>
+        </el-tooltip>
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="添加一级章节"
+          placement="top"
+        >
+          <el-button
+            size="mini"
+            type="success"
+            @click="addPageOne"
+            icon="el-icon-circle-plus-outline"
+            circle
+          >
+          </el-button>
+        </el-tooltip>
+        <!-- <el-button type="info" icon="el-icon-message" circle></el-button>
+        <el-button type="warning" icon="el-icon-star-off" circle></el-button>
+        <el-button type="danger" icon="el-icon-delete" circle></el-button> -->
+      </div>
+
       <el-tree
         :data="data"
         node-key="id"
@@ -240,6 +277,22 @@ export default {
     this.generateIndexes(this.data);
   },
   methods: {
+    addPageOne() {
+      this.data.push({
+        id: new Date().getTime(),
+        level: 1,
+        label: "请修改标题",
+        content: "请修改标题",
+        children: [
+          {
+            id: new Date().getTime() - 100,
+            label: "请修改标题",
+            content: "请修改标题",
+          },
+        ],
+      });
+      this.generateIndexes(this.data);
+    },
     generateIndexes(nodes, parentIndex = "") {
       let counter = 1;
       nodes.forEach((node) => {
@@ -364,6 +417,7 @@ export default {
     },
     handleDragEnd(draggingNode, dropNode, dropType, ev) {
       console.log("tree drag end: ", dropNode && dropNode.label, dropType);
+      this.generateIndexes(this.data);
     },
     handleDrop(draggingNode, dropNode, dropType, ev) {
       console.log("tree drop: ", dropNode.label, dropType);
@@ -460,6 +514,10 @@ export default {
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   margin-top: 32px;
   padding: 16px;
+}
+.tipOutline {
+  text-align: right;
+  margin-bottom: 10px;
 }
 .custom-tree-node {
   width: 100%;

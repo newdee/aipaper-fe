@@ -3,7 +3,7 @@
     <!-- 优势页 -->
     <el-dialog :visible.sync="advantageStatus" class="dialogContainer" top="0">
       <div slot="title" class="dialog-tittle">
-        <p>AIPaper 3.0 vs 4.0</p>
+        <p>mixpaper 3.0 vs 4.0</p>
       </div>
       <div class="main-txt">
         <div class="title">4.0版优势</div>

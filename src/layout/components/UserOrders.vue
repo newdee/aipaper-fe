@@ -1,5 +1,9 @@
 <template>
   <div class="ordersList">
+    <div class="btns">
+      <el-button type="primary" round @click="delList">删除订单</el-button>
+      <el-button type="primary" round @click="getList">刷新订单</el-button>
+    </div>
     <!-- 页面名称 -->
     <el-checkbox-group v-model="checkList" @change="handleCheckAllChange">
       <div class="orderBox" v-for="item in orderList" :key="item.id">
@@ -31,10 +35,6 @@
         </div>
       </div>
     </el-checkbox-group>
-    <div class="btns">
-      <el-button type="primary" round @click="delList">删除订单</el-button>
-      <el-button type="primary" round @click="getList">刷新订单</el-button>
-    </div>
   </div>
 </template>
 <script>
@@ -72,6 +72,7 @@ export default {
   },
   mounted() {
     // 页面初始化
+    this.getList();
   },
 
   computed: {
@@ -82,7 +83,7 @@ export default {
       if (val.length > 1) {
         this.$message({
           type: "warning",
-          message: "只能同时删除一条数据!",
+          message: "只能同时选择一条数据!",
         });
         this.checkList.pop();
       }
@@ -117,6 +118,8 @@ export default {
 .ordersList {
   --border: 1px solid #0000001f;
   --border-bottom: 1px solid #0000001f;
+  max-height: 90vh;
+  overflow: auto;
 }
 .orderBox {
   display: flex;
@@ -163,7 +166,7 @@ export default {
 }
 .btns {
   text-align: right;
-  border-top: var(--border-bottom);
+  // border-top: var(--border-bottom);
   padding: 15px 0;
 }
 </style>
