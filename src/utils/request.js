@@ -72,9 +72,10 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error) // for debug
+     // 请求已发出，但是不在2xx的范围
+     console.log(error.response.data);
     Message({
-      message: error.msg,
+      message: error.response.data.msg,
       type: 'error',
       duration: 5 * 1000
     })
