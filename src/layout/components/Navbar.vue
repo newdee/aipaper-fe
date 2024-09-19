@@ -157,9 +157,29 @@ export default {
   },
   methods: {
     showOrderList() {
-      this.listId = new Date().getTime();
-      console.log("this.", this.listId);
-      this.ordersDrawer = true;
+      const hasToken = getToken();
+      console.log("hasToken", hasToken);
+      if (hasToken) {
+        this.listId = new Date().getTime();
+        console.log("this.", this.listId);
+        this.ordersDrawer = true;
+      } else {
+        this.$confirm("查看订单需要登录, 是否跳转到登录页?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+          center: true,
+        })
+          .then(() => {
+            this.$router.push("/login");
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消生成",
+            });
+          });
+      }
     },
     handleClose(done) {
       done();

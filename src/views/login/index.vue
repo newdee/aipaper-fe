@@ -42,32 +42,62 @@
           loading="lazy"
         />
 
-        <div v-show="phoneStatus" class="home app_router">
+        <div class="home app_router">
           <div class="loginView mainContent">
             <div>
               <div class="loginTitle">欢迎来到mixpaper</div>
               <div class="passView">
-                <div class="inputTitle">手机号登录</div>
-                <input
-                  :class="['phoneView', butNoPhoneNum ? 'warning' : '']"
-                  v-model="phoneNum"
-                  placeholder="请输入手机号"
-                  autocomplete="on"
-                  name="username"
-                  type="text"
-                  style="margin-bottom: 4px"
-                /><!---->
-                <div class="tips">
+                <div class="inputTitle">
+                  手机号登录
+                  <i style="font-size: 10px"
+                    >验证即登录，未注册将自动创建账号</i
+                  >
+                </div>
+                <div class="">
+                  <div>
+                    <input
+                      @change="vaildPhone"
+                      :class="['phoneView', butNoPhoneNum ? 'warning' : '']"
+                      v-model="phoneNum"
+                      placeholder="请输入手机号"
+                      autocomplete="on"
+                      name="username"
+                      type="text"
+                      style="margin-bottom: 4px"
+                    />
+                  </div>
+                  <div class="codeInput">
+                    <input
+                      type="text"
+                      v-model="sms_code"
+                      placeholder="验证码"
+                    />
+                    <div class="codeLeft g_poin">
+                      <span v-show="codeTimeStatus"> {{ secondsLeft }} </span>
+                      <span
+                        v-show="!codeTimeStatus && index == 0"
+                        @click="getCode"
+                      >
+                        发送验证码
+                      </span>
+                      <span v-show="!codeTimeStatus && index != 0">
+                        重新发送
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div v-if="vailStatus" class="tips">
                   <p v-if="!rightPhoneNum">这看起来不是一个有效的手机号</p>
                   <p v-if="rightPhoneNum">你需要输入一个手机号</p>
                 </div>
               </div>
-              <div
+              <el-button
+                :disabled="!agreeStatus"
                 class="loginButton registerButton center"
                 @click="loginOrRegister(phoneNum)"
               >
-                登录 / 注册
-              </div>
+                登录
+              </el-button>
               <div class="agreement lanhuText">
                 <div data-v-688ca5dc="" class="checkBox" @click="canClick">
                   <img
@@ -146,57 +176,6 @@
           </div>
           <div class="wx_code_box" style="display: none"></div>
         </div>
-        <!-- 验证码界面 -->
-        <div v-show="!phoneStatus" class="home app_router">
-          <div class="loginView mainContent">
-            <div>
-              <div class="loginTitle">
-                <i @click="backInputPhone" class="el-icon-back g_poin"></i>
-                输入验证码
-              </div>
-              <div class="passView">
-                <div class="inputTitle">
-                  请输入发送至 {{ phoneNum }} 的 6 位验证码，有效期15分钟。
-                </div>
-                <div
-                  v-show="!codeTimeStatus"
-                  @click="repeatCode"
-                  class="retrieveCode g_poin"
-                >
-                  <span> 重新获取验证码 </span>
-                </div>
-                <div v-show="codeTimeStatus" class="timeText">
-                  <span class="timeDetail"> {{ secondsLeft }} </span
-                  >秒后尝试重新获取验证码
-                </div>
-                <div>
-                  <input-code
-                    :phone="phoneNum"
-                    @codeChange="codeChange"
-                  ></input-code>
-                </div>
-                <p v-if="codeEndStatus && !codeSuccess" class="codeTag">
-                  <i class="el-icon-loading"></i>
-                  验证中,请稍等 . . .
-                </p>
-                <div
-                  v-if="!codeEndStatus && codeSuccess"
-                  class="codeStatusMessage"
-                >
-                  <p v-if="!codeRegExrStatus" class="errorText">
-                    <i class="el-icon-error"></i>
-                    验证码无效，请重试
-                  </p>
-                  <p v-if="codeRegExrStatus" class="successText">
-                    <i class="el-icon-success"></i>
-                    验证通过,跳转中....
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="wx_code_box" style="display: none"></div>
-        </div>
       </div>
     </div>
     <el-dialog title="提示" :visible.sync="dialogVisible" width="40%">
@@ -222,10 +201,11 @@ import { sms } from "@/api/login";
 export default {
   data() {
     return {
+      index: 0,
+      vailStatus: false,
       secondsLeft: 60,
       codeTimeStatus: false,
       countdownInterval: null,
-      phoneStatus: true,
       codeEndStatus: false,
       codeSuccess: false,
       agreeStatus: false,
@@ -234,6 +214,7 @@ export default {
       butNoPhoneNum: false,
       rightPhoneNum: true,
       codeRegExrStatus: true,
+      sms_code: "",
     };
   },
   components: { inputCode },
@@ -248,6 +229,7 @@ export default {
       console.log("this.data", data);
 
       sms(data).then((res) => {
+        this.index++;
         this.codeTimeStatus = false;
         if (this.codeTimeStatus) return; // 如果已经在倒计时，不重复开始
         this.secondsLeft = 60; // 重置为 60 秒
@@ -277,7 +259,6 @@ export default {
         if (val == "success") {
           // 验证码验证成功,页面跳转
           this.codeRegExrStatus = true;
-          this.$router.push({ path: "/home" || "/" });
         } else {
           // 验证码验证失败
           this.codeRegExrStatus = false;
@@ -290,9 +271,7 @@ export default {
         message: "此功能暂未开放",
       });
     },
-    backInputPhone() {
-      this.phoneStatus = true;
-    },
+    backInputPhone() {},
     setAgreeF() {
       this.agreeStatus = true;
       this.dialogVisible = false;
@@ -307,6 +286,26 @@ export default {
     canClick() {
       this.agreeStatus = !this.agreeStatus;
     },
+    vaildPhone() {
+      if (this.phoneNum.trim() == "") {
+        console.log("178---无输入内容", this.phoneNum);
+        this.butNoPhoneNum = true;
+        this.vailStatus = true;
+        this.rightPhoneNum = true;
+      } else {
+        console.log("189--有输入内容");
+        this.butNoPhoneNum = true;
+        this.rightPhoneNum = this.checkPhoneNum(this.phoneNum);
+
+        if (this.rightPhoneNum) {
+          console.log("191--有输入内容且正确", this.rightPhoneNum);
+          this.vailStatus = false;
+          this.butNoPhoneNum = false;
+        } else {
+          this.vailStatus = true;
+        }
+      }
+    },
     loginOrRegister(phoneNum) {
       if (phoneNum.trim() == "") {
         console.log("178---无输入内容", phoneNum);
@@ -317,31 +316,42 @@ export default {
         this.butNoPhoneNum = true;
         this.rightPhoneNum = this.checkPhoneNum(phoneNum);
 
-        if (this.rightPhoneNum) {
-          console.log("191--有输入内容且正确", this.rightPhoneNum);
+        if (this.rightPhoneNum && this.sms_code) {
           this.butNoPhoneNum = false;
           // 提交用户手机号
           // 判断是否点击已阅读
-          if (this.agreeStatus) {
-            this.getCode();
-          } else {
-            this.dialogVisible = true;
-          }
+
+          let data = {
+            phone: this.phoneNum,
+            sms_code: this.sms_code,
+          };
+
+          console.log("189--有输入内容", data);
+
+          this.$store.dispatch("user/login", data).then(() => {
+            this.$message({
+              type: "success",
+              message: "登录成功！",
+            });
+            this.$router.push({ path: "/home" || "/" });
+          });
         }
       }
     },
     getCode() {
-      // 获取验证码
-      let data = {
-        phone: this.phoneNum,
-        // phone: "13164661907",
-      };
-      console.log("this.data", data);
-
-      sms(data).then((res) => {
-        console.log("res", res);
-        this.phoneStatus = false;
-      });
+      this.vaildPhone();
+      if (!this.vailStatus) {
+        // 获取验证码
+        // let data = {
+        //   phone: this.phoneNum,
+        //   // phone: "13164661907",
+        // };
+        // console.log("this.data", data);
+        // sms(data).then((res) => {
+        //   console.log("res", res);
+        this.repeatCode();
+        // });
+      }
     },
     checkPhoneNum(phoneNum) {
       let phoneRegex = /^1[3-9]\d{9}$/;
@@ -362,6 +372,55 @@ export default {
   .blue {
     display: block !important;
   }
+}
+
+.codeInput {
+  margin-top: 10px;
+  height: 48px;
+  width: 100%;
+  border: 1px solid #b8b8b8;
+  display: flex;
+  align-items: center;
+  padding: 11px 12px;
+  border-radius: 12px;
+  input {
+    height: 95%;
+    border: none;
+    outline: none;
+    flex: 1;
+  }
+  .codeLeft {
+    border-left: 1px solid #dedede;
+    font-size: 16px;
+    line-height: 16px;
+    transition: 0.3s;
+    color: #4e6ef2;
+    padding: 0 6px;
+  }
+}
+.phoneView {
+  --totl-primary-background: rgba(255, 255, 255, 0.8);
+  --totl-primary-font-color: #000;
+  --totl-primate-font-descolor: #565656;
+  --leave-note: 30px;
+  -webkit-font-smoothing: antialiased;
+  width: calc(100% - 2px);
+  margin: 0 1px;
+  background: #fff;
+  box-sizing: border-box;
+  border-radius: 12px;
+  border: 1px solid #b8b8b8;
+  height: 48px;
+  padding: 11px 12px;
+  display: flex;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+.phoneView:focus {
+  border: 2px solid #2878ff !important;
+  margin: 0 !important;
+  background-color: #fff !important;
+  outline: none !important;
 }
 .successText {
   color: #67c23a;
@@ -428,29 +487,12 @@ export default {
   color: rgba(31, 33, 38, 0.7);
   margin: 0 0 8px 0;
 }
-.phoneView {
-  --totl-primary-background: rgba(255, 255, 255, 0.8);
-  --totl-primary-font-color: #000;
-  --totl-primate-font-descolor: #565656;
-  --leave-note: 30px;
-  -webkit-font-smoothing: antialiased;
-  width: calc(100% - 2px);
-  margin: 0 1px;
-  background: #fff;
-  box-sizing: border-box;
-  border-radius: 12px;
-  border: 1px solid #e4e4e5;
-  height: 50px;
-  padding: 11px 12px;
-  display: flex;
-  font-size: 16px;
-  margin-bottom: 4px;
+
+.loginButton:disabled {
+  background: rgba(30, 144, 255, 0.5);
 }
-.phoneView:focus {
-  border: 2px solid #2878ff !important;
-  margin: 0 !important;
-  background-color: #fff !important;
-  outline: none !important;
+.loginButton:hover {
+  color: #fff !important;
 }
 .loginButton {
   width: 100%;
@@ -701,16 +743,13 @@ export default {
   color: #fff;
 }
 
-input.phoneView.warning {
+.phoneView.warning {
   border: 2px solid #ea4f3d;
   margin: 0;
   background-color: #fff5f5;
 }
-input.phoneView + div.tips {
-  display: none;
-  color: #ea4f3d;
-}
-input.phoneView.warning + div.tips {
+.tips {
   display: block;
+  color: #ea4f3d;
 }
 </style>
