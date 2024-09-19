@@ -8,14 +8,16 @@
             <!-- 页面名称 -->
             <div class="info">
                 <div class="info_left">
-                    <span class="userNameIcon">高</span>
+                    <!-- <span class="userNameIcon">{{ user.name.slice(0,1) }}</span> -->
+                    <img class="userNameIcon" v-if="userInfo.photo" :src="userInfo.photo" alt="">
+                    <img class="userNameIcon" v-else :src="avatar" alt="">
                 </div>
                 <div class="info_right"></div>
             </div>
             <div class="info">
                 <div class="info_left">
                     <p class="infoLabel">用户名</p>
-                    <p class="InfoValue">高高</p>
+                    <p class="InfoValue">{{ name }}</p>
                 </div>
                 <div class="info_right">
                     <el-button  @click="$devf">编辑</el-button>
@@ -24,7 +26,7 @@
             <div class="info">
                 <div class="info_left">
                     <p class="infoLabel">手机号</p>
-                    <p class="InfoValue">13612344321</p>
+                    <p class="InfoValue">{{ userInfo.phone }}</p>
                 </div>
                 <div class="info_right">
                     <el-button  @click="$devf">编辑</el-button>
@@ -40,13 +42,13 @@
                 </div>
             </div>
             <div class="info">
-                <el-button @click="$devf">退出登录</el-button>
+                <el-button @click="loginOut">退出登录</el-button>
             </div>
         </div>
     </div>
 </template>
 <script>
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 
@@ -65,14 +67,14 @@ export default {
     },
 
     computed: {
-        // 计算属性
+        ...mapGetters(["avatar","name","userInfo"]),
     },
     methods: {  
         // 定义方法
         goBack() {
-        // 使用 history.back() 方法返回上一页
-        history.back();
-        }
+            // 使用 history.back() 方法返回上一页
+            history.back();
+        },
 
     },
 };

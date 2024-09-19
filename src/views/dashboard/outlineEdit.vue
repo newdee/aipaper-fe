@@ -185,9 +185,63 @@
                         </div>
                     </el-checkbox>
                     <el-checkbox label="2" border>
-                        任务书
+                        <div class="cusLabel">
+                            <p>任务书</p>
+                            <div class="price">
+                                <span>4.9元</span>
+                                <span>19.9元</span>
+                            </div>
+                        </div>
+                    </el-checkbox>
+                    <el-checkbox label="3" border>
+                        <div class="cusLabel">
+                            <p>CAD三维设计</p>
+                            <div class="price">
+                                <span>19.9元</span>
+                                <span>39.9元</span>
+                            </div>
+                        </div>
+                    </el-checkbox>
+                    <el-checkbox label="4" border>
+                        <div class="cusLabel">
+                            <p>答辩汇报PPT</p>
+                            <div class="price">
+                                <span>19.9元</span>
+                                <span>49.9元</span>
+                            </div>
+                        </div>
+                    </el-checkbox>
+                    <el-checkbox label="5" border>
+                        <div class="cusLabel">
+                            <p>调查问卷</p>
+                            <div class="price">
+                                <span>9.9元</span>
+                                <span>19.9元</span>
+                            </div>
+                        </div>
+                    </el-checkbox>
+                    <el-checkbox label="6" border>
+                        <div class="cusLabel">
+                            <p>“投喂”AI</p>
+                            <div class="price">
+                                <span>9.9元</span>
+                                <span>29.9元</span>
+                            </div>
+                        </div>
+                    </el-checkbox>
+                    <el-checkbox label="7" border>
+                        <div class="cusLabel">
+                            <p>一键降AIGC率</p>
+                            <div class="price">
+                                <span>18元</span>
+                                <span>180元</span>
+                            </div>
+                        </div>
                     </el-checkbox>
                 </el-checkbox-group>
+                <p class="tips" @click="reduceAIGC">
+                    AIGC率知网超25%<span>包退费</span>
+                </p>
             </div>
         </div>
         <div class="warningP">
@@ -208,6 +262,17 @@
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取消支付</el-button>
                 <el-button type="primary" @click="dialogVisible = false">确定支付</el-button>
+            </span>
+        </el-dialog>
+        <!-- 生成全文操作前置声明 -->
+        <el-dialog
+            title="提示"
+            :visible.sync="statementDialogVisible"
+            width="30%"
+            :before-close="handleCloseStatementDialog">
+            <span>平台所生成的全文为范文，仅用作参考，不用做毕业论文、发表刊物等</span>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="agreeGenerate">同意并生成全文</el-button>
             </span>
         </el-dialog>
     </div>
@@ -306,7 +371,8 @@ export default {
                 label: "label",
             },
             editStatus: false,
-            checkboxGroup1:[],
+            checkboxGroup1: [],
+            statementDialogVisible:false,
         };
     },
 
@@ -426,6 +492,9 @@ export default {
         },
         // 生成全文
         generateForm() {
+            if (!this.checked) {
+                this.statementDialogVisible = true;
+            }
             let data = {
                 user_id: 1,
                 payment_method: "alipay",
@@ -450,6 +519,13 @@ export default {
                 let url = res.result.pay_link;
                 window.open(url, "_blank");
             });
+        },
+        agreeGenerate() {
+            // 关闭确认弹窗
+            this.statementDialogVisible = false;
+            // 勾选"我已阅读并同意...."
+            this.checked = true;
+            // 接下来弹出付款二维码,走付款流程
         },
         handleDragStart(node, ev) {
             console.log("drag start", node);
@@ -513,6 +589,16 @@ export default {
         resetForm() {
             this.appendValue = "";
         },
+        reduceAIGC() {
+            if (this.checkboxGroup1.indexOf('7') != -1) {
+                console.log('572---',this.checkboxGroup1);
+                let i = this.checkboxGroup1.indexOf('7');
+                this.checkboxGroup1.splice(i, 1)
+            } else {
+                console.log('576---',this.checkboxGroup1);
+                this.checkboxGroup1.push('7');
+            }
+        },
     },
 };
 </script>
@@ -539,13 +625,14 @@ export default {
 .spendingBox {
     width: 688px;
     margin: 0 auto;
-    padding: 24px 10px;
+    padding: 24px 10px 0px 10px;
     background: #fff;
     border: 1px solid #ebeef5;
     border-radius: 8px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     > p{
         font-size: 18px;
+        padding: 0 10px;
     }
     .borderBox {
         border: 1px solid transparent;
@@ -606,37 +693,47 @@ export default {
             color:#01847f;
         }
     }
-
-    .addService {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); 
-        label.el-checkbox {
-            display: flex;
-            flex-direction: row-reverse;
-            padding: 10px;
-            margin: 5px 10px;
-            background-image: linear-gradient(45deg, #eef9fe, transparent);
-            border: 1px solid #a9d4ff;
-            border-radius: 5px;
-            align-items: center;
-            height: auto;
-            justify-content: space-between;
-            .cusLabel {
-                font-size: 14px;
-                p {
-                    margin: 0px;
-                    line-height: 1.5em;
-                    color: #202020;
+    .adds {
+        .addService {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            label.el-checkbox {
+                display: flex;
+                flex-direction: row-reverse;
+                padding: 10px;
+                margin: 5px 10px;
+                background-image: linear-gradient(45deg, #eef9fe, transparent);
+                border: 1px solid #a9d4ff;
+                border-radius: 5px;
+                align-items: center;
+                height: auto;
+                justify-content: space-between;
+                .cusLabel {
+                    font-size: 14px;
+                    p {
+                        margin: 0px;
+                        line-height: 1.5em;
+                        color: #202020;
+                    }
+                    .price span:first-child {
+                        color: #ee6562;
+                        font-weight: 600;
+                    }
+                    .price span:last-child {
+                        font-size: 12px;
+                        color: #7e7e7e;
+                        text-decoration: line-through;
+                    }
                 }
-                .price span:first-child {
-                    color: #ee6562;
-                    font-weight: 600;
-                }
-                .price span:last-child {
-                    font-size: 12px;
-                    color: #7e7e7e;
-                    text-decoration: line-through;
-                }
+            }
+        }
+        .tips {
+            padding: 0 15px;
+            font-size: 10px;
+            margin: 0px 0px 5px 0;
+            cursor: pointer;
+            span {
+                color: #ee6562;
             }
         }
     }
