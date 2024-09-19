@@ -1,179 +1,270 @@
 <template>
-    <div>
-        <div class="outlineIntro">
-            <p class="introTitle">编辑大纲，生成全文</p>
-            <p class="introSubtitle">
-                🔔
-                大纲可直接<span>点击编辑</span>，点击小节右侧按钮，为小节增加<span>参考资料、数据(表)、图、公式、代码段</span>，对该小节进行<span>增加、删减</span>
-            </p>
-        </div>
-        <!-- 大纲 -->
-        <div class="outlineMain">
-            <el-tree :data="data" node-key="id" default-expand-all @node-drag-start="handleDragStart"
-                @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver"
-                @node-drag-end="handleDragEnd" @node-drop="handleDrop" draggable :expand-on-click-node="false"
-                :allow-drop="allowDrop" :allow-drag="allowDrag">
-                <span class="custom-tree-node" slot-scope="{ node, data }">
-                    <div class="inputBoxMain">
-                        <!-- 如果是编辑状态 -->
-                        <div class="pageSource">
-                            <span v-if="data.index <= 9">第{{ numberToChinese(data.index) }}章</span>
-                            <span v-else>{{ data.index }}</span>
-                        </div>
-                        <template v-if="data.isEdit == 1">
-                            <input ref="input" class="editInput" size="mini" @blur="() => submitEdit(node, data)"
-                                v-model="newlabel" />
-                            <!-- 放弃、提交按钮废弃，改为失去焦点自动提交 -->
-                            <!-- <el-button type="text"
+  <div>
+    <div class="outlineIntro">
+      <p class="introTitle">编辑大纲，生成全文</p>
+      <p class="introSubtitle">
+        🔔
+        大纲可直接<span>点击编辑</span>，点击小节右侧按钮，为小节增加<span>参考资料、数据(表)、图、公式、代码段</span>，对该小节进行<span
+          >增加、删减</span
+        >
+      </p>
+    </div>
+    <!-- 大纲 -->
+    <div class="outlineMain">
+      <el-tree
+        :data="data"
+        node-key="id"
+        default-expand-all
+        @node-drag-start="handleDragStart"
+        @node-drag-enter="handleDragEnter"
+        @node-drag-leave="handleDragLeave"
+        @node-drag-over="handleDragOver"
+        @node-drag-end="handleDragEnd"
+        @node-drop="handleDrop"
+        draggable
+        :expand-on-click-node="false"
+        :allow-drop="allowDrop"
+        :allow-drag="allowDrag"
+      >
+        <span class="custom-tree-node" slot-scope="{ node, data }">
+          <div class="inputBoxMain">
+            <!-- 如果是编辑状态 -->
+            <div class="pageSource">
+              <span v-if="data.index <= 9"
+                >第{{ numberToChinese(data.index) }}章</span
+              >
+              <span v-else>{{ data.index }}</span>
+            </div>
+            <template v-if="data.isEdit == 1">
+              <input
+                ref="input"
+                class="editInput"
+                size="mini"
+                @blur="() => submitEdit(node, data)"
+                v-model="newlabel"
+              />
+              <!-- 放弃、提交按钮废弃，改为失去焦点自动提交 -->
+              <!-- <el-button type="text"
               size="mini"
               @click="() => cancelEdit(node,data)">C</el-button>
             <el-button type="text"
               size="mini"
               @click="() => submitEdit(node,data)">S</el-button> -->
-                        </template>
-                        <!-- 如果不是编辑状态 -->
-                        <span v-else class="showSpan" @click="() => edit(node, data)" v-text="data.label"></span>
-                    </div>
-                    <span class="iconRight">
-                        <el-popover placement="top-start" title="标题" width="200" trigger="hover"
-                            content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
-                            <i @click="() => edit(node, data)" class="el-icon-edit-outline g_poin"></i>
-                            <span>dddd</span>
-                            <i @click="() => appendShow(node, data)" class="el-icon-circle-plus-outline g_poin"></i>
-                        </el-popover>
-                        <!-- 新增 -->
-                        <el-tooltip class="item" effect="dark" content="新增" placement="top">
-                            <i @click="() => appendShow(node, data)" class="el-icon-circle-plus-outline g_poin"></i>
-                        </el-tooltip>
-                        <!-- 删除 -->
-                        <el-tooltip class="item" effect="dark" content="删除" placement="top">
-                            <i @click="() => remove(node, data)" class="el-icon-delete g_poin"></i>
-                        </el-tooltip>
-                    </span>
-                </span>
-            </el-tree>
-            <el-dialog :visible.sync="editStatus" width="40%">
-                <div slot="title">
-                    <p class="dialogTitle">
-                        <i class="el-icon-folder-add dialogIcon"></i>
-                        新增章节
-                    </p>
-                    <p class="warningText">
-                        🔔 全文生成效果受章节数和概要内容影响，请谨慎修改
-                    </p>
-                </div>
-                <el-form :model="numberValidateForm" ref="numberValidateForm" label-width="100px" class="demo-ruleForm">
-                    <el-form-item label="请输入章节" prop="appendValue" :rules="[{ required: true, message: '章节不能为空' }]">
-                        <el-input placeholder="请输入章节" v-model="numberValidateForm.appendValue"
-                            autocomplete="off"></el-input>
-                    </el-form-item>
-                </el-form>
+            </template>
+            <!-- 如果不是编辑状态 -->
+            <span
+              v-else
+              class="showSpan"
+              @click="() => edit(node, data)"
+              v-text="data.label"
+            ></span>
+          </div>
+          <span class="iconRight">
+            <el-popover
+              placement="top-start"
+              title="标题"
+              width="200"
+              trigger="hover"
+              content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。"
+            >
+              <i
+                @click="() => edit(node, data)"
+                class="el-icon-edit-outline g_poin"
+              ></i>
+              <span>dddd</span>
+              <i
+                @click="() => appendShow(node, data)"
+                class="el-icon-circle-plus-outline g_poin"
+              ></i>
+            </el-popover>
+            <!-- 新增 -->
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="新增"
+              placement="top"
+            >
+              <i
+                @click="() => appendShow(node, data)"
+                class="el-icon-circle-plus-outline g_poin"
+              ></i>
+            </el-tooltip>
+            <!-- 删除 -->
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="删除"
+              placement="top"
+            >
+              <i
+                @click="() => remove(node, data)"
+                class="el-icon-delete g_poin"
+              ></i>
+            </el-tooltip>
+          </span>
+        </span>
+      </el-tree>
+      <el-dialog :visible.sync="editStatus" width="40%">
+        <div slot="title">
+          <p class="dialogTitle">
+            <i class="el-icon-folder-add dialogIcon"></i>
+            新增章节
+          </p>
+          <p class="warningText">
+            🔔 全文生成效果受章节数和概要内容影响，请谨慎修改
+          </p>
+        </div>
+        <el-form
+          :model="numberValidateForm"
+          ref="numberValidateForm"
+          label-width="100px"
+          class="demo-ruleForm"
+        >
+          <el-form-item
+            label="请输入章节"
+            prop="appendValue"
+            :rules="[{ required: true, message: '章节不能为空' }]"
+          >
+            <el-input
+              placeholder="请输入章节"
+              v-model="numberValidateForm.appendValue"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+        </el-form>
 
-                <span slot="footer" class="dialog-footer">
-                    <el-button @click="closeDialog">取 消</el-button>
-                    <el-button type="primary" @click="submitForm('numberValidateForm')">确 定</el-button>
-                </span>
-            </el-dialog>
-        </div>
-        <div class="outlineRepeat">
-            <p>
-                大纲不满意? 重新生成
-                <i class="el-icon-refresh"></i>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="closeDialog">取 消</el-button>
+          <el-button type="primary" @click="submitForm('numberValidateForm')"
+            >确 定</el-button
+          >
+        </span>
+      </el-dialog>
+    </div>
+    <div class="outlineRepeat">
+      <p>
+        大纲不满意? 重新生成
+        <i class="el-icon-refresh"></i>
+      </p>
+    </div>
+    <!-- 付费项选择 -->
+    <div class="spendingBox">
+      <p>您将获得</p>
+      <div class="maintxt">
+        <div class="borderBox">
+          <div class="left">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-wj-zw"></use>
+            </svg>
+          </div>
+          <div class="right">
+            <p>[中文]水稻灰粉病的调查研究</p>
+            <p>本科·2万字<span>含无限改稿</span></p>
+            <p class="alignR">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-checkmark"></use>
+              </svg>
             </p>
+          </div>
         </div>
-        <!-- 付费项选择 -->
-        <div class="spendingBox">
-            <p>您将获得</p>
-            <div class="maintxt">
-                <div class="borderBox">
-                    <div class="left">
-                        <svg class="icon svg-icon" aria-hidden="true">
-                            <use xlink:href="#icon-wj-zw"></use>
-                        </svg>
-                    </div>
-                    <div class="right">
-                        <p>[中文]水稻灰粉病的调查研究</p>
-                        <p>本科·2万字<span>含无限改稿</span></p>
-                        <p class="alignR">
-                            <svg class="icon svg-icon" aria-hidden="true">
-                                <use xlink:href="#icon-checkmark"></use>
-                            </svg>
-                            
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="att">
-                <div class="borderBox">
-                    <div class="left">
-                        <svg class="icon svg-icon" aria-hidden="true">
-                            <use xlink:href="#icon-wj-zw"></use>
-                        </svg>
-                    </div>
-                    <div class="right">
-                        <p>[文献综述]</p>
-                        <p>x1</p>
-                        <p class="alignR">
-                            <svg class="icon svg-icon" aria-hidden="true">
-                                <use xlink:href="#icon-checkmark"></use>
-                            </svg>
-                        </p>
-                    </div>
-                </div>
-                <div class="borderBox">
-                    <div class="left">
-                        <svg class="icon svg-icon" aria-hidden="true">
-                            <use xlink:href="#icon-wj-zw"></use>
-                        </svg>
-                    </div>
-                    <div class="right">
-                        <p>[中英文摘要]</p>
-                        <p>x1</p>
-                        <p class="alignR">
-                            <svg class="icon svg-icon" aria-hidden="true">
-                                <use xlink:href="#icon-checkmark"></use>
-                            </svg>
-                        </p>
-                    </div>
-                </div>
-                <div class="borderBox">
-                    <div class="left">
-                        <svg class="icon svg-icon" aria-hidden="true">
-                            <use xlink:href="#icon-wj-zw"></use>
-                        </svg>
-                    </div>
-                    <div class="right">
-                        <p>[中英文参考文献]</p>
-                        <p>x1</p>
-                        <p class="alignR">
-                            <svg class="icon svg-icon" aria-hidden="true">
-                                <use xlink:href="#icon-checkmark"></use>
-                            </svg>
-                        </p>
-                    </div>
-                </div>
-                <div class="borderBox">
-                    <div class="left">
-                        <svg class="icon svg-icon" aria-hidden="true">
-                            <use xlink:href="#icon-wj-zw"></use>
-                        </svg>
-                    </div>
-                    <div class="right">
-                        <p>[致谢模板]</p>
-                        <p>x1</p>
-                        <p class="alignR">
-                            <svg class="icon svg-icon" aria-hidden="true">
-                                <use xlink:href="#icon-checkmark"></use>
-                            </svg>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <p>附加服务</p>
-            <div class="adds">
-                <!-- <div class="item">
+      </div>
+      <div class="att">
+        <div class="borderBox">
+          <div class="left">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-wj-zw"></use>
+            </svg>
+          </div>
+          <div class="right">
+            <p>[文献综述]</p>
+            <p>x1</p>
+            <p class="alignR">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-checkmark"></use>
+              </svg>
+            </p>
+          </div>
+        </div>
+        <div class="borderBox">
+          <div class="left">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-wj-zw"></use>
+            </svg>
+          </div>
+          <div class="right">
+            <p>[中英文摘要]</p>
+            <p>x1</p>
+            <p class="alignR">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-checkmark"></use>
+              </svg>
+            </p>
+          </div>
+        </div>
+        <div class="borderBox">
+          <div class="left">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-wj-zw"></use>
+            </svg>
+          </div>
+          <div class="right">
+            <p>[中英文参考文献]</p>
+            <p>x1</p>
+            <p class="alignR">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-checkmark"></use>
+              </svg>
+            </p>
+          </div>
+        </div>
+        <div class="borderBox">
+          <div class="left">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-wj-zw"></use>
+            </svg>
+          </div>
+          <div class="right">
+            <p>[致谢模板]</p>
+            <p>x1</p>
+            <p class="alignR">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-checkmark"></use>
+              </svg>
+            </p>
+          </div>
+        </div>
+      </div>
+      <p>附加服务</p>
+      <div class="adds">
+        <!-- <div class="item">
                     <p></p>
                 </div> -->
+        <el-checkbox-group
+          class="addService"
+          v-model="checkboxGroup1"
+          size="small"
+        >
+          <el-checkbox label="1" border>
+            <div class="cusLabel">
+              <p>开题报告</p>
+              <div class="price">
+                <span>4.9元</span>
+                <span>19.9元</span>
+              </div>
+            </div>
+          </el-checkbox>
+          <el-checkbox label="2" border> 任务书 </el-checkbox>
+        </el-checkbox-group>
+      </div>
+    </div>
+    <div class="warningP">
+      <el-checkbox v-model="checked">
+        我已阅读并同意：平台所生成的全文为范文，仅用作参考，不用作毕业论文、发表刊物等
+      </el-checkbox>
+    </div>
+    <div class="warningP generateSpan">
+      <span class="g_poin" @click="generateForm">生成全文</span>
+    </div>
                 <el-checkbox-group class="addService" v-model="checkboxGroup1" size="small">
                     <el-checkbox label="1" border>
                         <div class="cusLabel">
@@ -253,17 +344,19 @@
             <span class="g_poin" @click="generateForm">生成全文</span>
         </div>
 
-        <!-- 付款成功弹窗 -->
-        <el-dialog title="确认支付" :visible.sync="payStatus" width="30%">
-            <i>支付确认弹窗，暂定会跳转订单页</i>
-            <i>TODO：暂未增加跳转</i>
+    <!-- 付款成功弹窗 -->
+    <el-dialog title="确认支付" :visible.sync="payStatus" width="30%">
+      <i>支付确认弹窗，暂定会跳转订单页</i>
+      <p>TODO：暂未增加跳转</p>
 
-            <p>您是否已成功支付？</p>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取消支付</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确定支付</el-button>
-            </span>
-        </el-dialog>
+      <p>您是否已成功支付？</p>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消支付</el-button>
+        <el-button type="primary" @click="dialogVisible = false"
+          >确定支付</el-button
+        >
+      </span>
+    </el-dialog>
         <!-- 生成全文操作前置声明 -->
         <el-dialog
             title="提示"
@@ -275,12 +368,12 @@
                 <el-button type="primary" @click="agreeGenerate">同意并生成全文</el-button>
             </span>
         </el-dialog>
-    </div>
+  </div>
 </template>
 
 <script>
 import mitt from "mitt";
-
+import { getToken } from "@/utils/auth"; //
 // 方法
 import { getOrder } from "@/api/user";
 export default {
@@ -376,103 +469,103 @@ export default {
         };
     },
 
-    created() {
-        this.generateIndexes(this.data);
+  created() {
+    this.generateIndexes(this.data);
+  },
+  methods: {
+    generateIndexes(nodes, parentIndex = "") {
+      let counter = 1;
+      nodes.forEach((node) => {
+        const index = parentIndex
+          ? `${parentIndex}-${counter++}`
+          : `${counter++}`;
+        this.$set(node, "index", index);
+        if (node.children && node.children.length > 0) {
+          this.generateIndexes(node.children, index);
+        }
+      });
     },
-    methods: {
-        generateIndexes(nodes, parentIndex = "") {
-            let counter = 1;
-            nodes.forEach((node) => {
-                const index = parentIndex
-                    ? `${parentIndex}-${counter++}`
-                    : `${counter++}`;
-                this.$set(node, "index", index);
-                if (node.children && node.children.length > 0) {
-                    this.generateIndexes(node.children, index);
-                }
-            });
-        },
 
-        allowDrag(draggingNode) {
-            // 顶层默认分组不允许拖拽
-            if (draggingNode.data.id === 1) {
-                return false;
-            } else {
-                return true;
-            }
-            // return draggingNode.data.apiGroupName.indexOf('三级 3-2-2') === -1
-        },
-        updateApiGroup(data) {
-            console.log(data);
-            this.generateIndexes(this.data);
-            // updateApiGroup(1, data)
-            //   .then((response) => {
-            //     console.log(response);
-            //   })
-            //   .catch((err) => {
-            //     console.log(err);
-            //   });
-        },
-        appendShow(node, data) {
-            this.editData = data;
-            this.editStatus = true;
-            this.$nextTick(() => {
-                this.$refs.numberValidateForm.resetFields();
-            });
-        },
-        submitForm(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    // alert('submit!');
-                    this.append();
-                } else {
-                    console.log("error submit!!");
-                    return false;
-                }
-            });
-        },
-        append(node, data) {
-            data = this.editData;
-            // var pid = data.parentApiGroupId + ':' + data.id
-            var timestamp = new Date().getTime();
-            const newChild = {
-                id: timestamp,
-                isEdit: 0,
-                apiGroupName: "T" + timestamp,
-                label: this.numberValidateForm.appendValue,
-                children: [],
-            };
-            if (!data.children) {
-                this.$set(data, "children", []);
-            }
-            data.children.push(newChild);
-            this.updateApiGroup(this.data);
-            this.$refs.numberValidateForm.resetFields();
-            this.editStatus = false;
-        },
+    allowDrag(draggingNode) {
+      // 顶层默认分组不允许拖拽
+      if (draggingNode.data.id === 1) {
+        return false;
+      } else {
+        return true;
+      }
+      // return draggingNode.data.apiGroupName.indexOf('三级 3-2-2') === -1
+    },
+    updateApiGroup(data) {
+      console.log(data);
+      this.generateIndexes(this.data);
+      // updateApiGroup(1, data)
+      //   .then((response) => {
+      //     console.log(response);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+    },
+    appendShow(node, data) {
+      this.editData = data;
+      this.editStatus = true;
+      this.$nextTick(() => {
+        this.$refs.numberValidateForm.resetFields();
+      });
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // alert('submit!');
+          this.append();
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    append(node, data) {
+      data = this.editData;
+      // var pid = data.parentApiGroupId + ':' + data.id
+      var timestamp = new Date().getTime();
+      const newChild = {
+        id: timestamp,
+        isEdit: 0,
+        apiGroupName: "T" + timestamp,
+        label: this.numberValidateForm.appendValue,
+        children: [],
+      };
+      if (!data.children) {
+        this.$set(data, "children", []);
+      }
+      data.children.push(newChild);
+      this.updateApiGroup(this.data);
+      this.$refs.numberValidateForm.resetFields();
+      this.editStatus = false;
+    },
 
-        remove(node, data) {
-            const parent = node.parent;
-            const children = parent.data.children || parent.data;
-            const index = children.findIndex((d) => d.id === data.id);
-            children.splice(index, 1);
-            this.updateApiGroup(this.data);
-        },
-        edit(node, data) {
-            console.log(
-                "before:",
-                data.id,
-                // data.parentApiGroupId,
-                data.label,
-                data.isEdit
-            );
-            this.$set(data, "isEdit", 1);
-            this.newlabel = data.label;
-            this.$nextTick(() => {
-                this.$refs.input.focus();
-            });
-            console.log("after:", data.id, data.label, data.isEdit);
-        },
+    remove(node, data) {
+      const parent = node.parent;
+      const children = parent.data.children || parent.data;
+      const index = children.findIndex((d) => d.id === data.id);
+      children.splice(index, 1);
+      this.updateApiGroup(this.data);
+    },
+    edit(node, data) {
+      console.log(
+        "before:",
+        data.id,
+        // data.parentApiGroupId,
+        data.label,
+        data.isEdit
+      );
+      this.$set(data, "isEdit", 1);
+      this.newlabel = data.label;
+      this.$nextTick(() => {
+        this.$refs.input.focus();
+      });
+      console.log("after:", data.id, data.label, data.isEdit);
+    },
 
         submitEdit(node, data) {
             // console.log('点击了保存按钮')
@@ -607,19 +700,19 @@ export default {
 @import "@/styles/variables.scss";
 
 .outlineRepeat {
-    text-align: center;
-    margin-top: 50px;
+  text-align: center;
+  margin-top: 50px;
 
-    p {
-        display: inline-block;
-        padding: 0 18px;
-        line-height: 34px;
-        height: 34px;
-        border-radius: 17px;
-        font-size: 14px;
-        color: #3b82f6;
-        border: 1px solid #3b82f6;
-    }
+  p {
+    display: inline-block;
+    padding: 0 18px;
+    line-height: 34px;
+    height: 34px;
+    border-radius: 17px;
+    font-size: 14px;
+    color: #3b82f6;
+    border: 1px solid #3b82f6;
+  }
 }
 
 .spendingBox {
@@ -740,130 +833,130 @@ export default {
 }
 
 .warningP {
-    width: 688px;
-    margin: 0 auto;
-    margin-top: 20px;
+  width: 688px;
+  margin: 0 auto;
+  margin-top: 20px;
 }
 
 // @import "@/index.scss";
 .warningText {
-    color: #ffa500;
-    font-size: 14px;
+  color: #ffa500;
+  font-size: 14px;
 }
 
 .generateSpan {
-    text-align: center;
+  text-align: center;
 
-    span {
-        display: inline-block;
-        background: #3b82f6;
-        height: 40px;
-        line-height: 40px;
-        border-radius: 20px;
-        padding: 0 22px;
-        color: #fff;
-    }
+  span {
+    display: inline-block;
+    background: #3b82f6;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 20px;
+    padding: 0 22px;
+    color: #fff;
+  }
 }
 
 .outlineIntro {
-    max-width: 688px;
-    margin: 0 auto;
-    margin-top: 50px;
-    text-align: center;
+  max-width: 688px;
+  margin: 0 auto;
+  margin-top: 50px;
+  text-align: center;
 
-    .introTitle {
-        font-size: 16px;
-        font-weight: bold;
-        color: #3b82f6;
+  .introTitle {
+    font-size: 16px;
+    font-weight: bold;
+    color: #3b82f6;
+  }
+
+  .introSubtitle {
+    font-size: 14px;
+    line-height: 20px;
+
+    span {
+      color: #d75300;
     }
-
-    .introSubtitle {
-        font-size: 14px;
-        line-height: 20px;
-
-        span {
-            color: #d75300;
-        }
-    }
+  }
 }
 
 .outlineMain {
-    max-width: 688px;
-    margin: 0 auto;
-    border-radius: 8px;
-    border: 1px solid #ebeef5;
-    background-color: #fff;
-    overflow: hidden;
-    color: #303133;
-    transition: 0.3s;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-    margin-top: 32px;
-    padding: 16px;
+  max-width: 688px;
+  margin: 0 auto;
+  border-radius: 8px;
+  border: 1px solid #ebeef5;
+  background-color: #fff;
+  overflow: hidden;
+  color: #303133;
+  transition: 0.3s;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  margin-top: 32px;
+  padding: 16px;
 }
 
 .custom-tree-node {
-    width: 100%;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-    // background: red;
-    &:hover {
-        .showSpan {
-            width: 80%;
-            border: 1px solid #ccc;
-        }
+  // background: red;
+  &:hover {
+    .showSpan {
+      width: 80%;
+      border: 1px solid #ccc;
     }
+  }
 }
 
 .iconRight {
-    color: $menuActiveText;
+  color: $menuActiveText;
 }
 
 .editInput {
-    outline: none;
-    border: none;
-    height: 90%;
-    width: 80%;
+  outline: none;
+  border: none;
+  height: 90%;
+  width: 80%;
 }
 
 .inputBoxMain {
-    // height: 100%;
-    width: 100%;
+  // height: 100%;
+  width: 100%;
 }
 
 ::v-deep .el-tree-node__content {
-    height: auto !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
+  height: auto !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .showSpan {
-    display: inline-block;
-    width: 100%;
+  display: inline-block;
+  width: 100%;
 }
 
 // 媒体查询
 // @media only screen and (max-width: 939px) {
 // }
 .dialogIcon {
-    color: #409eff;
-    font-size: 20px;
-    margin-right: 5px;
+  color: #409eff;
+  font-size: 20px;
+  margin-right: 5px;
 }
 
 .dialogTitle {
-    display: flex;
-    align-items: center;
-    font-weight: bold;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
 }
 
 .pageSource {
-    color: #333639;
-    display: inline-block;
-    margin-right: 10px;
-    font-size: 14px;
-    font-weight: bold;
+  color: #333639;
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: bold;
 }
 </style>
