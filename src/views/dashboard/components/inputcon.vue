@@ -56,7 +56,7 @@
             </div>
 
             <el-input
-              v-model="input"
+              v-model="requestForm.title"
               maxlength="50"
               show-word-limit
               placeholder="请输入完整题目，题目越完整大纲越准确"
@@ -65,13 +65,12 @@
         </div>
         <!-- 输入框选项 -->
         <div class="radioGroup">
-          <el-radio-group v-model="category">
+          <el-radio-group v-model="radio">
             <el-radio
               v-for="item in homeData.category_list"
               :key="item.name"
               :label="item.name"
-            >
-              {{ item.name }}({{ item.description }})
+              >{{ item.name }}({{ item.description }})
             </el-radio>
           </el-radio-group>
         </div>
@@ -85,9 +84,7 @@
         <!-- 生成大纲选项 -->
         <div class="submitBtn">
           <button class="g_poin" @click="sendProgress">生成大纲</button>
-
           <span class="inputLine g_poin" @click="importOut">录入大纲</span>
-
           <div class="threeLine">
             <el-tooltip class="item" effect="dark" content="" placement="top">
               <div slot="content">
@@ -152,27 +149,44 @@ export default {
   computed: {
     ...mapGetters(["homeData"]),
   },
-  sendProgress() {
-    if (!this.requestForm.title) {
-      this.$message({
-        type: "warning",
-        message: "请输入完整题目!",
-      });
-    } else {
-      if (this.requestForm.title.length <= 4) {
+
+  methods: {
+    sendProgress() {
+      if (!this.requestForm.title) {
         this.$message({
           type: "warning",
-          message: "标题至少需要五个字!",
+          message: "请输入完整题目!",
         });
       } else {
-        this.getList();
+        if (this.requestForm.title.length <= 4) {
+          this.$message({
+            type: "warning",
+            message: "标题至少需要五个字!",
+          });
+        } else {
+          this.getList();
+        }
       }
-    }
-    // const emitter = mitt();
-    // emitter.emit("foo", { a: "b" });
-  },
-  getList() {
-    eventBus.emit("sendOutline", 3); // 发布事件
+      // const emitter = mitt();
+      // emitter.emit("foo", { a: "b" });
+    },
+    importOut() {
+      // store.dispatch("user/getInfo");
+      eventBus.emit("clickImportOutline"); // 发布事件
+    },
+    sendProgress() {
+      // const emitter = mitt();
+      // emitter.emit("foo", { a: "b" });
+      eventBus.emit("sendOutline", 5); // 发布事件
+    },
+    // 定义方法
+    handleChange(value) {
+      console.log(value);
+    },
+    openAdvantageF() {
+      // this.advantageStatus = true;
+      this.$refs.advantageDia.advantageStatus = true;
+    },
   },
 };
 </script>

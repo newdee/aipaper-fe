@@ -64,7 +64,7 @@ export default {
   },
   data() {
     return {
-      loadingStatus: true, //整个大纲的展示状态
+      loadingStatus: false, //整个大纲的展示状态
       proDuceStatus: true, // 大纲展示， 录入还是生成
       outLineStatus: true, //大纲生成状态
       currentNumber: 0,
