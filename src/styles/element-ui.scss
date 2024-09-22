@@ -47,3 +47,7 @@
 .el-range-separator {
   box-sizing: content-box;
 }
+
+.el-drawer__close-btn:focus {
+  outline: none;
+}

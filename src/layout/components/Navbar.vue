@@ -74,7 +74,7 @@
     </el-drawer>
     <!-- 用户订单 -->
     <el-drawer :visible.sync="ordersDrawer" :direction="orderDirection" :before-close="handleOrdersClose" append-to-body
-      size="500">
+      size="500px">
       <template #title>
         <div>我的订单</div>
       </template>
@@ -392,6 +392,7 @@ export default {
   padding-bottom: 15px;
 }
 
+// 重置订单抽屉样式
 .drawBox {
   padding: 0 1.25rem 0 1.25rem;
   position: relative;
