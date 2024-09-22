@@ -28,7 +28,7 @@
                                 <i class="el-icon-house"></i>
                                 我的个人主页
                             </div>
-                            <div class="menuItem" @click="$devf">
+                            <div class="menuItem" @click="showOrderList">
                                 <i class="el-icon-goods"></i>
                                 订单管理
                             </div>
@@ -79,6 +79,20 @@
                 </div>
             </div>
         </transition>
+            <!-- 用户订单 -->
+        <el-drawer
+        :visible.sync="ordersDrawer"
+        :direction="orderDirection"
+        append-to-body
+        size="500"
+        >
+        <template #title>
+            <div>我的订单</div>
+        </template>
+        <div class="drawBox">
+            <user-orders :listId="listId"></user-orders>
+        </div>
+        </el-drawer>
     </div>
 </template>
 <script>
@@ -87,13 +101,20 @@
 // import webinfo from "@/components/webinfo.vue";
 import { getToken, removeToken } from "@/utils/auth"; // get token from cookie
 import { mapGetters } from "vuex";
+import UserOrders from "./UserOrders.vue";
 
 export default {
     name: "UserMenu",
+    components: {
+        UserOrders,
+    },
     data() {
         return {
             // 定义变量
             isPopupVisible: false,
+            listId: 0,
+            orderDirection: "ltr", //用户订单抽屉方向
+            ordersDrawer: false,
         };
     },
     mounted() {
@@ -136,6 +157,13 @@ export default {
         },
         jumpDetail(path) {
             this.$router.push(path);
+        },
+        showOrderList() {
+            // 本菜单仅在用户已登录状态可见,所以这里在查看订单前不再校验用户是否已登录
+            this.listId = new Date().getTime();
+            console.log("this.", this.listId);
+            this.hidePopup();
+            this.ordersDrawer = true;
         },
     },
     beforeDestroy() {

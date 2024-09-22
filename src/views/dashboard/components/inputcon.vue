@@ -56,7 +56,7 @@
             </div>
 
             <el-input
-              v-model="requestForm.title"
+              v-model="input"
               maxlength="50"
               show-word-limit
               placeholder="请输入完整题目，题目越完整大纲越准确"
@@ -65,12 +65,13 @@
         </div>
         <!-- 输入框选项 -->
         <div class="radioGroup">
-          <el-radio-group v-model="radio">
+          <el-radio-group v-model="category">
             <el-radio
               v-for="item in homeData.category_list"
               :key="item.name"
               :label="item.name"
-              >{{ item.name }}({{ item.description }})
+            >
+              {{ item.name }}({{ item.description }})
             </el-radio>
           </el-radio-group>
         </div>
@@ -151,41 +152,27 @@ export default {
   computed: {
     ...mapGetters(["homeData"]),
   },
-  methods: {
-    importOut() {
-      // store.dispatch("user/getInfo");
-      eventBus.emit("clickImportOutline"); // 发布事件
-    },
-    sendProgress() {
-      if (!this.requestForm.title) {
+  sendProgress() {
+    if (!this.requestForm.title) {
+      this.$message({
+        type: "warning",
+        message: "请输入完整题目!",
+      });
+    } else {
+      if (this.requestForm.title.length <= 4) {
         this.$message({
           type: "warning",
-          message: "请输入完整题目!",
+          message: "标题至少需要五个字!",
         });
       } else {
-        if (this.requestForm.title.length <= 4) {
-          this.$message({
-            type: "warning",
-            message: "标题至少需要五个字!",
-          });
-        } else {
-          this.getList();
-        }
+        this.getList();
       }
-      // const emitter = mitt();
-      // emitter.emit("foo", { a: "b" });
-    },
-    getList() {
-      eventBus.emit("sendOutline", 3); // 发布事件
-    },
-    // 定义方法
-    handleChange(value) {
-      console.log(value);
-    },
-    openAdvantageF() {
-      // this.advantageStatus = true;
-      this.$refs.advantageDia.advantageStatus = true;
-    },
+    }
+    // const emitter = mitt();
+    // emitter.emit("foo", { a: "b" });
+  },
+  getList() {
+    eventBus.emit("sendOutline", 3); // 发布事件
   },
 };
 </script>
