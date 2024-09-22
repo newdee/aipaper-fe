@@ -41,10 +41,19 @@ Vue.use(ElementUI, {
 // 定义全局的方法
 Vue.prototype.$devf = function () {
   // console.log('Global method called!');
-  ElementUI['Message']({
-    type: 'warning',
-    message: '功能开发中, 请联系我们的官方客服,获取上线时间.'
+  const ele = `
+<div style="display: flex;flex-direction: column;align-items: center;">
+  <p style="font-weight:600;font-size:large;color:#202020;margin:12px 0;">发中, 请联系我们的官方客服，获取上线时间。</p>
+  <p style="font-weight:500;font-size:small;color:#ff5353;margin:5px 0;">发中, 请联系我们的官方客服，获取上线时间。</p>
+</div>
+  `;
+  ElementUI['MessageBox']({
+    title:'',
+    message: ele,
+    dangerouslyUseHTMLString: true,
+    showClose:true,
   })
+  // this.$msgbox(options)
   // 执行你需要的操作
 };
 
