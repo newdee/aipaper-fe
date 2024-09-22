@@ -4,17 +4,29 @@
       <el-button type="primary" round @click="delList">删除订单</el-button>
       <el-button type="primary" round @click="getList">刷新订单</el-button>
     </div>
-    <!-- 页面名称 -->
+    <!-- 订单列表 -->
     <el-checkbox-group v-model="checkList" @change="handleCheckAllChange">
-      <div class="orderBox" v-for="item in orderList" :key="item.id">
-        <el-checkbox :label="item.id" :value="item.id"></el-checkbox>
+      <div class="orderBox" v-for="orderObj in orderList" :key="orderObj.order.id">
+        <el-checkbox :label="orderObj.order.id" :value="orderObj.order.id"></el-checkbox>
         <div class="order">
           <div class="orderNum rowBetween">
-            <div class="left">订单号：1827987236658872320</div>
-            <div class="right">2024-08-15 23:12:24</div>
+            <!-- <div class="left">订单号：{{ orderObj.order.out_trade_no }}</div> -->
+            <div class="left"></div>
+            <div class="right">时间：{{ orderObj.order.created_at }}</div>
           </div>
-          <div class="orderTitle">关于全球变暖治理及发展前景</div>
-          <div class="orderOutline rowBetween handleRow">
+          <template v-for="(item,j) in orderObj.order_item_response">
+            <div class="orderTitle" :key="item.paper.title +j">{{ item.paper.title }}</div>
+            <div class="orderText rowBetween handleRow" :key="item.product.id +j">
+              <div class="left">{{ item.product.name }}</div>
+              <div class="right">
+                <span class="handle">下载</span>
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-download"></use>
+                </svg>
+              </div>
+            </div>
+          </template>
+          <!-- <div class="orderOutline rowBetween handleRow">
             <div class="left">[本科·约2万字]</div>
             <div class="right">
               查看大纲
@@ -30,6 +42,14 @@
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-download"></use>
               </svg>
+            </div>
+          </div> -->
+          <div class="orderText rowBetween handleRow">
+            <div class="left">订单价格</div>
+            <div class="right">
+              <span class="price">￥{{ orderObj.order.total_price }}</span>
+              <span class="handle" v-if="orderObj.order.payment_status == 'WAIT_BUYER_PAY'" style="color: crimson;">去支付</span>
+              
             </div>
           </div>
         </div>
@@ -102,6 +122,10 @@ export default {
       getOrderList(data).then((res) => {
         console.log("res", res);
         this.orderList = res.result;
+        let data = res.result;
+        if (Object.keys(data).length > 0) {
+          this.orderList = data.order_resp_list || [];
+        }
       });
     },
   },
@@ -163,10 +187,15 @@ export default {
 }
 .handleRow:not(:last-child) {
   border-bottom: var(--border-bottom);
+  margin-bottom: 10px;
 }
 .btns {
   text-align: right;
   // border-top: var(--border-bottom);
   padding: 15px 0;
+}
+.handle {
+  cursor: pointer;
+  margin-left:5px;
 }
 </style>
