@@ -56,7 +56,7 @@
             </div>
 
             <el-input
-              v-model="input"
+              v-model="requestForm.title"
               maxlength="50"
               show-word-limit
               placeholder="请输入完整题目，题目越完整大纲越准确"
@@ -120,6 +120,9 @@ export default {
   name: "maincon",
   data() {
     return {
+      requestForm: {
+        title: "",
+      },
       carProp: {
         value: "code",
         label: "name",
@@ -154,9 +157,26 @@ export default {
       eventBus.emit("clickImportOutline"); // 发布事件
     },
     sendProgress() {
+      if (!this.requestForm.title) {
+        this.$message({
+          type: "warning",
+          message: "请输入完整题目!",
+        });
+      } else {
+        if (this.requestForm.title.length <= 4) {
+          this.$message({
+            type: "warning",
+            message: "标题至少需要五个字!",
+          });
+        } else {
+          this.getList();
+        }
+      }
       // const emitter = mitt();
       // emitter.emit("foo", { a: "b" });
-      eventBus.emit("sendOutline", 5); // 发布事件
+    },
+    getList() {
+      eventBus.emit("sendOutline", 3); // 发布事件
     },
     // 定义方法
     handleChange(value) {

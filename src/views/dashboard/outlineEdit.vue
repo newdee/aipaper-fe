@@ -59,23 +59,107 @@
               v-text="data.label"
             ></span>
           </div>
+
           <span class="iconRight">
             <el-popover
-              placement="top-start"
-              title="标题"
+              popper-class="popperTitle"
+              placement="top"
+              title="添加参考资料"
               width="200"
               trigger="hover"
-              content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。"
             >
-              <i
-                @click="() => edit(node, data)"
-                class="el-icon-edit-outline g_poin"
-              ></i>
-              <span>dddd</span>
-              <i
-                @click="() => appendShow(node, data)"
-                class="el-icon-circle-plus-outline g_poin"
-              ></i>
+              <el-input
+                size="mini"
+                placeholder="请输入内容"
+                v-model="data.data1"
+                clearable
+              >
+              </el-input>
+              <el-switch
+                class="switchMini"
+                slot="reference"
+                size="mini"
+                v-model="data.checked1"
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+              >
+              </el-switch>
+            </el-popover>
+            <!-- 表 -->
+
+            <el-popover
+              popper-class="popperTitle"
+              placement="top"
+              title="点亮图标,本节插入数据表"
+              width="200"
+              trigger="hover"
+            >
+              <el-input
+                size="mini"
+                placeholder="请输入数据表类型"
+                v-model="data.data2"
+                clearable
+              >
+              </el-input>
+              <el-switch
+                class="switchMini"
+                slot="reference"
+                size="mini"
+                v-model="data.checked2"
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+              >
+              </el-switch>
+            </el-popover>
+            <!-- 图 -->
+            <el-popover
+              popper-class="popperTitle"
+              placement="top"
+              title="点亮图标,本节插入图"
+              width="200"
+              trigger="hover"
+            >
+              <el-input
+                size="mini"
+                placeholder="请输入图类型"
+                v-model="data.data3"
+                clearable
+              >
+              </el-input>
+              <el-switch
+                class="switchMini"
+                slot="reference"
+                size="mini"
+                v-model="data.checked3"
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+              >
+              </el-switch>
+            </el-popover>
+            <!-- 代码 -->
+            <el-popover
+              popper-class="popperTitle"
+              placement="top"
+              title="点亮图标,本节插入代码"
+              width="200"
+              trigger="hover"
+            >
+              <el-input
+                size="mini"
+                placeholder="请输入代码类型"
+                v-model="data.data4"
+                clearable
+              >
+              </el-input>
+              <el-switch
+                class="switchMini"
+                slot="reference"
+                size="mini"
+                v-model="data.checked4"
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+              >
+              </el-switch>
             </el-popover>
             <!-- 新增 -->
             <el-tooltip
@@ -135,9 +219,9 @@
 
         <span slot="footer" class="dialog-footer">
           <el-button @click="closeDialog">取 消</el-button>
-          <el-button type="primary" @click="submitForm('numberValidateForm')"
-            >确 定</el-button
-          >
+          <el-button type="primary" @click="submitForm('numberValidateForm')">
+            确 定
+          </el-button>
         </span>
       </el-dialog>
     </div>
@@ -371,10 +455,20 @@ export default {
       numberValidateForm: {
         appendValue: "",
       },
+      selectForm: {
+        data1: "",
+        checked: "",
+      },
       data: [
         {
           id: 1,
           level: 1,
+          checked1: "",
+          data1: "",
+          checked2: "",
+          data2: "",
+          checked3: "",
+          data3: "",
           label: "请修改标题",
           content: "请修改标题",
           children: [
@@ -701,6 +795,12 @@ export default {
 // 引入scss
 @import "@/styles/variables.scss";
 
+.switchMini {
+  transform: scale(0.7);
+}
+.popperTitle {
+  font-size: 10px;
+}
 .outlineRepeat {
   text-align: center;
   margin-top: 50px;

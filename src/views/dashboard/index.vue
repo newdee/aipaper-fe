@@ -64,11 +64,11 @@ export default {
   },
   data() {
     return {
-      loadingStatus: false,
+      loadingStatus: true, //整个大纲的展示状态
       proDuceStatus: true, // 大纲展示， 录入还是生成
       outLineStatus: true, //大纲生成状态
       currentNumber: 0,
-      outLineClick: "produce", // pro:生成 imp : 录入
+      outLineClick: "pro", // pro:生成 imp : 录入
       intervalId: null,
     };
   },
