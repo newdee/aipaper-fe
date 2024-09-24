@@ -46,6 +46,11 @@ export const constantRoutes = [{
     component: () => import('@/views/user/userinfo'),
     hidden: true
 },
+{
+    path: '/dashboard',
+        component: () => import('@/views/dashboard/index'),
+    hidden: true
+},
 
 {
     path: '/',
@@ -54,13 +59,15 @@ export const constantRoutes = [{
     children: [{
         path: 'home',
         name: 'home',
-        component: () => import('@/views/dashboard/index'),
+        component: () => import('@/views/home/index'),
         meta: {
             title: 'home',
             icon: 'dashboard'
         }
-    }]
-},
+    }
+    ]
+  },
+
 {
     path: '/paper',
     component: Layout,
