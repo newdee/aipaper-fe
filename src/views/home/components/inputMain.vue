@@ -1,16 +1,16 @@
 <template>
   <div>
-    <button @click="jump">跳转到原页面</button>
-    <!-- 页面名称 -->
-    首页
-    <input-main></input-main>
-    <button @click="jump2">跳转详情页</button>
+    <!-- 底图页面 -->
+
+    <div class="mainBackground">
+      <div></div>
+    </div>
   </div>
 </template>
 <script>
 // import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
-import inputMain from "./components/inputMain.vue";
+// import webinfo from "@/components/webinfo.vue";
 // import eventBus from "@/utils/eventBus";
 
 export default {
@@ -21,7 +21,7 @@ export default {
     };
   },
   components: {
-    inputMain,
+    // webinfo,
   },
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
@@ -38,12 +38,6 @@ export default {
   },
   methods: {
     // 定义方法
-    jump() {
-      this.$router.push("/dashboard");
-    },
-    jump2() {
-      this.$router.push("/main/explore");
-    },
   },
 };
 </script>
@@ -55,4 +49,10 @@ export default {
 // 媒体查询
 // @media only screen and (max-width: 939px) {
 // }
+.mainBackground {
+  background: url("../../../assets/images/newspaper.png") no-repeat 0 0;
+  background-size: cover;
+  height: 612px;
+  width: 100%;
+}
 </style>

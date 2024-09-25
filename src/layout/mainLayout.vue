@@ -5,6 +5,8 @@
       class="drawer-bg"
       @click="handleClickOutside"
     />
+    <sidebar class="sidebar-container" />
+
     <div class="main-container">
       <div :class="{ 'fixed-header': fixedHeader }">
         <navbar />
@@ -16,7 +18,7 @@
 </template>
 
 <script>
-import { Navbar, AppMain, MyFooter } from "./mcomponents";
+import { Navbar, Sidebar, AppMain, MyFooter } from "./mcomponents";
 import ResizeMixin from "./mixin/ResizeHandler";
 
 export default {
@@ -24,6 +26,7 @@ export default {
   components: {
     Navbar,
     AppMain,
+    Sidebar,
     MyFooter,
   },
   mixins: [ResizeMixin],
