@@ -1,10 +1,8 @@
 <template>
   <div>
-    <button @click="jump">跳转到原页面</button>
     <!-- 页面名称 -->
-    首页
-
-    <button @click="jump2">开始智能写作</button>
+    读论文
+    <el-input v-model="value" type="text"></el-input>
   </div>
 </template>
 <script>
@@ -18,6 +16,7 @@ export default {
   data() {
     return {
       // 定义变量
+      value: "",
     };
   },
   components: {
@@ -38,12 +37,6 @@ export default {
   },
   methods: {
     // 定义方法
-    jump() {
-      this.$router.push("/dashboard");
-    },
-    jump2() {
-      this.$router.push("/main/explore");
-    },
   },
 };
 </script>

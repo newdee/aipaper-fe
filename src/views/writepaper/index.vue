@@ -1,10 +1,7 @@
 <template>
   <div>
-    <button @click="jump">跳转到原页面</button>
     <!-- 页面名称 -->
-    首页
-
-    <button @click="jump2">开始智能写作</button>
+    写论文
   </div>
 </template>
 <script>
@@ -38,12 +35,6 @@ export default {
   },
   methods: {
     // 定义方法
-    jump() {
-      this.$router.push("/dashboard");
-    },
-    jump2() {
-      this.$router.push("/main/explore");
-    },
   },
 };
 </script>
