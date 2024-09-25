@@ -1,10 +1,9 @@
 <template>
   <div>
-    <button @click="jump">跳转到原页面</button>
-    <!-- 页面名称 -->
-    首页
     <input-main></input-main>
-    <button @click="jump2">跳转详情页</button>
+    <el-button type="success" @click="jump">跳转到原页面</el-button>
+    <!-- 页面名称 -->
+    <el-button type="success" @click="jump2">跳转详情页</el-button>
   </div>
 </template>
 <script>
