@@ -15,7 +15,7 @@ NProgress.configure({
   showSpinner: false
 }) // NProgress Configuration
 
-const whiteList = ['/login', '/home', '/paperPreview', '/reduceRepetiton', "/preview", '/paper', '/paper/preview', '/paper/reduceRepetiton','/userInfo'] // no redirect whitelist
+const whiteList = ['/login', '/home', '/paperPreview', '/reduceRepetiton', "/preview", '/dashboard','/paper', '/paper/preview', '/paper/reduceRepetiton','/userInfo'] // no redirect whitelist
 // setToken("editor-token");
 router.beforeEach(async (to, from, next) => {
   // start progress bar
