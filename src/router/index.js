@@ -1,10 +1,11 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from "vue";
+import Router from "vue-router";
 
-Vue.use(Router)
+Vue.use(Router);
 
 /* Layout */
-import Layout from '@/layout'
+import Layout from "@/layout";
+import mLayout from "@/layout/mainLayout.vue";
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -30,210 +31,214 @@ import Layout from '@/layout'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-export const constantRoutes = [{
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-},
+export const constantRoutes = [
+  {
+    path: "/login",
+    component: () => import("@/views/login/index"),
+    hidden: true,
+  },
 
-{
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
-},
-{
-    path: '/userInfo',
-    component: () => import('@/views/user/userinfo'),
-    hidden: true
-},
+  {
+    path: "/userInfo",
+    component: () => import("@/views/user/userinfo"),
+    hidden: true,
+  },
+  {
+    path: "/dashboard",
+    component: () => import("@/views/dashboard/index"),
+    hidden: true,
+  },
 
-{
-    path: '/',
+  {
+    path: "/",
     component: Layout,
-    redirect: '/home',
-    children: [{
-        path: 'home',
-        name: 'home',
-        component: () => import('@/views/dashboard/index'),
+    redirect: "/home",
+    children: [
+      {
+        path: "home",
+        name: "home",
+        component: () => import("@/views/home/index"),
         meta: {
-            title: 'home',
-            icon: 'dashboard'
-        }
-    }]
-},
-{
-    path: '/paper',
-    component: Layout,
-    redirect: '/paper/preview',
-    children: [{
-        path: 'preview',
-        name: 'preview',
-        component: () => import('@/views/paperpreview/index'),
-        meta: {
-            title: '范文样例',
-            icon: 'dashboard'
-        }
-    },
-    {
-        path: 'reduceRepetiton',
-        name: 'reduceRepetiton',
-        component: () => import('@/views/reduceRepetition/index'),
-        meta: {
-            title: '智能降重',
-            icon: 'dashboard'
-        }
-    }
-    ]
-},
-// {
-//   path: '/paper',
-//   component: Layout,
-//   redirect: '/paper/reduceRepetiton',
-//   children: []
-// },
+          title: "home",
+          icon: "dashboard",
+        },
+      },
+    ],
+  },
 
-// {
-//   path: '/reduceRepetiton',
-//   component: () => import('@/views/reduceRepetition/index'),
-//   hidden: true
-// },
-
-{
-    path: '/example',
+  {
+    path: "/paper",
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
+    redirect: "/paper/preview",
+    children: [
+      {
+        path: "preview",
+        name: "preview",
+        component: () => import("@/views/paperpreview/index"),
+        meta: {
+          title: "范文样例",
+          icon: "dashboard",
+        },
+      },
+      {
+        path: "reduceRepetiton",
+        name: "reduceRepetiton",
+        component: () => import("@/views/reduceRepetition/index"),
+        meta: {
+          title: "智能降重",
+          icon: "dashboard",
+        },
+      },
+    ],
+  },
+  // {
+  //   path: '/paper',
+  //   component: Layout,
+  //   redirect: '/paper/reduceRepetiton',
+  //   children: []
+  // },
+
+  // {
+  //   path: '/reduceRepetiton',
+  //   component: () => import('@/views/reduceRepetition/index'),
+  //   hidden: true
+  // },
+  {
+    path: "/home",
+    component: Layout,
+    redirect: "/home",
+
+    children: [
+      {
+        path: "home",
+        name: "home",
+        component: () => import("@/views/main/index"),
+
+        meta: {
+          title: "home",
+          icon: "dashboard",
+        },
+      },
+    ],
+    hidden: true,
+  },
+
+  {
+    path: "/main",
+    component: mLayout,
+    redirect: "/main/explore",
+    name: "main",
     meta: {
-        title: 'Example',
-        icon: 'el-icon-s-help'
+      title: "main",
+      icon: "el-icon-s-help",
     },
-    children: [{
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
+    children: [
+      {
+        path: "explore",
+        name: "explore",
+        component: () => import("@/views/explore/index"),
         meta: {
-            title: 'Table',
-            icon: 'table'
-        }
-    },
-    {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: {
-            title: 'Tree',
-            icon: 'tree'
-        }
-    }
-    ]
-},
-
-
-
-{
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-        title: 'Nested',
-        icon: 'nested'
-    },
-    children: [{
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: {
-            title: 'Menu1'
+          keepAlive: true,
+          title: "explore",
+          icon: "table",
         },
-        children: [{
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: {
-                title: 'Menu1-1'
-            }
-        },
-        {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: {
-                title: 'Menu1-2'
-            },
-            children: [{
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: {
-                    title: 'Menu1-2-1'
-                }
-            },
-            {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: {
-                    title: 'Menu1-2-2'
-                }
-            }
-            ]
-        },
-        {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: {
-                title: 'Menu1-3'
-            }
-        }
-        ]
-    },
-    {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
+      },
+      {
+        path: "writepaper",
+        name: "writepaper",
+        component: () => import("@/views/writepaper/index"),
         meta: {
-            title: 'menu2'
-        }
-    }
-    ]
-},
-
-{
-    path: 'external-link',
-    component: Layout,
-    children: [{
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+          title: "writepaper",
+          keepAlive: true,
+          icon: "tree",
+        },
+      },
+      // 读论文
+      {
+        path: "readpaper",
+        name: "readpaper",
+        component: () => import("@/views/readpaper/index"),
         meta: {
-            title: 'External Link',
-            icon: 'link'
-        }
-    }]
-},
+          keepAlive: true,
+          title: "readpaper",
+          icon: "tree",
+        },
+      },
+      // 该论文
+      {
+        path: "amendpaper",
+        name: "amendpaper",
+        component: () => import("@/views/amendpaper/index"),
+        meta: {
+          title: "amendpaper",
+          keepAlive: true,
+          icon: "tree",
+        },
+      },
+      // 综合服务
+      {
+        path: "integratedservices",
+        name: "integratedservices",
+        component: () => import("@/views/integratedservices/index"),
+        meta: {
+          keepAlive: true,
+          title: "integratedservices",
+          icon: "tree",
+        },
+      },
+      // ai工具
+      {
+        path: "aitools",
+        name: "aitools",
+        component: () => import("@/views/aitools/index"),
+        meta: {
+          title: "aitools",
+          keepAlive: true,
+          icon: "tree",
+        },
+      },
+      // 降重/降aigc率
+      {
+        path: "reduceRepetition",
+        name: "reduceRepetition",
+        component: () => import("@/views/reduceRepetition/index.vue"),
+        meta: {
+          title: "reduceRepetition",
+          icon: "tree",
+          keepAlive: true,
+        },
+      },
+    ],
+  },
 
-// 404 page must be placed at the end !!!
-{
-    path: '*',
-    redirect: '/404',
-    hidden: true
-}
-]
+  {
+    path: "/404",
+    component: () => import("@/views/404"),
+    hidden: true,
+  },
+  // 404 page must be placed at the end !!!
+  {
+    path: "*",
+    redirect: "/404",
+    hidden: true,
+  },
+];
 
-const createRouter = () => new Router({
+const createRouter = () =>
+  new Router({
     // mode: 'history', // require service support
     scrollBehavior: () => ({
-        y: 0
+      y: 0,
     }),
-    routes: constantRoutes
-})
+    routes: constantRoutes,
+  });
 
-const router = createRouter()
+const router = createRouter();
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-    const newRouter = createRouter()
-    router.matcher = newRouter.matcher // reset router
+  const newRouter = createRouter();
+  router.matcher = newRouter.matcher; // reset router
 }
 
-export default router
+export default router;

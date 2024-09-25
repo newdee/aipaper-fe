@@ -27,6 +27,7 @@
   padding: 4px 16px;
   font-size: 14px;
   color: #1e293b;
+  z-index: 1000;
   p {
     line-height: 0px;
   }
