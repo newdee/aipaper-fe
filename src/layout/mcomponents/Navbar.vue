@@ -1,52 +1,88 @@
 <template>
   <div class="navbar">
     <el-row :gutter="10">
-      <el-col :xs="21" :sm="12">
-        <div
-          @click="jumpDetail('/')"
-          class="grid-content nav_left flex items-center"
-        >
-          <div class="logo-box">
-            <img :src="logo" alt="" title="logo" />
-          </div>
-          <div>
-            <span class="web_title">
-              mixpaperPass
-              <span>.com</span>
-            </span>
-            <span>AI写作指导平台</span>
-          </div>
-        </div>
-      </el-col>
-      <button @click="jumpDetail('/main/explore')">读论文</button>
-      <button @click="jumpDetail('/main/writepaper')">写论文</button>
-      <button @click="jumpDetail('/main/readpaper')">改论文</button>
-      <button @click="jumpDetail('/main/amendpaper')">读论文</button>
-      <button @click="jumpDetail('/main/integratedservices')">读论文</button>
-      <button @click="jumpDetail('/main/aitools')">读论文</button>
-      <button @click="jumpDetail('/main/reduceRepetition')">读论文</button>
-      <el-col :xs="3" :sm="12">
-        <div
-          class="grid-content flex items-center operations items-align-right"
-        >
+      <el-col :xs="18" :sm="18" :lg="18">
+        <div class="navItems flex">
           <div
-            class="text-main items-center hidden-xs-only"
-            @click="jumpDetail('/paper/reduceRepetiton')"
+            :class="['navItem', activeIndex == '1' ? 'active' : '']"
+            @click="
+              activeIndex = 1;
+              jumpDetail('/home');
+            "
+          >
+            首页
+          </div>
+          <div
+            :class="['navItem', activeIndex == '2' ? 'active' : '']"
+            @click="
+              activeIndex = 2;
+              jumpDetail('/main/writepaper');
+            "
+          >
+            写论文
+          </div>
+          <div
+            :class="['navItem', activeIndex == '3' ? 'active' : '']"
+            @click="
+              activeIndex = 3;
+              jumpDetail('/main/readpaper');
+            "
+          >
+            读论文
+          </div>
+          <div
+            :class="['navItem', activeIndex == '4' ? 'active' : '']"
+            @click="
+              activeIndex = 4;
+              jumpDetail('/main/amendpaper');
+            "
+          >
+            改论文
+          </div>
+          <div
+            :class="['navItem', activeIndex == '5' ? 'active' : '']"
+            @click="
+              activeIndex = 5;
+              jumpDetail('/main/integratedservices');
+            "
+          >
+            综合服务
+          </div>
+          <div
+            :class="['navItem', activeIndex == '6' ? 'active' : '']"
+            @click="
+              activeIndex = 6;
+              jumpDetail('/main/explore');
+            "
+          >
+            精品课程
+          </div>
+          <div
+            :class="['navItem', activeIndex == '7' ? 'active' : '']"
+            @click="
+              activeIndex = 7;
+              jumpDetail('/main/aitools');
+            "
+          >
+            AI工具
+          </div>
+          <div
+            :class="['navItem', activeIndex == '8' ? 'active' : '']"
+            @click="
+              activeIndex = 8;
+              jumpDetail('/main/reduceRepetition');
+            "
           >
             降重/降AIGC率
           </div>
-          <div
-            class="text-main items-center hidden-xs-only"
-            @click="showOrderList"
-          >
-            我的订单
+        </div>
+      </el-col>
+      <el-col :xs="6" :sm="6" :lg="6">
+        <div class="flex navBarRight">
+          <div class="gift">
+            <span class="num">1</span>
           </div>
-          <div
-            class="text-main items-center hidden-xs-only"
-            @click="jumpDetail('/paper/preview')"
-          >
-            范文样例
-          </div>
+          <div class="btn" @click="$dev">升级专业版</div>
           <template>
             <div
               v-if="!hasLogin"
@@ -65,12 +101,6 @@
               </UserMenu>
             </div>
           </template>
-          <div
-            class="hidden-sm-and-up operation_box bg-purple-light"
-            @click="showDraw"
-          >
-            <i class="el-icon-s-operation"></i>
-          </div>
         </div>
       </el-col>
     </el-row>
@@ -163,6 +193,8 @@ export default {
       orderDirection: "ltr", //用户订单抽屉方向
       hasLogin: true,
       ordersDrawer: false,
+
+      activeIndex: 1,
     };
   },
   computed: {
@@ -248,7 +280,7 @@ export default {
 }
 
 .navbar {
-  padding: 0 16px;
+  // padding: 0 16px;
 
   .el-col {
     height: 100%;
@@ -462,5 +494,73 @@ export default {
   width: 100%;
   height: 0px;
   border-top: 1px solid #0000001f;
+}
+
+.navbar {
+  padding-left: $sideBarWidth;
+}
+@media only screen and (max-width: 990px) {
+  .navbar {
+    padding-left: 0px;
+  }
+}
+.navItems {
+  color: #777777;
+  font-size: 14px;
+  line-height: 24px;
+  height: 100%;
+  align-items: center;
+  .navItem {
+    padding: 0 10px;
+  }
+  .active {
+    font-weight: 600;
+    color: #212121;
+    position: relative;
+    &::after {
+      content: "";
+      display: block;
+      width: calc(100% - 20px);
+      height: 3px;
+      background: #3355ff;
+      position: absolute;
+      left: 50%;
+      bottom: -3px;
+      transform: translate(-50%, 0);
+    }
+  }
+}
+.navBarRight {
+  height: 100%;
+  align-items: center;
+  > div {
+    margin: 0 10px;
+  }
+  .gift {
+    --size: 18px;
+    width: var(--size);
+    height: var(--size);
+    background-image: url("../../assets/images/gift.png");
+    background-size: 100% 100%;
+    position: relative;
+    .num {
+      background-color: #ff4d4d;
+      line-height: 18px;
+      padding: 0 6px;
+      color: #fff;
+      border-radius: 9px;
+      position: absolute;
+      right: -13px;
+      top: -10px;
+    }
+  }
+  .btn {
+    background-color: #3355ff;
+    color: #fff;
+    border-radius: 18px;
+    height: 36px;
+    padding: 8px 10px;
+    line-height: 20px;
+  }
 }
 </style>
