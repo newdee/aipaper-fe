@@ -2,9 +2,6 @@
   <div>
     <!-- 底图页面 -->
 
-    <div class="mainBackground">
-      <div></div>
-    </div>
     <div class="swiperBox">
       <swiper
         :options="swiperOption"
@@ -13,10 +10,16 @@
       >
         <!-- slides -->
         <swiper-slide>
-          <div class="sliderImgBox">I'm Slide 1</div>
+          <div class="sliderImgBox">
+            <img src="@/assets/images/banner.png" alt="" />
+          </div>
         </swiper-slide>
         <swiper-slide> <div class="sliderImgBox">I'm Slide3</div></swiper-slide>
-        <swiper-slide> <div class="sliderImgBox">I'm Slide4</div></swiper-slide>
+        <swiper-slide>
+          <div class="sliderImgBox">
+            <img src="@/assets/images/banner.png" alt="" />
+          </div>
+        </swiper-slide>
         <swiper-slide> <div class="sliderImgBox">I'm Slide5</div></swiper-slide>
         <swiper-slide>
           <div class="sliderImgBox">I'm Slide 6</div></swiper-slide
@@ -26,6 +29,20 @@
         >
 
         <!-- 为了显示底部原点分页器 -->
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
+    </div>
+    <div class="swiperNews">
+      <swiper class="swiper" :options="swiperOptionNew">
+        <swiper-slide><div class="newSlider">1</div></swiper-slide>
+        <swiper-slide><div class="newSlider">2</div></swiper-slide>
+        <swiper-slide><div class="newSlider">3</div></swiper-slide>
+        <swiper-slide><div class="newSlider">4</div></swiper-slide>
+        <swiper-slide><div class="newSlider">5</div></swiper-slide>
+        <swiper-slide><div class="newSlider">6</div></swiper-slide>
+        <swiper-slide><div class="newSlider">7</div></swiper-slide>
+        <swiper-slide><div class="newSlider">8</div></swiper-slide>
+        <swiper-slide><div class="newSlider">9</div></swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
       </swiper>
     </div>
@@ -56,11 +73,13 @@ export default {
         mousewheel: true, // 开启鼠标滚轮控制Swiper切换
         loop: true, // 是否循环
         autoplay: true, // 是否自动切换
-        pagination: {
-          // 控制分页器
-          el: ".swiper-pagination",
-          clickable: true, // 此参数设置为true时，点击分页器的指示点分页器会控制Swiper切换
-        },
+        pagination: ".swiper-pagination",
+      },
+      swiperOptionNew: {
+        slidesPerView: 4,
+        spaceBetween: 30,
+        loop: true,
+        pagination: ".swiper-pagination",
       },
     };
   },
@@ -97,17 +116,19 @@ export default {
 // 媒体查询
 // @media only screen and (max-width: 939px) {
 // }
-.mainBackground {
-  background: url("../../../assets/images/newspaper.png") no-repeat 0 0;
-  background-size: cover;
-  height: 612px;
-  width: 100%;
-}
+
 .sliderImgBox {
   height: 195px;
   background: skyblue;
 }
 .swiperBox {
   margin-top: 23px;
+}
+.swiperNews {
+  margin-top: 60px;
+}
+.newSlider {
+  height: 510px;
+  background: sandybrown;
 }
 </style>

@@ -25,9 +25,10 @@
     "path-to-regexp": "2.4.0",
     "postcss-px2rem": "^0.3.0",
     "px2rem-loader": "^0.1.9",
-    "vue": "2.6.10",
+    "vue": "^2.6.10",
     "vue-awesome-swiper": "^2.6.7",
     "vue-router": "3.0.6",
+    "vue-splitpane": "^1.0.6",
     "vuex": "3.1.0"
   },
   "devDependencies": {

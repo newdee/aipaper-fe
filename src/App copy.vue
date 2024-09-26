@@ -1,33 +1,26 @@
+
 <template>
-  <div>
-    <el-button type="success" @click="jump">跳转到原页面</el-button>
-    <!-- 页面名称 -->
-    <el-button type="success" @click="jump2">跳转详情页</el-button>
-    <search-paper></search-paper>
-    <input-main></input-main>
-    <!-- 优势页面 -->
-    <advantage></advantage>
+  <div id="app">
+    <div>
+      <router-view />
+    </div>
+    <div>定义全局</div>
   </div>
 </template>
-<script>
 // import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
-import inputMain from "./components/inputMain.vue";
-import advantage from "./components/advantage.vue";
-import searchPaper from "./components/searchPaper.vue";
+// import webinfo from "@/components/webinfo.vue";
 // import eventBus from "@/utils/eventBus";
-
+<script>
 export default {
-  name: "myFooter",
+  name: "App",
   data() {
     return {
       // 定义变量
     };
   },
   components: {
-    inputMain,
-    advantage,
-    searchPaper,
+    // webinfo,
   },
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
@@ -44,12 +37,6 @@ export default {
   },
   methods: {
     // 定义方法
-    jump() {
-      this.$router.push("/dashboard");
-    },
-    jump2() {
-      this.$router.push("/main/explore");
-    },
   },
 };
 </script>
