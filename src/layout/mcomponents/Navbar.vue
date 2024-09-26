@@ -82,7 +82,7 @@
           <div class="gift">
             <span class="num">1</span>
           </div>
-          <div class="btn" @click="$dev">升级专业版</div>
+          <div class="btn" @click="$devf">升级专业版</div>
           <template>
             <div
               v-if="!hasLogin"

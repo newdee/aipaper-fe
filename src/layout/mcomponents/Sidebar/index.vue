@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="logo">
+    <div @click="$jumpUrl('/')" class="logo">
       <img src="@/assets/images/MIXPAPER.png" alt="" />
     </div>
     <div class="mSiderBar">
-      <div class="mItemWrapper">
+      <div @click="$jumpUrl('/main/explore')" class="mItemWrapper">
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>探索</div>
           <span class="right imgIcon"></span>
@@ -88,6 +88,7 @@ export default {
       return !this.sidebar.opened;
     },
   },
+  methods: {},
 };
 </script>
 <stlyle lang="scss" scoped>
