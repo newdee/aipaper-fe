@@ -1,129 +1,51 @@
+
 <template>
-  <div class="wrap">
-    <split-pane
-      @resize="resize"
-      :default-size="800"
-      :min-percent="20"
-      :default-percent="70"
-      split="vertical"
-    >
-      <template slot="paneL">
-        <!-- 编辑自己的代码 -->
-        <router-view />
-      </template>
-      <template slot="paneR">
-        <!-- 编辑自己的代码 -->
-        <div class="paneR"></div>
-      </template>
-    </split-pane>
+  <div id="app">
+    <div>
+      <router-view />
+    </div>
+    <div>定义全局</div>
   </div>
 </template>
-
-  <script>
-import splitPane from "vue-splitpane";
+// import { mapGetters } from "vuex";
+// import { sms } from "@/api/login";
+// import webinfo from "@/components/webinfo.vue";
+// import eventBus from "@/utils/eventBus";
+<script>
 export default {
   name: "App",
-  components: { splitPane },
   data() {
-    return {};
+    return {
+      // 定义变量
+    };
   },
-  mounted() {},
+  components: {
+    // webinfo,
+  },
+  mounted() {
+    // eventBus.emit("sendOutline", 5); // 发布事件
+    // 页面初始化
+  },
+  created() {
+    // eventBus.on("sendOutline", this.addE); // 订阅事件
+  },
+  beforeDestroy() {
+    // eventBus.off("sendOutline", this.addE); // 移除事件监听
+  },
+  computed: {
+    // 计算属性
+  },
   methods: {
-    //开启轮询模式
-    resize(val) {
-      console.log("val", val);
-    },
+    // 定义方法
   },
 };
 </script>
+<style lang="scss" scoped>
+// 引入scss
+// @import "@/styles/variables.scss";
+// @import './index.scss';
 
-  <style lang="scss" scoped>
-.wrap {
-  height: 100%;
-  .paneL {
-    background-color: red;
-    height: 100%;
-    width: 100%;
-  }
-  .paneR {
-    background-color: pink;
-    height: 100%;
-    width: 100%;
-  }
-}
-#container {
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-}
-
-.topLeft {
-  height: 100%;
-  width: calc(100% - 4px);
-  margin-right: 4px;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  background-color: #4a4a4a;
-}
-.topRight {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  background-color: #4a4a4a;
-}
-.bottomLeft {
-  width: calc(100% - 4px);
-  margin-right: 4px;
-  height: calc(100% - 8px);
-  margin-top: 8px;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  background-color: #4a4a4a;
-}
-
-.brTop {
-  height: calc(100% - 8px);
-  margin-top: 8px;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  background-color: #4a4a4a;
-}
-.brBottom {
-  height: calc(100% - 8px);
-  margin-top: 8px;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  background-color: #4a4a4a;
-}
-.title {
-  height: 26px;
-  color: #9fe1f9;
-  font-weight: 700;
-  font-size: 16px;
-  padding-left: 5px;
-}
-.contentTable {
-  flex: 1;
-  height: calc(100% - 26px);
-  overflow: auto;
-}
-.contentTable >>> .el-table__body-wrapper::-webkit-scrollbar {
-  width: 10px;
-  height: 8px;
-}
-/* 修改每行高度 */
-/* .topRight >>> .el-table__row {
-  height: 100px !important;
-  } */
-/* .splitter-pane-resizer {
-  background: transparent!important;
-  } */
-.vue-splitter-container >>> .splitter-pane-resizer {
-  background: transparent !important;
-}
+// 媒体查询
+// @media only screen and (max-width: 939px) {
+// }
 </style>

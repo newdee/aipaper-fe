@@ -1,0 +1,112 @@
+.mainBackground {
+  padding-top: 100px;
+
+  .leftMainText {
+    max-width: 1100px;
+    margin: 0 auto;
+    font-family: AlimamaShuHeiTi;
+    font-size: 56px;
+    color: #212121;
+    line-height: 58px;
+    font-weight: bold;
+    text-align: left;
+    font-style: normal;
+  }
+}
+.mainInput {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  margin-top: 30px;
+  background-color: #fff;
+  display: flex;
+  border-radius: 12px;
+  padding: 0 30px;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  .inputName {
+    font-family: PingFangSC, PingFang SC;
+    font-weight: 600;
+    font-size: 16px;
+    color: #212121;
+    line-height: 28px;
+    text-align: left;
+    font-style: normal;
+    background: linear-gradient(
+      45.000000000000014deg,
+      #00d5ff 0%,
+      #0091ff 29%,
+      #6236ff 62%,
+      #b620e0 100%
+    );
+    color: transparent;
+    background-clip: text;
+  }
+  .selectText {
+    width: 80px;
+    margin-right: 10px;
+    margin-left: 10px;
+    :deep(.el-input__inner) {
+      background-color: transparent !important;
+    }
+  }
+
+  .inputBox {
+    flex: 1;
+    font-size: 18px;
+    input {
+      width: 100%;
+      background-color: #fff;
+      height: 78px;
+      outline: none;
+      border: none;
+    }
+  }
+  .searchIconBox {
+    width: 32px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    background: #3355ff;
+    border-radius: 16px;
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+.inputDesc {
+  max-width: 1100px;
+  margin: 0 auto;
+  margin-top: 30px;
+  height: 48px;
+  display: flex;
+  & > p {
+    font-family: PingFangSC, PingFang SC;
+    font-weight: 400;
+    font-size: 24px;
+    color: #212121;
+    line-height: 33px;
+    text-align: left;
+    font-style: normal;
+  }
+  div {
+    width: 190px;
+    height: 48px;
+    background: #3355ff;
+    border-radius: 24px;
+    margin-left: 30px;
+    font-family: PingFangSC, PingFang SC;
+    font-size: 20px;
+    color: #ffffff;
+    line-height: 24px;
+    text-align: left;
+    font-style: normal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
