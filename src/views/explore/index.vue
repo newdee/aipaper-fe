@@ -40,7 +40,7 @@ export default {
 .wrap {
   height: 300px;
   .paneL {
-    background-color: red;
+    background-color: sandybrown;
     height: 100%;
     width: 100%;
   }

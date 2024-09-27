@@ -2,12 +2,12 @@
   <div>
     <!-- 页面名称 -->
     <div class="mainBackground">
-      <div>
+      <div class="leftMainText">
         <p>MIXPAPER</p>
         <p>万象学术</p>
       </div>
-      <div>
-        <p>AI 论文快插</p>
+      <div class="mainInput">
+        <p class="inputName">AI 论文快查</p>
         <div class="selectText">
           <el-select v-model="value" placeholder="请选择">
             <el-option
@@ -21,12 +21,21 @@
         </div>
         <!-- 输入框 -->
         <div class="inputBox">
-          <input type="text" />
+          <input placeholder="输入你想查找的论文信息" type="text" />
         </div>
-        <div>
+        <div class="searchIconBox">
           <span>
-            <i class="el-icon-search"></i>
+            <img src="@/assets/images/search.png" alt="" />
           </span>
+        </div>
+      </div>
+      <div class="inputDesc g_poin" @click="$jumpUrl('/main/explore')">
+        <p>全网首家免费无限AI改稿平台</p>
+        <div>
+          <p>
+            开始智能写作
+            <i class="el-icon-caret-right"></i>
+          </p>
         </div>
       </div>
     </div>
@@ -46,7 +55,7 @@ export default {
       options: [
         {
           value: "选项1",
-          label: "黄金糕",
+          label: "综合",
         },
         {
           value: "选项2",
@@ -57,7 +66,7 @@ export default {
           label: "蚵仔煎",
         },
       ],
-      value: "",
+      value: "综合",
     };
   },
   components: {
@@ -83,9 +92,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 // 引入scss
-// @import "@/styles/variables.scss";
-// @import './index.scss';
-
+@import "@/styles/variables.scss";
+@import "./index.scss";
+//
 // 媒体查询
 // @media only screen and (max-width: 939px) {
 // }

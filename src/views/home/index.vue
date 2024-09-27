@@ -56,7 +56,7 @@ export default {
 <style lang="scss" scoped>
 // 引入scss
 // @import "@/styles/variables.scss";
-// @import './index.scss';
+@import "./index.scss";
 
 // 媒体查询
 // @media only screen and (max-width: 939px) {
