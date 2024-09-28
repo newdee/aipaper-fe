@@ -2,33 +2,18 @@
   <div>
     <!-- 底图页面 -->
 
-    <div class="swiperBox">
-      <swiper
-        :options="swiperOption"
-        ref="mySwiper"
-        @someSwiperEvent="callback"
-      >
-        <!-- slides -->
-        <swiper-slide>
-          <div class="sliderImgBox">
-            <img src="@/assets/images/banner.png" alt="" />
-          </div>
-        </swiper-slide>
-        <swiper-slide> <div class="sliderImgBox">I'm Slide3</div></swiper-slide>
-        <swiper-slide>
-          <div class="sliderImgBox">
-            <img src="@/assets/images/banner.png" alt="" />
-          </div>
-        </swiper-slide>
-        <swiper-slide> <div class="sliderImgBox">I'm Slide5</div></swiper-slide>
-        <swiper-slide>
-          <div class="sliderImgBox">I'm Slide 6</div></swiper-slide
-        >
-        <swiper-slide>
-          <div class="sliderImgBox">I'm Slide 7</div></swiper-slide
-        >
-
-        <!-- 为了显示底部原点分页器 -->
+    
+    <div class="swiperNews">
+      <swiper class="swiper" :options="swiperOptionNew">
+        <swiper-slide><div class="newSlider">1</div></swiper-slide>
+        <swiper-slide><div class="newSlider">2</div></swiper-slide>
+        <swiper-slide><div class="newSlider">3</div></swiper-slide>
+        <swiper-slide><div class="newSlider">4</div></swiper-slide>
+        <swiper-slide><div class="newSlider">5</div></swiper-slide>
+        <swiper-slide><div class="newSlider">6</div></swiper-slide>
+        <swiper-slide><div class="newSlider">7</div></swiper-slide>
+        <swiper-slide><div class="newSlider">8</div></swiper-slide>
+        <swiper-slide><div class="newSlider">9</div></swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
       </swiper>
     </div>
@@ -67,9 +52,6 @@ export default {
         loop: true,
         pagination: ".swiper-pagination",
       },
-      callback: function (item) {
-        console.log(item)
-      }
     };
   },
   components: {

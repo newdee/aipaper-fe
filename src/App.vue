@@ -4,7 +4,6 @@
     <div>
       <router-view />
     </div>
-    <div>定义全局</div>
   </div>
 </template>
 // import { mapGetters } from "vuex";

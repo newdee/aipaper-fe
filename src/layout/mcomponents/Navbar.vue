@@ -2,7 +2,7 @@
   <div class="navbar">
     <el-row :gutter="10">
       <el-col :xs="18" :sm="18" :lg="18">
-        <div class="navItems flex">
+        <!-- <div class="navItems flex">
           <div
             :class="['navItem', activeIndex == '1' ? 'active' : '']"
             @click="
@@ -75,7 +75,7 @@
           >
             降重/降AIGC率
           </div>
-        </div>
+        </div> -->
       </el-col>
       <el-col :xs="6" :sm="6" :lg="6">
         <div class="flex navBarRight">

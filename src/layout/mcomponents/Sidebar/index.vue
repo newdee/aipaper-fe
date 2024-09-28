@@ -10,37 +10,37 @@
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div class="mItemWrapper">
+      <div @click="$jumpUrl('/main/writepaper')" class="mItemWrapper">
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>写论文</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div class="mItemWrapper">
+      <div @click="$jumpUrl('/main/readpaper')" class="mItemWrapper">
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>读论文</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div class="mItemWrapper">
+      <div @click="$jumpUrl('/main/amendpaper')" class="mItemWrapper">
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>改论文</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div class="mItemWrapper">
+      <div @click="$jumpUrl('/main/integratedservices')" class="mItemWrapper">
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>综合服务</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div class="mItemWrapper">
+      <div  @click="$jumpUrl('/main/aitools')"class="mItemWrapper">
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>AI工具</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div class="mItemWrapper">
+      <div @click="$jumpUrl('/main/reduceRepetition')" class="mItemWrapper">
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>降重/降AIGC率</div>
           <span class="right imgIcon"></span>
