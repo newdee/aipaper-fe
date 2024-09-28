@@ -5,6 +5,7 @@
     <el-button type="success" @click="jump2">跳转详情页</el-button>
     <search-paper></search-paper>
     <input-main></input-main>
+    <swiper-three></swiper-three>
     <!-- 优势页面 -->
     <advantage></advantage>
   </div>
@@ -13,6 +14,7 @@
 // import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 import inputMain from "./components/inputMain.vue";
+import swiperThree from "./components/swiperThree.vue";
 import advantage from "./components/advantage.vue";
 import searchPaper from "./components/searchPaper.vue";
 // import eventBus from "@/utils/eventBus";
@@ -28,6 +30,7 @@ export default {
     inputMain,
     advantage,
     searchPaper,
+    swiperThree,
   },
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
