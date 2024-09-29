@@ -13,6 +13,9 @@
 <script>
 // import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
+
+import { getHomeInfo } from "@/api/user";
+
 import inputMain from "./components/inputMain.vue";
 import swiperThree from "./components/swiperThree.vue";
 import advantage from "./components/advantage.vue";
@@ -35,6 +38,13 @@ export default {
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
+    // 获取首页数据
+    this.$nextTick(() => {
+      getHomeInfo().then((res) => {
+        console.log(res.result, "res");
+        this.$store.dispatch("app/setHomeData", res.result);
+      });
+    });
   },
   created() {
     // eventBus.on("sendOutline", this.addE); // 订阅事件

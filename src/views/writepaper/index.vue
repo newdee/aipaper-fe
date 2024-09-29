@@ -1,5 +1,5 @@
 <template>
-  <div class="writepaper">
+  <div class="mainContentSec">
     <!-- 页面名称 -->
     <swiper-one class="topSwiper"></swiper-one>
 
@@ -10,31 +10,29 @@
         <div class="tabIcon">
           <span></span>
         </div>
-        <p class="tabIntro">
-          填写需求 <span>生成大纲</span>
-        </p>
+        <p class="tabIntro">填写需求 <span>生成大纲</span></p>
       </div>
       <div :class="['tabLi', activeIndex == 2 ? 'activeTab' : '']">
         <p class="tabsTitle">Step 2</p>
         <div class="tabIcon">
           <span></span>
         </div>
-        <p class="tabIntro">
-          填写需求 <span>生成大纲</span>
-        </p>
+        <p class="tabIntro">填写需求 <span>生成大纲</span></p>
       </div>
       <div :class="['tabLi', activeIndex == 3 ? 'activeTab' : '']">
         <p class="tabsTitle">Step 3</p>
         <div class="tabIcon">
           <span></span>
         </div>
-        <p class="tabIntro">
-          填写需求 <span>生成大纲</span>
-        </p>
+        <p class="tabIntro">填写需求 <span>生成大纲</span></p>
       </div>
     </div>
-    <div @click="tabStapAdd" class="tabsContent">
-      下一步
+    <div @click="tabStapAdd" class="tabsContent">下一步</div>
+    <div class="outlineBox">
+      <outline></outline>
+    </div>
+    <div class="stepContent">
+      <step1></step1>
     </div>
   </div>
 </template>
@@ -43,18 +41,25 @@
 // import { sms } from "@/api/login";
 import swiperOne from "@/views/home/components/inputMain.vue";
 // import eventBus from "@/utils/eventBus";
-
+import step1 from "./components/step1.vue";
+import step2 from "./components/step2.vue";
+import outline from "./components/outline.vue";
+import step3 from "./components/step3.vue";
 export default {
   name: "writepaper",
   data() {
     return {
       // 定义变量
-      activeIndex: 1
+      activeIndex: 1,
     };
   },
   components: {
     // webinfo,
-    swiperOne
+    swiperOne,
+    outline,
+    step3,
+    step2,
+    step1,
   },
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
@@ -73,9 +78,9 @@ export default {
     // 定义方法
     tabStapAdd() {
       if (this.activeIndex <= 3) {
-        this.activeIndex += 1
+        this.activeIndex += 1;
       }
-    }
+    },
   },
 };
 </script>
@@ -95,12 +100,12 @@ export default {
 .tabsList {
   // : 1200px;
   width: 100%;
+  max-width: 1200px;
   margin-top: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #E6EDFF;
-
+  background-color: #e6edff;
   .tabLi {
     width: 33.3%;
     display: flex;
@@ -108,7 +113,6 @@ export default {
     align-items: center;
     justify-content: center;
     height: 130px;
-
   }
 
   .tabsTitle {
@@ -135,7 +139,7 @@ export default {
       display: inline-block;
       width: 12px;
       height: 12px;
-      background: #FFFFFF;
+      background: #ffffff;
       border-radius: 8px;
     }
   }
@@ -150,7 +154,7 @@ export default {
     font-style: normal;
 
     span {
-      color: #3355FF;
+      color: #3355ff;
       margin-left: -5px;
     }
   }
@@ -159,11 +163,10 @@ export default {
     background-color: #fff !important;
 
     .tabsTitle {
-      color: #3355FF;
+      color: #3355ff;
     }
-
     .tabIcon {
-      background-color: #3355FF;
+      background-color: #3355ff;
     }
   }
 }
