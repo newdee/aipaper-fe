@@ -1,5 +1,5 @@
 <template>
-    <div class="footer">
+    <div :class="['footer', $route.fullPath == '/home' ? 'isHome' : '']">
         <!-- 网站信息 -->
         <section class="siteInfo">
             <div class="col col_1">
@@ -74,6 +74,14 @@ export default {
     padding-left: $sideBarWidth !important;
 }
 
+.footer.isHome {
+    padding-left: 0px !important;
+
+    .siteInfo {
+        padding-left: $sideBarWidth !important;
+    }
+}
+
 @media only screen and (max-width: 990px) {
     .footer {
         padding-left: 0px !important;
@@ -142,10 +150,6 @@ export default {
     }
 
 
-}
-
-.footer {
-    padding: 15px 0;
 }
 
 .footer p {

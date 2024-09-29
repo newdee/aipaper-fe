@@ -3,30 +3,30 @@
     <!-- 底图页面 -->
 
     <div class="swiperBox">
-      <swiper
-        :options="swiperOption"
-        ref="mySwiper"
-        @someSwiperEvent="callback"
-      >
+      <swiper :options="swiperOption" ref="mySwiper" @someSwiperEvent="callback">
         <!-- slides -->
         <swiper-slide>
           <div class="sliderImgBox">
             <img src="@/assets/images/banner.png" alt="" />
           </div>
         </swiper-slide>
-        <swiper-slide> <div class="sliderImgBox">I'm Slide3</div></swiper-slide>
+        <swiper-slide>
+          <div class="sliderImgBox">I'm Slide3</div>
+        </swiper-slide>
         <swiper-slide>
           <div class="sliderImgBox">
             <img src="@/assets/images/banner.png" alt="" />
           </div>
         </swiper-slide>
-        <swiper-slide> <div class="sliderImgBox">I'm Slide5</div></swiper-slide>
         <swiper-slide>
-          <div class="sliderImgBox">I'm Slide 6</div></swiper-slide
-        >
+          <div class="sliderImgBox">I'm Slide5</div>
+        </swiper-slide>
         <swiper-slide>
-          <div class="sliderImgBox">I'm Slide 7</div></swiper-slide
-        >
+          <div class="sliderImgBox">I'm Slide 6</div>
+        </swiper-slide>
+        <swiper-slide>
+          <div class="sliderImgBox">I'm Slide 7</div>
+        </swiper-slide>
 
         <!-- 为了显示底部原点分页器 -->
         <div class="swiper-pagination" slot="pagination"></div>
@@ -46,7 +46,7 @@ import { swiper, swiperSlide } from "vue-awesome-swiper";
 // import eventBus from "@/utils/eventBus";
 
 export default {
-  name: "myFooter",
+  name: "inputMain",
   data() {
     return {
       // 定义变量
@@ -110,12 +110,15 @@ export default {
   height: 195px;
   background: skyblue;
 }
+
 .swiperBox {
   margin-top: 23px;
 }
+
 .swiperNews {
   margin-top: 60px;
 }
+
 .newSlider {
   height: 510px;
   background: sandybrown;

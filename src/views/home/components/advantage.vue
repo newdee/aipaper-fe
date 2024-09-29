@@ -1,11 +1,7 @@
 <template>
   <div class="adBox">
     <!-- 页面名称 -->
-    <div
-      class="newLi"
-      v-for="(item, index) in advantageList"
-      :key="index + 'ad'"
-    >
+    <div class="newLi" v-for="(item, index) in advantageList" :key="index + 'ad'">
       {{ item.name }}
       {{ item.label }}
     </div>
@@ -18,7 +14,7 @@
 // import eventBus from "@/utils/eventBus";
 
 export default {
-  name: "myFooter",
+  name: "advantage",
   data() {
     return {
       // 定义变量
@@ -83,6 +79,7 @@ export default {
   background: #f5f8ff;
   padding: 30px 0;
 }
+
 .newLi {
   width: 172px;
   height: 485px;

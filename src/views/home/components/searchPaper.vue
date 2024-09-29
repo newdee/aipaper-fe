@@ -10,12 +10,7 @@
         <p class="inputName">AI 论文快查</p>
         <div class="selectText">
           <el-select v-model="value" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
         </div>
@@ -29,7 +24,7 @@
           </span>
         </div>
       </div>
-      <div class="inputDesc g_poin" @click="$jumpUrl('/main/explore')">
+      <div class="inputDesc g_poin" @click="$jumpUrl('/main/writepaper')">
         <p>全网首家免费无限AI改稿平台</p>
         <div>
           <p>
@@ -48,7 +43,7 @@
 // import eventBus from "@/utils/eventBus";
 
 export default {
-  name: "myFooter",
+  name: "searchPaper",
   data() {
     return {
       // 定义变量
@@ -94,6 +89,7 @@ export default {
 // 引入scss
 @import "@/styles/variables.scss";
 @import "./index.scss";
+
 //
 // 媒体查询
 // @media only screen and (max-width: 939px) {
@@ -103,5 +99,24 @@ export default {
   background-size: cover;
   height: 612px;
   width: 100%;
+}
+
+.selectText {
+  margin: 0 !important;
+}
+
+.selectText .el-select {
+  position: relative;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #fff;
+  }
 }
 </style>

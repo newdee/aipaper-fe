@@ -1,46 +1,37 @@
 <template>
-  <div>
+  <div class="mainContentSec">
     <!-- 页面名称 -->
-    <swiper-one></swiper-one>
+    <swiper-one class="topSwiper"></swiper-one>
 
     <!-- tabs写论文 -->
     <div class="tabsList">
-      <div 
-      :class="['tabLi', activeIndex == 1 ? 'activeTab': ''] "
-      >
+      <div :class="['tabLi', activeIndex == 1 ? 'activeTab' : '']">
         <p class="tabsTitle">Step 1</p>
         <div class="tabIcon">
           <span></span>
         </div>
-        <p class="tabIntro">
-        填写需求 <span>生成大纲</span>
-        </p>
+        <p class="tabIntro">填写需求 <span>生成大纲</span></p>
       </div>
-      <div 
-      :class="['tabLi', activeIndex == 2 ? 'activeTab': ''] "
-      >
+      <div :class="['tabLi', activeIndex == 2 ? 'activeTab' : '']">
         <p class="tabsTitle">Step 2</p>
         <div class="tabIcon">
           <span></span>
         </div>
-        <p class="tabIntro">
-        填写需求 <span>生成大纲</span>
-        </p>
+        <p class="tabIntro">填写需求 <span>生成大纲</span></p>
       </div>
-      <div 
-      :class="['tabLi', activeIndex == 3 ? 'activeTab': ''] "
-      >
+      <div :class="['tabLi', activeIndex == 3 ? 'activeTab' : '']">
         <p class="tabsTitle">Step 3</p>
         <div class="tabIcon">
           <span></span>
         </div>
-        <p class="tabIntro">
-        填写需求 <span>生成大纲</span>
-        </p>
+        <p class="tabIntro">填写需求 <span>生成大纲</span></p>
       </div>
     </div>
-    <div @click="tabStapAdd" class="tabsContent">
-      下一步
+    <div class="outlineBox">
+      <outline></outline>
+    </div>
+    <div class="stepContent">
+      <step1></step1>
     </div>
   </div>
 </template>
@@ -49,18 +40,25 @@
 // import { sms } from "@/api/login";
 import swiperOne from "@/views/home/components/inputMain.vue";
 // import eventBus from "@/utils/eventBus";
-
+import step1 from "./components/step1.vue";
+import step2 from "./components/step2.vue";
+import outline from "./components/outline.vue";
+import step3 from "./components/step3.vue";
 export default {
-  name: "myFooter",
+  name: "writepaper",
   data() {
     return {
       // 定义变量
-      activeIndex: 1
+      activeIndex: 1,
     };
   },
   components: {
     // webinfo,
-    swiperOne
+    swiperOne,
+    outline,
+    step3,
+    step2,
+    step1,
   },
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
@@ -78,10 +76,10 @@ export default {
   methods: {
     // 定义方法
     tabStapAdd() {
-      if (this.activeIndex <=3) {
-        this.activeIndex += 1
+      if (this.activeIndex <= 3) {
+        this.activeIndex += 1;
       }
-    }
+    },
   },
 };
 </script>
@@ -93,14 +91,22 @@ export default {
 // 媒体查询
 // @media only screen and (max-width: 939px) {
 // }
+.topSwiper ::v-deep .sliderImgBox img {
+  width: 100%;
+  height: 100%;
+}
+.mainContentSec {
+  // background-color: #f5f8ff;
+}
 .tabsList {
   // : 1200px;
   width: 100%;
+  max-width: 1200px;
   margin-top: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #E6EDFF;
+  background-color: #e6edff;
   .tabLi {
     width: 33.3%;
     display: flex;
@@ -108,8 +114,8 @@ export default {
     align-items: center;
     justify-content: center;
     height: 130px;
-
   }
+
   .tabsTitle {
     font-family: PingFangSC, PingFang SC;
     font-weight: 600;
@@ -119,6 +125,7 @@ export default {
     text-align: left;
     font-style: normal;
   }
+
   .tabIcon {
     width: 38px;
     height: 38px;
@@ -128,14 +135,16 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+
     span {
       display: inline-block;
       width: 12px;
       height: 12px;
-      background: #FFFFFF;
+      background: #ffffff;
       border-radius: 8px;
     }
   }
+
   .tabIntro {
     font-family: PingFangSC, PingFang SC;
     font-weight: 400;
@@ -144,18 +153,21 @@ export default {
     line-height: 22px;
     text-align: center;
     font-style: normal;
+
     span {
-      color:#3355FF;
+      color: #3355ff;
       margin-left: -5px;
     }
   }
+
   .activeTab {
     background-color: #fff !important;
+
     .tabsTitle {
-      color: #3355FF;
+      color: #3355ff;
     }
-  .tabIcon {
-      background-color: #3355FF;
+    .tabIcon {
+      background-color: #3355ff;
     }
   }
 }
