@@ -3,11 +3,11 @@
     <el-button type="success" @click="jump">跳转到原页面</el-button>
     <!-- 页面名称 -->
     <el-button type="success" @click="jump2">跳转详情页</el-button>
-    <search-paper></search-paper>
-    <input-main></input-main>
-    <swiper-three></swiper-three>
+    <search-paper class="searchPaper"></search-paper>
+    <input-main class="swiper swiper1"></input-main>
+    <swiper-three class="swiper swiper2"></swiper-three>
     <!-- 优势页面 -->
-    <advantage></advantage>
+    <advantage class="swiper swiper3"></advantage>
   </div>
 </template>
 <script>
@@ -20,7 +20,7 @@ import searchPaper from "./components/searchPaper.vue";
 // import eventBus from "@/utils/eventBus";
 
 export default {
-  name: "myFooter",
+  name: "index",
   data() {
     return {
       // 定义变量
@@ -60,8 +60,4 @@ export default {
 // 引入scss
 // @import "@/styles/variables.scss";
 @import "./index.scss";
-
-// 媒体查询
-// @media only screen and (max-width: 939px) {
-// }
 </style>

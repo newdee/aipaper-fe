@@ -4,80 +4,56 @@
       <el-col :xs="18" :sm="18" :lg="18">
         <div class="navItems flex">
           <div @click="jumpDetail('/')" class="grid-content nav_left flex items-center">
-          <div class="logo-box">
-            <img :src="logo" alt="" title="logo" />
+            <div class="logo-box">
+              <img :src="logo" alt="" title="logo" />
+            </div>
           </div>
-        </div>
-          <div
-            :class="['navItem', activeIndex == '1' ? 'active' : '']"
-            @click="
-              activeIndex = 1;
-              jumpDetail('/home');
-            "
-          >
+          <div :class="['navItem', activeIndex == '1' ? 'active' : '']" @click="
+            activeIndex = 1;
+          jumpDetail('/home');
+          ">
             首页
           </div>
-          <div
-            :class="['navItem', activeIndex == '2' ? 'active' : '']"
-            @click="
-              activeIndex = 2;
-              jumpDetail('/main/writepaper');
-            "
-          >
+          <div :class="['navItem', activeIndex == '2' ? 'active' : '']" @click="
+            activeIndex = 2;
+          jumpDetail('/main/writepaper');
+          ">
             写论文
           </div>
-          <div
-            :class="['navItem', activeIndex == '3' ? 'active' : '']"
-            @click="
-              activeIndex = 3;
-              jumpDetail('/main/readpaper');
-            "
-          >
+          <div :class="['navItem', activeIndex == '3' ? 'active' : '']" @click="
+            activeIndex = 3;
+          jumpDetail('/main/readpaper');
+          ">
             读论文
           </div>
-          <div
-            :class="['navItem', activeIndex == '4' ? 'active' : '']"
-            @click="
-              activeIndex = 4;
-              jumpDetail('/main/amendpaper');
-            "
-          >
+          <div :class="['navItem', activeIndex == '4' ? 'active' : '']" @click="
+            activeIndex = 4;
+          jumpDetail('/main/amendpaper');
+          ">
             改论文
           </div>
-          <div
-            :class="['navItem', activeIndex == '5' ? 'active' : '']"
-            @click="
-              activeIndex = 5;
-              jumpDetail('/main/integratedservices');
-            "
-          >
+          <div :class="['navItem', activeIndex == '5' ? 'active' : '']" @click="
+            activeIndex = 5;
+          jumpDetail('/main/integratedservices');
+          ">
             综合服务
           </div>
-          <div
-            :class="['navItem', activeIndex == '6' ? 'active' : '']"
-            @click="
-              activeIndex = 6;
-              jumpDetail('/main/explore');
-            "
-          >
+          <div :class="['navItem', activeIndex == '6' ? 'active' : '']" @click="
+            activeIndex = 6;
+          jumpDetail('/main/explore');
+          ">
             精品课程
           </div>
-          <div
-            :class="['navItem', activeIndex == '7' ? 'active' : '']"
-            @click="
-              activeIndex = 7;
-              jumpDetail('/main/aitools');
-            "
-          >
+          <div :class="['navItem', activeIndex == '7' ? 'active' : '']" @click="
+            activeIndex = 7;
+          jumpDetail('/main/aitools');
+          ">
             AI工具
           </div>
-          <div
-            :class="['navItem', activeIndex == '8' ? 'active' : '']"
-            @click="
-              activeIndex = 8;
-              jumpDetail('/main/reduceRepetition');
-            "
-          >
+          <div :class="['navItem', activeIndex == '8' ? 'active' : '']" @click="
+            activeIndex = 8;
+          jumpDetail('/main/reduceRepetition');
+          ">
             降重/降AIGC率
           </div>
         </div>
@@ -89,11 +65,7 @@
           </div>
           <div class="btn" @click="$devf">升级专业版</div>
           <template>
-            <div
-              v-if="!hasLogin"
-              @click="pushLogin"
-              class="login_box hidden-xs-only"
-            >
+            <div v-if="!hasLogin" @click="pushLogin" class="login_box hidden-xs-only">
               <div class="img">登录</div>
             </div>
             <div v-else class="login_box hidden-xs-only">
@@ -111,60 +83,32 @@
     </el-row>
 
     <!-- 菜单栏 -->
-    <el-drawer
-      size="40%"
-      :visible.sync="drawer"
-      :direction="direction"
-      :before-close="handleClose"
-      :show-close="false"
-      append-to-body
-    >
+    <el-drawer size="40%" :visible.sync="drawer" :direction="direction" :before-close="handleClose" :show-close="false"
+      append-to-body>
       <template slot="title">
         <div>我的菜单</div>
       </template>
       <div class="flex flex-star">
-        <div
-          class="text-main items-center siderbar-item"
-          @click="jumpDetail('/paper/reduceRepetiton')"
-        >
+        <div class="text-main items-center siderbar-item" @click="jumpDetail('/paper/reduceRepetiton')">
           降重/降AIGC率
         </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="showOrderList"
-        >
+        <div class="text-main items-center siderbar-item" @click="showOrderList">
           我的订单
         </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="jumpDetail('/paper/preview')"
-        >
+        <div class="text-main items-center siderbar-item" @click="jumpDetail('/paper/preview')">
           范文样例
         </div>
-        <div
-          v-if="!hasLogin"
-          class="text-main items-center siderbar-item"
-          @click="pushLogin"
-        >
+        <div v-if="!hasLogin" class="text-main items-center siderbar-item" @click="pushLogin">
           登录
         </div>
-        <div
-          v-else
-          class="text-main items-center siderbar-item"
-          @click="jumpDetail('/userInfo')"
-        >
+        <div v-else class="text-main items-center siderbar-item" @click="jumpDetail('/userInfo')">
           我的个人主页
         </div>
       </div>
     </el-drawer>
     <!-- 用户订单 -->
-    <el-drawer
-      :visible.sync="ordersDrawer"
-      :direction="orderDirection"
-      :before-close="handleOrdersClose"
-      append-to-body
-      size="500px"
-    >
+    <el-drawer :visible.sync="ordersDrawer" :direction="orderDirection" :before-close="handleOrdersClose" append-to-body
+      size="500px">
       <template #title>
         <div>我的订单</div>
       </template>
@@ -288,6 +232,7 @@ export default {
 .navbar {
   // padding: 0 16px;
   height: 80px;
+
   .el-col {
     height: 100%;
   }
@@ -337,13 +282,14 @@ export default {
 
 .logo-box {
   width: 117px;
-height: 19px;
-font-family: DOUYINSANSBOLD, DOUYINSANSBOLD;
-font-weight: normal;
-font-size: 24px;
-color: #3355FF;
-text-align: left;
+  height: 19px;
+  font-family: DOUYINSANSBOLD, DOUYINSANSBOLD;
+  font-weight: normal;
+  font-size: 24px;
+  color: #3355FF;
+  text-align: left;
   margin-right: 20px;
+
   img {
     width: 100%;
     height: 100%;
@@ -370,7 +316,7 @@ text-align: left;
   border-radius: 4px;
   height: 100%;
 
-  &:hover > div {
+  &:hover>div {
     cursor: pointer;
   }
 }
@@ -472,7 +418,7 @@ text-align: left;
 .navbar .el-row {
   // width: 100%;
   // color: red;
-  height:100%;
+  height: 100%;
 }
 
 .text-main {
@@ -508,44 +454,51 @@ text-align: left;
 .navbar {
   padding-left: $sideBarWidth;
 }
+
 @media only screen and (max-width: 990px) {
   .navbar {
     padding-left: 0px;
   }
 }
+
 .navItems {
-  & > div:hover {
-      cursor: pointer;
+  &>div:hover {
+    cursor: pointer;
   }
-  
+
   color: #777777;
   font-size: 14px;
   line-height: 24px;
   height: 100%;
   align-items: center;
+
   .navItem {
     padding: 0 10px;
+
     &:hover {
-    font-weight: 600;
-    color: #212121;
-    position: relative;
-    &::after {
-      content: "";
-      display: block;
-      width: calc(100% - 20px);
-      height: 3px;
-      background: #3355ff;
-      position: absolute;
-      left: 50%;
-      bottom: -3px;
-      transform: translate(-50%, 0);
+      font-weight: 600;
+      color: #212121;
+      position: relative;
+
+      &::after {
+        content: "";
+        display: block;
+        width: calc(100% - 20px);
+        height: 3px;
+        background: #3355ff;
+        position: absolute;
+        left: 50%;
+        bottom: -3px;
+        transform: translate(-50%, 0);
+      }
     }
   }
-  }
+
   .active {
     font-weight: 600;
     color: #212121;
     position: relative;
+
     &::after {
       content: "";
       display: block;
@@ -559,12 +512,15 @@ text-align: left;
     }
   }
 }
+
 .navBarRight {
   height: 100%;
   align-items: center;
-  > div {
+
+  >div {
     margin: 0 10px;
   }
+
   .gift {
     --size: 18px;
     width: var(--size);
@@ -572,6 +528,7 @@ text-align: left;
     background-image: url("../../assets/images/gift.png");
     background-size: 100% 100%;
     position: relative;
+
     .num {
       background-color: #ff4d4d;
       line-height: 18px;
@@ -583,6 +540,7 @@ text-align: left;
       top: -10px;
     }
   }
+
   .btn {
     background-color: #3355ff;
     color: #fff;
