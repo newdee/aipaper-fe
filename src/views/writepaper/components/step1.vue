@@ -1,7 +1,17 @@
 <template>
-  <div>
+  <div class="step1Box">
     <!-- 页面名称 -->
-     step1
+    <div class="progressBox">
+      <div class="pgBox">
+        <el-progress
+          :text-inside="true"
+          :stroke-width="24"
+          :percentage="currentNumber"
+          status="success"
+        ></el-progress>
+      </div>
+      <p>大纲生成中 <i class="el-icon-loading"></i>....</p>
+    </div>
   </div>
 </template>
 <script>
@@ -11,10 +21,11 @@
 // import eventBus from "@/utils/eventBus";
 
 export default {
-  name: "myFooter",
+  name: "step1",
   data() {
     return {
       // 定义变量
+      currentNumber: 0,
     };
   },
   components: {
@@ -35,6 +46,33 @@ export default {
   },
   methods: {
     // 定义方法
+    // 生成大纲
+    addE(index) {
+      this.countUpToHundred(index);
+    },
+    countUpToHundred(seconds) {
+      this.currentNumber = 0;
+      const targetNumber = 100;
+      const totalSteps = targetNumber - this.currentNumber;
+
+      // 计算每一步所需的时间（毫秒）
+      const stepTimeMs = (seconds * 1000) / totalSteps;
+
+      this.intervalId = setInterval(() => {
+        console.log(this.currentNumber);
+        this.currentNumber++;
+
+        if (this.currentNumber >= targetNumber) {
+          clearInterval(this.intervalId); // 达到目标数字时清除定时器
+          this.getList();
+        }
+      }, stepTimeMs);
+    },
+    // 渲染大纲
+    getList() {
+      // this.outLineStatus = false;
+      // 判断展示那个大纲
+    },
   },
 };
 </script>
@@ -46,4 +84,9 @@ export default {
 // 媒体查询
 // @media only screen and (max-width: 939px) {
 // }
+.step1Box {
+  // width: ;
+  height: 500px;
+  max-width: 1200px;
+}
 </style>

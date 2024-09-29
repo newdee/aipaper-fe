@@ -8,7 +8,7 @@
     <!-- 推荐内容 -->
     <recommend v-show="outLineStatus"></recommend>
     <!-- <progress></progress> -->
-    <div v-show="!outLineStatus && !loadingStatus" class="progressBox">
+    <div class="progressBox">
       <div class="pgBox">
         <el-progress
           :text-inside="true"

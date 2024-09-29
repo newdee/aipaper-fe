@@ -1,7 +1,6 @@
 <template>
   <div class="outlineMain">
     <!-- 页面名称 -->
-    填写大纲区域
     <div class="outlineTab">
       <div class="outLeft">
         <p
@@ -43,7 +42,7 @@
       <div class="selectLang formItem">
         <p class="formItemLabel">论文类型</p>
         <div class="formItemCon">
-          <el-radio-group v-model="radio">
+          <el-radio-group v-model="requestForm.radio">
             <el-radio
               v-for="item in homeData.category_list"
               :key="item.name"
@@ -52,6 +51,42 @@
             </el-radio>
           </el-radio-group>
         </div>
+      </div>
+      <!-- 科目与题目 -->
+      <div class="selectLang formItem">
+        <p class="formItemLabel">科目与题目</p>
+        <div class="formItemCon">
+          <el-cascader
+            placeholder="请选择科目"
+            v-model="requestForm.selectValue"
+            :options="homeData.subject_list"
+            :props="carProp"
+            @change="handleChange"
+          >
+          </el-cascader>
+          <div class="userInputCon">
+            <el-input
+              v-model="requestForm.title"
+              maxlength="50"
+              show-word-limit
+              placeholder="请输入完整题目，题目越完整大纲越准确"
+            ></el-input>
+          </div>
+        </div>
+      </div>
+      <!-- 三级大纲 -->
+      <div class="selectLang formItem">
+        <p class="formItemLabel">
+          三级大纲
+          <span class="switchBox">
+            <el-switch v-model="requestForm.threeCon" active-text="开启">
+            </el-switch>
+          </span>
+        </p>
+      </div>
+      <!-- 生成大纲 -->
+      <div class="outlineBtn">
+        <p>生成大纲</p>
       </div>
     </div>
   </div>
@@ -68,8 +103,19 @@ export default {
   data() {
     return {
       // 定义变量
-      radio: "",
+      requestForm: {
+        title: "",
+        threeCon: "",
+        radio: "",
+        selectValue: "",
+      },
       index: 1,
+      carProp: {
+        value: "code",
+        label: "name",
+        children: "subcategories",
+        expandTrigger: "hover",
+      },
       options: [
         {
           value: "简体中文",
@@ -114,6 +160,9 @@ export default {
   },
   methods: {
     // 定义方法
+    handleChange(value) {
+      console.log(value);
+    },
     checkoutPaper(val) {
       this.index = val;
       console.log("homeData", this.homeData);
@@ -131,6 +180,10 @@ export default {
 // }
 .outlineMain {
   max-width: 1200px;
+  height: 769px;
+  background: #ffffff;
+  border-radius: 0px 0px 12px 12px;
+  margin-bottom: 20px;
 }
 .outlineTab {
   width: 100%;
@@ -192,12 +245,37 @@ export default {
     font-weight: 600;
     font-size: 18px;
     color: #000000;
+    display: flex;
     line-height: 25px;
     text-align: left;
     font-style: normal;
   }
   .formItemCon {
     margin-top: 25px;
+    display: flex;
+    width: 100%;
+    align-items: center;
   }
+  .switchBox {
+    margin-left: 26px;
+  }
+  .userInputCon {
+    margin-left: 16px;
+    max-width: 670px;
+    flex: 1;
+  }
+}
+.outlineBtn {
+  width: auto;
+  height: 44px;
+  background: #3355ff;
+  border-radius: 24px;
+  margin-top: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #ffffff;
+  margin-left: 40px;
 }
 </style>

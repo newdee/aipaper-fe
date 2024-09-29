@@ -27,7 +27,6 @@
         <p class="tabIntro">填写需求 <span>生成大纲</span></p>
       </div>
     </div>
-    <div @click="tabStapAdd" class="tabsContent">下一步</div>
     <div class="outlineBox">
       <outline></outline>
     </div>
@@ -96,7 +95,9 @@ export default {
   width: 100%;
   height: 100%;
 }
-
+.mainContentSec {
+  // background-color: #f5f8ff;
+}
 .tabsList {
   // : 1200px;
   width: 100%;

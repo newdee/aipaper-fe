@@ -26,6 +26,8 @@ export default {
   min-height: calc(100vh - 50px);
   /* max-width: calc(100vw - 260px); */
   padding-left: 220px;
+  background-color: #f5f8ff;
+
   width: 100%;
   position: relative;
   overflow: hidden;
