@@ -3,57 +3,34 @@
     <el-row :gutter="10">
       <el-col :xs="18" :sm="18" :lg="18">
         <div class="navItems flex">
-          <div @click="jumpDetail('/')" class="grid-content nav_left flex items-center">
+          <p>{{ sidebar.activeIndex }}</p>
+          <div @click="$jumpUrl('/')" class="grid-content nav_left flex items-center">
             <div class="logo-box">
               <img :src="logo" alt="" title="logo" />
             </div>
           </div>
-          <div :class="['navItem', activeIndex == '1' ? 'active' : '']" @click="
-            activeIndex = 1;
-          jumpDetail('/home');
-          ">
+          <div :class="['navItem', activeIndex == '1' ? 'active' : '']" @click="toView(0, '/home')">
             首页
           </div>
-          <div :class="['navItem', activeIndex == '2' ? 'active' : '']" @click="
-            activeIndex = 2;
-          jumpDetail('/main/writepaper');
-          ">
+          <div :class="['navItem', activeIndex == '2' ? 'active' : '']" @click="toView(1, '/main/writepaper')">
             写论文
           </div>
-          <div :class="['navItem', activeIndex == '3' ? 'active' : '']" @click="
-            activeIndex = 3;
-          jumpDetail('/main/readpaper');
-          ">
+          <div :class="['navItem', activeIndex == '3' ? 'active' : '']" @click="toView(2, '/main/readpaper')">
             读论文
           </div>
-          <div :class="['navItem', activeIndex == '4' ? 'active' : '']" @click="
-            activeIndex = 4;
-          jumpDetail('/main/amendpaper');
-          ">
+          <div :class="['navItem', activeIndex == '4' ? 'active' : '']" @click="toView(3, '/main/amendpaper')">
             改论文
           </div>
-          <div :class="['navItem', activeIndex == '5' ? 'active' : '']" @click="
-            activeIndex = 5;
-          jumpDetail('/main/integratedservices');
-          ">
+          <div :class="['navItem', activeIndex == '5' ? 'active' : '']" @click="toView(4, '/main/integratedservices')">
             综合服务
           </div>
-          <div :class="['navItem', activeIndex == '6' ? 'active' : '']" @click="
-            activeIndex = 6;
-          jumpDetail('/main/explore');
-          ">
+          <div :class="['navItem', activeIndex == '6' ? 'active' : '']" @click="toView(5, '/main/explore')">
             精品课程
           </div>
-          <div :class="['navItem', activeIndex == '7' ? 'active' : '']" @click="
-            activeIndex = 7;
-          jumpDetail('/main/aitools');
-          ">
+          <div :class="['navItem', activeIndex == '7' ? 'active' : '']" @click="toView(6, '/main/aitools')">
             AI工具
           </div>
-          <div :class="['navItem', activeIndex == '8' ? 'active' : '']" @click="
-            activeIndex = 8;
-          jumpDetail('/main/reduceRepetition');
-          ">
+          <div :class="['navItem', activeIndex == '8' ? 'active' : '']" @click="toView(7, '/main/reduceRepetition')">
             降重/降AIGC率
           </div>
         </div>
@@ -89,19 +66,19 @@
         <div>我的菜单</div>
       </template>
       <div class="flex flex-star">
-        <div class="text-main items-center siderbar-item" @click="jumpDetail('/paper/reduceRepetiton')">
+        <div class="text-main items-center siderbar-item" @click="$jumpUrl('/paper/reduceRepetiton')">
           降重/降AIGC率
         </div>
         <div class="text-main items-center siderbar-item" @click="showOrderList">
           我的订单
         </div>
-        <div class="text-main items-center siderbar-item" @click="jumpDetail('/paper/preview')">
+        <div class="text-main items-center siderbar-item" @click="$jumpUrl('/paper/preview')">
           范文样例
         </div>
         <div v-if="!hasLogin" class="text-main items-center siderbar-item" @click="pushLogin">
           登录
         </div>
-        <div v-else class="text-main items-center siderbar-item" @click="jumpDetail('/userInfo')">
+        <div v-else class="text-main items-center siderbar-item" @click="$jumpUrl('/userInfo')">
           我的个人主页
         </div>
       </div>
@@ -148,7 +125,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["userInfo", "name", "avatar"]),
+    ...mapGetters(["sidebar", "userInfo", "name", "avatar"]),
   },
   mounted() {
     console.log("tokend", getToken());
@@ -193,9 +170,6 @@ export default {
       //         alert('先不关')
       //     });
     },
-    jumpDetail(path) {
-      this.$router.push(path);
-    },
     pushLogin() {
       this.$router.push("/login");
     },
@@ -209,8 +183,9 @@ export default {
       await this.$store.dispatch("user/logout");
       this.$router.push(`/login?redirect=${this.$route.fullPath}`);
     },
-    toView(toPath) {
-      this.$router.push("/" + toPath + "");
+    toView(index, path) {
+      if (index != 0) this.$store.dispatch("app/setActiveSidebar", index);
+      this.$jumpUrl(path);
     },
   },
 };

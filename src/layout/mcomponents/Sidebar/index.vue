@@ -4,92 +4,58 @@
       <img src="@/assets/images/MIXPAPER.png" alt="" />
     </div>
     <div class="mSiderBar">
-      <div
-        @click="
-          $jumpUrl('/main/explore');
-          active = 1;
-        "
-        :active="active == 1"
-        class="mItemWrapper"
-      >
+      <p>{{ sidebar.activeIndex }}</p>
+      <div @click="
+        $jumpUrl('/main/explore');
+      " :active="sidebar.activeIndex == 5" class="mItemWrapper">
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>探索</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div
-        @click="
-          $jumpUrl('/main/writepaper');
-          active = 2;
-        "
-        :active="active == 2"
-        class="mItemWrapper"
-      >
+      <div @click="
+        $jumpUrl('/main/writepaper');
+      " :active="sidebar.activeIndex == 1" class="mItemWrapper">
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>写论文</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div
-        @click="
-          $jumpUrl('/main/readpaper');
-          active = 3;
-        "
-        :active="active == 3"
-        class="mItemWrapper"
-      >
+      <div @click="
+        $jumpUrl('/main/readpaper');
+      " :active="sidebar.activeIndex == 2" class="mItemWrapper">
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>读论文</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div
-        @click="
-          $jumpUrl('/main/amendpaper');
-          active = 4;
-        "
-        :active="active == 4"
-        class="mItemWrapper"
-      >
+      <div @click="
+        $jumpUrl('/main/amendpaper');
+      " :active="sidebar.activeIndex == 3" class="mItemWrapper">
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>改论文</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div
-        @click="
-          $jumpUrl('/main/integratedservices');
-          active = 5;
-        "
-        :active="active == 5"
-        class="mItemWrapper"
-      >
+      <div @click="
+        $jumpUrl('/main/integratedservices');
+      " :active="sidebar.activeIndex == 4" class="mItemWrapper">
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>综合服务</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div
-        @click="
-          $jumpUrl('/main/aitools');
-          active = 6;
-        "
-        :active="active == 6"
-        class="mItemWrapper"
-      >
+      <div @click="
+        $jumpUrl('/main/aitools');
+      " :active="sidebar.activeIndex == 6" class="mItemWrapper">
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>AI工具</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div
-        @click="
-          $jumpUrl('/main/reduceRepetition');
-          active = 7;
-        "
-        :active="active == 7"
-        class="mItemWrapper"
-      >
+      <div @click="
+        $jumpUrl('/main/reduceRepetition');
+      " :active="sidebar.activeIndex == 7" class="mItemWrapper">
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>降重/降AIGC率</div>
           <span class="right imgIcon"></span>
@@ -147,22 +113,22 @@ export default {
   },
   watch: {
     $route: function (to, from) {
-      if (to.path == "/main/explor") {
-        this.active = 1;
+      if (to.path == "/main/explore") {
+        this.$store.dispatch("app/setActiveSidebar", 5);
       } else if (to.path == "/main/writepaper") {
-        this.active = 2;
+        this.$store.dispatch("app/setActiveSidebar", 1);
       } else if (to.path == "/main/readpaper") {
-        this.active = 3;
+        this.$store.dispatch("app/setActiveSidebar", 2);
       } else if (to.path == "/main/amendpaper") {
-        this.active = 4;
+        this.$store.dispatch("app/setActiveSidebar", 3);
       } else if (to.path == "/main/integratedservices") {
-        this.active = 5;
+        this.$store.dispatch("app/setActiveSidebar", 4);
       } else if (to.path == "/main/aitools") {
-        this.active = 6;
+        this.$store.dispatch("app/setActiveSidebar", 6);
       } else if (to.path == "/main/reduceRepetition") {
-        this.active = 7;
+        this.$store.dispatch("app/setActiveSidebar", 7);
       }
-      this.timeKey = new Date().getMilliseconds;
+      this.timeKey = JSON.stringify(new Date().getMilliseconds);
     },
   },
   methods: {},
