@@ -31,7 +31,7 @@ export default {
 }
 
 .fixed-header + .app-main {
-  padding-top: $navBarHeight;
+  padding-top: 80px;
 }
 
 // fix css style bug in open el-dialog
