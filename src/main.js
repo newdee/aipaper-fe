@@ -42,7 +42,7 @@ Vue.prototype.$devf = function () {
   const ele = `
 <div style="display: flex;flex-direction: column;align-items: center;">
   <p style="font-weight:600;font-size:large;color:#202020;margin:12px 0;">开发中, 请联系我们的官方客服，获取上线时间。</p>
-  // <p style="font-weight:500;font-size:small;color:#ff5353;margin:5px 0;display:none;">开发中, 请联系我们的官方客服，获取上线时间。</p>
+   <p style="font-weight:500;font-size:small;color:#ff5353;margin:5px 0;display:none;">开发中, 请联系我们的官方客服，获取上线时间。</p>
 </div>
   `;
   ElementUI["MessageBox"]({
@@ -86,6 +86,23 @@ Vue.prototype.$setMinWindowWidth = function () {
   // 提示用户最小窗口大小要求
 };
 // eventBus.js
+import VueScrollTo from 'vue-scrollto';
+
+let scrollOptions = {
+  container: "body", //滚动的容器
+  duration: 500, //滚动时间
+  easing: "ease", //缓动类型
+  offset: -50, // 滚动时应应用的偏移量。此选项接受回调函数
+  force: true, // 是否应执行滚动
+  cancelable: true, // 用户是否可以取消滚动
+  onStart: false, // 滚动开始时的钩子函数
+  onDone: false, // 滚动结束时候的钩子函数
+  onCancel: false, // 用户取消滚动的钩子函数
+  x: false, // 是否要在x轴上也滚动
+  y: true    // 是否要在y轴上滚动
+};
+
+Vue.use(VueScrollTo, scrollOptions);
 
 new Vue({
   el: "#app",

@@ -100,23 +100,4 @@ export default {
   height: 612px;
   width: 100%;
 }
-
-.selectText {
-  margin: 0 !important;
-}
-
-.selectText .el-select {
-  position: relative;
-
-  &::after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 2px solid #fff;
-  }
-}
 </style>

@@ -947,7 +947,6 @@ export default {
 .outlineIntro {
   max-width: 688px;
   margin: 0 auto;
-  margin-top: 50px;
   text-align: center;
 
   .introTitle {

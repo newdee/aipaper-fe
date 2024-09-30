@@ -77,7 +77,7 @@ export default {
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
-    this.swiper.slideTo(3, 1000, false);
+    // this.swiper.slideTo(3, 1000, false);
   },
   created() {
     // eventBus.on("sendOutline", this.addE); // 订阅事件

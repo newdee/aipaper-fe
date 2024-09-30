@@ -3,7 +3,8 @@ import Cookies from 'js-cookie'
 const state = {
   sidebar: {
     opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
-    withoutAnimation: false
+    withoutAnimation: false,
+    activeIndex:1,
   },
   device: 'desktop',
   homeData: {},
@@ -30,6 +31,9 @@ const mutations = {
   },
   SET_HOME_DATA: (state, homeData) => {
     state.homeData = JSON.parse(JSON.stringify(homeData))
+  },
+  CHANGE_ACTIVE_SIDEBAR_ITEM: (state, activeIndex) =>{
+    state.sidebar.activeIndex = activeIndex;
   }
 }
 
@@ -45,6 +49,9 @@ const actions = {
   },
   setHomeData({ commit },  data ) {
     commit('SET_HOME_DATA', data)
+  },
+  setActiveSidebar({ commit }, index ) {
+    commit('CHANGE_ACTIVE_SIDEBAR_ITEM', index)
   },
 }
 

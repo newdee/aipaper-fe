@@ -5,33 +5,44 @@
 
     <!-- tabs写论文 -->
     <div class="tabsList">
-      <div :class="['tabLi', activeIndex == 1 ? 'activeTab' : '']">
+      <div
+        @click="tabsClick(1)"
+        :class="['tabLi', activeIndex == 1 ? 'activeTab' : '']"
+      >
         <p class="tabsTitle">Step 1</p>
         <div class="tabIcon">
           <span></span>
         </div>
         <p class="tabIntro">填写需求 <span>生成大纲</span></p>
       </div>
-      <div :class="['tabLi', activeIndex == 2 ? 'activeTab' : '']">
+      <div
+        @click="tabsClick(2)"
+        :class="['tabLi', activeIndex == 2 ? 'activeTab' : '']"
+      >
         <p class="tabsTitle">Step 2</p>
         <div class="tabIcon">
           <span></span>
         </div>
-        <p class="tabIntro">填写需求 <span>生成大纲</span></p>
+        <p class="tabIntro">检查大纲 <span>生成正文</span></p>
       </div>
-      <div :class="['tabLi', activeIndex == 3 ? 'activeTab' : '']">
+      <div
+        @click="tabsClick(3)"
+        :class="['tabLi', activeIndex == 3 ? 'activeTab' : '']"
+      >
         <p class="tabsTitle">Step 3</p>
         <div class="tabIcon">
           <span></span>
         </div>
-        <p class="tabIntro">填写需求 <span>生成大纲</span></p>
+        <p class="tabIntro">查收正文 <span>无限改稿</span></p>
       </div>
     </div>
     <div class="outlineBox">
       <outline></outline>
     </div>
     <div class="stepContent">
-      <step1></step1>
+      <step1 v-if="activeIndex == 1"></step1>
+      <step2 v-if="activeIndex == 2"></step2>
+      <step3 v-if="activeIndex == 3"></step3>
     </div>
   </div>
 </template>
@@ -44,12 +55,16 @@ import step1 from "./components/step1.vue";
 import step2 from "./components/step2.vue";
 import outline from "./components/outline.vue";
 import step3 from "./components/step3.vue";
+import { getHomeInfo } from "@/api/user";
+import eventBus from "@/utils/eventBus";
+import emitter from "@/utils/eventBus";
+
 export default {
   name: "writepaper",
   data() {
     return {
       // 定义变量
-      activeIndex: 1,
+      activeIndex: 2,
     };
   },
   components: {
@@ -63,18 +78,41 @@ export default {
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
+    // 获取首页数据
+    this.$nextTick(() => {
+      getHomeInfo().then((res) => {
+        console.log(res.result, "res");
+        this.$store.dispatch("app/setHomeData", res.result);
+      });
+    });
   },
   created() {
-    // eventBus.on("sendOutline", this.addE); // 订阅事件
+    eventBus.on("emitOulineClick", this.showIndex); // 订阅事件
   },
   beforeDestroy() {
-    // eventBus.off("sendOutline", this.addE); // 移除事件监听
+    eventBus.off("emitOulineClick", this.showIndex); // 移除事件监听
   },
   computed: {
     // 计算属性
   },
   methods: {
     // 定义方法
+    // 点击生成大纲
+    showIndex() {
+      console.log("ddddd", this.activeIndex);
+      this.activeIndex = 1;
+      this.$nextTick(() => {
+        eventBus.emit("beginTime", 5);
+      });
+    },
+    tabsClick(val) {
+      this.activeIndex = val;
+      if (val == 2) {
+        this.$nextTick(() => {
+          this.$scrollTo("#top", 500, { offset: -100 });
+        });
+      }
+    },
     tabStapAdd() {
       if (this.activeIndex <= 3) {
         this.activeIndex += 1;
@@ -170,5 +208,9 @@ export default {
       background-color: #3355ff;
     }
   }
+}
+.stepContent {
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 </style>

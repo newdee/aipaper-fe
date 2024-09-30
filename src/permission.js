@@ -43,7 +43,7 @@ router.beforeEach(async (to, from, next) => {
   // determine whether the user has logged in
   // const hasToken = getToken() ? getToken() : setToken("editor-token");
   const hasToken = getToken();
-  console.log("ddddd", hasToken);
+  console.log("46-permission---hasToken:", hasToken);
   if (hasToken) {
     if (to.path === "/login" && hasToken == "editor-token") {
       // if is logged in, redirect to the home page
