@@ -21,7 +21,7 @@
           :text-inside="true"
           :percentage="currentNumber"
           type="circle"
-          width="150"
+          :width="150"
         ></el-progress>
         <div class="progressText">
           <p>大纲生成<i class="el-icon-loading"></i></p>
@@ -57,10 +57,10 @@ export default {
     // 页面初始化
   },
   created() {
-    eventBus.on("emitOulineClick", this.addE); // 订阅事件
+    eventBus.on("beginTime", this.addE); // 订阅事件
   },
   beforeDestroy() {
-    eventBus.off("emitOulineClick", this.addE); // 移除事件监听
+    eventBus.off("beginTime", this.addE); // 移除事件监听
   },
   computed: {
     // 计算属性
@@ -69,6 +69,7 @@ export default {
     // 定义方法
     // 生成大纲
     addE(index) {
+      console.log("beginTime", index);
       this.countUpToHundred(index);
     },
     countUpToHundred(seconds) {
