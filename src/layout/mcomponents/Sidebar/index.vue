@@ -146,7 +146,7 @@ export default {
 }
 
 .sidebar-container {
-  background-image: linear-gradient(90deg, #f5f8ff, #f2f2f2);
+  background: #F5F8FF;
   color: #000;
   font-size: 14px !important;
 

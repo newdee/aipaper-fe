@@ -20,20 +20,24 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/styles/variables.scss";
+
 .app-main {
   /*50 = navbar  */
   min-height: calc(100vh - 50px);
   /* max-width: calc(100vw - 260px); */
-  padding-left: 220px;
+  /* padding-left: 220px; */
+  padding-left: $sideBarWidth;
   background-color: #f5f8ff;
 
   width: 100%;
   position: relative;
   overflow: hidden;
 }
-.fixed-header + .app-main {
-  padding-top: 50px;
+
+.fixed-header+.app-main {
+  padding-top: $navBarHeight;
 }
 </style>
 

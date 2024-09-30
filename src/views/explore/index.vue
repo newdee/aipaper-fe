@@ -1,7 +1,27 @@
 <template>
-  <div>
+  <div class="exploreWrapper">
+    <!-- AI论文快查 -->
+    <div class="mainInput">
+      <p class="inputName">AI 论文快查</p>
+      <div class="selectText">
+        <el-select v-model="value" placeholder="请选择">
+          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
+      </div>
+      <!-- 输入框 -->
+      <div class="inputBox">
+        <input placeholder="输入你想查找的论文信息" type="text" />
+      </div>
+      <div class="searchIconBox">
+        <span>
+          <img src="@/assets/images/search.png" alt="" />
+        </span>
+      </div>
+    </div>
     <!-- 中间行的轮播图 -->
     <div class="swiperNews">
+      <h6>最新热点</h6>
       <swiper class="swiper" :options="swiperOptionNew">
         <swiper-slide>
           <div class="newSlider">1</div>
@@ -52,6 +72,21 @@ export default {
     return {
       // 定义变量
 
+      options: [
+        {
+          value: "选项1",
+          label: "综合",
+        },
+        {
+          value: "选项2",
+          label: "双皮奶",
+        },
+        {
+          value: "选项3",
+          label: "蚵仔煎",
+        },
+      ],
+      value: "综合",
       swiperOptionNew: {
         freeMode: true,
         slidesPerView: 4,
@@ -88,12 +123,31 @@ export default {
 </script>
 <style lang="scss" scoped>
 // 引入scss
-// @import "@/styles/variables.scss";
-// @import './index.scss';
+@import "@/styles/variables.scss";
+// 搜索框
+@import "../home/components/index.scss";
 
 // 媒体查询
 // @media only screen and (max-width: 939px) {
 // }
+.exploreWrapper {
+  padding: 10px 16px 16px 0px;
+}
+
+// 搜索框
+.mainInput {
+  margin: 0px;
+  width: 100%;
+  max-width: none;
+  height: 56px;
+  border-radius: 32px;
+}
+
+.mainInput .inputBox input {
+  height: 20px;
+}
+
+// swiper
 .sliderImgBox {
   height: 195px;
   background: skyblue;
@@ -104,7 +158,16 @@ export default {
 }
 
 .swiperNews {
-  margin-top: 60px;
+  margin-top: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 15px 0px;
+  background-color: #fff;
+
+  h6 {
+    line-height: 2em;
+    padding: 0 2em;
+  }
 }
 
 .newSlider {

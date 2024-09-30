@@ -84,11 +84,7 @@
           </div>
           <div class="btn" @click="$devf">升级专业版</div>
           <template>
-            <div
-              v-if="!hasLogin"
-              @click="pushLogin"
-              class="login_box hidden-xs-only"
-            >
+            <div v-if="!hasLogin" @click="pushLogin" class="login_box hidden-xs-only">
               <div class="img">登录</div>
             </div>
             <div v-else class="login_box hidden-xs-only">
@@ -106,60 +102,32 @@
     </el-row>
 
     <!-- 菜单栏 -->
-    <el-drawer
-      size="40%"
-      :visible.sync="drawer"
-      :direction="direction"
-      :before-close="handleClose"
-      :show-close="false"
-      append-to-body
-    >
+    <el-drawer size="40%" :visible.sync="drawer" :direction="direction" :before-close="handleClose" :show-close="false"
+      append-to-body>
       <template slot="title">
         <div>我的菜单</div>
       </template>
       <div class="flex flex-star">
-        <div
-          class="text-main items-center siderbar-item"
-          @click="jumpDetail('/paper/reduceRepetiton')"
-        >
+        <div class="text-main items-center siderbar-item" @click="jumpDetail('/paper/reduceRepetiton')">
           降重/降AIGC率
         </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="showOrderList"
-        >
+        <div class="text-main items-center siderbar-item" @click="showOrderList">
           我的订单
         </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="jumpDetail('/paper/preview')"
-        >
+        <div class="text-main items-center siderbar-item" @click="jumpDetail('/paper/preview')">
           范文样例
         </div>
-        <div
-          v-if="!hasLogin"
-          class="text-main items-center siderbar-item"
-          @click="pushLogin"
-        >
+        <div v-if="!hasLogin" class="text-main items-center siderbar-item" @click="pushLogin">
           登录
         </div>
-        <div
-          v-else
-          class="text-main items-center siderbar-item"
-          @click="jumpDetail('/userInfo')"
-        >
+        <div v-else class="text-main items-center siderbar-item" @click="jumpDetail('/userInfo')">
           我的个人主页
         </div>
       </div>
     </el-drawer>
     <!-- 用户订单 -->
-    <el-drawer
-      :visible.sync="ordersDrawer"
-      :direction="orderDirection"
-      :before-close="handleOrdersClose"
-      append-to-body
-      size="500px"
-    >
+    <el-drawer :visible.sync="ordersDrawer" :direction="orderDirection" :before-close="handleOrdersClose" append-to-body
+      size="500px">
       <template #title>
         <div>我的订单</div>
       </template>
@@ -360,18 +328,18 @@ export default {
   border-radius: 4px;
   height: 100%;
 
-  &:hover > div {
+  &:hover>div {
     cursor: pointer;
   }
 }
 
 .navbar {
   width: 100%;
-  height: 50px;
+  height: $navBarHeight;
   // overflow: hidden;
   position: relative;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  background: #F5F8FF;
+  // box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
   .hamburger-container {
     line-height: 46px;
@@ -462,8 +430,7 @@ export default {
 
 .navbar .el-row {
   width: 100%;
-  // color: red;
-  height: 50px;
+  height: 100%;
 }
 
 .text-main {
@@ -499,24 +466,29 @@ export default {
 .navbar {
   padding-left: $sideBarWidth;
 }
+
 @media only screen and (max-width: 990px) {
   .navbar {
     padding-left: 0px;
   }
 }
+
 .navItems {
   color: #777777;
   font-size: 14px;
   line-height: 24px;
   height: 100%;
   align-items: center;
+
   .navItem {
     padding: 0 10px;
   }
+
   .active {
     font-weight: 600;
     color: #212121;
     position: relative;
+
     &::after {
       content: "";
       display: block;
@@ -530,12 +502,15 @@ export default {
     }
   }
 }
+
 .navBarRight {
   height: 100%;
   align-items: center;
-  > div {
+
+  >div {
     margin: 0 10px;
   }
+
   .gift {
     --size: 18px;
     width: var(--size);
@@ -543,6 +518,7 @@ export default {
     background-image: url("../../assets/images/gift.png");
     background-size: 100% 100%;
     position: relative;
+
     .num {
       background-color: #ff4d4d;
       line-height: 18px;
@@ -554,6 +530,7 @@ export default {
       top: -10px;
     }
   }
+
   .btn {
     background-color: #3355ff;
     color: #fff;

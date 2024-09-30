@@ -214,6 +214,8 @@ export default {
   .login_box {
     font-size: 12px;
     position: relative;
+    cursor: pointer;
+    user-select: none;
 
     .img {
       border-radius: 50%;
@@ -502,6 +504,7 @@ export default {
     background-image: url("../../assets/images/gift.png");
     background-size: 100% 100%;
     position: relative;
+    cursor: pointer;
 
     .num {
       background-color: #ff4d4d;
@@ -523,6 +526,8 @@ export default {
     height: 36px;
     padding: 0px 10px;
     line-height: 36px;
+    cursor: pointer;
+    user-select: none;
   }
 }
 </style>
