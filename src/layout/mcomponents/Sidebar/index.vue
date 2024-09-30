@@ -4,7 +4,6 @@
       <img src="@/assets/images/MIXPAPER.png" alt="" />
     </div>
     <div class="mSiderBar">
-      <p>{{ sidebar.activeIndex }}</p>
       <div @click="
         $jumpUrl('/main/explore');
       " :active="sidebar.activeIndex == 5" class="mItemWrapper">

@@ -3,7 +3,6 @@
     <el-row :gutter="10">
       <el-col :xs="18" :sm="18" :lg="18">
         <div class="navItems flex">
-          <p>{{ sidebar.activeIndex }}</p>
           <div @click="$jumpUrl('/')" class="grid-content nav_left flex items-center">
             <div class="logo-box">
               <img :src="logo" alt="" title="logo" />
