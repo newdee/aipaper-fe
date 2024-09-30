@@ -22,7 +22,7 @@ export default {
 
 .app-main {
   /*50 = navbar  */
-  min-height: calc(100vh - $navBarHeight);
+  min-height: calc(100vh - 80px);
   width: 100%;
   position: relative;
   background-color: #f5f8ff;
@@ -30,12 +30,10 @@ export default {
   overflow: hidden;
 }
 
-.fixed-header+.app-main {
+.fixed-header + .app-main {
   padding-top: $navBarHeight;
 }
-</style>
 
-<style lang="scss">
 // fix css style bug in open el-dialog
 .el-popup-parent--hidden {
   .fixed-header {
