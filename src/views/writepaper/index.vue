@@ -44,6 +44,8 @@ import step1 from "./components/step1.vue";
 import step2 from "./components/step2.vue";
 import outline from "./components/outline.vue";
 import step3 from "./components/step3.vue";
+import { getHomeInfo } from "@/api/user";
+
 export default {
   name: "writepaper",
   data() {
@@ -63,6 +65,13 @@ export default {
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
+    // 获取首页数据
+    this.$nextTick(() => {
+      getHomeInfo().then((res) => {
+        console.log(res.result, "res");
+        this.$store.dispatch("app/setHomeData", res.result);
+      });
+    });
   },
   created() {
     // eventBus.on("sendOutline", this.addE); // 订阅事件
@@ -170,5 +179,9 @@ export default {
       background-color: #3355ff;
     }
   }
+}
+.stepContent {
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 </style>

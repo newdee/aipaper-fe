@@ -85,7 +85,7 @@
         </p>
       </div>
       <!-- 生成大纲 -->
-      <div class="outlineBtn">
+      <div @click="sendOutlineForm" class="outlineBtn g_poin">
         <p>生成大纲</p>
       </div>
     </div>
@@ -97,6 +97,7 @@ import { mapGetters } from "vuex";
 // import webinfo from "@/components/webinfo.vue";
 // import eventBus from "@/utils/eventBus";
 import { getHomeInfo } from "@/api/user";
+import eventBus from "@/utils/eventBus";
 
 export default {
   name: "outline",
@@ -148,17 +149,16 @@ export default {
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
   },
-  created() {
-    // eventBus.on("sendOutline", this.addE); // 订阅事件
-  },
-  beforeDestroy() {
-    // eventBus.off("sendOutline", this.addE); // 移除事件监听
-  },
+
   computed: {
     // 计算属性
     ...mapGetters(["homeData"]),
   },
   methods: {
+    sendOutlineForm() {
+      eventBus.emit("emitOulineClick", 5); // 发布事件
+    },
+    addE() {},
     // 定义方法
     handleChange(value) {
       console.log(value);
@@ -180,10 +180,9 @@ export default {
 // }
 .outlineMain {
   max-width: 1200px;
-  height: 769px;
+  padding-bottom: 40px;
   background: #ffffff;
   border-radius: 0px 0px 12px 12px;
-  margin-bottom: 20px;
 }
 .outlineTab {
   width: 100%;
