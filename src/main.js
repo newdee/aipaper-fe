@@ -39,7 +39,7 @@ Vue.use(ElementUI, {
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 
 // import style
-import 'swiper/css/swiper.css'
+import 'swiper/swiper.css'
 
 Vue.use(VueAwesomeSwiper, /* { default options with global component } */)
 

@@ -5,7 +5,12 @@
       <p class="inputName">AI 论文快查</p>
       <div class="selectText">
         <el-select v-model="value" placeholder="请选择">
-          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
           </el-option>
         </el-select>
       </div>
@@ -26,163 +31,208 @@
         <swiper-slide>
           <div class="newSlider">
             <div class="upToDate">最近更新</div>
-            <img class="illustration" src="@/assets/images/illustration-1.png" alt="">
+            <img
+              class="illustration"
+              src="@/assets/images/illustration-1.png"
+              alt=""
+            />
             <div class="txt">
               <p class="title">
                 Black hole jets on the scale of the cosmic web
               </p>
-              <p class="text">Black hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic
-                webBlack hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic …</p>
+              <p class="text">
+                Black hole jets on the scale of the cosmic webBlack hole jets on
+                the scale of the cosmic webBlack hole jets on the scale of the
+                cosmic webBlack hole jets on the scale of the cosmic …
+              </p>
             </div>
             <div class="authorInfo">
               <p class="author">Jacob Smith</p>
-              <p class="info">
-                Aritical | 18 Sept 2024
-              </p>
+              <p class="info">Aritical | 18 Sept 2024</p>
             </div>
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/illustration-2.png" alt="">
+            <img
+              class="illustration"
+              src="@/assets/images/illustration-2.png"
+              alt=""
+            />
             <div class="txt">
               <p class="title">
                 Black hole jets on the scale of the cosmic web
               </p>
-              <p class="text">Black hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic
-                webBlack hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic …</p>
+              <p class="text">
+                Black hole jets on the scale of the cosmic webBlack hole jets on
+                the scale of the cosmic webBlack hole jets on the scale of the
+                cosmic webBlack hole jets on the scale of the cosmic …
+              </p>
             </div>
             <div class="authorInfo">
               <p class="author">Jacob Smith</p>
-              <p class="info">
-                Aritical | 18 Sept 2024
-              </p>
+              <p class="info">Aritical | 18 Sept 2024</p>
             </div>
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/illustration-3.png" alt="">
+            <img
+              class="illustration"
+              src="@/assets/images/illustration-3.png"
+              alt=""
+            />
             <div class="txt">
               <p class="title">
                 Black hole jets on the scale of the cosmic web
               </p>
-              <p class="text">Black hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic
-                webBlack hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic …</p>
+              <p class="text">
+                Black hole jets on the scale of the cosmic webBlack hole jets on
+                the scale of the cosmic webBlack hole jets on the scale of the
+                cosmic webBlack hole jets on the scale of the cosmic …
+              </p>
             </div>
             <div class="authorInfo">
               <p class="author">Jacob Smith</p>
-              <p class="info">
-                Aritical | 18 Sept 2024
-              </p>
+              <p class="info">Aritical | 18 Sept 2024</p>
             </div>
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/illustration-4.png" alt="">
+            <img
+              class="illustration"
+              src="@/assets/images/illustration-4.png"
+              alt=""
+            />
             <div class="txt">
               <p class="title">
                 Black hole jets on the scale of the cosmic web
               </p>
-              <p class="text">Black hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic
-                webBlack hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic …</p>
+              <p class="text">
+                Black hole jets on the scale of the cosmic webBlack hole jets on
+                the scale of the cosmic webBlack hole jets on the scale of the
+                cosmic webBlack hole jets on the scale of the cosmic …
+              </p>
             </div>
             <div class="authorInfo">
               <p class="author">Jacob Smith</p>
-              <p class="info">
-                Aritical | 18 Sept 2024
-              </p>
+              <p class="info">Aritical | 18 Sept 2024</p>
             </div>
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/illustration-1.png" alt="">
+            <img
+              class="illustration"
+              src="@/assets/images/illustration-1.png"
+              alt=""
+            />
             <div class="txt">
               <p class="title">
                 Black hole jets on the scale of the cosmic web
               </p>
-              <p class="text">Black hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic
-                webBlack hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic …</p>
+              <p class="text">
+                Black hole jets on the scale of the cosmic webBlack hole jets on
+                the scale of the cosmic webBlack hole jets on the scale of the
+                cosmic webBlack hole jets on the scale of the cosmic …
+              </p>
             </div>
             <div class="authorInfo">
               <p class="author">Jacob Smith</p>
-              <p class="info">
-                Aritical | 18 Sept 2024
-              </p>
+              <p class="info">Aritical | 18 Sept 2024</p>
             </div>
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/illustration-2.png" alt="">
+            <img
+              class="illustration"
+              src="@/assets/images/illustration-2.png"
+              alt=""
+            />
             <div class="txt">
               <p class="title">
                 Black hole jets on the scale of the cosmic web
               </p>
-              <p class="text">Black hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic
-                webBlack hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic …</p>
+              <p class="text">
+                Black hole jets on the scale of the cosmic webBlack hole jets on
+                the scale of the cosmic webBlack hole jets on the scale of the
+                cosmic webBlack hole jets on the scale of the cosmic …
+              </p>
             </div>
             <div class="authorInfo">
               <p class="author">Jacob Smith</p>
-              <p class="info">
-                Aritical | 18 Sept 2024
-              </p>
+              <p class="info">Aritical | 18 Sept 2024</p>
             </div>
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/illustration-3.png" alt="">
+            <img
+              class="illustration"
+              src="@/assets/images/illustration-3.png"
+              alt=""
+            />
             <div class="txt">
               <p class="title">
                 Black hole jets on the scale of the cosmic web
               </p>
-              <p class="text">Black hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic
-                webBlack hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic …</p>
+              <p class="text">
+                Black hole jets on the scale of the cosmic webBlack hole jets on
+                the scale of the cosmic webBlack hole jets on the scale of the
+                cosmic webBlack hole jets on the scale of the cosmic …
+              </p>
             </div>
             <div class="authorInfo">
               <p class="author">Jacob Smith</p>
-              <p class="info">
-                Aritical | 18 Sept 2024
-              </p>
+              <p class="info">Aritical | 18 Sept 2024</p>
             </div>
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/illustration-4.png" alt="">
+            <img
+              class="illustration"
+              src="@/assets/images/illustration-4.png"
+              alt=""
+            />
             <div class="txt">
               <p class="title">
                 Black hole jets on the scale of the cosmic web
               </p>
-              <p class="text">Black hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic
-                webBlack hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic …</p>
+              <p class="text">
+                Black hole jets on the scale of the cosmic webBlack hole jets on
+                the scale of the cosmic webBlack hole jets on the scale of the
+                cosmic webBlack hole jets on the scale of the cosmic …
+              </p>
             </div>
             <div class="authorInfo">
               <p class="author">Jacob Smith</p>
-              <p class="info">
-                Aritical | 18 Sept 2024
-              </p>
+              <p class="info">Aritical | 18 Sept 2024</p>
             </div>
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/illustration-1.png" alt="">
+            <img
+              class="illustration"
+              src="@/assets/images/illustration-1.png"
+              alt=""
+            />
             <div class="txt">
               <p class="title">
                 Black hole jets on the scale of the cosmic web
               </p>
-              <p class="text">Black hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic
-                webBlack hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic …</p>
+              <p class="text">
+                Black hole jets on the scale of the cosmic webBlack hole jets on
+                the scale of the cosmic webBlack hole jets on the scale of the
+                cosmic webBlack hole jets on the scale of the cosmic …
+              </p>
             </div>
             <div class="authorInfo">
               <p class="author">Jacob Smith</p>
-              <p class="info">
-                Aritical | 18 Sept 2024
-              </p>
+              <p class="info">Aritical | 18 Sept 2024</p>
             </div>
           </div>
         </swiper-slide>
@@ -193,7 +243,7 @@
 </template>
 <script>
 // require styles
-import "swiper/dist/css/swiper.css";
+import "swiper/swiper.css";
 
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 
@@ -309,7 +359,7 @@ export default {
 
 .newSlider {
   height: 510px;
-  background: #FFFFFF;
+  background: #ffffff;
   position: relative;
   user-select: none;
   cursor: default;
@@ -323,7 +373,7 @@ export default {
     height: 32px;
     line-height: 30px;
     text-align: center;
-    background: #FF4D4D;
+    background: #ff4d4d;
     border-radius: 8px 0px 8px 0px;
     opacity: 0.9;
     color: #fff;
