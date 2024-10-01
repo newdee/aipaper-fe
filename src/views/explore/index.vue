@@ -243,9 +243,6 @@
 </template>
 <script>
 // require styles
-import "swiper/swiper.css";
-
-import { swiper, swiperSlide } from "vue-awesome-swiper";
 
 // import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
@@ -278,18 +275,15 @@ export default {
         slidesPerView: 4,
         spaceBetween: 30,
         loop: true,
-        pagination: ".swiper-pagination",
+        pagination: {
+          el: ".swiper-pagination",
+        },
       },
     };
-  },
-  components: {
-    swiper,
-    swiperSlide,
   },
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
-    this.swiper.slideTo(3, 1000, false);
   },
   created() {
     // eventBus.on("sendOutline", this.addE); // 订阅事件

@@ -5,21 +5,30 @@
 
     <!-- tabs写论文  -->
     <div class="tabsList">
-      <div @click="tabsClick(1)" :class="['tabLi', activeIndex == 1 ? 'activeTab' : '']">
+      <div
+        @click="tabsClick(1)"
+        :class="['tabLi', activeIndex == 1 ? 'activeTab' : '']"
+      >
         <p class="tabsTitle">Step 1</p>
         <div class="tabIcon">
           <span></span>
         </div>
         <p class="tabIntro">填写需求 <span>生成大纲</span></p>
       </div>
-      <div @click="tabsClick(2)" :class="['tabLi', activeIndex == 2 ? 'activeTab' : '']">
+      <div
+        @click="tabsClick(2)"
+        :class="['tabLi', activeIndex == 2 ? 'activeTab' : '']"
+      >
         <p class="tabsTitle">Step 2</p>
         <div class="tabIcon">
           <span></span>
         </div>
         <p class="tabIntro">检查大纲 <span>生成正文</span></p>
       </div>
-      <div @click="tabsClick(3)" :class="['tabLi', activeIndex == 3 ? 'activeTab' : '']">
+      <div
+        @click="tabsClick(3)"
+        :class="['tabLi', activeIndex == 3 ? 'activeTab' : '']"
+      >
         <p class="tabsTitle">Step 3</p>
         <div class="tabIcon">
           <span></span>
@@ -143,7 +152,6 @@ export default {
   align-items: center;
   justify-content: space-between;
   background-color: #e6edff;
-
   .tabLi {
     width: 33.3%;
     display: flex;
@@ -203,7 +211,6 @@ export default {
     .tabsTitle {
       color: #3355ff;
     }
-
     .tabIcon {
       background-color: #3355ff;
     }

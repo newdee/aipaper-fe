@@ -1,42 +1,58 @@
 <template>
   <div>
-    <!-- 页面名称 -->
+    <!-- 底图页面 -->
+    <div class="swiperBox">
+      <swiper :options="swiperOption" ref="mySwiper1">
+        <!-- slides -->
+        <swiper-slide>
+          <div class="sliderImgBox">
+            <img src="@/assets/images/banner.png" alt="" />
+          </div>
+        </swiper-slide>
+        <swiper-slide>
+          <div class="sliderImgBox">I'm Slide3</div>
+        </swiper-slide>
+        <!-- 其他 slides... -->
+
+        <!-- 分页器 -->
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
+    </div>
   </div>
 </template>
-<script>
-// import { mapGetters } from "vuex";
-// import { sms } from "@/api/login";
-// import webinfo from "@/components/webinfo.vue";
-// import eventBus from "@/utils/eventBus";
 
+<script>
 export default {
-  name: "myFooter",
+  name: "inputMain",
   data() {
     return {
-      // 定义变量
+      swiperOption: {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        mousewheel: true,
+        loop: true,
+        autoplay: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      },
     };
   },
-  components: {
-    // webinfo,
-  },
   mounted() {
-    // eventBus.emit("sendOutline", 5); // 发布事件
-    // 页面初始化
-  },
-  created() {
-    // eventBus.on("sendOutline", this.addE); // 订阅事件
-  },
-  beforeDestroy() {
-    // eventBus.off("sendOutline", this.addE); // 移除事件监听
+    console.log(this.swiper); // 检查 Swiper 实例
   },
   computed: {
-    // 计算属性
+    swiper() {
+      return this.$refs.mySwiper1.swiper;
+    },
   },
   methods: {
     // 定义方法
   },
 };
 </script>
+
 <style lang="scss" scoped>
 // 引入scss
 // @import "@/styles/variables.scss";
@@ -45,4 +61,30 @@ export default {
 // 媒体查询
 // @media only screen and (max-width: 939px) {
 // }
+
+.sliderImgBox {
+  height: 195px;
+  background: skyblue;
+}
+
+.swiperBox {
+  margin-top: 23px;
+}
+
+.swiperNews {
+  margin-top: 60px;
+}
+
+.newSlider {
+  height: 510px;
+  background: sandybrown;
+}
+
+// 确保分页器样式没有问题
+.swiper-pagination {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
 </style>
