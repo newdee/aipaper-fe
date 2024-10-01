@@ -104,6 +104,9 @@ let scrollOptions = {
 
 Vue.use(VueScrollTo, scrollOptions);
 
+import TextareaAutosize from 'vue-textarea-autosize'
+
+Vue.use(TextareaAutosize)
 new Vue({
   el: "#app",
   router,

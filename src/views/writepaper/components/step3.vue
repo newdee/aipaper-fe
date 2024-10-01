@@ -2,6 +2,11 @@
   <div>
     <!-- 页面名称 -->
     s43333333
+    <textarea-autosize
+      style="height: 35px; font-size: 20px"
+      placeholder="Type something here..."
+      v-model="data"
+    />
   </div>
 </template>
 <script>
@@ -15,6 +20,7 @@ export default {
   data() {
     return {
       // 定义变量
+      data: "",
     };
   },
   components: {
