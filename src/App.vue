@@ -1,4 +1,3 @@
-
 <template>
   <div id="app">
     <div>
@@ -6,10 +5,9 @@
     </div>
   </div>
 </template>
-// import { mapGetters } from "vuex";
-// import { sms } from "@/api/login";
-// import webinfo from "@/components/webinfo.vue";
-// import eventBus from "@/utils/eventBus";
+// import { mapGetters } from "vuex"; // import { sms } from "@/api/login"; //
+import webinfo from "@/components/webinfo.vue"; // import eventBus from
+"@/utils/eventBus";
 <script>
 export default {
   name: "App",

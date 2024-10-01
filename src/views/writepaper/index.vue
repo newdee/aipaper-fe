@@ -3,7 +3,7 @@
     <!-- 页面名称 -->
     <swiper-one class="topSwiper"></swiper-one>
 
-    <!-- tabs写论文 -->
+    <!-- tabs写论文  -->
     <div class="tabsList">
       <div @click="tabsClick(1)" :class="['tabLi', activeIndex == 1 ? 'activeTab' : '']">
         <p class="tabsTitle">Step 1</p>
@@ -27,7 +27,8 @@
         <p class="tabIntro">查收正文 <span>无限改稿</span></p>
       </div>
     </div>
-    <div class="outlineBox">
+    <!-- step3不展示论文 -->
+    <div v-if="activeIndex !== 3" class="outlineBox">
       <outline></outline>
     </div>
     <div class="stepContent">
@@ -55,7 +56,7 @@ export default {
   data() {
     return {
       // 定义变量
-      activeIndex: 2,
+      activeIndex: 3,
     };
   },
   components: {
