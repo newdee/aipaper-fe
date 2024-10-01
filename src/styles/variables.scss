@@ -66,3 +66,8 @@ $textColor4:#d4a11c;
   vertical-align: -0.15em;
   fill: currentColor;
 }
+
+// 重置popover样式
+.el-popover.el-popper {
+  min-width: 120px;
+}
