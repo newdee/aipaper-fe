@@ -24,31 +24,167 @@
       <h6>最新热点</h6>
       <swiper class="swiper" :options="swiperOptionNew">
         <swiper-slide>
-          <div class="newSlider">1</div>
+          <div class="newSlider">
+            <div class="upToDate">最近更新</div>
+            <img class="illustration" src="@/assets/images/illustration-1.png" alt="">
+            <div class="txt">
+              <p class="title">
+                Black hole jets on the scale of the cosmic web
+              </p>
+              <p class="text">Black hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic
+                webBlack hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic …</p>
+            </div>
+            <div class="authorInfo">
+              <p class="author">Jacob Smith</p>
+              <p class="info">
+                Aritical | 18 Sept 2024
+              </p>
+            </div>
+          </div>
         </swiper-slide>
         <swiper-slide>
-          <div class="newSlider">2</div>
+          <div class="newSlider">
+            <img class="illustration" src="@/assets/images/illustration-2.png" alt="">
+            <div class="txt">
+              <p class="title">
+                Black hole jets on the scale of the cosmic web
+              </p>
+              <p class="text">Black hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic
+                webBlack hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic …</p>
+            </div>
+            <div class="authorInfo">
+              <p class="author">Jacob Smith</p>
+              <p class="info">
+                Aritical | 18 Sept 2024
+              </p>
+            </div>
+          </div>
         </swiper-slide>
         <swiper-slide>
-          <div class="newSlider">3</div>
+          <div class="newSlider">
+            <img class="illustration" src="@/assets/images/illustration-3.png" alt="">
+            <div class="txt">
+              <p class="title">
+                Black hole jets on the scale of the cosmic web
+              </p>
+              <p class="text">Black hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic
+                webBlack hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic …</p>
+            </div>
+            <div class="authorInfo">
+              <p class="author">Jacob Smith</p>
+              <p class="info">
+                Aritical | 18 Sept 2024
+              </p>
+            </div>
+          </div>
         </swiper-slide>
         <swiper-slide>
-          <div class="newSlider">4</div>
+          <div class="newSlider">
+            <img class="illustration" src="@/assets/images/illustration-4.png" alt="">
+            <div class="txt">
+              <p class="title">
+                Black hole jets on the scale of the cosmic web
+              </p>
+              <p class="text">Black hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic
+                webBlack hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic …</p>
+            </div>
+            <div class="authorInfo">
+              <p class="author">Jacob Smith</p>
+              <p class="info">
+                Aritical | 18 Sept 2024
+              </p>
+            </div>
+          </div>
         </swiper-slide>
         <swiper-slide>
-          <div class="newSlider">5</div>
+          <div class="newSlider">
+            <img class="illustration" src="@/assets/images/illustration-1.png" alt="">
+            <div class="txt">
+              <p class="title">
+                Black hole jets on the scale of the cosmic web
+              </p>
+              <p class="text">Black hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic
+                webBlack hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic …</p>
+            </div>
+            <div class="authorInfo">
+              <p class="author">Jacob Smith</p>
+              <p class="info">
+                Aritical | 18 Sept 2024
+              </p>
+            </div>
+          </div>
         </swiper-slide>
         <swiper-slide>
-          <div class="newSlider">6</div>
+          <div class="newSlider">
+            <img class="illustration" src="@/assets/images/illustration-2.png" alt="">
+            <div class="txt">
+              <p class="title">
+                Black hole jets on the scale of the cosmic web
+              </p>
+              <p class="text">Black hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic
+                webBlack hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic …</p>
+            </div>
+            <div class="authorInfo">
+              <p class="author">Jacob Smith</p>
+              <p class="info">
+                Aritical | 18 Sept 2024
+              </p>
+            </div>
+          </div>
         </swiper-slide>
         <swiper-slide>
-          <div class="newSlider">7</div>
+          <div class="newSlider">
+            <img class="illustration" src="@/assets/images/illustration-3.png" alt="">
+            <div class="txt">
+              <p class="title">
+                Black hole jets on the scale of the cosmic web
+              </p>
+              <p class="text">Black hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic
+                webBlack hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic …</p>
+            </div>
+            <div class="authorInfo">
+              <p class="author">Jacob Smith</p>
+              <p class="info">
+                Aritical | 18 Sept 2024
+              </p>
+            </div>
+          </div>
         </swiper-slide>
         <swiper-slide>
-          <div class="newSlider">8</div>
+          <div class="newSlider">
+            <img class="illustration" src="@/assets/images/illustration-4.png" alt="">
+            <div class="txt">
+              <p class="title">
+                Black hole jets on the scale of the cosmic web
+              </p>
+              <p class="text">Black hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic
+                webBlack hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic …</p>
+            </div>
+            <div class="authorInfo">
+              <p class="author">Jacob Smith</p>
+              <p class="info">
+                Aritical | 18 Sept 2024
+              </p>
+            </div>
+          </div>
         </swiper-slide>
         <swiper-slide>
-          <div class="newSlider">9</div>
+          <div class="newSlider">
+            <img class="illustration" src="@/assets/images/illustration-1.png" alt="">
+            <div class="txt">
+              <p class="title">
+                Black hole jets on the scale of the cosmic web
+              </p>
+              <p class="text">Black hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic
+                webBlack hole jets on the scale of the cosmic webBlack hole jets on the scale of the cosmic …</p>
+            </div>
+            <div class="authorInfo">
+              <p class="author">Jacob Smith</p>
+              <p class="info">
+                Aritical | 18 Sept 2024
+              </p>
+            </div>
+          </div>
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
       </swiper>
@@ -167,11 +303,84 @@ export default {
   h6 {
     line-height: 2em;
     padding: 0 2em;
+    margin-bottom: 8px;
   }
 }
 
 .newSlider {
   height: 510px;
-  background: sandybrown;
+  background: #FFFFFF;
+  position: relative;
+  user-select: none;
+  cursor: default;
+  overflow: hidden;
+
+  .upToDate {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 76px;
+    height: 32px;
+    line-height: 30px;
+    text-align: center;
+    background: #FF4D4D;
+    border-radius: 8px 0px 8px 0px;
+    opacity: 0.9;
+    color: #fff;
+  }
+
+  .illustration {
+    width: calc(100% - 2px);
+    height: 200px;
+    // border: 1px solid #CCCCCC;
+    outline: 1px solid #ffffff;
+    border-radius: 8px;
+  }
+
+  .txt {
+    padding: 20px 0px;
+    font-size: 14px;
+    color: #999;
+
+    .title {
+      color: #000000;
+      font-size: 18px;
+      padding-bottom: 8px;
+      text-decoration: underline;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      word-break: break-all;
+      overflow: hidden;
+    }
+
+    .text {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 5;
+      word-break: break-all;
+      overflow: hidden;
+    }
+  }
+
+  .authorInfo {
+    position: absolute;
+    width: 100%;
+    top: 390px;
+    left: 0;
+
+    .author {
+      color: #000000;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      word-break: break-all;
+      overflow: hidden;
+    }
+
+    .info {
+      color: #999;
+    }
+  }
 }
 </style>
