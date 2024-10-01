@@ -175,7 +175,7 @@
         </span>
       </el-dialog>
     </div>
-    <div class="outlineRepeat">
+    <div @click="textF" class="outlineRepeat g_poin">
       <p>
         大纲不满意? 重新生成
         <i class="el-icon-refresh"></i>
@@ -353,10 +353,17 @@
       </el-checkbox>
     </div>
     <div class="warningP generateSpan">
-      <span class="g_poin" @click="generateForm">生成全文</span>
+      <!-- <span class="g_poin" @click="generateForm">生成全文</span> -->
+      <span class="g_poin" @click="textF">生成全文</span>
     </div>
     <!-- 付款成功弹窗 -->
-    <el-dialog title="确认支付" :visible.sync="payStatus" width="30%">
+    <el-dialog
+      :append-to-body="true"
+      :lock-scroll="false"
+      title="确认支付"
+      :visible.sync="payStatus"
+      width="30%"
+    >
       <i>支付确认弹窗，暂定会跳转订单页</i>
       <p>TODO：暂未增加跳转</p>
 
@@ -369,7 +376,13 @@
       </span>
     </el-dialog>
     <!-- 生成全文操作前置声明 -->
-    <el-dialog title="提示" :visible.sync="statementDialogVisible" width="30%">
+    <el-dialog
+      title="提示"
+      :append-to-body="true"
+      :lock-scroll="false"
+      :visible.sync="statementDialogVisible"
+      width="30%"
+    >
       <span
         >平台所生成的全文为范文，仅用作参考，不用做毕业论文、发表刊物等</span
       >
@@ -628,6 +641,9 @@ export default {
         // console.log(this.data)
         this.updateApiGroup(this.data);
       }
+    },
+    textF() {
+      this.statementDialogVisible = true;
     },
     // 生成全文
     generateForm() {

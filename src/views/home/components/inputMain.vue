@@ -3,7 +3,11 @@
     <!-- 底图页面 -->
 
     <div class="swiperBox">
-      <swiper :options="swiperOption" ref="mySwiper" @someSwiperEvent="callback">
+      <swiper
+        :options="swiperOption"
+        ref="mySwiper"
+        @someSwiperEvent="callback"
+      >
         <!-- slides -->
         <swiper-slide>
           <div class="sliderImgBox">
@@ -59,7 +63,9 @@ export default {
         mousewheel: true, // 开启鼠标滚轮控制Swiper切换
         loop: true, // 是否循环
         autoplay: true, // 是否自动切换
+        paginationClickable: true,
         pagination: ".swiper-pagination",
+        paginationAsRange: true,
       },
       swiperOptionNew: {
         slidesPerView: 4,
@@ -67,9 +73,10 @@ export default {
         loop: true,
         pagination: ".swiper-pagination",
       },
+
       callback: function (item) {
-        console.log(item)
-      }
+        console.log(item);
+      },
     };
   },
   components: {

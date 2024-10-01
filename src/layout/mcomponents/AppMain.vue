@@ -4,6 +4,7 @@
       <keep-alive exclude="Detail">
         <router-view v-if="$route.meta.keepAlive" :key="key"></router-view>
       </keep-alive>
+
       <router-view v-if="!$route.meta.keepAlive" :key="key"></router-view>
     </transition>
   </section>
@@ -36,7 +37,7 @@ export default {
   overflow: hidden;
 }
 
-.fixed-header+.app-main {
+.fixed-header + .app-main {
   padding-top: $navBarHeight;
 }
 </style>
