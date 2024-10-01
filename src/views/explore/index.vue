@@ -352,8 +352,10 @@ export default {
 
   h6 {
     line-height: 2em;
-    padding: 0 2em;
+    padding: 0 24px;
     margin-bottom: 8px;
+    font-size: 18px;
+    user-select: none;
   }
 }
 
