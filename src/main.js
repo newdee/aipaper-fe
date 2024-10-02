@@ -36,6 +36,15 @@ Vue.use(ElementUI, {
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
 
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+
+// import style
+import 'swiper/swiper-bundle.css'
+import 'swiper/swiper.css'
+import 'swiper/swiper.min.css'
+
+Vue.use(VueAwesomeSwiper, /* { default options with global component } */)
+
 // 定义全局的方法
 Vue.prototype.$devf = function () {
   // console.log('Global method called!');
@@ -104,6 +113,9 @@ let scrollOptions = {
 
 Vue.use(VueScrollTo, scrollOptions);
 
+import TextareaAutosize from 'vue-textarea-autosize'
+
+Vue.use(TextareaAutosize)
 new Vue({
   el: "#app",
   router,

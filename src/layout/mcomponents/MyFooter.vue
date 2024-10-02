@@ -33,6 +33,39 @@
                 <a href="https://beian.miit.gov.cn" target="_blank">冀ICP备2024060058号-2</a>
             </p>
         </div>
+        <!-- 悬浮菜单 --><!-- 显示条件怎么设置? -->
+        <div class="floatMenuWrapper" v-if="true">
+            <div class="menu">
+                <!-- <el-button v-popover:popover1> -->
+                <el-button @click="$devf">
+                    <div class="item ai">
+                        <img src="@/assets/images/robat-ai.png" alt="">
+                    </div>
+                </el-button>
+                <!-- <el-button v-popover:popover2> -->
+                <el-button @click="$devf">
+                    <div class="item">
+                        <img src="@/assets/images/headset.png" alt="">
+                    </div>
+                </el-button>
+                <el-button v-popover:popover3>
+                    <div class="item">
+                        <img src="@/assets/images/team-dark.png" alt="">
+                    </div>
+                </el-button>
+            </div>
+        </div>
+        <el-popover ref="popover1" placement="left-start" width="125" trigger="click">
+            AI写作
+        </el-popover>
+        <el-popover ref="popover2" placement="left-start" width="125" trigger="click">
+            在线客服
+        </el-popover>
+        <el-popover ref="popover3" placement="left-start" width="125" trigger="click">
+            <div class="qrBox" title="团队二维码">
+                <img class="qrcode" src="@/assets/images/qrcode.png" alt="">
+            </div>
+        </el-popover>
     </div>
 </template>
 <script>
@@ -162,5 +195,61 @@ export default {
     padding: 24px 0;
     text-align: center;
     font-size: 12px;
+}
+
+.floatMenuWrapper {
+    position: fixed;
+    bottom: 25vh;
+    right: 28px;
+    width: 44px;
+    z-index: 9999;
+
+    .menu {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        button {
+            padding: 0px;
+            border: none;
+            background-color: transparent;
+            margin: 0px !important;
+        }
+
+        .item {
+            width: 44px;
+            height: 44px;
+            background: #FFFFFF;
+            border-radius: 8px;
+            border: 1px solid #CCCCCC;
+            display: grid;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 23px;
+                height: auto;
+            }
+        }
+
+        .ai {
+            border: 1px solid transparent;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            background-clip: padding-box, border-box;
+            background-origin: padding-box, border-box;
+            background-image: linear-gradient(90deg, #fff, #fff), linear-gradient(135deg, rgba(0, 186, 255, 1), rgba(175, 34, 227, 1));
+        }
+    }
+}
+
+.qrBox {
+    font-size: 0px;
+    display: inline-block;
+}
+
+.qrcode {
+    width: 100px;
+    height: 100px;
 }
 </style>

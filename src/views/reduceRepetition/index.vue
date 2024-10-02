@@ -205,6 +205,10 @@ export default {
   height: 100%;
 }
 
+.topSwiper ::v-deep .swiperBox {
+  margin-top: 0px;
+}
+
 .outlineMain {
   max-width: 1200px;
   padding-bottom: 40px;

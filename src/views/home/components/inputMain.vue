@@ -1,95 +1,62 @@
 <template>
   <div>
     <!-- 底图页面 -->
-
     <div class="swiperBox">
-      <swiper :options="swiperOption" ref="mySwiper" @someSwiperEvent="callback">
+      <swiper :options="swiperOption" ref="mySwiper1">
         <!-- slides -->
         <swiper-slide>
           <div class="sliderImgBox">
-            <img src="@/assets/images/banner.png" alt="" />
+            <img src="@/assets/images/banner/banner1.png" alt="" />
           </div>
-        </swiper-slide>
-        <swiper-slide>
-          <div class="sliderImgBox">I'm Slide3</div>
         </swiper-slide>
         <swiper-slide>
           <div class="sliderImgBox">
-            <img src="@/assets/images/banner.png" alt="" />
+            <img src="@/assets/images/banner/banner2.png" alt="" />
           </div>
         </swiper-slide>
         <swiper-slide>
-          <div class="sliderImgBox">I'm Slide5</div>
+          <div class="sliderImgBox">
+            <img src="@/assets/images/banner/banner3.png" alt="" />
+          </div>
         </swiper-slide>
         <swiper-slide>
-          <div class="sliderImgBox">I'm Slide 6</div>
+          <div class="sliderImgBox">
+            <img src="@/assets/images/banner/banner4.png" alt="" />
+          </div>
         </swiper-slide>
-        <swiper-slide>
-          <div class="sliderImgBox">I'm Slide 7</div>
-        </swiper-slide>
+        <!-- 其他 slides... -->
 
-        <!-- 为了显示底部原点分页器 -->
+        <!-- 分页器 -->
         <div class="swiper-pagination" slot="pagination"></div>
       </swiper>
     </div>
   </div>
 </template>
+
 <script>
-// require styles
-import "swiper/dist/css/swiper.css";
-
-import { swiper, swiperSlide } from "vue-awesome-swiper";
-
-// import { mapGetters } from "vuex";
-// import { sms } from "@/api/login";
-// import webinfo from "@/components/webinfo.vue";
-// import eventBus from "@/utils/eventBus";
-
 export default {
   name: "inputMain",
   data() {
     return {
-      // 定义变量
       swiperOption: {
-        // some swiper options/callbacks
-        // 所有的参数同 swiper 官方 api 参数
-        // ...
-        slidesPerView: 1, // 定义slides的数量多少为一组
-        spaceBetween: 30, // 在slide之间设置距离（单位px）
-        mousewheel: true, // 开启鼠标滚轮控制Swiper切换
-        loop: true, // 是否循环
-        autoplay: true, // 是否自动切换
-        pagination: ".swiper-pagination",
-      },
-      swiperOptionNew: {
-        slidesPerView: 4,
+        slidesPerView: 1,
         spaceBetween: 30,
+        mousewheel: true,
         loop: true,
-        pagination: ".swiper-pagination",
+        autoplay: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
       },
-      callback: function (item) {
-        console.log(item)
-      }
     };
   },
-  components: {
-    swiper,
-    swiperSlide,
-  },
   mounted() {
-    // eventBus.emit("sendOutline", 5); // 发布事件
-    // 页面初始化
-    this.swiper.slideTo(3, 1000, false);
-  },
-  created() {
-    // eventBus.on("sendOutline", this.addE); // 订阅事件
-  },
-  beforeDestroy() {
-    // eventBus.off("sendOutline", this.addE); // 移除事件监听
+    console.log(this.swiper); // 检查 Swiper 实例
   },
   computed: {
     swiper() {
-      return this.$refs.mySwiper.swiper;
+      return this.$refs.mySwiper1.swiper;
     },
   },
   methods: {
@@ -97,6 +64,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
 // 引入scss
 // @import "@/styles/variables.scss";
@@ -122,5 +90,13 @@ export default {
 .newSlider {
   height: 510px;
   background: sandybrown;
+}
+
+// 确保分页器样式没有问题
+.swiper-pagination {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>

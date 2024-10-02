@@ -11,6 +11,7 @@
       <div :class="{ 'fixed-header': fixedHeader }">
         <navbar />
       </div>
+
       <app-main />
       <my-footer />
     </div>

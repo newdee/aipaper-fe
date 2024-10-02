@@ -25,11 +25,13 @@
     "path-to-regexp": "2.4.0",
     "postcss-px2rem": "^0.3.0",
     "px2rem-loader": "^0.1.9",
+    "swiper": "^11.1.14",
     "vue": "^2.6.10",
-    "vue-awesome-swiper": "^2.6.7",
+    "vue-awesome-swiper": "^4.1.1",
     "vue-router": "3.0.6",
     "vue-scrollto": "^2.20.0",
     "vue-splitpane": "^1.0.6",
+    "vue-textarea-autosize": "^1.1.1",
     "vuex": "3.1.0"
   },
   "devDependencies": {

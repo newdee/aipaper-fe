@@ -3,7 +3,7 @@
     <!-- 页面名称 -->
     <swiper-one class="topSwiper"></swiper-one>
 
-    <!-- tabs写论文 -->
+    <!-- tabs写论文  -->
     <div class="tabsList">
       <div
         @click="tabsClick(1)"
@@ -36,7 +36,8 @@
         <p class="tabIntro">查收正文 <span>无限改稿</span></p>
       </div>
     </div>
-    <div class="outlineBox">
+    <!-- step3不展示论文 -->
+    <div v-if="activeIndex !== 3" class="outlineBox">
       <outline></outline>
     </div>
     <div class="stepContent">
@@ -64,7 +65,7 @@ export default {
   data() {
     return {
       // 定义变量
-      activeIndex: 2,
+      activeIndex: 3,
     };
   },
   components: {
@@ -133,9 +134,15 @@ export default {
   width: 100%;
   height: 100%;
 }
+
+.topSwiper ::v-deep .swiperBox {
+  margin-top: 0px;
+}
+
 .mainContentSec {
   // background-color: #f5f8ff;
 }
+
 .tabsList {
   // : 1200px;
   width: 100%;
@@ -209,6 +216,7 @@ export default {
     }
   }
 }
+
 .stepContent {
   margin-top: 16px;
   margin-bottom: 16px;

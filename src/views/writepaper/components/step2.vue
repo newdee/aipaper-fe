@@ -126,7 +126,14 @@
             </span>
           </div>
           <div v-if="data.content" class="contentInput">
-            <input type="textarea" v-model="data.content" class="ownInput" />
+            <!-- <textarea type="textarea" v-model="data.content"  /> -->
+            <textarea-autosize
+              class="ownInput"
+              rows="1"
+              placeholder="Type something here..."
+              ref="myTextarea"
+              v-model="data.content"
+            />
           </div>
         </div>
       </el-tree>
@@ -168,7 +175,7 @@
         </span>
       </el-dialog>
     </div>
-    <div class="outlineRepeat">
+    <div @click="textF" class="outlineRepeat g_poin">
       <p>
         大纲不满意? 重新生成
         <i class="el-icon-refresh"></i>
@@ -176,7 +183,7 @@
     </div>
     <!-- 付费项选择 -->
     <div class="spendingBox">
-      <p>您将获得</p>
+      <p class="fuTitle">您将获得</p>
       <div class="maintxt">
         <div class="borderBox">
           <div class="left">
@@ -261,7 +268,7 @@
           </div>
         </div>
       </div>
-      <p>附加服务</p>
+      <p class="fuTitle">附加服务</p>
       <div class="adds">
         <!-- <div class="item">
                     <p></p>
@@ -346,10 +353,17 @@
       </el-checkbox>
     </div>
     <div class="warningP generateSpan">
-      <span class="g_poin" @click="generateForm">生成全文</span>
+      <!-- <span class="g_poin" @click="generateForm">生成全文</span> -->
+      <span class="g_poin" @click="textF">生成全文</span>
     </div>
     <!-- 付款成功弹窗 -->
-    <el-dialog title="确认支付" :visible.sync="payStatus" width="30%">
+    <el-dialog
+      :append-to-body="true"
+      :lock-scroll="false"
+      title="确认支付"
+      :visible.sync="payStatus"
+      width="30%"
+    >
       <i>支付确认弹窗，暂定会跳转订单页</i>
       <p>TODO：暂未增加跳转</p>
 
@@ -362,7 +376,13 @@
       </span>
     </el-dialog>
     <!-- 生成全文操作前置声明 -->
-    <el-dialog title="提示" :visible.sync="statementDialogVisible" width="30%">
+    <el-dialog
+      title="提示"
+      :append-to-body="true"
+      :lock-scroll="false"
+      :visible.sync="statementDialogVisible"
+      width="30%"
+    >
       <span
         >平台所生成的全文为范文，仅用作参考，不用做毕业论文、发表刊物等</span
       >
@@ -622,6 +642,9 @@ export default {
         this.updateApiGroup(this.data);
       }
     },
+    textF() {
+      this.statementDialogVisible = true;
+    },
     // 生成全文
     generateForm() {
       if (!this.checked) {
@@ -753,7 +776,7 @@ export default {
 .outlineRepeat {
   text-align: center;
   margin-top: 50px;
-
+  margin-bottom: 64px;
   p {
     display: inline-block;
     padding: 0 18px;
@@ -761,15 +784,15 @@ export default {
     height: 34px;
     border-radius: 17px;
     font-size: 14px;
-    color: #3b82f6;
-    border: 1px solid #3b82f6;
+    color: #d4a11c;
+    border: 1px solid #d4a11c;
   }
 }
 
 .spendingBox {
   width: 688px;
   margin: 0 auto;
-  padding: 24px 10px 0px 10px;
+  padding: 0px 10px 10px 10px;
   background: #fff;
   border: 1px solid #ebeef5;
   border-radius: 8px;
@@ -822,9 +845,9 @@ export default {
     grid-template-columns: repeat(4, 1fr);
   }
   .maintxt .borderBox {
-    border-color: #409eff;
+    border-color: #d4a11c;
     svg.icon {
-      color: #409eff;
+      color: #d4a11c;
     }
   }
   .att .borderBox {
@@ -846,8 +869,12 @@ export default {
         flex-direction: row-reverse;
         padding: 10px;
         margin: 5px 10px;
-        background-image: linear-gradient(45deg, #eef9fe, transparent);
-        border: 1px solid #a9d4ff;
+        background-image: linear-gradient(
+          45deg,
+          rgb(252, 243, 205),
+          transparent
+        );
+        border: 1px solid #d4a11c;
         border-radius: 5px;
         align-items: center;
         height: auto;
@@ -897,13 +924,16 @@ export default {
 
 .generateSpan {
   text-align: center;
-
+  padding-bottom: 60px;
   span {
     display: inline-block;
-    background: #3b82f6;
+    background: #d4a11c;
     height: 40px;
+    width: 160px;
     line-height: 40px;
     border-radius: 20px;
+    font-size: 15px;
+    font-weight: bold;
     padding: 0 22px;
     color: #fff;
   }
@@ -918,7 +948,7 @@ export default {
   .introTitle {
     font-size: 16px;
     font-weight: bold;
-    color: #3b82f6;
+    color: #d4a11c;
   }
 
   .introSubtitle {
@@ -1020,7 +1050,7 @@ export default {
 // @media only screen and (max-width: 939px) {
 // }
 .dialogIcon {
-  color: #409eff;
+  color: #d4a11c;
   font-size: 20px;
   margin-right: 5px;
 }
@@ -1055,8 +1085,15 @@ export default {
 .ownInput {
   border: none;
   width: 100%;
+  height: 35px;
+  border-radius: 5px;
   margin: 5px;
+  margin-top: -5px;
   max-width: 500px;
+  // padding-top: 10px;
+  padding: 10px;
+  // padding-top: 0px;
+  // padding-bottom: 20px;
   &:hover {
     border: 1px solid #3355fe;
   }
@@ -1071,5 +1108,11 @@ export default {
     box-shadow: 0 0 5px #3355fe;
     outline: none;
   }
+}
+.fuTitle {
+  font-size: 18xp;
+  font-weight: bold;
+  margin: 32px 0;
+  color: #1f2937;
 }
 </style>

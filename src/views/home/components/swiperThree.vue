@@ -2,7 +2,7 @@
   <div>
     <!-- 中间行的轮播图 -->
     <div class="swiperNews">
-      <swiper class="swiper" :options="swiperOptionNew">
+      <swiper ref="mySwiper" class="swiper" :options="swiperOptionNew">
         <swiper-slide>
           <div class="newSlider">1</div>
         </swiper-slide>
@@ -37,9 +37,8 @@
 </template>
 <script>
 // require styles
-import "swiper/dist/css/swiper.css";
-
-import { swiper, swiperSlide } from "vue-awesome-swiper";
+import { Pagination } from "element-ui";
+import "swiper/swiper.css";
 
 // import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
@@ -51,31 +50,22 @@ export default {
   data() {
     return {
       // 定义变量
-      swiperOption: {
-        // some swiper options/callbacks
-        // 所有的参数同 swiper 官方 api 参数
-        // ...
-        slidesPerView: 1, // 定义slides的数量多少为一组
-        spaceBetween: 30, // 在slide之间设置距离（单位px）
-        mousewheel: true, // 开启鼠标滚轮控制Swiper切换
-        loop: true, // 是否循环
-        autoplay: true, // 是否自动切换
-        pagination: ".swiper-pagination",
-      },
+
       swiperOptionNew: {
         slidesPerView: 4,
         spaceBetween: 30,
         loop: true,
+        // pagination: {
+        //   el: ".swiper-pagination",
+        // },
         pagination: ".swiper-pagination",
       },
     };
   },
-  components: {
-    swiper,
-    swiperSlide,
-  },
+
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
+    console.log("Current Swiper instance object", this.swiper);
     // 页面初始化
     // this.swiper.slideTo(3, 1000, false);
   },
