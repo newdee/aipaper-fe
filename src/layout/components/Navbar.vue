@@ -5,8 +5,13 @@
         <div class="navItems flex">
           <div @click="$jumpUrl('/')" class="grid-content nav_left flex items-center">
             <div class="logo-box">
-              <img :src="logo" alt="" title="logo" />
-              <p>万象写作</p>
+              <div class="logoR">
+                <img :src="logoMax" alt="" title="logo" />
+              </div>
+              <div class="logoL">
+                <p>万象学术</p>
+                <img :src="logo" alt="" title="logo" />
+              </div>
             </div>
           </div>
           <div :class="['navItem', activeIndex == '1' ? 'active' : '']" @click="toView(0, '/home')">
@@ -114,6 +119,7 @@ export default {
     return {
       listId: 0,
       logo: require("@/assets/images/MIXPAPER.png"),
+      logoMax: require("@/assets/images/logoMax.png"),
 
       drawer: false,
       direction: "rtl", //小屏菜单抽屉方向
@@ -258,6 +264,25 @@ export default {
 }
 
 .logo-box {
+  width: 167px;
+  height: 40px;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .logoR {
+    width: 40px;
+    height: 40px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.logoL {
   width: 117px;
   height: 40px;
   font-family: DOUYINSANSBOLD, DOUYINSANSBOLD;
@@ -265,7 +290,9 @@ export default {
   font-size: 24px;
   color: #3355FF;
   text-align: left;
-  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 
   img {
     width: 117px;
