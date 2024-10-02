@@ -6,10 +6,11 @@
           <div @click="$jumpUrl('/')" class="grid-content nav_left flex items-center">
             <div class="logo-box">
               <img :src="logo" alt="" title="logo" />
+              <p>万象写作</p>
             </div>
           </div>
           <div :class="['navItem', activeIndex == '1' ? 'active' : '']" @click="toView(0, '/home')">
-            首页
+            搜论文
           </div>
           <div :class="['navItem', activeIndex == '2' ? 'active' : '']" @click="toView(1, '/main/writepaper')">
             写论文
@@ -258,7 +259,7 @@ export default {
 
 .logo-box {
   width: 117px;
-  height: 19px;
+  height: 40px;
   font-family: DOUYINSANSBOLD, DOUYINSANSBOLD;
   font-weight: normal;
   font-size: 24px;
@@ -267,8 +268,16 @@ export default {
   margin-right: 20px;
 
   img {
+    width: 117px;
+    height: 19px;
+  }
+
+  p {
     width: 100%;
-    height: 100%;
+    font-family: arial, "Hiragino Sans GB", "Microsoft Yahei", "微软雅黑", "宋体", 宋体, Tahoma, Arial, Helvetica, STHeiti;
+    text-align: center;
+    font-weight: 600;
+    transform: rotateX(45deg) scaleX(1.2);
   }
 }
 

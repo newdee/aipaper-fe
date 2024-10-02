@@ -33,27 +33,36 @@
                 <a href="https://beian.miit.gov.cn" target="_blank">冀ICP备2024060058号-2</a>
             </p>
         </div>
-        <!-- 悬浮菜单 -->
-        <div class="floatMenuWrapper">
+        <!-- 悬浮菜单 --><!-- 显示条件怎么设置? -->
+        <div class="floatMenuWrapper" v-if="true">
             <div class="menu">
-                <el-button v-popover:popover1>
+                <!-- <el-button v-popover:popover1> -->
+                <el-button @click="$devf">
                     <div class="item ai">
                         <img src="@/assets/images/robat-ai.png" alt="">
                     </div>
                 </el-button>
-                <!-- <div class="item ai">
-                    <img src="@/assets/images/robat-ai.png" alt="">
-                </div>
-                <div class="item">
-                    <img src="@/assets/images/headset.png" alt="">
-                </div>
-                <div class="item">
-                    <img src="@/assets/images/team-dark.png" alt="">
-                </div> -->
+                <!-- <el-button v-popover:popover2> -->
+                <el-button @click="$devf">
+                    <div class="item">
+                        <img src="@/assets/images/headset.png" alt="">
+                    </div>
+                </el-button>
+                <el-button v-popover:popover3>
+                    <div class="item">
+                        <img src="@/assets/images/team-dark.png" alt="">
+                    </div>
+                </el-button>
             </div>
         </div>
         <el-popover ref="popover1" placement="left-start" width="125" trigger="click">
-            <div class="qrBox">
+            AI写作
+        </el-popover>
+        <el-popover ref="popover2" placement="left-start" width="125" trigger="click">
+            在线客服
+        </el-popover>
+        <el-popover ref="popover3" placement="left-start" width="125" trigger="click">
+            <div class="qrBox" title="团队二维码">
                 <img class="qrcode" src="@/assets/images/qrcode.png" alt="">
             </div>
         </el-popover>
@@ -190,7 +199,7 @@ export default {
 
 .floatMenuWrapper {
     position: fixed;
-    bottom: 30vh;
+    bottom: 25vh;
     right: 28px;
     width: 44px;
     z-index: 9999;
@@ -203,6 +212,8 @@ export default {
         button {
             padding: 0px;
             border: none;
+            background-color: transparent;
+            margin: 0px !important;
         }
 
         .item {

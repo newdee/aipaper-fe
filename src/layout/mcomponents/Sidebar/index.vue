@@ -8,7 +8,7 @@
         $jumpUrl('/main/explore');
       " :active="sidebar.activeIndex == 5" class="mItemWrapper">
         <div class="mSliderItem">
-          <div class="left"><span class="imgIcon"></span>探索</div>
+          <div class="left"><span class="imgIcon"></span>搜论文</div>
           <span class="right imgIcon"></span>
         </div>
       </div>

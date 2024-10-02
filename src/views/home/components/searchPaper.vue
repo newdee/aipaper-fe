@@ -4,7 +4,7 @@
     <div class="mainBackground">
       <div class="leftMainText">
         <p>MIXPAPER</p>
-        <p>万象学术</p>
+        <p>万象写作</p>
       </div>
       <div class="mainInput">
         <p class="inputName">AI 论文快查</p>
