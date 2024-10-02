@@ -10,7 +10,12 @@
         <p class="inputName">AI 论文快查</p>
         <div class="selectText">
           <el-select v-model="value" placeholder="请选择">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
             </el-option>
           </el-select>
         </div>
@@ -25,7 +30,7 @@
         </div>
       </div>
       <div class="inputDesc g_poin" @click="$jumpUrl('/main/writepaper')">
-        <p>全网首家免费无限AI改稿平台</p>
+        <p>全网首家免费在线编辑的AI写作平台</p>
         <div>
           <p>
             开始智能写作

@@ -28,7 +28,7 @@ export default {
       feature_list: [
         {
           id: 1,
-          text: "全网首家免费无限AI改稿平台",
+          text: "全网首家免费在线编辑的AI写作平台",
           url: "https://example.com/feature1",
         },
         {

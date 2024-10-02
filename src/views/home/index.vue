@@ -1,8 +1,8 @@
 <template>
   <div>
-    <el-button type="success" @click="jump">跳转到原页面</el-button>
+    <!-- <el-button type="success" @click="jump">跳转到原页面</el-button> -->
     <!-- 页面名称 -->
-    <el-button type="success" @click="jump2">跳转详情页</el-button>
+    <!-- <el-button type="success" @click="jump2">跳转详情页</el-button> -->
     <search-paper class="searchPaper"></search-paper>
     <input-main class="swiper swiper1"></input-main>
     <swiper-three class="swiper swiper2"></swiper-three>

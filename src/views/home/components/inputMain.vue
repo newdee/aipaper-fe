@@ -6,11 +6,23 @@
         <!-- slides -->
         <swiper-slide>
           <div class="sliderImgBox">
-            <img src="@/assets/images/banner.png" alt="" />
+            <img src="@/assets/images/banner/banner1.png" alt="" />
           </div>
         </swiper-slide>
         <swiper-slide>
-          <div class="sliderImgBox">I'm Slide3</div>
+          <div class="sliderImgBox">
+            <img src="@/assets/images/banner/banner2.png" alt="" />
+          </div>
+        </swiper-slide>
+        <swiper-slide>
+          <div class="sliderImgBox">
+            <img src="@/assets/images/banner/banner3.png" alt="" />
+          </div>
+        </swiper-slide>
+        <swiper-slide>
+          <div class="sliderImgBox">
+            <img src="@/assets/images/banner/banner4.png" alt="" />
+          </div>
         </swiper-slide>
         <!-- 其他 slides... -->
 
