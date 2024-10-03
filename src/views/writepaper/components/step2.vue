@@ -93,37 +93,47 @@
               ></span>
             </div>
 
-            <span class="iconRight">
-              <!-- <el-tooltip placement="top" content="插入图表配置">
-                <span> 插入图表 </span>
-              </el-tooltip> -->
-              <!-- 新增 -->
-              <!-- <el-tooltip
-                :num="data.index.split('-').length"
-                v-if="data.index.split('-').length < 3"
-                class="item"
-                effect="dark"
-                content="新增"
-                placement="top"
-              >
-                <i
-                  @click="() => appendShow(node, data)"
-                  class="el-icon-circle-plus-outline g_poin"
-                ></i>
-              </el-tooltip> -->
-              <!-- 删除 -->
-              <!-- <el-tooltip
-                class="item"
-                effect="dark"
-                content="删除"
-                placement="top"
-              >
-                <i
-                  @click="() => remove(node, data)"
-                  class="el-icon-delete g_poin"
-                ></i>
-              </el-tooltip> -->
-            </span>
+            <div v-if="data.level == 3" class="iconRight">
+              <div>
+                <el-tooltip placement="top" content="插入图表配置">
+                  <span @click="showImgF(data)">
+                    <i class="el-icon-edit-outline"></i>
+                    插入图表
+                  </span>
+                </el-tooltip>
+                <!-- 新增 -->
+                <el-tooltip
+                  :num="data.index.split('-').length"
+                  v-if="data.index.split('-').length < 3"
+                  class="item"
+                  effect="dark"
+                  content="新增"
+                  placement="top"
+                >
+                  <i
+                    @click="() => appendShow(node, data)"
+                    class="el-icon-circle-plus-outline g_poin"
+                  ></i>
+                </el-tooltip>
+                <!-- 删除 -->
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="删除"
+                  placement="top"
+                >
+                  <i
+                    @click="() => remove(node, data)"
+                    class="el-icon-delete g_poin"
+                  ></i>
+                </el-tooltip>
+              </div>
+              <div class="rightbottom">
+                <i class="el-icon-document-remove"></i>
+                <i class="el-icon-document-remove"></i>
+                <i class="el-icon-document-remove"></i>
+              </div>
+            </div>
           </div>
           <div v-if="data.content" class="contentInput">
             <!-- <textarea type="textarea" v-model="data.content"  /> -->
@@ -137,43 +147,6 @@
           </div>
         </div>
       </el-tree>
-
-      <el-dialog :visible.sync="editStatus" width="40%">
-        <div slot="title">
-          <p class="dialogTitle">
-            <i class="el-icon-folder-add dialogIcon"></i>
-            新增章节
-          </p>
-          <p class="warningText">
-            🔔 全文生成效果受章节数和概要内容影响，请谨慎修改
-          </p>
-        </div>
-        <el-form
-          :model="numberValidateForm"
-          ref="numberValidateForm"
-          label-width="100px"
-          class="demo-ruleForm"
-        >
-          <el-form-item
-            label="请输入章节"
-            prop="appendValue"
-            :rules="[{ required: true, message: '章节不能为空' }]"
-          >
-            <el-input
-              placeholder="请输入章节"
-              v-model="numberValidateForm.appendValue"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-        </el-form>
-
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="closeDialog">取 消</el-button>
-          <el-button type="primary" @click="submitForm('numberValidateForm')">
-            确 定
-          </el-button>
-        </span>
-      </el-dialog>
     </div>
     <div @click="textF" class="outlineRepeat g_poin">
       <p>
@@ -392,6 +365,149 @@
         >
       </span>
     </el-dialog>
+    <el-dialog
+      :append-to-body="true"
+      :lock-scroll="false"
+      :visible.sync="editStatus"
+      width="40%"
+    >
+      <div slot="title">
+        <p class="dialogTitle">
+          <i class="el-icon-folder-add dialogIcon"></i>
+          新增章节
+        </p>
+        <p class="warningText">
+          🔔 全文生成效果受章节数和概要内容影响，请谨慎修改
+        </p>
+      </div>
+      <el-form
+        :model="numberValidateForm"
+        ref="numberValidateForm"
+        label-width="100px"
+        class="demo-ruleForm"
+      >
+        <el-form-item
+          label="请输入章节"
+          prop="appendValue"
+          :rules="[{ required: true, message: '章节不能为空' }]"
+        >
+          <el-input
+            placeholder="请输入章节"
+            v-model="numberValidateForm.appendValue"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="closeDialog">取 消</el-button>
+        <el-button type="primary" @click="submitForm('numberValidateForm')">
+          确 定
+        </el-button>
+      </span>
+    </el-dialog>
+    <!-- 插入图表 -->
+    <el-dialog
+      :append-to-body="true"
+      :lock-scroll="false"
+      title="插入图表"
+      :visible.sync="imgExcelSetStatus"
+      width="80%"
+      label-width="120px"
+    >
+      <el-form
+        :model="numberValidateForm"
+        ref="numberValidateForm"
+        label-width="130px"
+        class="demo-ruleForm"
+      >
+        <el-form-item label="请输入章节" prop="appendValue">
+          <div class="leftLabel" slot="label">
+            <el-switch
+              v-model="data.label"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            >
+            </el-switch>
+            <span class="labelSpan">插入图</span>
+          </div>
+          <el-input
+            placeholder="请输入图的名称"
+            v-model="data.label"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="请输入章节" prop="appendValue">
+          <div class="leftLabel" slot="label">
+            <el-switch
+              v-model="data.label"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            >
+            </el-switch>
+            <span class="labelSpan">插入图</span>
+          </div>
+          <el-input
+            placeholder="请输入图的名称"
+            v-model="data.label"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="请输入章节" prop="appendValue">
+          <div class="leftLabel" slot="label">
+            <el-switch
+              v-model="data.label"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            >
+            </el-switch>
+            <span class="labelSpan">插入图</span>
+          </div>
+          <el-input
+            placeholder="请输入图的名称"
+            v-model="data.label"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="请输入章节" prop="appendValue">
+          <div class="leftLabel" slot="label">
+            <el-switch
+              v-model="data.label"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            >
+            </el-switch>
+            <span class="labelSpan">插入图</span>
+          </div>
+          <el-input
+            placeholder="请输入图的名称"
+            v-model="data.label"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="请输入章节" prop="appendValue">
+          <div class="leftLabel" slot="label">
+            <el-switch
+              v-model="data.index"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            >
+            </el-switch>
+            <span class="labelSpan">插入图</span>
+          </div>
+          <el-input
+            placeholder="请输入图的名称"
+            v-model="data.index"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="closeFDialog">取 消</el-button>
+        <el-button type="primary" @click="closeFDialog"> 确 定 </el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -438,11 +554,13 @@ export default {
               children: [
                 {
                   content: "介绍艺术批评与设计实践之间的关系和重要性",
+                  level: 3,
                   id: 9,
                   label: "三级 1-1-1",
                 },
                 {
                   content: "介绍艺术批评与设计实践之间的关系和重要性",
+                  level: 3,
                   id: 10,
                   label: "三级 1-1-2",
                 },
@@ -457,11 +575,13 @@ export default {
           children: [
             {
               content: "介绍艺术批评与设计实践之间的关系和重要性",
+              level: 3,
               id: 5,
               label: "二级 2-1",
             },
             {
               content: "介绍艺术批评与设计实践之间的关系和重要性",
+              level: 3,
               id: 6,
               label: "二级 2-2",
             },
@@ -483,16 +603,19 @@ export default {
               children: [
                 {
                   content: "介绍艺术批评与设计实践之间的关系和重要性",
+                  level: 3,
                   id: 11,
                   label: "三级 3-2-1",
                 },
                 {
                   content: "介绍艺术批评与设计实践之间的关系和重要性",
+                  level: 3,
                   id: 12,
                   label: "三级 3-2-2",
                 },
                 {
                   id: 13,
+                  level: 3,
                   content: "介绍艺术批评与设计实践之间的关系和重要性",
                   label: "三级 3-2-3",
                 },
@@ -501,6 +624,8 @@ export default {
           ],
         },
       ],
+      imgExcelSetStatus: false,
+
       editData: {},
       defaultProps: {
         children: "children",
@@ -509,6 +634,7 @@ export default {
       editStatus: false,
       checkboxGroup1: [],
       statementDialogVisible: false,
+      currentRow: {},
     };
   },
 
@@ -516,6 +642,11 @@ export default {
     this.generateIndexes(this.data);
   },
   methods: {
+    showImgF(item) {
+      console.log("item", item);
+      this.imgExcelSetStatus = true;
+      this.currentRow = item;
+    },
     addPageOne() {
       this.data.push({
         id: new Date().getTime(),
@@ -750,6 +881,9 @@ export default {
       this.resetForm("numberValidateForm");
       this.editStatus = false;
     },
+    closeFDialog() {
+      this.numberValidateForm = false;
+    },
     resetForm() {
       this.appendValue = "";
     },
@@ -920,6 +1054,7 @@ export default {
 .warningText {
   color: #ffa500;
   font-size: 14px;
+  margin-top: 20px;
 }
 
 .generateSpan {
@@ -996,7 +1131,18 @@ export default {
 
 .iconRight {
   color: $menuActiveText;
-  position: relative;
+  position: absolute;
+  top: 10px;
+  font-size: 14px;
+  height: 100%;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 10px;
+  padding-top: 3px;
+  padding-bottom: 20px;
 }
 .oulineTitlePaper {
   font-size: 20px;
@@ -1079,6 +1225,7 @@ export default {
 .slotContentBox {
   font-size: 14px;
   font-weight: bold;
+  position: relative;
   width: 100%;
   color: #333639;
 }
@@ -1114,5 +1261,21 @@ export default {
   font-weight: bold;
   margin: 32px 0;
   color: #1f2937;
+}
+.rightbottom {
+}
+.labelSpan {
+  font-family: PingFangSC, PingFang SC;
+  margin-left: 16px;
+  font-weight: 400;
+  font-size: 14px;
+  color: #000000;
+  line-height: 20px;
+  text-align: left;
+}
+.leftLabel {
+  display: flex;
+  align-items: center;
+  height: 32px;
 }
 </style>

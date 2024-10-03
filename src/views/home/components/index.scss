@@ -6,7 +6,7 @@
     margin: 0 auto;
     font-family: AlimamaShuHeiTi;
     font-size: 56px;
-    color: #212121;
+    color: #fff;
     line-height: 58px;
     font-weight: bold;
     text-align: left;
@@ -97,13 +97,16 @@
   margin-top: 30px;
   height: 48px;
   display: flex;
+  white-space: nowrap; /* 防止文字换行 */
+  
   & > p {
     font-family: PingFangSC, PingFang SC;
     font-weight: 400;
     font-size: 24px;
-    color: #212121;
+    color: #fff;
     line-height: 46px;
-    text-align: left;
+    text-align: left;overflow: hidden; /* 隐藏超出的内容 */
+    text-overflow: ellipsis; 
     font-style: normal;
   }
   div {
@@ -122,5 +125,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    p {
+      white-space: nowrap; /* 防止文字换行 */
+    overflow: hidden; /* 隐藏超出的内容 */
+    text-overflow: ellipsis;
+    }
   }
 }
