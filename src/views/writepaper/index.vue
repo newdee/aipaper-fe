@@ -141,6 +141,7 @@ export default {
 
 .mainContentSec {
   // background-color: #f5f8ff;
+  overflow: hidden;
 }
 
 .tabsList {

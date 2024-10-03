@@ -1,9 +1,15 @@
 <template>
   <div class="adBox">
     <!-- 页面名称 -->
-    <div class="newLi" v-for="(item, index) in advantageList" :key="index + 'ad'">
-      {{ item.name }}
+    <div
+      class="newLi"
+      v-for="(item, index) in advantageList"
+      :key="index + 'ad'"
+    >
       {{ item.label }}
+      <p class="advanP">
+        {{ item.name }}
+      </p>
     </div>
   </div>
 </template>
@@ -20,24 +26,28 @@ export default {
       // 定义变量
       advantageList: [
         {
-          name: "每个小节支持上传AI学习资料、链接",
-          label: "全网首家",
+          name: "在线编辑 方便排版 一次定稿 ",
+          label: "全网首家免费在线编辑",
         },
         {
-          name: "每个小节支持上传AI学习资料、链接3",
-          label: "全网首家",
+          name: "最专业的学术论文生成 蕴含硕士博士做学术的经验",
+          label: "全网最专业论文生成平台",
         },
         {
-          name: "每个小节支持上传AI学习资料、链接5",
-          label: "全网首家",
+          name: "富含学术创新 一次搞定",
+          label: "全网最优质AI生成的论文内容",
         },
         {
-          name: "每个小节支持上传AI学习资料、链接6",
-          label: "全网首家",
+          name: "全天候提供专业服务，顾问式支持完成定稿",
+          label: "7*24小时在线服务",
         },
         {
-          name: "每个小节支持上传AI学习资料、链接7",
-          label: "全网首家",
+          name: "支持学术思考、论文写作、论文编辑、论文搜索",
+          label: "一站式服务",
+        },
+        {
+          name: "AIGC率超过25%退费 重复率超过15%退费",
+          label: "知网通过无忧",
         },
       ],
     };
@@ -85,9 +95,11 @@ export default {
   height: 485px;
   padding: 15px;
   background: rgba(51, 85, 255, 0.1);
+  background: url("../../../assets/images/advan1.jpg") no-repeat 0 0 / 100% 100%;
   border-radius: 8px;
   border: 1px solid #3355ff;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-weight: 600;
@@ -97,5 +109,8 @@ export default {
   text-align: left;
   margin-top: 30px;
   font-style: normal;
+}
+.advanP {
+  margin-top: 10px;
 }
 </style>
