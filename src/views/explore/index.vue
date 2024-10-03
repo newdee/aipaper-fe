@@ -27,217 +27,9 @@
     <!-- 中间行的轮播图 -->
     <div class="swiperNews">
       <h6>最新热点</h6>
-      <swiper class="swiper" :options="swiperOptionNew">
-        <swiper-slide>
-          <div class="newSlider">
-            <div class="upToDate">最近更新</div>
-            <img
-              class="illustration"
-              src="@/assets/images/illustration-1.png"
-              alt=""
-            />
-            <div class="txt">
-              <p class="title">
-                Black hole jets on the scale of the cosmic web
-              </p>
-              <p class="text">
-                Black hole jets on the scale of the cosmic webBlack hole jets on
-                the scale of the cosmic webBlack hole jets on the scale of the
-                cosmic webBlack hole jets on the scale of the cosmic …
-              </p>
-            </div>
-            <div class="authorInfo">
-              <p class="author">Jacob Smith</p>
-              <p class="info">Aritical | 18 Sept 2024</p>
-            </div>
-          </div>
-        </swiper-slide>
-        <swiper-slide>
-          <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/illustration-2.png"
-              alt=""
-            />
-            <div class="txt">
-              <p class="title">
-                Black hole jets on the scale of the cosmic web
-              </p>
-              <p class="text">
-                Black hole jets on the scale of the cosmic webBlack hole jets on
-                the scale of the cosmic webBlack hole jets on the scale of the
-                cosmic webBlack hole jets on the scale of the cosmic …
-              </p>
-            </div>
-            <div class="authorInfo">
-              <p class="author">Jacob Smith</p>
-              <p class="info">Aritical | 18 Sept 2024</p>
-            </div>
-          </div>
-        </swiper-slide>
-        <swiper-slide>
-          <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/illustration-3.png"
-              alt=""
-            />
-            <div class="txt">
-              <p class="title">
-                Black hole jets on the scale of the cosmic web
-              </p>
-              <p class="text">
-                Black hole jets on the scale of the cosmic webBlack hole jets on
-                the scale of the cosmic webBlack hole jets on the scale of the
-                cosmic webBlack hole jets on the scale of the cosmic …
-              </p>
-            </div>
-            <div class="authorInfo">
-              <p class="author">Jacob Smith</p>
-              <p class="info">Aritical | 18 Sept 2024</p>
-            </div>
-          </div>
-        </swiper-slide>
-        <swiper-slide>
-          <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/illustration-4.png"
-              alt=""
-            />
-            <div class="txt">
-              <p class="title">
-                Black hole jets on the scale of the cosmic web
-              </p>
-              <p class="text">
-                Black hole jets on the scale of the cosmic webBlack hole jets on
-                the scale of the cosmic webBlack hole jets on the scale of the
-                cosmic webBlack hole jets on the scale of the cosmic …
-              </p>
-            </div>
-            <div class="authorInfo">
-              <p class="author">Jacob Smith</p>
-              <p class="info">Aritical | 18 Sept 2024</p>
-            </div>
-          </div>
-        </swiper-slide>
-        <swiper-slide>
-          <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/illustration-1.png"
-              alt=""
-            />
-            <div class="txt">
-              <p class="title">
-                Black hole jets on the scale of the cosmic web
-              </p>
-              <p class="text">
-                Black hole jets on the scale of the cosmic webBlack hole jets on
-                the scale of the cosmic webBlack hole jets on the scale of the
-                cosmic webBlack hole jets on the scale of the cosmic …
-              </p>
-            </div>
-            <div class="authorInfo">
-              <p class="author">Jacob Smith</p>
-              <p class="info">Aritical | 18 Sept 2024</p>
-            </div>
-          </div>
-        </swiper-slide>
-        <swiper-slide>
-          <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/illustration-2.png"
-              alt=""
-            />
-            <div class="txt">
-              <p class="title">
-                Black hole jets on the scale of the cosmic web
-              </p>
-              <p class="text">
-                Black hole jets on the scale of the cosmic webBlack hole jets on
-                the scale of the cosmic webBlack hole jets on the scale of the
-                cosmic webBlack hole jets on the scale of the cosmic …
-              </p>
-            </div>
-            <div class="authorInfo">
-              <p class="author">Jacob Smith</p>
-              <p class="info">Aritical | 18 Sept 2024</p>
-            </div>
-          </div>
-        </swiper-slide>
-        <swiper-slide>
-          <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/illustration-3.png"
-              alt=""
-            />
-            <div class="txt">
-              <p class="title">
-                Black hole jets on the scale of the cosmic web
-              </p>
-              <p class="text">
-                Black hole jets on the scale of the cosmic webBlack hole jets on
-                the scale of the cosmic webBlack hole jets on the scale of the
-                cosmic webBlack hole jets on the scale of the cosmic …
-              </p>
-            </div>
-            <div class="authorInfo">
-              <p class="author">Jacob Smith</p>
-              <p class="info">Aritical | 18 Sept 2024</p>
-            </div>
-          </div>
-        </swiper-slide>
-        <swiper-slide>
-          <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/illustration-4.png"
-              alt=""
-            />
-            <div class="txt">
-              <p class="title">
-                Black hole jets on the scale of the cosmic web
-              </p>
-              <p class="text">
-                Black hole jets on the scale of the cosmic webBlack hole jets on
-                the scale of the cosmic webBlack hole jets on the scale of the
-                cosmic webBlack hole jets on the scale of the cosmic …
-              </p>
-            </div>
-            <div class="authorInfo">
-              <p class="author">Jacob Smith</p>
-              <p class="info">Aritical | 18 Sept 2024</p>
-            </div>
-          </div>
-        </swiper-slide>
-        <swiper-slide>
-          <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/illustration-1.png"
-              alt=""
-            />
-            <div class="txt">
-              <p class="title">
-                Black hole jets on the scale of the cosmic web
-              </p>
-              <p class="text">
-                Black hole jets on the scale of the cosmic webBlack hole jets on
-                the scale of the cosmic webBlack hole jets on the scale of the
-                cosmic webBlack hole jets on the scale of the cosmic …
-              </p>
-            </div>
-            <div class="authorInfo">
-              <p class="author">Jacob Smith</p>
-              <p class="info">Aritical | 18 Sept 2024</p>
-            </div>
-          </div>
-        </swiper-slide>
-        <div class="swiper-pagination" slot="pagination"></div>
-      </swiper>
+      <div class="swiperBox">
+        <swiper3></swiper3>
+      </div>
     </div>
   </div>
 </template>
@@ -246,11 +38,14 @@
 
 // import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
-// import webinfo from "@/components/webinfo.vue";
+import swiper3 from "@/views/home/components/swiperThree.vue";
 // import eventBus from "@/utils/eventBus";
 
 export default {
   name: "swiperThree",
+  components: {
+    swiper3,
+  },
   data() {
     return {
       // 定义变量
@@ -262,11 +57,11 @@ export default {
         },
         {
           value: "选项2",
-          label: "双皮奶",
+          label: "科学",
         },
         {
           value: "选项3",
-          label: "蚵仔煎",
+          label: "政治",
         },
       ],
       value: "综合",
@@ -281,6 +76,7 @@ export default {
       },
     };
   },
+
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
@@ -377,7 +173,6 @@ export default {
 
   .illustration {
     width: calc(100% - 2px);
-    height: 200px;
     // border: 1px solid #CCCCCC;
     outline: 1px solid #ffffff;
     border-radius: 8px;

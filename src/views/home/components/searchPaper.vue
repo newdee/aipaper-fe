@@ -59,11 +59,11 @@ export default {
         },
         {
           value: "选项2",
-          label: "双皮奶",
+          label: "科学",
         },
         {
           value: "选项3",
-          label: "蚵仔煎",
+          label: "政治",
         },
       ],
       value: "综合",
