@@ -3,10 +3,7 @@
     <div class="navMain">
       <div>
         <div class="navItems flex">
-          <div
-            @click="$jumpUrl('/')"
-            class="grid-content nav_left flex items-center"
-          >
+          <div @click="$jumpUrl('/')" class="grid-content nav_left flex items-center">
             <div class="logo-box">
               <div class="logoR">
                 <img :src="logoMax" alt="" title="logo" />
@@ -17,52 +14,28 @@
               </div>
             </div>
           </div>
-          <div
-            :class="['navItem', activeIndex == '1' ? 'active' : '']"
-            @click="toView(0, '/home')"
-          >
+          <div :class="['navItem', activeIndex == '1' ? 'active' : '']" @click="toView(0, '/home')">
             搜论文
           </div>
-          <div
-            :class="['navItem', activeIndex == '2' ? 'active' : '']"
-            @click="toView(1, '/main/writepaper')"
-          >
+          <div :class="['navItem', activeIndex == '2' ? 'active' : '']" @click="toView(1, '/main/writepaper')">
             写论文
           </div>
-          <div
-            :class="['navItem', activeIndex == '3' ? 'active' : '']"
-            @click="toView(2, '/main/readpaper')"
-          >
+          <div :class="['navItem', activeIndex == '3' ? 'active' : '']" @click="toView(2, '/main/readpaper')">
             读论文
           </div>
-          <div
-            :class="['navItem', activeIndex == '4' ? 'active' : '']"
-            @click="toView(3, '/main/amendpaper')"
-          >
+          <div :class="['navItem', activeIndex == '4' ? 'active' : '']" @click="toView(3, '/main/amendpaper')">
             改论文
           </div>
-          <div
-            :class="['navItem', activeIndex == '5' ? 'active' : '']"
-            @click="toView(4, '/main/integratedservices')"
-          >
+          <div :class="['navItem', activeIndex == '5' ? 'active' : '']" @click="toView(4, '/main/integratedservices')">
             综合服务
           </div>
-          <div
-            :class="['navItem', activeIndex == '6' ? 'active' : '']"
-            @click="toView(5, '/main/explore')"
-          >
+          <div :class="['navItem', activeIndex == '6' ? 'active' : '']" @click="toView(5, '/main/explore')">
             精品课程
           </div>
-          <div
-            :class="['navItem', activeIndex == '7' ? 'active' : '']"
-            @click="toView(6, '/main/aitools')"
-          >
+          <div :class="['navItem', activeIndex == '7' ? 'active' : '']" @click="toView(6, '/main/aitools')">
             AI工具
           </div>
-          <div
-            :class="['navItem', activeIndex == '8' ? 'active' : '']"
-            @click="toView(7, '/main/reduceRepetition')"
-          >
+          <div :class="['navItem', activeIndex == '8' ? 'active' : '']" @click="toView(7, '/main/reduceRepetition')">
             降重/降AIGC率
           </div>
         </div>
@@ -75,11 +48,7 @@
           <div class="btn" @click="$devf">升级专业版</div>
 
           <template>
-            <div
-              v-if="!hasLogin"
-              @click="pushLogin"
-              class="login_box hidden-xs-only"
-            >
+            <div v-if="!hasLogin" @click="pushLogin" class="login_box hidden-xs-only">
               <div class="img">登录</div>
             </div>
             <div v-else class="login_box hidden-xs-only">
@@ -100,60 +69,50 @@
     </div>
 
     <!-- 菜单栏 -->
-    <el-drawer
-      size="40%"
-      :visible.sync="drawerStatus"
-      :direction="direction"
-      :before-close="handleClose"
-      :show-close="false"
-      append-to-body
-    >
+    <el-drawer size="40%" :visible.sync="drawerStatus" :direction="direction" :before-close="handleClose"
+      :show-close="false" append-to-body>
       <template slot="title">
         <div>我的菜单</div>
       </template>
       <div class="flex flex-star">
-        <div
-          class="text-main items-center siderbar-item"
-          @click="$jumpUrl('/paper/reduceRepetiton')"
-        >
+        <div class="text-main items-center siderbar-item" @click="toView(0, '/home')">
+          搜论文
+        </div>
+        <div class="text-main items-center siderbar-item" @click="toView(1, '/main/writepaper')">
+          写论文
+        </div>
+        <div class="text-main items-center siderbar-item" @click="toView(2, '/main/readpaper')">
+          读论文
+        </div>
+        <div class="text-main items-center siderbar-item" @click="toView(3, '/main/amendpaper')">
+          改论文
+        </div>
+        <div class="text-main items-center siderbar-item" @click="toView(4, '/main/integratedservices')">
+          综合服务
+        </div>
+        <div class="text-main items-center siderbar-item" @click="toView(5, '/main/explore')">
+          精品课程
+        </div>
+        <div class="text-main items-center siderbar-item" @click="toView(6, '/main/aitools')">
+          AI工具
+        </div>
+        <div class="text-main items-center siderbar-item" @click="toView(7, '/main/reduceRepetition')">
           降重/降AIGC率
         </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="showOrderList"
-        >
-          我的订单
+        <div class="text-main items-center siderbar-item" @click="showOrderList">
+          查看订单
         </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="$jumpUrl('/paper/preview')"
-        >
-          范文样例
-        </div>
-        <div
-          v-if="!hasLogin"
-          class="text-main items-center siderbar-item"
-          @click="pushLogin"
-        >
+        <div v-if="!hasLogin" class="text-main items-center siderbar-item" @click="pushLogin">
           登录
         </div>
-        <div
-          v-else
-          class="text-main items-center siderbar-item"
-          @click="$jumpUrl('/userInfo')"
-        >
+        <div v-else class="text-main items-center siderbar-item" @click="$jumpUrl('/userInfo')">
           我的个人主页
         </div>
       </div>
     </el-drawer>
     <!-- 用户订单 -->
-    <el-drawer
-      :visible.sync="ordersDrawer"
-      :direction="orderDirection"
-      :before-close="handleOrdersClose"
-      append-to-body
-      size="500px"
-    >
+    <el-drawer :visible.sync="ordersDrawer" :direction="orderDirection" :before-close="handleOrdersClose" append-to-body
+      size="500px">
       <template #title>
         <div>我的订单</div>
       </template>
@@ -266,11 +225,13 @@ export default {
 @media only screen and (max-width: 990px) {
   .navbarHome {
     padding-left: 0px;
+
     .navItem {
       display: none;
     }
   }
 }
+
 @media only screen and (min-width: 640px) {
   .menuBtn {
     margin: 0;
@@ -301,6 +262,7 @@ export default {
   // padding: 0 16px;
   height: 80px;
   width: 100%;
+
   .el-col {
     height: 100%;
   }
@@ -416,7 +378,7 @@ export default {
   border-radius: 4px;
   height: 100%;
 
-  &:hover > div {
+  &:hover>div {
     cursor: pointer;
   }
 }
@@ -546,7 +508,7 @@ export default {
 }
 
 .navItems {
-  & > div:hover {
+  &>div:hover {
     cursor: pointer;
   }
 
@@ -601,7 +563,7 @@ export default {
   height: 100%;
   align-items: center;
 
-  > div {
+  >div {
     margin: 0 10px;
   }
 
@@ -638,6 +600,7 @@ export default {
     user-select: none;
   }
 }
+
 .menuBtn {
   font-size: 24px;
 }
