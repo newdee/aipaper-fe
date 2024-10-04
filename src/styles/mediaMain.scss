@@ -1,0 +1,52 @@
+@media only screen and (max-width: 760px) {
+  .footer {
+    .siteInfo {
+      display: flex;
+      flex-wrap: wrap;
+      .qrBox {
+        display: flex;
+        flex-direction: column;
+        img {
+          margin-bottom: 10px;
+        }
+      }
+      .col_1 {
+        display: none;
+      }
+      .col {
+        width: 100%;
+      }
+      .col_3 {
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+        .title_mini {
+          display: none;
+        }
+        p {
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+
+  // three Swiper
+  .swiper2 {
+    padding: 10px;
+    .swiperNews {
+      margin-top: 30px;
+    }
+    .newSlider {
+      height: 400px;
+      border-radius: 8px;
+    }
+  }
+  .swiper1 {
+    padding: 0 10px;
+  }
+
+  // 侧边栏
+  .floatMenuWrapper {
+    bottom: 70px;
+  }
+}

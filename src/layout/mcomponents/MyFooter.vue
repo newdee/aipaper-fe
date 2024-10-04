@@ -156,9 +156,6 @@ export default {
   }
 }
 
-@media only screen and (max-width: 990px) {
-}
-
 .siteInfo {
   display: grid;
   grid-template-columns: 8fr 8fr 5fr;
@@ -306,4 +303,6 @@ export default {
     }
   }
 }
+
+@import "@/styles/mediaMain.scss";
 </style>

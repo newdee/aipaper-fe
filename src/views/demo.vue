@@ -40,6 +40,7 @@ export default {
 <style lang="scss" scoped>
 // 引入scss
 // @import "@/styles/variables.scss";
+// @import "@/styles/mediaMain.scss";
 // @import './index.scss';
 
 // 媒体查询
