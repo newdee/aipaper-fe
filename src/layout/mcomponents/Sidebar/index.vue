@@ -1,60 +1,74 @@
 <template>
   <div class="qysytxy" :key="timeKey">
-    <div @click="$jumpUrl('/')" class="logo">
+    <div @click="$jumpUrl('/')" class="logoEr">
       <img src="@/assets/images/MIXPAPER.png" alt="" />
     </div>
     <div class="mSiderBar">
-      <div @click="
-        $jumpUrl('/main/explore');
-      " :active="sidebar.activeIndex == 5" class="mItemWrapper">
+      <div
+        @click="$jumpUrl('/main/explore')"
+        :active="sidebar.activeIndex == 5"
+        class="mItemWrapper"
+      >
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>搜论文</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div @click="
-        $jumpUrl('/main/writepaper');
-      " :active="sidebar.activeIndex == 1" class="mItemWrapper">
+      <div
+        @click="$jumpUrl('/main/writepaper')"
+        :active="sidebar.activeIndex == 1"
+        class="mItemWrapper"
+      >
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>写论文</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div @click="
-        $jumpUrl('/main/readpaper');
-      " :active="sidebar.activeIndex == 2" class="mItemWrapper">
+      <div
+        @click="$jumpUrl('/main/readpaper')"
+        :active="sidebar.activeIndex == 2"
+        class="mItemWrapper"
+      >
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>读论文</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div @click="
-        $jumpUrl('/main/amendpaper');
-      " :active="sidebar.activeIndex == 3" class="mItemWrapper">
+      <div
+        @click="$jumpUrl('/main/amendpaper')"
+        :active="sidebar.activeIndex == 3"
+        class="mItemWrapper"
+      >
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>改论文</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div @click="
-        $jumpUrl('/main/integratedservices');
-      " :active="sidebar.activeIndex == 4" class="mItemWrapper">
+      <div
+        @click="$jumpUrl('/main/integratedservices')"
+        :active="sidebar.activeIndex == 4"
+        class="mItemWrapper"
+      >
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>综合服务</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div @click="
-        $jumpUrl('/main/aitools');
-      " :active="sidebar.activeIndex == 6" class="mItemWrapper">
+      <div
+        @click="$jumpUrl('/main/aitools')"
+        :active="sidebar.activeIndex == 6"
+        class="mItemWrapper"
+      >
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>AI工具</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div @click="
-        $jumpUrl('/main/reduceRepetition');
-      " :active="sidebar.activeIndex == 7" class="mItemWrapper">
+      <div
+        @click="$jumpUrl('/main/reduceRepetition')"
+        :active="sidebar.activeIndex == 7"
+        class="mItemWrapper"
+      >
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>降重/降AIGC率</div>
           <span class="right imgIcon"></span>
@@ -146,7 +160,7 @@ export default {
 }
 
 .sidebar-container {
-  background: #F5F8FF;
+  background: #f5f8ff;
   color: #000;
   font-size: 14px !important;
 
@@ -226,6 +240,19 @@ export default {
         transform: rotateY(180deg);
       }
     }
+  }
+}
+.logoEr {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    // width: 100%;
+    // height: 100%;
+    width: 115px;
+    height: 18px;
   }
 }
 </stlyle>

@@ -150,19 +150,15 @@ export default {
   padding-left: 0px !important;
 
   .siteInfo {
-    padding-left: $sideBarWidth !important;
-  }
-}
-
-@media only screen and (max-width: 990px) {
-  .footer {
-    padding-left: 0px !important;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
   }
 }
 
 .siteInfo {
   display: grid;
-  grid-template-columns: 7fr 7fr 7fr;
+  grid-template-columns: 8fr 8fr 5fr;
   text-align: left;
   padding: 32px 0px;
 
@@ -183,8 +179,6 @@ export default {
   }
 
   .col_1 {
-    padding-left: 7em;
-
     > img {
       height: 20px;
       width: auto;
@@ -309,4 +303,6 @@ export default {
     }
   }
 }
+
+@import "@/styles/mediaMain.scss";
 </style>

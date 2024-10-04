@@ -1,7 +1,7 @@
 <template>
-  <div class="navbar">
-    <el-row :gutter="10">
-      <el-col :xs="18" :sm="18" :lg="18">
+  <div class="navbarHome">
+    <div class="navMain">
+      <div>
         <div class="navItems flex">
           <div @click="$jumpUrl('/')" class="grid-content nav_left flex items-center">
             <div class="logo-box">
@@ -39,13 +39,14 @@
             降重/降AIGC率
           </div>
         </div>
-      </el-col>
-      <el-col :xs="6" :sm="6" :lg="6">
+      </div>
+      <div>
         <div class="flex navBarRight">
           <div class="gift">
             <span class="num">1</span>
           </div>
           <div class="btn" @click="$devf">升级专业版</div>
+
           <template>
             <div v-if="!hasLogin" @click="pushLogin" class="login_box hidden-xs-only">
               <div class="img">登录</div>
@@ -59,26 +60,47 @@
                 </div>
               </UserMenu>
             </div>
+            <div class="menuBtn hidden-sm-and-up" @click="showDraw">
+              <i class="el-icon-s-operation"></i>
+            </div>
           </template>
         </div>
-      </el-col>
-    </el-row>
+      </div>
+    </div>
 
     <!-- 菜单栏 -->
-    <el-drawer size="40%" :visible.sync="drawer" :direction="direction" :before-close="handleClose" :show-close="false"
-      append-to-body>
+    <el-drawer size="40%" :visible.sync="drawerStatus" :direction="direction" :before-close="handleClose"
+      :show-close="false" append-to-body>
       <template slot="title">
         <div>我的菜单</div>
       </template>
       <div class="flex flex-star">
-        <div class="text-main items-center siderbar-item" @click="$jumpUrl('/paper/reduceRepetiton')">
+        <div class="text-main items-center siderbar-item" @click="toView(0, '/home')">
+          搜论文
+        </div>
+        <div class="text-main items-center siderbar-item" @click="toView(1, '/main/writepaper')">
+          写论文
+        </div>
+        <div class="text-main items-center siderbar-item" @click="toView(2, '/main/readpaper')">
+          读论文
+        </div>
+        <div class="text-main items-center siderbar-item" @click="toView(3, '/main/amendpaper')">
+          改论文
+        </div>
+        <div class="text-main items-center siderbar-item" @click="toView(4, '/main/integratedservices')">
+          综合服务
+        </div>
+        <div class="text-main items-center siderbar-item" @click="toView(5, '/main/explore')">
+          精品课程
+        </div>
+        <div class="text-main items-center siderbar-item" @click="toView(6, '/main/aitools')">
+          AI工具
+        </div>
+        <div class="text-main items-center siderbar-item" @click="toView(7, '/main/reduceRepetition')">
           降重/降AIGC率
         </div>
         <div class="text-main items-center siderbar-item" @click="showOrderList">
-          我的订单
-        </div>
-        <div class="text-main items-center siderbar-item" @click="$jumpUrl('/paper/preview')">
-          范文样例
+          查看订单
         </div>
         <div v-if="!hasLogin" class="text-main items-center siderbar-item" @click="pushLogin">
           登录
@@ -121,7 +143,7 @@ export default {
       logo: require("@/assets/images/MIXPAPER.png"),
       logoMax: require("@/assets/images/logoMax.png"),
 
-      drawer: false,
+      drawerStatus: false,
       direction: "rtl", //小屏菜单抽屉方向
       orderDirection: "ltr", //用户订单抽屉方向
       hasLogin: true,
@@ -180,7 +202,7 @@ export default {
       this.$router.push("/login");
     },
     showDraw() {
-      this.drawer = true;
+      this.drawerStatus = true;
     },
     toggleSideBar() {
       this.$store.dispatch("app/toggleSideBar");
@@ -197,10 +219,36 @@ export default {
 };
 </script>
 
-
-
 <style lang="scss" scoped>
 @import "@/styles/variables.scss";
+
+@media only screen and (max-width: 990px) {
+  .navbarHome {
+    padding-left: 0px;
+
+    .navItem {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (min-width: 640px) {
+  .menuBtn {
+    margin: 0;
+    display: block;
+    margin-right: 0 !important;
+  }
+}
+
+.navMain {
+  display: flex;
+  padding: 0 10px;
+  max-width: 1100px;
+  align-items: center;
+  height: 80px;
+  margin: 0 auto;
+  justify-content: space-between;
+}
 
 .operation_box {
   font-size: 20px;
@@ -210,9 +258,10 @@ export default {
   left: 10px;
 }
 
-.navbar {
+.navbarHome {
   // padding: 0 16px;
   height: 80px;
+  width: 100%;
 
   .el-col {
     height: 100%;
@@ -288,7 +337,7 @@ export default {
   font-family: DOUYINSANSBOLD, DOUYINSANSBOLD;
   font-weight: normal;
   font-size: 24px;
-  color: #3355FF;
+  color: #3355ff;
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -301,7 +350,8 @@ export default {
 
   p {
     width: 100%;
-    font-family: arial, "Hiragino Sans GB", "Microsoft Yahei", "微软雅黑", "宋体", 宋体, Tahoma, Arial, Helvetica, STHeiti;
+    font-family: arial, "Hiragino Sans GB", "Microsoft Yahei", "微软雅黑",
+      "宋体", 宋体, Tahoma, Arial, Helvetica, STHeiti;
     text-align: center;
     font-weight: 600;
     transform: rotateX(45deg) scaleX(1.2);
@@ -333,7 +383,7 @@ export default {
   }
 }
 
-.navbar {
+.navbarHome {
   width: 100%;
   // overflow: hidden;
   position: relative;
@@ -427,12 +477,6 @@ export default {
   flex-direction: column;
 }
 
-.navbar .el-row {
-  // width: 100%;
-  // color: red;
-  height: 100%;
-}
-
 .text-main {
   margin-right: 1.5rem;
 }
@@ -461,16 +505,6 @@ export default {
   width: 100%;
   height: 0px;
   border-top: 1px solid #0000001f;
-}
-
-.navbar {
-  padding-left: $sideBarWidth;
-}
-
-@media only screen and (max-width: 990px) {
-  .navbar {
-    padding-left: 0px;
-  }
 }
 
 .navItems {
@@ -565,5 +599,9 @@ export default {
     cursor: pointer;
     user-select: none;
   }
+}
+
+.menuBtn {
+  font-size: 24px;
 }
 </style>

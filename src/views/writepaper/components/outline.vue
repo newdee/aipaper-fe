@@ -232,6 +232,7 @@ export default {
   font-size: 16px;
   color: #ffffff;
   font-style: normal;
+  text-align: center;
 }
 .formItem {
   padding-left: 40px;

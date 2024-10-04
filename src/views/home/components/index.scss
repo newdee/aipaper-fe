@@ -1,12 +1,17 @@
 .mainBackground {
   padding-top: 100px;
+  height: 612px;
+  width: 100%;
 
+  background-size: cover;
+  height: 612px;
+  width: 100%;
   .leftMainText {
     max-width: 1100px;
     margin: 0 auto;
     font-family: AlimamaShuHeiTi;
     font-size: 56px;
-    color: #212121;
+    color: #fff;
     line-height: 58px;
     font-weight: bold;
     text-align: left;
@@ -51,7 +56,7 @@
     }
     .el-select {
       position: relative;
-    
+
       &::after {
         content: "";
         display: block;
@@ -71,7 +76,7 @@
     input {
       width: 100%;
       background-color: #fff;
-      height: 78px;
+      height: 98%;
       outline: none;
       border: none;
     }
@@ -97,13 +102,18 @@
   margin-top: 30px;
   height: 48px;
   display: flex;
+  white-space: nowrap; /* 防止文字换行 */
+  justify-content: space-between;
+
   & > p {
     font-family: PingFangSC, PingFang SC;
     font-weight: 400;
     font-size: 24px;
-    color: #212121;
+    color: #fff;
     line-height: 46px;
     text-align: left;
+    overflow: hidden; /* 隐藏超出的内容 */
+    text-overflow: ellipsis;
     font-style: normal;
   }
   div {
@@ -111,7 +121,6 @@
     height: 48px;
     background: #3355ff;
     border-radius: 24px;
-    margin-left: 30px;
     padding-left: 10px;
     font-family: PingFangSC, PingFang SC;
     font-size: 24px;
@@ -121,6 +130,80 @@
     font-style: normal;
     display: flex;
     align-items: center;
-    justify-content: center;
+    p {
+      white-space: nowrap; /* 防止文字换行 */
+      overflow: hidden; /* 隐藏超出的内容 */
+      text-overflow: ellipsis;
+    }
+  }
+}
+// 六大优势
+.adBox {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  background: #f5f8ff;
+  padding: 30px 0;
+}
+
+.newLi {
+  width: 172px;
+  height: 485px;
+  padding: 15px;
+  background: rgba(51, 85, 255, 0.1);
+  border-radius: 8px;
+  border: 1px solid #3355ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+  color: #3355ff;
+  line-height: 24px;
+  text-align: left;
+  margin-top: 30px;
+  font-style: normal;
+}
+.advanP {
+  margin-top: 10px;
+}
+// 媒体查询
+@media only screen and (max-width: 768px) {
+  .mainBackground {
+    height: 400px;
+    padding-top: 50px;
+    .leftMainText {
+      line-height: 30px;
+      font-size: 30px;
+      margin-left: 20px;
+    }
+    .inputBox {
+    }
+    .mainInput {
+      // margin: 40px;
+      height: 60px;
+      width: calc(100% - 40px);
+      padding: 0 10px;
+      .inputName {
+        display: none;
+      }
+      .selectText {
+        margin-left: -10px !important;
+      }
+    }
+    .inputDesc {
+      height: 100px;
+      padding-left: 20px;
+      flex-direction: column;
+    }
+  }
+  .adBox {
+    padding: 0 10px;
+  }
+  .newLi {
+    width: 130px;
+    height: 330px;
   }
 }
