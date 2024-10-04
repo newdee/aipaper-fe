@@ -5,22 +5,22 @@
       <swiper :options="swiperOption" ref="mySwiper1">
         <!-- slides -->
         <swiper-slide>
-          <div class="sliderImgBox">
+          <div class="slider1Img">
             <img src="@/assets/images/banner/banner1.png" alt="" />
           </div>
         </swiper-slide>
         <swiper-slide>
-          <div class="sliderImgBox">
+          <div class="slider1Img">
             <img src="@/assets/images/banner/banner2.png" alt="" />
           </div>
         </swiper-slide>
         <swiper-slide>
-          <div class="sliderImgBox">
+          <div class="slider1Img">
             <img src="@/assets/images/banner/banner3.png" alt="" />
           </div>
         </swiper-slide>
         <swiper-slide>
-          <div class="sliderImgBox">
+          <div class="slider1Img">
             <img src="@/assets/images/banner/banner4.png" alt="" />
           </div>
         </swiper-slide>
@@ -74,9 +74,11 @@ export default {
 // @media only screen and (max-width: 939px) {
 // }
 
-.sliderImgBox {
-  height: 195px;
-  background: skyblue;
+.slider1Img {
+  width: 100%;
+  img {
+    width: 100%;
+  }
 }
 
 .swiperBox {

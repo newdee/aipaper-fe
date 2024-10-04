@@ -45,4 +45,6 @@ export default {
 // 媒体查询
 // @media only screen and (max-width: 939px) {
 // }
+// @media only screen and (max-width: 768px) {
+// }
 </style>

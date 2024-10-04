@@ -93,7 +93,6 @@ export default {
 <style lang="scss" scoped>
 // 引入scss
 @import "@/styles/variables.scss";
-@import "./index.scss";
 
 //
 // 媒体查询
@@ -102,7 +101,6 @@ export default {
 .mainBackground {
   background: url("../../../assets/images/newspaper.png") no-repeat 0 0;
   background-size: cover;
-  height: 612px;
-  width: 100%;
 }
+@import "./index.scss";
 </style>
