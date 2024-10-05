@@ -1,11 +1,7 @@
 <template>
   <div class="adBox">
     <!-- 页面名称 -->
-    <div
-      class="newLi"
-      v-for="(item, index) in advantageList"
-      :key="index + 'ad'"
-    >
+    <div class="newLi" v-for="(item, index) in advantageList" :key="index + 'ad'">
       {{ item.label }}
       <p class="advanP">
         {{ item.name }}

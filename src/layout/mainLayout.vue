@@ -9,7 +9,7 @@
 
     <div class="main-container">
       <div :class="{ 'fixed-header': fixedHeader }">
-        <navbar />
+        <navbar :showContent="false" />
       </div>
 
       <app-main />
@@ -19,7 +19,9 @@
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain, MyFooter } from "./mcomponents";
+import { Navbar } from "./components";
+
+import { Sidebar, AppMain, MyFooter } from "./mcomponents";
 import ResizeMixin from "./mixin/ResizeHandler";
 
 export default {
