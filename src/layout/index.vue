@@ -7,7 +7,7 @@
     />
     <div class="main-container">
       <div :class="{ 'fixed-header': fixedHeader }">
-        <navbar />
+        <navbar :showContent="true" />
       </div>
       <app-main />
       <my-footer />

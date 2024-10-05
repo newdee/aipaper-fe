@@ -17,7 +17,7 @@
       </div>
       <div
         @click="tabsClick(2)"
-        :class="['tabLi', activeIndex == 2 ? 'activeTab' : '']"
+        :class="['tabLi', activeIndex == 2 ? 'activeTab2' : '']"
       >
         <p class="tabsTitle">Step 2</p>
         <div class="tabIcon">
@@ -27,7 +27,7 @@
       </div>
       <div
         @click="tabsClick(3)"
-        :class="['tabLi', activeIndex == 3 ? 'activeTab' : '']"
+        :class="['tabLi', activeIndex == 3 ? 'activeTab3' : '']"
       >
         <p class="tabsTitle">Step 3</p>
         <div class="tabIcon">
@@ -207,8 +207,28 @@ export default {
   }
 
   .activeTab {
-    background-color: #fff !important;
+    background: url("../../assets/images/shape-left.png") no-repeat 0 0 / 100%
+      100% !important;
 
+    .tabsTitle {
+      color: #3355ff;
+    }
+    .tabIcon {
+      background-color: #3355ff;
+    }
+  }
+  .activeTab2 {
+    background: url("../../assets/images/shape.png") no-repeat 0 0 / 100% 100% !important;
+    .tabsTitle {
+      color: #3355ff;
+    }
+    .tabIcon {
+      background-color: #3355ff;
+    }
+  }
+  .activeTab3 {
+    background: url("../../assets/images/shape-right.png") no-repeat 0 0 / 100%
+      100% !important;
     .tabsTitle {
       color: #3355ff;
     }
