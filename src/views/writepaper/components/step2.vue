@@ -76,6 +76,7 @@
                   @blur="() => submitEdit(node, data)"
                   v-model="newlabel"
                 />
+
                 <!-- 放弃、提交按钮废弃，改为失去焦点自动提交 -->
                 <!-- <el-button type="text"
               size="mini"
@@ -413,93 +414,116 @@
       title="插入图表"
       :visible.sync="imgExcelSetStatus"
       width="80%"
-      label-width="120px"
+      label-width="130px"
     >
       <el-form
         :model="numberValidateForm"
         ref="numberValidateForm"
-        label-width="130px"
+        label-width="140px"
         class="demo-ruleForm"
       >
-        <el-form-item label="请输入章节" prop="appendValue">
+        <el-form-item prop="appendValue">
           <div class="leftLabel" slot="label">
             <el-switch
-              v-model="data.label"
+              v-model="currentRow.insert_data_table.enabled"
               active-color="#13ce66"
               inactive-color="#ff4949"
             >
             </el-switch>
-            <span class="labelSpan">插入图</span>
+            <span class="labelSpan">插入数据表</span>
           </div>
           <el-input
-            placeholder="请输入图的名称"
-            v-model="data.label"
+            type="textarea"
+            autosize
+            placeholder="请输入插入数据表"
+            v-model="currentRow.insert_data_table.table_id"
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="请输入章节" prop="appendValue">
+        <el-form-item prop="appendValue">
           <div class="leftLabel" slot="label">
             <el-switch
-              v-model="data.label"
+              v-model="currentRow.insert_image.enabled"
               active-color="#13ce66"
               inactive-color="#ff4949"
             >
             </el-switch>
-            <span class="labelSpan">插入图</span>
+            <span class="labelSpan">插入图形</span>
           </div>
           <el-input
+            type="textarea"
+            autosize
             placeholder="请输入图的名称"
-            v-model="data.label"
+            v-model="currentRow.insert_image.image_id"
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="请输入章节" prop="appendValue">
+        <el-form-item prop="appendValue">
           <div class="leftLabel" slot="label">
             <el-switch
-              v-model="data.label"
+              v-model="currentRow.insert_formula.enabled"
               active-color="#13ce66"
               inactive-color="#ff4949"
             >
             </el-switch>
-            <span class="labelSpan">插入图</span>
+            <span class="labelSpan">插入公式</span>
           </div>
           <el-input
-            placeholder="请输入图的名称"
-            v-model="data.label"
+            type="textarea"
+            autosize
+            placeholder="请输入插入公式"
+            v-model="currentRow.insert_formula.formula_id"
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="请输入章节" prop="appendValue">
+        <el-form-item prop="appendValue">
           <div class="leftLabel" slot="label">
             <el-switch
-              v-model="data.label"
+              v-model="currentRow.insert_code.enabled"
               active-color="#13ce66"
               inactive-color="#ff4949"
             >
             </el-switch>
-            <span class="labelSpan">插入图</span>
+            <span class="labelSpan">插入代码段</span>
           </div>
-          <el-input
-            placeholder="请输入图的名称"
-            v-model="data.label"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="请输入章节" prop="appendValue">
-          <div class="leftLabel" slot="label">
-            <el-switch
-              v-model="data.index"
-              active-color="#13ce66"
-              inactive-color="#ff4949"
+          <div class="codeSelectInfo">
+            <el-input
+              type="textarea"
+              autosize
+              placeholder="请输入插入代码段"
+              v-model="currentRow.insert_code.code_content"
+              autocomplete="off"
+            ></el-input>
+            <el-select
+              v-model="currentRow.insert_code.code_language"
+              placeholder="请选择"
             >
-            </el-switch>
-            <span class="labelSpan">插入图</span>
+              <el-option tag="q1" label="Python" value="Python"> </el-option>
+              <el-option tag="q2" label="Java" value="Java"> </el-option>
+              <el-option tag="q3" label="JavaScript" value="JavaScript">
+              </el-option>
+              <el-option tag="q4" label="C++" value="C++"> </el-option>
+              <el-option tag="q5" label="C#" value="C#"> </el-option>
+              <el-option tag="q5" label="PHP" value="PHP"> </el-option>
+              <el-option tag="q5" label="Go" value="Go"> </el-option>
+              <el-option tag="q5" label="Dart" value="Dart"> </el-option>
+              <el-option tag="Rust" label="Rust" value="Rust"> </el-option>
+              <el-option tag="SQL" label="SQL" value="SQL"> </el-option>
+              <el-option tag="LaTeX" label="LaTeX" value="LaTeX"> </el-option>
+              <el-option tag="Markdown" label="Markdown" value="Markdown">
+              </el-option>
+              <el-option tag="Swift" label="Swift" value="Swift"> </el-option>
+              <el-option tag="Ruby" label="Ruby" value="Ruby"> </el-option>
+              <el-option tag="Erlang" label="Erlang" value="Erlang">
+              </el-option>
+              <el-option tag="Erlang" label="Erlang" value="Erlang">
+              </el-option>
+              <el-option tag="Perl" label="Perl" value="Perl"> </el-option>
+              <el-option tag="Kotlin" label="Kotlin" value="Kotlin">
+              </el-option>
+              <el-option tag="Swift" label="Swift" value="Swift"> </el-option>
+            </el-select>
           </div>
-          <el-input
-            placeholder="请输入图的名称"
-            v-model="data.index"
-            autocomplete="off"
-          ></el-input>
         </el-form-item>
       </el-form>
 
@@ -557,12 +581,48 @@ export default {
                   level: 3,
                   id: 9,
                   label: "三级 1-1-1",
+                  insert_data_table: {
+                    enabled: false, // bool值，表示是否插入数据表
+                    table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
+                  },
+                  insert_image: {
+                    enabled: false, // bool值，表示是否插入图形
+                    image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
+                  },
+                  insert_formula: {
+                    enabled: false, // bool值，表示是否插入公式
+                    formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
+                  },
+                  insert_code: {
+                    enabled: false, // bool值，表示是否插入代码段
+                    code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
+                    code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
+                    code_content: "代码内容", // 代码段的具体内容, 可选
+                  },
                 },
                 {
                   content: "介绍艺术批评与设计实践之间的关系和重要性",
                   level: 3,
                   id: 10,
                   label: "三级 1-1-2",
+                  insert_data_table: {
+                    enabled: false, // bool值，表示是否插入数据表
+                    table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
+                  },
+                  insert_image: {
+                    enabled: false, // bool值，表示是否插入图形
+                    image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
+                  },
+                  insert_formula: {
+                    enabled: false, // bool值，表示是否插入公式
+                    formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
+                  },
+                  insert_code: {
+                    enabled: false, // bool值，表示是否插入代码段
+                    code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
+                    code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
+                    code_content: "代码内容", // 代码段的具体内容, 可选
+                  },
                 },
               ],
             },
@@ -576,14 +636,114 @@ export default {
             {
               content: "介绍艺术批评与设计实践之间的关系和重要性",
               level: 3,
-              id: 5,
+              id: 511,
               label: "二级 2-1",
+              children: [
+                {
+                  content: "介绍艺术批评与设计实践之间的关系和重要性",
+                  level: 3,
+                  id: 19,
+                  label: "三级 1-1-1",
+                  insert_data_table: {
+                    enabled: false, // bool值，表示是否插入数据表
+                    table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
+                  },
+                  insert_image: {
+                    enabled: false, // bool值，表示是否插入图形
+                    image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
+                  },
+                  insert_formula: {
+                    enabled: false, // bool值，表示是否插入公式
+                    formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
+                  },
+                  insert_code: {
+                    enabled: false, // bool值，表示是否插入代码段
+                    code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
+                    code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
+                    code_content: "代码内容", // 代码段的具体内容, 可选
+                  },
+                },
+                {
+                  content: "介绍艺术批评与设计实践之间的关系和重要性",
+                  level: 3,
+                  id: 210,
+                  label: "三级 1-1-2",
+                  insert_data_table: {
+                    enabled: false, // bool值，表示是否插入数据表
+                    table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
+                  },
+                  insert_image: {
+                    enabled: false, // bool值，表示是否插入图形
+                    image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
+                  },
+                  insert_formula: {
+                    enabled: false, // bool值，表示是否插入公式
+                    formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
+                  },
+                  insert_code: {
+                    enabled: false, // bool值，表示是否插入代码段
+                    code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
+                    code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
+                    code_content: "代码内容", // 代码段的具体内容, 可选
+                  },
+                },
+              ],
             },
             {
               content: "介绍艺术批评与设计实践之间的关系和重要性",
               level: 3,
-              id: 6,
+              id: 611,
               label: "二级 2-2",
+              children: [
+                {
+                  content: "介绍艺术批评与设计实践之间的关系和重要性",
+                  level: 3,
+                  id: 449,
+                  label: "三级 1-1-1",
+                  insert_data_table: {
+                    enabled: false, // bool值，表示是否插入数据表
+                    table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
+                  },
+                  insert_image: {
+                    enabled: false, // bool值，表示是否插入图形
+                    image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
+                  },
+                  insert_formula: {
+                    enabled: false, // bool值，表示是否插入公式
+                    formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
+                  },
+                  insert_code: {
+                    enabled: false, // bool值，表示是否插入代码段
+                    code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
+                    code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
+                    code_content: "代码内容", // 代码段的具体内容, 可选
+                  },
+                },
+                {
+                  content: "介绍艺术批评与设计实践之间的关系和重要性",
+                  level: 3,
+                  id: 101,
+                  label: "三级 1-1-2",
+                  insert_data_table: {
+                    enabled: false, // bool值，表示是否插入数据表
+                    table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
+                  },
+                  insert_image: {
+                    enabled: false, // bool值，表示是否插入图形
+                    image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
+                  },
+                  insert_formula: {
+                    enabled: false, // bool值，表示是否插入公式
+                    formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
+                  },
+                  insert_code: {
+                    enabled: false, // bool值，表示是否插入代码段
+                    code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
+                    code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
+                    code_content: "代码内容", // 代码段的具体内容, 可选
+                  },
+                },
+              ],
             },
           ],
         },
@@ -606,18 +766,72 @@ export default {
                   level: 3,
                   id: 11,
                   label: "三级 3-2-1",
+                  insert_data_table: {
+                    enabled: false, // bool值，表示是否插入数据表
+                    table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
+                  },
+                  insert_image: {
+                    enabled: false, // bool值，表示是否插入图形
+                    image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
+                  },
+                  insert_formula: {
+                    enabled: false, // bool值，表示是否插入公式
+                    formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
+                  },
+                  insert_code: {
+                    enabled: false, // bool值，表示是否插入代码段
+                    code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
+                    code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
+                    code_content: "代码内容", // 代码段的具体内容, 可选
+                  },
                 },
                 {
                   content: "介绍艺术批评与设计实践之间的关系和重要性",
                   level: 3,
                   id: 12,
                   label: "三级 3-2-2",
+                  insert_data_table: {
+                    enabled: false, // bool值，表示是否插入数据表
+                    table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
+                  },
+                  insert_image: {
+                    enabled: false, // bool值，表示是否插入图形
+                    image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
+                  },
+                  insert_formula: {
+                    enabled: false, // bool值，表示是否插入公式
+                    formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
+                  },
+                  insert_code: {
+                    enabled: false, // bool值，表示是否插入代码段
+                    code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
+                    code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
+                    code_content: "代码内容", // 代码段的具体内容, 可选
+                  },
                 },
                 {
                   id: 13,
                   level: 3,
                   content: "介绍艺术批评与设计实践之间的关系和重要性",
                   label: "三级 3-2-3",
+                  insert_data_table: {
+                    enabled: false, // bool值，表示是否插入数据表
+                    table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
+                  },
+                  insert_image: {
+                    enabled: false, // bool值，表示是否插入图形
+                    image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
+                  },
+                  insert_formula: {
+                    enabled: false, // bool值，表示是否插入公式
+                    formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
+                  },
+                  insert_code: {
+                    enabled: false, // bool值，表示是否插入代码段
+                    code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
+                    code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
+                    code_content: "代码内容", // 代码段的具体内容, 可选
+                  },
                 },
               ],
             },
@@ -634,7 +848,26 @@ export default {
       editStatus: false,
       checkboxGroup1: [],
       statementDialogVisible: false,
-      currentRow: {},
+      currentRow: {
+        insert_data_table: {
+          enabled: false, // bool值，表示是否插入数据表
+          table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
+        },
+        insert_image: {
+          enabled: false, // bool值，表示是否插入图形
+          image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
+        },
+        insert_formula: {
+          enabled: false, // bool值，表示是否插入公式
+          formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
+        },
+        insert_code: {
+          enabled: false, // bool值，表示是否插入代码段
+          code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
+          code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
+          code_content: "代码内容", // 代码段的具体内容, 可选
+        },
+      },
     };
   },
 
@@ -1124,7 +1357,7 @@ export default {
   &:hover {
     .showSpan {
       width: 80%;
-      border: 1px solid #ccc;
+      border: 1px solid #3355fe;
     }
   }
 }
@@ -1161,6 +1394,18 @@ export default {
   position: relative;
   top: 8px;
 }
+.codeSelectInfo {
+  display: flex;
+  :deep(.el-input__inner) {
+    height: 30px;
+  }
+  .el-input__inner {
+    height: 30px;
+  }
+  ::deep .el-input__inner {
+    height: 30px;
+  }
+}
 .outlineTitleDesc {
   text-align: center;
   font-weight: bold;
@@ -1169,8 +1414,11 @@ export default {
 .editInput {
   outline: none;
   border: none;
-  height: 90%;
+  height: 28px;
   width: 80%;
+  font-weight: bold;
+  font-size: 14px;
+  background-color: blue;
 }
 
 .inputBoxMain {
@@ -1190,6 +1438,11 @@ export default {
   font-size: 14px;
   font-weight: bold;
   color: #333639;
+  height: 28px;
+  line-height: 28px;
+  font-weight: bold;
+  padding-left: 5px;
+  border-radius: 5px;
 }
 
 // 媒体查询

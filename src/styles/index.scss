@@ -178,7 +178,6 @@ pre.wordwrap {
   white-space: pre-wrap;
 }
 
-
 body,
 form {
   position: relative;
@@ -258,4 +257,15 @@ li {
 }
 .mainContentSec {
   max-width: 1200px;
+}
+
+.codeSelectInfo {
+  .el-input__inner {
+    height: 33px;
+  }
+  .el-select {
+    margin-left: 30px;
+    position: relative;
+    top: -3px;
+  }
 }
