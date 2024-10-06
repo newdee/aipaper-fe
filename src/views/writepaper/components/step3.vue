@@ -76,19 +76,23 @@ export default {
   margin-bottom: 16px;
   padding: 40px;
 }
+
 .my-bullet {
   width: 0.1rem;
   height: 0.1rem;
   display: inline-block;
   border-radius: 50%;
   background: #b7b6b9;
+
   &:nth-child(2) {
     margin: 0 0.1rem;
   }
 }
+
 .my-bullet-active {
   background: #fd882e;
 }
+
 .pdfNavbar {
   max-width: 1120px;
   // margin: 0 auto;
@@ -103,6 +107,7 @@ export default {
   justify-content: space-between;
   padding: 0 10px;
   padding-left: 23px;
+
   .pdfNavItem {
     margin-right: 40px;
     font-family: PingFangSC, PingFang SC;
@@ -112,16 +117,20 @@ export default {
     line-height: 22px;
     text-align: left;
     font-style: normal;
+
     span {
       margin-left: 10px;
     }
+
     &:hover {
       cursor: pointer;
     }
   }
+
   .pdfNavLeft {
     display: flex;
   }
+
   .pdfNavRight {
     width: 148px;
     display: flex;
@@ -139,17 +148,8 @@ export default {
     font-style: normal;
   }
 }
+
 .stickyBox {
-  position: -webkit-sticky; /* For old webkit browsers */
-  position: sticky;
-  top: 90px;
-}
-.sticky {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  padding: 5px;
-  background-color: #cae8ca;
-  border: 2px solid #4caf50;
+  position: relative;
 }
 </style>

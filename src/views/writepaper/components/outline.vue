@@ -50,9 +50,12 @@
             >
               <div class="labelBox">
                 <div class="left">
-                  <svg class="icon svg-icon" aria-hidden="true">
+                  <!-- <svg class="icon svg-icon" aria-hidden="true">
                     <use xlink:href="#icon-tubiaozoushitu"></use>
-                  </svg>
+                  </svg> -->
+                  <img v-if="requestForm.radio == item.name" class="home-icon" src="@/assets/images/bank-white.png"
+                    alt="">
+                  <img v-else class="home-icon" src="@/assets/images/bank-dark.png" alt="">
                   {{ item.name }}({{ item.description }})
                 </div>
                 <div class="right">
@@ -320,6 +323,12 @@ export default {
 
     &.right {
       padding-left: 5px;
+    }
+
+    .home-icon {
+      width: 18px;
+      height: 18px;
+      transform: translateY(3px);
     }
   }
 }

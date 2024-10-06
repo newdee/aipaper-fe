@@ -1,39 +1,32 @@
 <template>
-  <div class="mainContentSec">
+  <div class="mainContentSec" ref="mainSec">
     <!-- 页面名称 -->
     <swiper-one class="topSwiper"></swiper-one>
 
     <!-- tabs写论文  -->
-    <div class="tabsList">
-      <div
-        @click="tabsClick(1)"
-        :class="['tabLi', activeIndex == 1 ? 'activeTab' : '']"
-      >
-        <p class="tabsTitle">Step 1</p>
-        <div class="tabIcon">
-          <span></span>
+    <div class="tabsListWrapper" ref="tasListWrapper">
+      <div class="tabsList">
+        <div @click="tabsClick(1)" :class="['tabLi', activeIndex == 1 ? 'activeTab' : '']">
+          <p class="tabsTitle">Step 1</p>
+          <div class="tabIcon">
+            <span></span>
+          </div>
+          <p class="tabIntro">填写需求 <span>生成大纲</span></p>
         </div>
-        <p class="tabIntro">填写需求 <span>生成大纲</span></p>
-      </div>
-      <div
-        @click="tabsClick(2)"
-        :class="['tabLi', activeIndex == 2 ? 'activeTab2' : '']"
-      >
-        <p class="tabsTitle">Step 2</p>
-        <div class="tabIcon">
-          <span></span>
+        <div @click="tabsClick(2)" :class="['tabLi', activeIndex == 2 ? 'activeTab2' : '']">
+          <p class="tabsTitle">Step 2</p>
+          <div class="tabIcon">
+            <span></span>
+          </div>
+          <p class="tabIntro">检查大纲 <span>生成正文</span></p>
         </div>
-        <p class="tabIntro">检查大纲 <span>生成正文</span></p>
-      </div>
-      <div
-        @click="tabsClick(3)"
-        :class="['tabLi', activeIndex == 3 ? 'activeTab3' : '']"
-      >
-        <p class="tabsTitle">Step 3</p>
-        <div class="tabIcon">
-          <span></span>
+        <div @click="tabsClick(3)" :class="['tabLi', activeIndex == 3 ? 'activeTab3' : '']">
+          <p class="tabsTitle">Step 3</p>
+          <div class="tabIcon">
+            <span></span>
+          </div>
+          <p class="tabIntro">查收正文 <span>无限改稿</span></p>
         </div>
-        <p class="tabIntro">查收正文 <span>无限改稿</span></p>
       </div>
     </div>
     <!-- step3不展示论文 -->
@@ -43,7 +36,7 @@
     <div class="stepContent">
       <step1 v-if="activeIndex == 1"></step1>
       <step2 v-if="activeIndex == 2"></step2>
-      <step3 v-if="activeIndex == 3"></step3>
+      <step3 v-if="activeIndex == 3" :class="[isScrollActive ? 'fixed' : '']"></step3>
     </div>
   </div>
 </template>
@@ -66,6 +59,7 @@ export default {
     return {
       // 定义变量
       activeIndex: 2,
+      isScrollActive: false,
     };
   },
   components: {
@@ -79,6 +73,7 @@ export default {
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
+    window.addEventListener('scroll', this.handleScroll);
     // 获取首页数据
     this.$nextTick(() => {
       getHomeInfo().then((res) => {
@@ -89,9 +84,6 @@ export default {
   },
   created() {
     eventBus.on("emitOulineClick", this.showIndex); // 订阅事件
-  },
-  beforeDestroy() {
-    eventBus.off("emitOulineClick", this.showIndex); // 移除事件监听
   },
   computed: {
     // 计算属性
@@ -119,6 +111,20 @@ export default {
         this.activeIndex += 1;
       }
     },
+    handleScroll() {
+      const element = this.$refs.mainSec;
+      const elementTop = element.getBoundingClientRect().top;// 当元素顶部到达页面顶部时添加 active 类
+
+      if (elementTop <= -300) {
+        this.isScrollActive = true;
+      } else {
+        this.isScrollActive = false;
+      }
+    }
+  },
+  beforeDestroy() {
+    eventBus.off("emitOulineClick", this.showIndex); // 移除事件监听
+    window.removeEventListener('scroll', this.handleScroll);
   },
 };
 </script>
@@ -144,101 +150,118 @@ export default {
   overflow: hidden;
 }
 
-.tabsList {
+.tabsListWrapper {
   // : 1200px;
   width: 100%;
   max-width: 1200px;
-  margin-top: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #e6edff;
-}
-.tabLi {
-  width: 33.3%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 130px;
-}
+  padding-top: 16px;
 
-.tabsTitle {
-  font-family: PingFangSC, PingFang SC;
-  font-weight: 600;
-  font-size: 18px;
-  color: #000000;
-  line-height: 25px;
-  text-align: left;
-  font-style: normal;
-}
-
-.tabIcon {
-  width: 38px;
-  height: 38px;
-  background: #999999;
-  border-radius: 19px;
-  margin: 7px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  span {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    background: #ffffff;
-    border-radius: 8px;
+  .tabsList {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #e6edff;
   }
-}
 
-.tabIntro {
-  font-family: PingFangSC, PingFang SC;
-  font-weight: 400;
-  font-size: 16px;
-  color: #000000;
-  line-height: 22px;
-  text-align: center;
-  font-style: normal;
-
-  span {
-    color: #3355ff;
-    margin-left: -5px;
+  .tabLi {
+    width: 33.3%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 130px;
   }
-}
-
-.activeTab {
-  background: url("../../assets/images/shape-left.png") no-repeat 0 0 / 100%
-    100% !important;
 
   .tabsTitle {
-    color: #3355ff;
+    font-family: PingFangSC, PingFang SC;
+    font-weight: 600;
+    font-size: 18px;
+    color: #000000;
+    line-height: 25px;
+    text-align: left;
+    font-style: normal;
   }
+
   .tabIcon {
-    background-color: #3355ff;
+    width: 38px;
+    height: 38px;
+    background: #999999;
+    border-radius: 19px;
+    margin: 7px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: #ffffff;
+      border-radius: 8px;
+    }
+  }
+
+  .tabIntro {
+    font-family: PingFangSC, PingFang SC;
+    font-weight: 400;
+    font-size: 16px;
+    color: #000000;
+    line-height: 22px;
+    text-align: center;
+    font-style: normal;
+
+    span {
+      color: #3355ff;
+      margin-left: -5px;
+    }
+  }
+
+  .activeTab {
+    background: url("../../assets/images/shape-left.png") no-repeat 0 0 / 100% 100% !important;
+
+    .tabsTitle {
+      color: #3355ff;
+    }
+
+    .tabIcon {
+      background-color: #3355ff;
+    }
+  }
+
+  .activeTab2 {
+    background: url("../../assets/images/shape.png") no-repeat 0 0 / 100% 100% !important;
+
+    .tabsTitle {
+      color: #3355ff;
+    }
+
+    .tabIcon {
+      background-color: #3355ff;
+    }
+  }
+
+  .activeTab3 {
+    background: url("../../assets/images/shape-right.png") no-repeat 0 0 / 100% 100% !important;
+
+    .tabsTitle {
+      color: #3355ff;
+    }
+
+    .tabIcon {
+      background-color: #3355ff;
+    }
   }
 }
-.activeTab2 {
-  background: url("../../assets/images/shape.png") no-repeat 0 0 / 100% 100% !important;
-  .tabsTitle {
-    color: #3355ff;
-  }
-  .tabIcon {
-    background-color: #3355ff;
-  }
-}
-.activeTab3 {
-  background: url("../../assets/images/shape-right.png") no-repeat 0 0 / 100%
-    100% !important;
-  .tabsTitle {
-    color: #3355ff;
-  }
-  .tabIcon {
-    background-color: #3355ff;
-  }
-}
+
 .stepContent {
   margin-top: 16px;
   margin-bottom: 16px;
+}
+
+.fixed ::v-deep .stickyBox {
+  width: 100%;
+  position: fixed;
+  top: 90px;
+  z-index: 100;
 }
 </style>
