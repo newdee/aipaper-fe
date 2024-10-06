@@ -1376,6 +1376,9 @@ export default {
   padding: 10px;
   padding-top: 3px;
   padding-bottom: 20px;
+  & > div {
+    background-color: #fff;
+  }
 }
 .oulineTitlePaper {
   font-size: 20px;
@@ -1418,7 +1421,6 @@ export default {
   width: 80%;
   font-weight: bold;
   font-size: 14px;
-  background-color: blue;
 }
 
 .inputBoxMain {

@@ -153,91 +153,90 @@ export default {
   align-items: center;
   justify-content: space-between;
   background-color: #e6edff;
-  .tabLi {
-    width: 33.3%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 130px;
-  }
+}
+.tabLi {
+  width: 33.3%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 130px;
+}
 
-  .tabsTitle {
-    font-family: PingFangSC, PingFang SC;
-    font-weight: 600;
-    font-size: 18px;
-    color: #000000;
-    line-height: 25px;
-    text-align: left;
-    font-style: normal;
-  }
+.tabsTitle {
+  font-family: PingFangSC, PingFang SC;
+  font-weight: 600;
+  font-size: 18px;
+  color: #000000;
+  line-height: 25px;
+  text-align: left;
+  font-style: normal;
+}
 
-  .tabIcon {
-    width: 38px;
-    height: 38px;
-    background: #999999;
-    border-radius: 19px;
-    margin: 7px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.tabIcon {
+  width: 38px;
+  height: 38px;
+  background: #999999;
+  border-radius: 19px;
+  margin: 7px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    span {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      background: #ffffff;
-      border-radius: 8px;
-    }
-  }
-
-  .tabIntro {
-    font-family: PingFangSC, PingFang SC;
-    font-weight: 400;
-    font-size: 16px;
-    color: #000000;
-    line-height: 22px;
-    text-align: center;
-    font-style: normal;
-
-    span {
-      color: #3355ff;
-      margin-left: -5px;
-    }
-  }
-
-  .activeTab {
-    background: url("../../assets/images/shape-left.png") no-repeat 0 0 / 100%
-      100% !important;
-
-    .tabsTitle {
-      color: #3355ff;
-    }
-    .tabIcon {
-      background-color: #3355ff;
-    }
-  }
-  .activeTab2 {
-    background: url("../../assets/images/shape.png") no-repeat 0 0 / 100% 100% !important;
-    .tabsTitle {
-      color: #3355ff;
-    }
-    .tabIcon {
-      background-color: #3355ff;
-    }
-  }
-  .activeTab3 {
-    background: url("../../assets/images/shape-right.png") no-repeat 0 0 / 100%
-      100% !important;
-    .tabsTitle {
-      color: #3355ff;
-    }
-    .tabIcon {
-      background-color: #3355ff;
-    }
+  span {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    border-radius: 8px;
   }
 }
 
+.tabIntro {
+  font-family: PingFangSC, PingFang SC;
+  font-weight: 400;
+  font-size: 16px;
+  color: #000000;
+  line-height: 22px;
+  text-align: center;
+  font-style: normal;
+
+  span {
+    color: #3355ff;
+    margin-left: -5px;
+  }
+}
+
+.activeTab {
+  background: url("../../assets/images/shape-left.png") no-repeat 0 0 / 100%
+    100% !important;
+
+  .tabsTitle {
+    color: #3355ff;
+  }
+  .tabIcon {
+    background-color: #3355ff;
+  }
+}
+.activeTab2 {
+  background: url("../../assets/images/shape.png") no-repeat 0 0 / 100% 100% !important;
+  .tabsTitle {
+    color: #3355ff;
+  }
+  .tabIcon {
+    background-color: #3355ff;
+  }
+}
+.activeTab3 {
+  background: url("../../assets/images/shape-right.png") no-repeat 0 0 / 100%
+    100% !important;
+  .tabsTitle {
+    color: #3355ff;
+  }
+  .tabIcon {
+    background-color: #3355ff;
+  }
+}
 .stepContent {
   margin-top: 16px;
   margin-bottom: 16px;
