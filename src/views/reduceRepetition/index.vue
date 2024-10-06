@@ -51,11 +51,10 @@
 </template>
 
 <script>
-
 import swiperOne from "@/views/home/components/inputMain.vue";
 
 export default {
-  name: 'reduceRepetition',
+  name: "reduceRepetition",
   components: {
     swiperOne,
   },
@@ -77,8 +76,6 @@ export default {
   },
 };
 </script>
-
-
 
 <style lang="scss" scoped>
 @import "@/styles/variables.scss";
@@ -116,6 +113,7 @@ export default {
   width: 100%;
   gap: 16px;
   padding-bottom: 16px;
+  flex-wrap: wrap;
 
   >div {
     background: #fff;
@@ -125,6 +123,8 @@ export default {
     height: auto;
     font-size: 14px;
     position: relative;
+    min-width: 300px;
+    min-height: 280px;
 
     &::v-deep .el-textarea textarea.el-textarea__inner {
       resize: none;
@@ -167,7 +167,7 @@ export default {
       button {
         width: 116px;
         height: 40px;
-        background: #3355FF;
+        background: #3355ff;
         border-radius: 20px;
       }
     }
@@ -196,9 +196,6 @@ export default {
 //   // font-size: 20px;
 //   color: red;
 // }
-
-
-
 
 .topSwiper ::v-deep .sliderImgBox img {
   width: 100%;
@@ -257,7 +254,7 @@ export default {
       bottom: -10px;
       right: 0;
       left: 0;
-      width: 110px;
+      width: 100%;
       height: 4px;
       background: #3355ff;
     }

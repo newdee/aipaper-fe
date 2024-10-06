@@ -1,4 +1,66 @@
+@import "./variables.scss";
 @media only screen and (max-width: 760px) {
+  // step1 写论文页面
+  .outlineBox {
+    .outlineTab {
+      padding: 0 20px !important;
+
+      p {
+        font-size: 15px !important;
+      }
+      .outRight {
+        width: 103px;
+        height: 30px;
+        font-size: 15px;
+        line-height: 30px;
+      }
+    }
+  }
+  .mainContentSec {
+    .tabsList {
+      .tabLi {
+        height: 70px;
+      }
+      .tabIntro {
+        font-size: 12px;
+      }
+      .tabsTitle {
+        font-size: 15px;
+      }
+      .tabIcon {
+        margin: 0;
+        width: 20px;
+        height: 20px;
+        span {
+          width: 8px;
+          height: 8px;
+        }
+      }
+    }
+  }
+  .uesrInputBox {
+    .formItem {
+      margin-top: 20px !important;
+      padding-left: 20px !important;
+      .userInputCon {
+        margin-left: 0px !important;
+        margin-top: 5px;
+      }
+    }
+    .outlineBtn {
+      margin: 20px 10px 10px 10px !important;
+    }
+  }
+
+  // 底部栏
+  .main-container {
+    .footer {
+      padding-left: 0 !important;
+    }
+    .phoneFlex {
+      display: block !important;
+    }
+  }
   .footer {
     .siteInfo {
       display: flex;
@@ -29,7 +91,12 @@
       }
     }
   }
-
+  .step2Box {
+    padding: 20px 10px !important;
+  }
+  // 大纲
+  .iconRight {
+  }
   // three Swiper
   .swiper2 {
     padding: 10px;
