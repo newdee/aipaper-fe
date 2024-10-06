@@ -1471,7 +1471,6 @@ export default {
 }
 .step2Box {
   max-width: 1200px;
-  padding-left: 100px;
   padding-top: 60px;
   background-color: #fff;
   margin-top: 16px;
