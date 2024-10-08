@@ -5,11 +5,7 @@
       <swiper class="swiper" ref="mySwiper" :options="swiperOptionNew">
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian1.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian1.png" alt="" />
             <div class="txt">
               <p class="title">后生产主义乡村:乡村振兴的一个理论视角</p>
               <p class="text">
@@ -24,11 +20,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian2.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian2.png" alt="" />
             <div class="txt">
               <p class="title">边缘损失约束下的多尺度动态图卷积点云分割网络</p>
               <p class="text">
@@ -43,11 +35,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian3.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian3.png" alt="" />
             <div class="txt">
               <p class="title">一种自监督的消息传递图表示学习方法</p>
               <p class="text">
@@ -63,11 +51,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian4.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian4.png" alt="" />
             <div class="txt">
               <p class="title">
                 贝叶斯框架下利用GPS数据反演震源参数的一种改进MCMC算法
@@ -101,11 +85,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian4.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian4.png" alt="" />
             <div class="txt">
               <p class="title">
                 多层级公共服务供给对大城市租房群体居住分异的影响——基于北京市的实证研究
@@ -126,11 +106,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian4.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian4.png" alt="" />
             <div class="txt">
               <p class="title">生物医学领域突破性论文识别</p>
               <p class="text">
@@ -147,11 +123,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian1.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian1.png" alt="" />
             <div class="txt">
               <p class="title">后生产主义乡村:乡村振兴的一个理论视角</p>
               <p class="text">
@@ -166,11 +138,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian2.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian2.png" alt="" />
             <div class="txt">
               <p class="title">边缘损失约束下的多尺度动态图卷积点云分割网络</p>
               <p class="text">
@@ -185,11 +153,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian3.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian3.png" alt="" />
             <div class="txt">
               <p class="title">一种自监督的消息传递图表示学习方法</p>
               <p class="text">
@@ -205,11 +169,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian4.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian4.png" alt="" />
             <div class="txt">
               <p class="title">
                 贝叶斯框架下利用GPS数据反演震源参数的一种改进MCMC算法
@@ -243,11 +203,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian4.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian4.png" alt="" />
             <div class="txt">
               <p class="title">
                 多层级公共服务供给对大城市租房群体居住分异的影响——基于北京市的实证研究
@@ -268,11 +224,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian4.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian4.png" alt="" />
             <div class="txt">
               <p class="title">生物医学领域突破性论文识别</p>
               <p class="text">
@@ -381,6 +333,7 @@ export default {
   border-radius: 8px;
   background: sandybrown;
 }
+
 .newSlider {
   height: 510px;
   background: #ffffff;
@@ -391,6 +344,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+
   .upToDate {
     position: absolute;
     top: 0;
@@ -417,6 +371,7 @@ export default {
     font-size: 14px;
     color: #999;
     padding: 20px 5px;
+
     .title {
       color: #000000;
       font-size: 18px;
@@ -427,7 +382,8 @@ export default {
       -webkit-line-clamp: 4;
       word-break: break-all;
       overflow: hidden;
-      height: 60px;
+      // height: 60px;
+      margin-bottom: 1em;
     }
 
     .text {
@@ -445,6 +401,7 @@ export default {
     bottom: 10px;
     left: 0;
     padding: 0 5px;
+
     .author {
       color: #000000;
       display: -webkit-box;

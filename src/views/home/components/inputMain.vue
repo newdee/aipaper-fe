@@ -77,6 +77,7 @@ export default {
 
 .slider1Img {
   width: 100%;
+
   img {
     width: 100%;
   }
@@ -84,6 +85,9 @@ export default {
 
 .swiperBox {
   margin-top: 23px;
+  border-radius: 12px;
+  overflow: hidden;
+  user-select: none;
 }
 
 .swiperNews {

@@ -22,28 +22,28 @@ export default {
       // 定义变量
       advantageList: [
         {
-          name: "在线编辑 方便排版 一次定稿 ",
-          label: "全网首家免费在线编辑",
+          name: "全网首家免费论文在线编辑，方便排版，一次定稿",
+          label: "免费编辑",
         },
         {
-          name: "最专业的学术论文生成 蕴含硕士博士做学术的经验",
-          label: "全网最专业论文生成平台",
+          name: "全网最专业学术平台，最专业学术论文生成，蕴含硕士博士的学术经验",
+          label: "专业论文",
         },
         {
-          name: "富含学术创新 一次搞定",
-          label: "全网最优质AI生成的论文内容",
+          name: "全网最优质AI生成的论文内容，富含学术性创新，一次搞定",
+          label: "优质内容",
         },
         {
-          name: "全天候提供专业服务，顾问式支持完成定稿",
-          label: "7*24小时在线服务",
+          name: "7*24小时在线服务，全天专业服务，顾问式支持完成定稿",
+          label: "在线服务",
         },
         {
           name: "支持学术思考、论文写作、论文编辑、论文搜索",
-          label: "一站式服务",
+          label: "一站服务",
         },
         {
-          name: "AIGC率超过25%退费 重复率超过15%退费",
-          label: "知网通过无忧",
+          name: "AIGC率超过25%全额退款，查重率超过15%全额退款",
+          label: "过稿无忧",
         },
       ],
     };
@@ -75,6 +75,6 @@ export default {
 @import "./index.scss";
 
 .newLi {
-  background: url("../../../assets/images/advan1.jpg") no-repeat 0 0 / 100% 100%;
+  // background: url("../../../assets/images/advan1.jpg") no-repeat 0 0 / 100% 100%;
 }
 </style>

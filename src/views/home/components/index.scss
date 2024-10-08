@@ -11,7 +11,7 @@
     margin: 0 auto;
     font-family: AlimamaShuHeiTi;
     font-size: 56px;
-    color: #fff;
+    color: #212121;
     line-height: 58px;
     font-weight: bold;
     text-align: left;
@@ -109,7 +109,7 @@
     font-family: PingFangSC, PingFang SC;
     font-weight: 400;
     font-size: 24px;
-    color: #fff;
+    color: #212121;
     line-height: 46px;
     text-align: left;
     overflow: hidden; /* 隐藏超出的内容 */
@@ -151,23 +151,24 @@
   width: 172px;
   height: 485px;
   padding: 15px;
+  text-align: center;
   background: rgba(51, 85, 255, 0.1);
   border-radius: 8px;
-  border: 1px solid #3355ff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  border: 1px solid #3960b8;
   font-weight: 600;
-  font-size: 16px;
-  color: #3355ff;
-  line-height: 24px;
-  text-align: left;
+  font-size: 25px;
+  font-family: '等线';
+  color: #3960b8;
+  line-height: 6em;
   margin-top: 30px;
-  font-style: normal;
 }
 .advanP {
-  margin-top: 10px;
+  text-align: left;
+  margin-top: 1em;
+  font-size: 16px;
+  line-height: 1.5em;
+  padding: 0px 14px;
+  text-decoration: underline;
 }
 // 媒体查询
 @media only screen and (max-width: 768px) {
