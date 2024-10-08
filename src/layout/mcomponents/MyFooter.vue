@@ -4,53 +4,34 @@
     <section class="siteInfo">
       <div class="col col_1">
         <img src="@/assets/images/MIXPAPERwxxz.png" alt="" />
-        <div class="qrBox">
-          <img
-            style="width: 120px; height: 200px"
-            src="@/assets/images/qq.jpg"
-            alt=""
-          />
-          <p>
-            <!-- 公司：MIXPAPER<br />
-                        联系方式：010-88766666<br />
-                        地址：北京市海淀区<br /> -->
-            扫码关注我们，获取更多信息<br />
-          </p>
-        </div>
-      </div>
-      <div class="col col_2">
-        <p class="title_mini">相关链接</p>
-
         <div class="linkListBox">
+          <div class="linkbox">
+            <div class="linkImg">
+              <img src="@/assets/images/gongzhonghao.png" alt="" />
+            </div>
+            <p class="linktext">公众号</p>
+          </div>
           <div class="linkbox">
             <div class="linkImg">
               <img src="@/assets/images/xhs.png" alt="" />
             </div>
-            <p class="linktext">关注小红书</p>
+            <p class="linktext">小红书</p>
           </div>
           <div class="linkbox">
             <div class="linkImg">
               <img src="@/assets/images/bilibili.png" alt="" />
             </div>
-            <p class="linktext">关注B战</p>
-          </div>
-          <div class="linkbox">
-            <div class="linkImg">
-              <img src="@/assets/images/gongzhonghao.jpg" alt="" />
-            </div>
-            <p class="linktext">关注公众号</p>
+            <p class="linktext">B站</p>
           </div>
         </div>
       </div>
-      <div class="col col_3">
-        <p class="title_mini">关于</p>
-        <p><a href="">关于我们</a></p>
-        <p><a href="">核心技术</a></p>
+      <div class="infoBottom">
+        <p>关注我们,获取更多实时资讯 !</p>
       </div>
     </section>
     <!-- 底部栏 -->
     <div class="footerP">
-      <p style="text-align: center; color: #666">
+      <p style="text-align: center; color: #2e2e2e">
         © 2024 石家庄浅思科技有限公司 关于我们
         <a href="https://beian.miit.gov.cn" target="_blank"
           >冀ICP备2024060058号-2</a
@@ -151,11 +132,16 @@ export default {
 
   .siteInfo {
     max-width: 1100px;
+    position: relative;
     width: 100%;
     margin: 0 auto;
   }
 }
-
+.infoBottom {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
 .siteInfo {
   display: grid;
   grid-template-columns: 8fr 8fr 5fr;
@@ -184,33 +170,9 @@ export default {
       width: auto;
     }
 
-    .qrBox {
-      display: flex;
-      justify-content: flex-start;
-      padding-top: 16px;
-      align-items: center;
-
-      img {
-        border: 1px solid #cccccc;
-        width: 115px;
-        height: 115px;
-        margin-right: 16px;
-      }
-    }
-  }
-
-  .col_2 {
-    padding-left: 3em;
-
     p {
-      line-height: 2em;
-    }
-  }
-
-  .col_3 {
-    padding-left: 3em;
-
-    p {
+      font-size: 12px;
+      font-family: "黑体";
       line-height: 2em;
     }
   }
@@ -284,19 +246,23 @@ export default {
   width: 100px;
   height: 100px;
 }
+
 .linkListBox {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
+
 .linkbox {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 20px;
 
   .linkImg {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
+
     img {
       width: 100%;
       height: 100%;

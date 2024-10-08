@@ -9,7 +9,7 @@
                 <img :src="logoMax" alt="" title="logo" />
               </div>
               <div class="logoL">
-                <p>万象学术</p>
+                <!-- <p>万象学术</p> -->
                 <img :src="logo" alt="" title="logo" />
               </div>
             </div>
@@ -322,7 +322,7 @@ export default {
 }
 
 .logo-box {
-  width: 167px;
+  // width: 176px;
   height: 40px;
   margin-right: 20px;
   display: flex;
@@ -330,8 +330,9 @@ export default {
   justify-content: space-between;
 
   .logoR {
-    width: 40px;
+    width: auto;
     height: 40px;
+    margin-right: 10px;
 
     img {
       width: 100%;
@@ -350,7 +351,7 @@ export default {
   text-align: left;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
 
   img {
     width: 117px;

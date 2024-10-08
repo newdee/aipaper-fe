@@ -381,6 +381,7 @@ export default {
   border-radius: 8px;
   background: sandybrown;
 }
+
 .newSlider {
   height: 510px;
   background: #ffffff;
@@ -391,6 +392,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+
   .upToDate {
     position: absolute;
     top: 0;
@@ -417,6 +419,7 @@ export default {
     font-size: 14px;
     color: #999;
     padding: 20px 5px;
+
     .title {
       color: #000000;
       font-size: 18px;
@@ -427,7 +430,8 @@ export default {
       -webkit-line-clamp: 4;
       word-break: break-all;
       overflow: hidden;
-      height: 60px;
+      // height: 60px;
+      margin-bottom: 1em;
     }
 
     .text {
@@ -436,6 +440,7 @@ export default {
       -webkit-line-clamp: 8;
       word-break: break-all;
       overflow: hidden;
+      line-height: 22px;
     }
   }
 
@@ -445,6 +450,7 @@ export default {
     bottom: 10px;
     left: 0;
     padding: 0 5px;
+
     .author {
       color: #000000;
       display: -webkit-box;
@@ -456,6 +462,7 @@ export default {
 
     .info {
       color: #999;
+      margin-top: 10px;
     }
   }
 }

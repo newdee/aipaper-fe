@@ -4,8 +4,10 @@
     <!-- 页面名称 -->
     <!-- <el-button type="success" @click="jump2">跳转详情页</el-button> -->
     <search-paper class="searchPaper"></search-paper>
-    <input-main class="swiper swiper1"></input-main>
-    <swiper-three class="swiper swiper2"></swiper-three>
+    <div class="swiperBg">
+      <input-main class="swiper swiper1"></input-main>
+      <swiper-three class="swiper swiper2"></swiper-three>
+    </div>
     <!-- 优势页面 -->
     <advantage class="swiper swiper3"></advantage>
   </div>
@@ -70,4 +72,8 @@ export default {
 // 引入scss
 // @import "@/styles/variables.scss";
 @import "./index.scss";
+.swiperBg {
+  background: #fff;
+  padding-bottom: 40px;
+}
 </style>
