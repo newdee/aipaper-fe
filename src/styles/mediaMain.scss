@@ -51,7 +51,9 @@
       margin: 20px 10px 10px 10px !important;
     }
   }
-
+  .newLi {
+    padding: 0 !important;
+  }
   // 底部栏
   .main-container {
     .footer {
@@ -72,9 +74,9 @@
           margin-bottom: 10px;
         }
       }
-      .col_1 {
-        display: none;
-      }
+      // .col_1 {
+      //   display: none;
+      // }
       .col {
         width: 100%;
       }
@@ -104,7 +106,7 @@
       margin-top: 30px;
     }
     .newSlider {
-      height: 400px;
+      height: 450px;
       border-radius: 8px;
     }
   }
@@ -115,5 +117,10 @@
   // 侧边栏
   .floatMenuWrapper {
     bottom: 70px;
+  }
+
+  // shouye
+  .swiperBg {
+    padding-bottom: 0px !important;
   }
 }
