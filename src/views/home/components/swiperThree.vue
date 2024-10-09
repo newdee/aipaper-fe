@@ -1,15 +1,11 @@
 <template>
-  <div>
+  <div class="swiperWrapper">
     <!-- 中间行的轮播图 -->
     <div class="swiperNews">
       <swiper class="swiper" ref="mySwiper" :options="swiperOptionNew">
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian1.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian1.png" alt="" />
             <div class="txt">
               <p class="title">后生产主义乡村:乡村振兴的一个理论视角</p>
               <p class="text">
@@ -24,11 +20,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian2.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian2.png" alt="" />
             <div class="txt">
               <p class="title">边缘损失约束下的多尺度动态图卷积点云分割网络</p>
               <p class="text">
@@ -43,11 +35,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian3.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian3.png" alt="" />
             <div class="txt">
               <p class="title">一种自监督的消息传递图表示学习方法</p>
               <p class="text">
@@ -63,11 +51,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian4.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian4.png" alt="" />
             <div class="txt">
               <p class="title">
                 贝叶斯框架下利用GPS数据反演震源参数的一种改进MCMC算法
@@ -101,11 +85,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian4.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian4.png" alt="" />
             <div class="txt">
               <p class="title">
                 多层级公共服务供给对大城市租房群体居住分异的影响——基于北京市的实证研究
@@ -126,11 +106,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian4.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian4.png" alt="" />
             <div class="txt">
               <p class="title">生物医学领域突破性论文识别</p>
               <p class="text">
@@ -147,11 +123,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian1.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian1.png" alt="" />
             <div class="txt">
               <p class="title">后生产主义乡村:乡村振兴的一个理论视角</p>
               <p class="text">
@@ -166,11 +138,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian2.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian2.png" alt="" />
             <div class="txt">
               <p class="title">边缘损失约束下的多尺度动态图卷积点云分割网络</p>
               <p class="text">
@@ -185,11 +153,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian3.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian3.png" alt="" />
             <div class="txt">
               <p class="title">一种自监督的消息传递图表示学习方法</p>
               <p class="text">
@@ -205,11 +169,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian4.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian4.png" alt="" />
             <div class="txt">
               <p class="title">
                 贝叶斯框架下利用GPS数据反演震源参数的一种改进MCMC算法
@@ -243,11 +203,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian4.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian4.png" alt="" />
             <div class="txt">
               <p class="title">
                 多层级公共服务供给对大城市租房群体居住分异的影响——基于北京市的实证研究
@@ -268,11 +224,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian4.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian4.png" alt="" />
             <div class="txt">
               <p class="title">生物医学领域突破性论文识别</p>
               <p class="text">
@@ -288,8 +240,16 @@
           </div>
         </swiper-slide>
 
-        <div class="swiper-pagination2" slot="pagination"></div>
+        <!-- <div class="swiper-pagination2" slot="pagination"></div> -->
+        <!-- <div class="prev-btn swiper-button-prev" slot="button-prev" @click="onPrevClick"><i class="el-icon-caret-left"></i></div>
+        <div class="next-btn swiper-button-next" slot="button-next" @click="onNextClick"><i class="el-icon-caret-right"></i></div> -->
+        <!-- <div class="swiper-button-prev" slot="button-prev" @click="onPrevClick"></div>
+        <div class="swiper-button-next" slot="button-next" @click="onNextClick"></div> -->
       </swiper>
+    </div>
+    <div class="external-controls">
+      <button class="prev-btn prev-button" @click="onPrevClick"><i class="el-icon-caret-left"></i></button>
+      <button class="next-btn next-button" @click="onNextClick"><i class="el-icon-caret-right"></i></button>
     </div>
   </div>
 </template>
@@ -312,14 +272,20 @@ export default {
         slidesPerView: 4,
         spaceBetween: 30,
         mousewheel: true,
-
-        loop: true,
-        autoplay: true,
-        pagination: ".swiper-pagination2",
+        // loop: true, // loop:true时前进后退按钮失效
+        autoplay: 4000,
+        autoplayDisableOnInteraction: false,
+        // pagination: ".swiper-pagination2",
+        // paginationClickable: true,
+        speed: 3000,
         // pagination: {
         //   el: ".swiper-pagination2",
         //   clickable: true,
         // },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        },
       },
     };
   },
@@ -330,6 +296,10 @@ export default {
 
     // 页面初始化
     // this.swiper.slideTo(3, 1000, false);
+
+    this.$nextTick(() => {
+      this.$refs.mySwiper.swiper.update();
+    });
   },
   created() {
     // eventBus.on("sendOutline", this.addE); // 订阅事件
@@ -352,6 +322,22 @@ export default {
   },
   methods: {
     // 定义方法
+    onPrevClick() {
+      console.log('321---', this.$refs.mySwiper.swiper);
+      // this.swiperOptionNew.loop = false;
+      this.$refs.mySwiper.swiper.slidePrev();
+      this.restartAutoplay();
+    },
+    onNextClick() {
+      console.log('322---', this.$refs.mySwiper.swiper.slideNext);
+      this.$refs.mySwiper.swiper.slideNext();
+      this.restartAutoplay();
+    },
+    restartAutoplay() {
+      if (this.$refs.mySwiper && this.$refs.mySwiper.swiper) {
+        this.$refs.mySwiper.swiper.autoplaying = true;  // 重置自动播放要用autoplaying属性
+      }
+    },
   },
 };
 </script>
@@ -375,6 +361,49 @@ export default {
 
 .swiperNews {
   margin-top: 60px;
+}
+
+.swiperWrapper {
+  position: relative;
+}
+
+.external-controls {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.prev-btn i,
+.next-btn i {
+  font-size: 50px;
+}
+
+.prev-btn::after,
+.next-btn::after {
+  content: none;
+}
+
+.external-controls .prev-btn {
+  position: absolute;
+  left: 0px;
+  top: 50%;
+  transform: translate(-100%, -50%);
+  border: none;
+  background: transparent;
+  color: #3355FF;
+}
+
+.external-controls .next-btn {
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translate(100%, -50%);
+  border: none;
+  background: transparent;
+  color: #3355FF;
 }
 
 .newSlider {
