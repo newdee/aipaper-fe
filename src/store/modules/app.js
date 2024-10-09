@@ -1,63 +1,72 @@
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 
 const state = {
   sidebar: {
-    opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
+    opened: Cookies.get("sidebarStatus")
+      ? !!+Cookies.get("sidebarStatus")
+      : true,
     withoutAnimation: false,
-    activeIndex:1,
+    activeIndex: 1,
   },
-  device: 'desktop',
+  device: "desktop",
   homeData: {},
-  lineTitle: '论文标题'
-}
+  lineTitle: "论文标题",
+  requestForm: {},
+};
 
 const mutations = {
-  TOGGLE_SIDEBAR: state => {
-    state.sidebar.opened = !state.sidebar.opened
-    state.sidebar.withoutAnimation = false
+  TOGGLE_SIDEBAR: (state) => {
+    state.sidebar.opened = !state.sidebar.opened;
+    state.sidebar.withoutAnimation = false;
     if (state.sidebar.opened) {
-      Cookies.set('sidebarStatus', 1)
+      Cookies.set("sidebarStatus", 1);
     } else {
-      Cookies.set('sidebarStatus', 0)
+      Cookies.set("sidebarStatus", 0);
     }
   },
   CLOSE_SIDEBAR: (state, withoutAnimation) => {
-    Cookies.set('sidebarStatus', 0)
-    state.sidebar.opened = false
-    state.sidebar.withoutAnimation = withoutAnimation
+    Cookies.set("sidebarStatus", 0);
+    state.sidebar.opened = false;
+    state.sidebar.withoutAnimation = withoutAnimation;
   },
   TOGGLE_DEVICE: (state, device) => {
-    state.device = device
+    state.device = device;
+  },
+  TOGGLE_FORM: (state, requestForm) => {
+    state.requestForm = requestForm;
   },
   SET_HOME_DATA: (state, homeData) => {
-    state.homeData = JSON.parse(JSON.stringify(homeData))
+    state.homeData = JSON.parse(JSON.stringify(homeData));
   },
-  CHANGE_ACTIVE_SIDEBAR_ITEM: (state, activeIndex) =>{
+  CHANGE_ACTIVE_SIDEBAR_ITEM: (state, activeIndex) => {
     state.sidebar.activeIndex = activeIndex;
-  }
-}
+  },
+};
 
 const actions = {
   toggleSideBar({ commit }) {
-    commit('TOGGLE_SIDEBAR')
+    commit("TOGGLE_SIDEBAR");
   },
   closeSideBar({ commit }, { withoutAnimation }) {
-    commit('CLOSE_SIDEBAR', withoutAnimation)
+    commit("CLOSE_SIDEBAR", withoutAnimation);
   },
   toggleDevice({ commit }, device) {
-    commit('TOGGLE_DEVICE', device)
+    commit("TOGGLE_DEVICE", device);
   },
-  setHomeData({ commit },  data ) {
-    commit('SET_HOME_DATA', data)
+  setHomeData({ commit }, data) {
+    commit("SET_HOME_DATA", data);
   },
-  setActiveSidebar({ commit }, index ) {
-    commit('CHANGE_ACTIVE_SIDEBAR_ITEM', index)
+  setRequestForm({ commit }, data) {
+    commit("TOGGLE_FORM", data);
   },
-}
+  setActiveSidebar({ commit }, index) {
+    commit("CHANGE_ACTIVE_SIDEBAR_ITEM", index);
+  },
+};
 
 export default {
   namespaced: true,
   state,
   mutations,
-  actions
-}
+  actions,
+};

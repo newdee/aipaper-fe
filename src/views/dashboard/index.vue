@@ -1,171 +1,119 @@
 <template>
-  <div>
-    <!--每日数据 -->
-    <webinfo></webinfo>
-    <!-- 输入框 -->
-
-    <inputcon></inputcon>
-    <!-- 推荐内容 -->
-    <recommend v-show="outLineStatus"></recommend>
-    <!-- <progress></progress> -->
-    <div class="progressBox">
-      <div class="pgBox">
-        <el-progress
-          :text-inside="true"
-          :stroke-width="24"
-          :percentage="currentNumber"
-          status="success"
-        ></el-progress>
-      </div>
-      <p>大纲生成中 <i class="el-icon-loading"></i>....</p>
-    </div>
-    <div v-show="loadingStatus">
-      <outline-edit v-if="outLineClick == 'pro'"></outline-edit>
-      <outline v-else></outline>
-    </div>
-    <!-- 大纲生成页面 -->
-
-    <!-- 下载文件和官方群 -->
-    <paper-others></paper-others>
-
-    <!-- <div style="height: 1500px"></div> -->
-    <!-- <el-backtop
-      target=".page-component__scroll .el-scrollbar__wrap"
-    ></el-backtop> -->
+  <div class="page-container">
+    <header class="header">
+      <h1 class="success-message">支付成功</h1>
+    </header>
+    <main class="content">
+      <section class="message">
+        <p>您好，您已成功支付。</p>
+        <p>请关闭当前页面，回到官网点击下一步，生成论文正文。</p>
+      </section>
+      <section class="actions">
+        <a href="#" @click.prevent="closePage" class="btn-close">关闭页面</a>
+      </section>
+    </main>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
-// 方法
-import { getHomeInfo } from "@/api/user";
-// 组件
-import webinfo from "./components/webinfo.vue";
-import inputcon from "./components/inputcon.vue";
-import recommend from "./components/recommend.vue";
-import paperOthers from "./components/paperOthers.vue";
-import outlineEdit from "./outlineEdit.vue";
-import outline from "./outline.vue";
-import eventBus from "@/utils/eventBus";
-
 export default {
-  name: "home",
-  components: {
-    webinfo,
-    inputcon,
-    recommend,
-    outline,
-    paperOthers,
-    outlineEdit,
-  },
-  computed: {
-    ...mapGetters(["name", "homeData"]),
-  },
-  data() {
-    return {
-      loadingStatus: true, //整个大纲的展示状态
-      proDuceStatus: true, // 大纲展示， 录入还是生成
-      outLineStatus: true, //大纲生成状态
-      currentNumber: 0,
-      outLineClick: "pro", // pro:生成 imp : 录入
-      intervalId: null,
-    };
-  },
+  name: "PaymentSuccess",
   created() {
-    eventBus.on("sendOutline", this.addE); // 订阅事件
-    eventBus.on("clickImportOutline", this.showImportLine); // 订阅事件
+    // 添加 beforeunload 事件监听器
+    window.addEventListener("beforeunload", this.handleBeforeUnload);
   },
   beforeDestroy() {
-    eventBus.off("sendOutline", this.addE); // 移除事件监听
-    eventBus.on("clickImportOutline", this.showImportLine); // 订阅事件
-  },
-  mounted() {
-    // 获取首页数据
-    getHomeInfo().then((res) => {
-      console.log(res.result, "res");
-      this.$store.dispatch("app/setHomeData", res.result);
-    });
+    // 移除 beforeunload 事件监听器
+    window.removeEventListener("beforeunload", this.handleBeforeUnload);
   },
   methods: {
-    // 生成大纲
-    addE(index) {
-      this.outLineStatus = false;
-      this.outLineClick = "pro";
-      this.loadingStatus = false;
-
-      this.countUpToHundred(index);
+    handleBeforeUnload(event) {
+      // 设置默认的提示信息
+      // const message = "您确定要离开吗？";
+      // // 兼容不同浏览器
+      // event.returnValue = message; // 标准浏览器
+      // return message; // 其他浏览器
     },
-    // 录入大纲
-    showImportLine() {
-      this.outLineStatus = false;
-      this.loadingStatus = true;
-      this.outLineClick = "imp";
-    },
-    // 渲染大纲
-    getList() {
-      this.outLineClick = "pro";
-      this.loadingStatus = true;
-      // this.outLineStatus = false;
-      // 判断展示那个大纲
-    },
-    // 进度条
-    countUpToHundred(seconds) {
-      this.currentNumber = 0;
-      const targetNumber = 100;
-      const totalSteps = targetNumber - this.currentNumber;
-
-      // 计算每一步所需的时间（毫秒）
-      const stepTimeMs = (seconds * 1000) / totalSteps;
-
-      this.intervalId = setInterval(() => {
-        console.log(this.currentNumber);
-        this.currentNumber++;
-
-        if (this.currentNumber >= targetNumber) {
-          clearInterval(this.intervalId); // 达到目标数字时清除定时器
-          this.getList();
-        }
-      }, stepTimeMs);
+    closePage() {
+      // 尝试关闭当前窗口
+      if (window.opener) {
+        window.opener = null;
+        window.close();
+      } else {
+        // 如果无法关闭窗口，提示用户手动关闭
+        alert("请手动关闭当前标签页或窗口。");
+      }
     },
   },
 };
 </script>
 
-<style lang="scss" scoped>
-.dashboard {
-  &-container {
-    margin: 30px;
-  }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
-  }
+<style scoped>
+.page-container {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
-.el-col {
-  border-radius: 4px;
+
+.header {
+  margin-bottom: 20px;
 }
-.bg-purple-dark {
-  background: #99a9bf;
+
+.success-message {
+  background-color: #4caf50; /* 绿色背景 */
+  color: #ffffff; /* 白色文字 */
+  padding: 20px;
+  border-radius: 8px;
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-.progressBox {
-  margin-top: 30px;
-  .pgBox {
-    width: 200px;
-  }
-  width: 100%;
+
+.content {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px;
+}
+
+.message {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  text-align: left;
+}
+
+.message p {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-close {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.btn-close:hover {
+  background-color: #0056b3;
 }
 </style>

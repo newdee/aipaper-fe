@@ -1,8 +1,8 @@
 <template>
   <div class="step2Box">
     <div id="top" class="outLineTitle">
-      <p class="oulineTitlePaper"><span>题目: </span>{{ title }}</p>
-      <p class="outlineTitleDesc"><span>科目: </span>{{ descri }}</p>
+      <p class="oulineTitlePaper"><span>题目: </span>{{ requestForm.title }}</p>
+      <p class="outlineTitleDesc"><span>科目: </span>{{ requestForm.field }}</p>
     </div>
     <!-- 大纲 -->
     <!-- {{ outlineData }} -->
@@ -540,6 +540,7 @@
 <script>
 import mitt from "mitt";
 import { getToken } from "@/utils/auth"; //
+import { mapGetters } from "vuex";
 // 方法
 import { getOrder } from "@/api/user";
 export default {
@@ -933,6 +934,10 @@ export default {
   },
   created() {
     this.generateIndexes(this.outlineData);
+  },
+  computed: {
+    // 计算属性
+    ...mapGetters(["requestForm"]),
   },
   methods: {
     showImgF(item) {

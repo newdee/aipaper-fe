@@ -51,7 +51,7 @@
 <script>
 // import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
-import swiperOne from "@/views/home/components/inputMain.vue";
+import swiperOne from "./components/swiperOne.vue";
 // import eventBus from "@/utils/eventBus";
 import step1 from "./components/step1.vue";
 import step2 from "./components/step2.vue";
@@ -175,6 +175,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
     background-color: #e6edff;
   }
 
