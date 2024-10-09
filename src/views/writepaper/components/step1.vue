@@ -69,19 +69,19 @@ export default {
     // 定义方法
     // 生成大纲
     addE(index) {
-      console.log("beginTime", index);
+      clearInterval(this.intervalId); // 达到目标数字时清除定时器
+      this.currentNumber = 0;
       this.countUpToHundred(index);
     },
     countUpToHundred(seconds) {
       this.currentNumber = 0;
-      const targetNumber = 100;
+      const targetNumber = 99;
       const totalSteps = targetNumber - this.currentNumber;
 
       // 计算每一步所需的时间（毫秒）
       const stepTimeMs = (seconds * 1000) / totalSteps;
 
       this.intervalId = setInterval(() => {
-        console.log(this.currentNumber);
         this.currentNumber++;
 
         if (this.currentNumber >= targetNumber) {

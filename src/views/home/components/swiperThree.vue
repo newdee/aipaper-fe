@@ -315,10 +315,11 @@ export default {
 
         loop: true,
         autoplay: true,
-        pagination: {
-          el: ".swiper-pagination2",
-          clickable: true,
-        },
+        pagination: ".swiper-pagination2",
+        // pagination: {
+        //   el: ".swiper-pagination2",
+        //   clickable: true,
+        // },
       },
     };
   },
