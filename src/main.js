@@ -36,14 +36,13 @@ Vue.use(ElementUI, {
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
 
-import VueAwesomeSwiper from 'vue-awesome-swiper'
+import VueAwesomeSwiper from "vue-awesome-swiper";
 
 // import style
-import 'swiper/swiper-bundle.css'
-import 'swiper/swiper.css'
-import 'swiper/swiper.min.css'
-
-Vue.use(VueAwesomeSwiper, /* { default options with global component } */)
+// import 'swiper/swiper.css'
+// require('swiper/dist/css/swiper.css')
+import "swiper/css/swiper.css";
+Vue.use(VueAwesomeSwiper /* { default options with global component } */);
 
 // 定义全局的方法
 Vue.prototype.$devf = function () {
@@ -95,7 +94,7 @@ Vue.prototype.$setMinWindowWidth = function () {
   // 提示用户最小窗口大小要求
 };
 // eventBus.js
-import VueScrollTo from 'vue-scrollto';
+import VueScrollTo from "vue-scrollto";
 
 let scrollOptions = {
   container: "body", //滚动的容器
@@ -108,14 +107,14 @@ let scrollOptions = {
   onDone: false, // 滚动结束时候的钩子函数
   onCancel: false, // 用户取消滚动的钩子函数
   x: false, // 是否要在x轴上也滚动
-  y: true    // 是否要在y轴上滚动
+  y: true, // 是否要在y轴上滚动
 };
 
 Vue.use(VueScrollTo, scrollOptions);
 
-import TextareaAutosize from 'vue-textarea-autosize'
+import TextareaAutosize from "vue-textarea-autosize";
 
-Vue.use(TextareaAutosize)
+Vue.use(TextareaAutosize);
 new Vue({
   el: "#app",
   router,

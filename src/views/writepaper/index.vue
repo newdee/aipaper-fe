@@ -6,21 +6,26 @@
     <!-- tabs写论文  -->
     <div class="tabsListWrapper" ref="tasListWrapper">
       <div class="tabsList">
-        <div @click="tabsClick(1)" :class="['tabLi', activeIndex == 1 ? 'activeTab' : '']">
+        <div
+          :class="[
+            'tabLi',
+            activeIndex == 1 || activeIndex == 0 ? 'activeTab' : '',
+          ]"
+        >
           <p class="tabsTitle">Step 1</p>
           <div class="tabIcon">
             <span></span>
           </div>
           <p class="tabIntro">填写需求 <span>生成大纲</span></p>
         </div>
-        <div @click="tabsClick(2)" :class="['tabLi', activeIndex == 2 ? 'activeTab2' : '']">
+        <div :class="['tabLi', activeIndex == 2 ? 'activeTab2' : '']">
           <p class="tabsTitle">Step 2</p>
           <div class="tabIcon">
             <span></span>
           </div>
           <p class="tabIntro">检查大纲 <span>生成正文</span></p>
         </div>
-        <div @click="tabsClick(3)" :class="['tabLi', activeIndex == 3 ? 'activeTab3' : '']">
+        <div :class="['tabLi', activeIndex == 3 ? 'activeTab3' : '']">
           <p class="tabsTitle">Step 3</p>
           <div class="tabIcon">
             <span></span>
@@ -35,15 +40,18 @@
     </div>
     <div class="stepContent">
       <step1 v-if="activeIndex == 1"></step1>
-      <step2 v-if="activeIndex == 2"></step2>
-      <step3 v-if="activeIndex == 3" :class="[isScrollActive ? 'fixed' : '']"></step3>
+      <step2 :outlineData="outlineData" v-if="activeIndex == 2"></step2>
+      <step3
+        v-if="activeIndex == 3"
+        :class="[isScrollActive ? 'fixed' : '']"
+      ></step3>
     </div>
   </div>
 </template>
 <script>
 // import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
-import swiperOne from "@/views/home/components/inputMain.vue";
+import swiperOne from "./components/swiperOne.vue";
 // import eventBus from "@/utils/eventBus";
 import step1 from "./components/step1.vue";
 import step2 from "./components/step2.vue";
@@ -58,8 +66,9 @@ export default {
   data() {
     return {
       // 定义变量
-      activeIndex: 2,
+      activeIndex: 0,
       isScrollActive: false,
+      outlineData: {},
     };
   },
   components: {
@@ -73,7 +82,7 @@ export default {
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener("scroll", this.handleScroll);
     // 获取首页数据
     this.$nextTick(() => {
       getHomeInfo().then((res) => {
@@ -84,6 +93,7 @@ export default {
   },
   created() {
     eventBus.on("emitOulineClick", this.showIndex); // 订阅事件
+    eventBus.on("successOutline", this.showOutLine); // 订阅事件
   },
   computed: {
     // 计算属性
@@ -97,6 +107,11 @@ export default {
       this.$nextTick(() => {
         eventBus.emit("beginTime", 5);
       });
+    },
+    showOutLine(data) {
+      console.log("indexOutline", data);
+      this.outlineData = data;
+      this.tabsClick(2);
     },
     tabsClick(val) {
       this.activeIndex = val;
@@ -113,18 +128,18 @@ export default {
     },
     handleScroll() {
       const element = this.$refs.mainSec;
-      const elementTop = element.getBoundingClientRect().top;// 当元素顶部到达页面顶部时添加 active 类
+      const elementTop = element.getBoundingClientRect().top; // 当元素顶部到达页面顶部时添加 active 类
 
       if (elementTop <= -300) {
         this.isScrollActive = true;
       } else {
         this.isScrollActive = false;
       }
-    }
+    },
   },
   beforeDestroy() {
     eventBus.off("emitOulineClick", this.showIndex); // 移除事件监听
-    window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener("scroll", this.handleScroll);
   },
 };
 </script>
@@ -160,6 +175,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
     background-color: #e6edff;
   }
 
@@ -217,7 +234,8 @@ export default {
   }
 
   .activeTab {
-    background: url("../../assets/images/shape-left.png") no-repeat 0 0 / 100% 100% !important;
+    background: url("../../assets/images/shape-left.png") no-repeat 0 0 / 100%
+      100% !important;
 
     .tabsTitle {
       color: #3355ff;
@@ -241,7 +259,8 @@ export default {
   }
 
   .activeTab3 {
-    background: url("../../assets/images/shape-right.png") no-repeat 0 0 / 100% 100% !important;
+    background: url("../../assets/images/shape-right.png") no-repeat 0 0 / 100%
+      100% !important;
 
     .tabsTitle {
       color: #3355ff;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="swiperWrapper">
     <!-- 底图页面 -->
     <div class="swiperBox">
       <swiper :options="swiperOption" ref="mySwiper1">
@@ -27,7 +27,7 @@
         <!-- 其他 slides... -->
 
         <!-- 分页器 -->
-        <div class="swiper-pagination" slot="pagination"></div>
+        <div class="swiper-pagination1" slot="pagination"></div>
       </swiper>
     </div>
   </div>
@@ -40,14 +40,16 @@ export default {
     return {
       swiperOption: {
         slidesPerView: 1,
-        spaceBetween: 30,
-        mousewheel: true,
         loop: true,
-        autoplay: true,
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-        },
+        autoplay: 4000,
+        autoplayDisableOnInteraction: false,
+        pagination: '.swiper-pagination1',
+        paginationType: 'bullets',
+        paginationClickable: true,
+        // pagination: {
+        //   el: ".swiper-pagination1",
+        //   clickable: true,
+        // },
       },
     };
   },
@@ -100,10 +102,34 @@ export default {
 }
 
 // 确保分页器样式没有问题
-.swiper-pagination {
+.swiper-pagination1 {
+
+  // position: absolute;
+  // bottom: 10px;
+  // left: 50%;
+  // transform: translateX(-50%);
+}
+
+.swiper-pagination1 {
   position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+  width: 100%;
+  height: 4px;
+  text-align: center;
+  bottom: 15px;
+  z-index: 100;
+
+  &::v-deep>.swiper-pagination-bullet {
+    width: 40px;
+    height: 4px;
+    display: inline-block;
+    border-radius: 4px;
+    background: #fff;
+    opacity: .5;
+  }
+
+  &::v-deep>.swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background: #fff;
+    opacity: 1;
+  }
 }
 </style>

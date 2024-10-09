@@ -1,11 +1,13 @@
 <template>
   <div class="step2Box">
     <div id="top" class="outLineTitle">
-      <p class="oulineTitlePaper"><span>题目: </span>{{ title }}</p>
-      <p class="outlineTitleDesc"><span>科目: </span>{{ descri }}</p>
+      <p class="oulineTitlePaper"><span>题目: </span>{{ requestForm.title }}</p>
+      <p class="outlineTitleDesc"><span>科目: </span>{{ requestForm.field }}</p>
     </div>
     <!-- 大纲 -->
+    <!-- {{ outlineData }} -->
     <div class="outlineMain">
+      <p class="tips">拖拽章节,可实现章节排序</p>
       <div class="tipOutline">
         <el-tooltip
           class="item"
@@ -44,7 +46,7 @@
       </div>
 
       <el-tree
-        :data="data"
+        :data="outlineData"
         node-key="id"
         default-expand-all
         @node-drag-start="handleDragStart"
@@ -63,10 +65,10 @@
             <div class="inputBoxMain">
               <!-- 如果是编辑状态 -->
               <div class="pageSource">
-                <span v-if="data.index <= 9"
-                  >第{{ numberToChinese(data.index) }}章</span
-                >
-                <span v-else>{{ data.index }}</span>
+                <span v-if="data.index < 99"
+                  >第{{ numberToChinese(data.index) }}章
+                </span>
+                <span v-else> {{ data.index }} </span>
               </div>
               <template v-if="data.isEdit == 1">
                 <input
@@ -90,7 +92,7 @@
                 v-else
                 class="showSpan"
                 @click="() => edit(node, data)"
-                v-text="data.label"
+                v-text="data.title"
               ></span>
             </div>
 
@@ -136,14 +138,14 @@
               </div>
             </div>
           </div>
-          <div v-if="data.content" class="contentInput">
+          <div v-if="data.summary" class="contentInput">
             <!-- <textarea type="textarea" v-model="data.content"  /> -->
             <textarea-autosize
               class="ownInput"
               rows="1"
               placeholder="Type something here..."
               ref="myTextarea"
-              v-model="data.content"
+              v-model="data.summary"
             />
           </div>
         </div>
@@ -321,7 +323,7 @@
         </p>
       </div>
     </div>
-    <div class="warningP">
+    <div class="warningP agreeText">
       <el-checkbox v-model="checked">
         我已阅读并同意：平台所生成的全文为范文，仅用作参考，不用作毕业论文、发表刊物等
       </el-checkbox>
@@ -538,6 +540,7 @@
 <script>
 import mitt from "mitt";
 import { getToken } from "@/utils/auth"; //
+import { mapGetters } from "vuex";
 // 方法
 import { getOrder } from "@/api/user";
 export default {
@@ -560,26 +563,79 @@ export default {
         data1: "",
         checked: "",
       },
+      outline: [
+        // 第一章
+        {
+          id: 1,
+          level: 1,
+          chapter: "引言",
+          children: [
+            {
+              // chapter: "引言",
+              id: 2,
+              level: 2,
+              title: "研究背景与意义",
+              summary:
+                "随着城市化进程的加快，环境污染问题日益严重。特别是城市道路空气污染，对公众健康和城市生态环境构成了重大威胁。如何利用现代技术手段有效治理环境污染成为当前研究的热点。",
+              // title_num: "1.1",
+              // chapter_num: "第一章",
+            },
+            {
+              // chapter: "引言",
+              id: 3,
+              level: 3,
+              title: "本研究的主要贡献和创新点",
+              summary:
+                "本研究通过整合移动监测数据和街景图像（SVIs），采用机器学习算法，提出了一种预测和治理道路空气污染的创新策略。研究表明，该策略在预测污染物浓度方面显著优于传统方法。",
+              // title_num: "1.2",
+              // chapter_num: "第一章",
+            },
+          ],
+        },
+        // 第二章
+        {
+          id: 1,
+          level: 1,
+          chapter: "文献综述",
+          children: [
+            {
+              // chapter: "引言",
+              id: 2,
+              level: 2,
+              title: "研究理论基础",
+              summary:
+                "随着城市化进程的加快，环境污染问题日益严重。特别是城市道路空气污染，对公众健康和城市生态环境构成了重大威胁。如何利用现代技术手段有效治理环境污染成为当前研究的热点。",
+              // title_num: "1.1",
+              // chapter_num: "第一章",
+            },
+            {
+              // chapter: "引言",
+              id: 3,
+              level: 3,
+              title: "研究现状",
+              summary:
+                "本研究通过整合移动监测数据和街景图像（SVIs），采用机器学习算法，提出了一种预测和治理道路空气污染的创新策略。研究表明，该策略在预测污染物浓度方面显著优于传统方法。",
+              // title_num: "1.2",
+              // chapter_num: "第一章",
+            },
+          ],
+        },
+      ],
       data: [
         {
           id: 1,
           level: 1,
-          checked1: "",
-          data1: "",
-          checked2: "",
-          data2: "",
-          checked3: "",
-          data3: "",
           label: "请修改标题",
           children: [
             {
               id: 4,
+              level: 1,
               label: "二级 1-1",
               children: [
                 {
-                  content: "介绍艺术批评与设计实践之间的关系和重要性",
-                  level: 3,
-                  id: 9,
+                  content: "介绍艺术批评与设计实践之间的关系和重要性", // 标题
+                  level: 3, // 大纲层级
+                  id: 9, // 大纲ID
                   label: "三级 1-1-1",
                   insert_data_table: {
                     enabled: false, // bool值，表示是否插入数据表
@@ -870,9 +926,18 @@ export default {
       },
     };
   },
-
+  props: {
+    outlineData: {
+      type: Object,
+      require: true,
+    },
+  },
   created() {
-    this.generateIndexes(this.data);
+    this.generateIndexes(this.outlineData);
+  },
+  computed: {
+    // 计算属性
+    ...mapGetters(["requestForm"]),
   },
   methods: {
     showImgF(item) {
@@ -1081,7 +1146,7 @@ export default {
       }
     },
     numberToChinese(num) {
-      const chineseDigits = [
+      const chineseNums = [
         "零",
         "一",
         "二",
@@ -1092,15 +1157,36 @@ export default {
         "七",
         "八",
         "九",
-        "十",
       ];
+      const units = ["", "十", "百", "千", "万", "十", "百", "千", "亿"];
+
       let result = "";
-      num
-        .toString()
-        .split("")
-        .forEach((digit) => {
-          result += chineseDigits[parseInt(digit, 10)];
-        });
+      let strNum = num.toString();
+      let len = strNum.length;
+
+      for (let i = 0; i < len; i++) {
+        let digit = parseInt(strNum[i]);
+        if (digit !== 0) {
+          result += chineseNums[digit] + units[len - i - 1];
+        } else if (result && result[result.length - 1] !== "零") {
+          result += chineseNums[digit];
+        }
+      }
+
+      // 处理特殊情况，如“一百零一”而不是“一百一”
+      result = result.replace(/零+/g, "零");
+      result = result.replace(/零([十百千])/, "$1");
+
+      // 去掉末尾的零
+      result = result.replace(/零+$/, "");
+
+      // 特殊处理“十”和“十一”
+      if (result === "十") {
+        result = "十";
+      } else if (result.startsWith("一十")) {
+        result = result.replace("一十", "十");
+      }
+
       return result;
     },
     allowDrag(draggingNode) {
@@ -1157,7 +1243,8 @@ export default {
 }
 
 .spendingBox {
-  width: 688px;
+  max-width: 688px;
+  width: 100%;
   margin: 0 auto;
   padding: 0px 10px 10px 10px;
   background: #fff;
@@ -1208,8 +1295,10 @@ export default {
     }
   }
   .att {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
   }
   .maintxt .borderBox {
     border-color: #d4a11c;
@@ -1218,6 +1307,7 @@ export default {
     }
   }
   .att .borderBox {
+    width: 150px;
     border-color: #01847f;
     font-size: 12px;
     .right p {
@@ -1229,13 +1319,14 @@ export default {
   }
   .adds {
     .addService {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      display: flex;
+      flex-wrap: wrap;
       label.el-checkbox {
+        width: 150px;
         display: flex;
         flex-direction: row-reverse;
         padding: 10px;
-        margin: 5px 10px;
+        margin: 5px 8px;
         background-image: linear-gradient(
           45deg,
           rgb(252, 243, 205),
@@ -1278,11 +1369,15 @@ export default {
 }
 
 .warningP {
-  width: 688px;
+  max-width: 688px;
   margin: 0 auto;
   margin-top: 20px;
 }
-
+.agreeText {
+  white-space: nowrap; /* 防止文字换行 */
+  overflow: hidden; /* 隐藏超出的内容 */
+  text-overflow: ellipsis;
+}
 // @import "@/index.scss";
 .warningText {
   color: #ffa500;

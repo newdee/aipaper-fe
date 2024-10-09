@@ -12,8 +12,8 @@
     </div>
     <!-- 论文标题
         -->
-    <p class="oulineTitlePaper"><span>题目: </span>{{ title }}</p>
-    <p class="outlineTitleDesc"><span>科目: </span>{{ descri }}</p>
+    <p class="oulineTitlePaper"><span>题目: </span>{{ requestForm.title }}</p>
+    <p class="outlineTitleDesc"><span>科目: </span>{{ requestForm.field }}</p>
     <!-- 页面名称 -->
     <div class="progressBox">
       <div class="pgBoxEl">
@@ -32,7 +32,7 @@
   </div>
 </template>
 <script>
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 // import eventBus from "@/utils/eventBus";
@@ -63,25 +63,26 @@ export default {
     eventBus.off("beginTime", this.addE); // 移除事件监听
   },
   computed: {
+    ...mapGetters(["requestForm"]),
     // 计算属性
   },
   methods: {
     // 定义方法
     // 生成大纲
     addE(index) {
-      console.log("beginTime", index);
+      clearInterval(this.intervalId); // 达到目标数字时清除定时器
+      this.currentNumber = 0;
       this.countUpToHundred(index);
     },
     countUpToHundred(seconds) {
       this.currentNumber = 0;
-      const targetNumber = 100;
+      const targetNumber = 99;
       const totalSteps = targetNumber - this.currentNumber;
 
       // 计算每一步所需的时间（毫秒）
       const stepTimeMs = (seconds * 1000) / totalSteps;
 
       this.intervalId = setInterval(() => {
-        console.log(this.currentNumber);
         this.currentNumber++;
 
         if (this.currentNumber >= targetNumber) {
