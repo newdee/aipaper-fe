@@ -420,9 +420,9 @@ export default {
 }
 
 .external-controls {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  // position: absolute;
+  // width: 100%;
+  // height: 100%;
   top: 0;
   left: 0;
   z-index: 100;
@@ -446,6 +446,7 @@ export default {
   border: none;
   background: transparent;
   color: #3355ff;
+  z-index: 100;
 }
 
 .external-controls .next-btn {
@@ -455,6 +456,7 @@ export default {
   transform: translate(100%, -50%);
   border: none;
   background: transparent;
+  z-index: 100;
   color: #3355ff;
 }
 
