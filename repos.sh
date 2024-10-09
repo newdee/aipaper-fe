@@ -58,6 +58,20 @@ git checkout main
 echo "从 $REMOTE_GITHUB/main 拉取最新代码..."
 git pull $REMOTE_GITHUB main
 
+# 合并 dev 分支到 main 分支
+echo "合并 dev 分支到 main 分支..."
+git merge --no-ff dev
+
+# 解决可能的冲突
+if [ $? -ne 0 ]; then
+  echo "合并过程中出现冲突，请手动解决冲突后继续。"
+  exit 1
+fi
+
+# 推送合并后的 main 分支到 github 仓库
+echo "向 $REMOTE_GITHUB/main 推送合并后的 main 分支..."
+git push $REMOTE_GITHUB main
+
 # 创建标签
 echo "创建标签 $TAG_NAME..."
 git tag $TAG_NAME

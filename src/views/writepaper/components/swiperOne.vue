@@ -29,15 +29,12 @@ export default {
   data() {
     return {
       swiperOption: {
-        slidesPerView: 1,
         spaceBetween: 30,
         mousewheel: true,
+        slidesPerView: 1,
         loop: true,
-        autoplay: true,
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-        },
+        autoplay: 4000,
+        autoplayDisableOnInteraction: false,
       },
     };
   },
