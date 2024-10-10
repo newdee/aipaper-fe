@@ -222,174 +222,219 @@ export default {
           field: "计算机",
           type: "本科",
         };
-        outlineCreate(data).then((res) => {
-          console.log("outlineCreateres", res);
-          let key = res.result.key;
-          polling({ key: key }).then((res) => {
-            console.log("ddddd", res);
-            alert("大纲生成成功");
-            eventBus.emit("successOutline", res); // 发布事件
-          });
-        });
+        // outlineCreate(data).then((res) => {
+        //   console.log("outlineCreateres", res);
+        //   let key = res.result.key;
+        // let key = "b846ba3f-5764-4e48-a5d6-59da6d46d694";
+        // polling({ key: key }).then((res) => {
+        //   console.log("ddddd", res);
+        //   alert("大纲生成成功");
+        //   eventBus.emit("successOutline", res); // 发布事件
+        // });
+        // });
 
-        // setTimeout(() => {
-        //   let res = {
-        //     code: 200,
-        //     message: "success",
-        //     result: {
-        //       status: "生成成功",
-        //       outline: {
-        //         outline: [
-        //           // 第一章
-        //           {
-        //             id: 1,
-        //             level: 1,
-        //             title: "引言",
-        //             children: [
-        //               {
-        //                 // chapter: "引言",
-        //                 id: 2,
-        //                 level: 2,
-        //                 title: "研究背景与意义",
-        //                 summary:
-        //                   "随着城市化进程的加快，环境污染问题日益严重。特别是城市道路空气污染，对公众健康和城市生态环境构成了重大威胁。如何利用现代技术手段有效治理环境污染成为当前研究的热点。",
-        //                 // title_num: "1.1",
-        //                 // chapter_num: "第一章",
-        //               },
-        //               {
-        //                 // chapter: "引言",
-        //                 id: 3,
-        //                 level: 3,
-        //                 title: "本研究的主要贡献和创新点",
-        //                 summary:
-        //                   "本研究通过整合移动监测数据和街景图像（SVIs），采用机器学习算法，提出了一种预测和治理道路空气污染的创新策略。研究表明，该策略在预测污染物浓度方面显著优于传统方法。",
-        //                 // title_num: "1.2",
-        //                 // chapter_num: "第一章",
-        //               },
-        //             ],
-        //           },
-        //           // 第二章
-        //           {
-        //             id: 1,
-        //             level: 1,
-        //             chapter: "文献综述",
-        //             children: [
-        //               {
-        //                 // chapter: "引言",
-        //                 id: 2,
-        //                 level: 2,
-        //                 title: "研究理论基础",
-        //                 summary:
-        //                   "随着城市化进程的加快，环境污染问题日益严重。特别是城市道路空气污染，对公众健康和城市生态环境构成了重大威胁。如何利用现代技术手段有效治理环境污染成为当前研究的热点。",
-        //                 // title_num: "1.1",
-        //                 // chapter_num: "第一章",
-        //               },
-        //               {
-        //                 // chapter: "引言",
-        //                 id: 3,
-        //                 level: 3,
-        //                 title: "研究现状",
-        //                 summary:
-        //                   "本研究通过整合移动监测数据和街景图像（SVIs），采用机器学习算法，提出了一种预测和治理道路空气污染的创新策略。研究表明，该策略在预测污染物浓度方面显著优于传统方法。",
-        //                 // title_num: "1.2",
-        //                 // chapter_num: "第一章",
-        //               },
-        //             ],
-        //           },
-        //           {
-        //             chapter: "文献综述",
-        //             title: "本研究的创新点",
-        //             summary:
-        //               "详细分析本研究的创新点，包括整合移动监测数据和街景图像的策略，以及采用机器学习算法进行污染预测的优势。",
-        //             title_num: "2.3",
-        //             chapter_num: "第二章",
-        //           },
-        //           {
-        //             chapter: "研究方法",
-        //             title: "数据采集",
-        //             summary:
-        //               "介绍数据采集的方法，包括利用314辆出租车动态监测NO、NO2、PM2.5和PM10，以及采集约382,000张街景图像的特征。",
-        //             title_num: "3.1",
-        //             chapter_num: "第三章",
-        //           },
-        //           {
-        //             chapter: "研究方法",
-        //             title: "机器学习算法",
-        //             summary:
-        //               "详细介绍研究中使用的机器学习算法，包括随机森林、XGBoost和神经网络，并解释这些算法在预测污染物浓度中的应用。",
-        //             title_num: "3.2",
-        //             chapter_num: "第三章",
-        //           },
-        //           {
-        //             chapter: "研究方法",
-        //             title: "模型优化与评估",
-        //             summary:
-        //               "讨论模型的优化过程和评估方法，包括不同角度和半径范围的SVIs采集策略，以及采用均方根误差（RMSE）和决定系数（R^2）作为评价指标。",
-        //             title_num: "3.3",
-        //             chapter_num: "第三章",
-        //           },
-        //           {
-        //             chapter: "结果分析",
-        //             title: "预测结果",
-        //             summary:
-        //               "展示并分析机器学习模型的预测结果，比较不同算法的预测性能，重点讨论随机森林算法的优势。",
-        //             title_num: "4.1",
-        //             chapter_num: "第四章",
-        //           },
-        //           {
-        //             chapter: "结果分析",
-        //             title: "采样策略优化",
-        //             summary:
-        //               "分析不同角度和半径范围的SVIs采集策略对预测结果的影响，确定最优采样策略。",
-        //             title_num: "4.2",
-        //             chapter_num: "第四章",
-        //           },
-        //           {
-        //             chapter: "结果分析",
-        //             title: "低质量图像对预测的影响",
-        //             summary:
-        //               "探讨低质量图像（过曝、模糊、欠曝、颜色通道失真）对预测精度的影响，并展示过滤低质量图像后的预测精度提升。",
-        //             title_num: "4.3",
-        //             chapter_num: "第四章",
-        //           },
-        //           {
-        //             chapter: "讨论与结论",
-        //             title: "讨论",
-        //             summary:
-        //               "讨论研究结果的意义，分析本研究方法的优势和不足，并与现有研究进行对比。",
-        //             title_num: "5.1",
-        //             chapter_num: "第五章",
-        //           },
-        //           {
-        //             chapter: "讨论与结论",
-        //             title: "结论",
-        //             summary:
-        //               "总结本研究的主要发现，提出未来研究的方向，并强调本研究对城市环境治理的贡献。",
-        //             title_num: "5.2",
-        //             chapter_num: "第五章",
-        //           },
-        //           {
-        //             chapter: "研究局限与未来展望",
-        //             title: "研究局限",
-        //             summary:
-        //               "分析本研究的局限性，如低质量图像对预测精度的影响，并提出改进建议。",
-        //             title_num: "6.1",
-        //             chapter_num: "第六章",
-        //           },
-        //           {
-        //             chapter: "研究局限与未来展望",
-        //             title: "未来研究方向提出展望",
-        //             summary:
-        //               "提出未来研究的方向，如提高图像质量和数据采集的精确性，探索更多的特征提取和模型优化方法。",
-        //             title_num: "6.2",
-        //             chapter_num: "第六章",
-        //           },
-        //         ],
-        //       },
-        //     },
-        //   };
-        //   eventBus.emit("successOutline", res.result.outline.outline); // 发布事件
-        // }, 3000);
+        setTimeout(() => {
+          let res = {
+            code: 200,
+            message: "success",
+            result: {
+              status: "生成成功",
+              outline: {
+                outline: [
+                  {
+                    chapter_num: "第一章",
+                    title: "引言",
+                    sections: [
+                      {
+                        title: "研究背景与意义",
+                        num: "1.1",
+                        planned_content: "xxx",
+                        insert_code: { status: false, content: "" },
+                        insert_mermaid: { status: false, content: "" },
+                        insert_latex_formula: { status: false, content: "" },
+                        insert_table: { status: false, content: "" },
+                        insert_plot: { status: false, content: "" },
+                      },
+                      {
+                        title: "本研究的主要贡献和创新点",
+                        num: "1.2",
+                        planned_content: "xxx",
+                        insert_code: { status: false, content: "" },
+                        insert_mermaid: { status: false, content: "" },
+                        insert_latex_formula: { status: false, content: "" },
+                        insert_table: { status: false, content: "" },
+                        insert_plot: { status: false, content: "" },
+                      },
+                    ],
+                  },
+                  {
+                    chapter_num: "第二章",
+                    title: "文献综述",
+                    sections: [
+                      {
+                        title: "研究理论基础",
+                        num: "2.1",
+                        planned_content: "xxx",
+                        insert_code: { status: false, content: "" },
+                        insert_mermaid: { status: false, content: "" },
+                        insert_latex_formula: { status: false, content: "" },
+                        insert_table: { status: false, content: "" },
+                        insert_plot: { status: false, content: "" },
+                      },
+                      {
+                        title: "研究现状",
+                        num: "2.2",
+                        planned_content: "xxx",
+                        insert_code: { status: false, content: "" },
+                        insert_mermaid: { status: false, content: "" },
+                        insert_latex_formula: { status: false, content: "" },
+                        insert_table: { status: false, content: "" },
+                        insert_plot: { status: false, content: "" },
+                      },
+                      {
+                        title: "本研究的创新点",
+                        num: "2.3",
+                        planned_content: "xxx",
+                        insert_code: { status: false, content: "" },
+                        insert_mermaid: { status: false, content: "" },
+                        insert_latex_formula: { status: false, content: "" },
+                        insert_table: { status: false, content: "" },
+                        insert_plot: { status: false, content: "" },
+                      },
+                    ],
+                  },
+                  {
+                    chapter_num: "第三章",
+                    title: "xxx的研究方法",
+                    sections: [
+                      {
+                        title: "xxx技术说明",
+                        num: "3.1",
+                        planned_content: "xxx",
+                        insert_code: { status: false, content: "" },
+                        insert_mermaid: ["xxx技术流程图"],
+                        insert_latex_formula: [
+                          "具体的Latex公式说明（注意json中需要转义），F(T) = \\\\sum_{i=1}^{n} \\\\alpha_i \\\\cdot f_i(T)",
+                        ],
+                        insert_table: { status: false, content: "" },
+                        insert_plot: { status: false, content: "" },
+                      },
+                      {
+                        title: "xxx方法说明",
+                        num: "3.2",
+                        planned_content: "xxx",
+                        insert_code: { status: false, content: "" },
+                        insert_mermaid: { status: false, content: "" },
+                        insert_latex_formula: { status: false, content: "" },
+                        insert_table: { status: false, content: "" },
+                        insert_plot: { status: false, content: "" },
+                      },
+                      {
+                        title: "本研究的方法设计",
+                        num: "3.3",
+                        planned_content: "xxx",
+                        insert_code: { status: false, content: "" },
+                        insert_mermaid: { status: false, content: "" },
+                        insert_latex_formula: { status: false, content: "" },
+                        insert_table: { status: false, content: "" },
+                        insert_plot: { status: false, content: "" },
+                      },
+                    ],
+                  },
+                  {
+                    chapter_num: "第四章",
+                    title: "xxx结果分析",
+                    sections: [
+                      {
+                        title: "xxx的分析",
+                        num: "4.1",
+                        planned_content: "xxx",
+                        insert_code: { status: false, content: "" },
+                        insert_mermaid: { status: false, content: "" },
+                        insert_latex_formula: { status: false, content: "" },
+                        insert_table: ["xxx分析表格1"],
+                        insert_plot: ["xxx分析图表1"],
+                      },
+                      {
+                        title: "xxx的分析",
+                        num: "4.2",
+                        planned_content: "xxx",
+                        insert_code: { status: false, content: "" },
+                        insert_mermaid: { status: false, content: "" },
+                        insert_latex_formula: { status: false, content: "" },
+                        insert_table: ["xxx分析表格1", "xxx分析表格2"],
+                        insert_plot: ["xxx分析图表1", "xxx分析图表2"],
+                      },
+                      {
+                        title: "结果分析",
+                        num: "4.3",
+                        planned_content: "xxx",
+                        insert_code: { status: false, content: "" },
+                        insert_mermaid: { status: false, content: "" },
+                        insert_latex_formula: { status: false, content: "" },
+                        insert_table: ["xxx分析表格1", "xxx分析表格2"],
+                        insert_plot: ["xxx分析图表1"],
+                      },
+                    ],
+                  },
+                  {
+                    chapter_num: "第五章",
+                    title: "讨论与结论",
+                    sections: [
+                      {
+                        title: "讨论",
+                        num: "5.1",
+                        planned_content: "xxx",
+                        insert_code: { status: false, content: "" },
+                        insert_mermaid: { status: false, content: "" },
+                        insert_latex_formula: { status: false, content: "" },
+                        insert_table: { status: false, content: "" },
+                        insert_plot: { status: false, content: "" },
+                      },
+                      {
+                        title: "结论",
+                        num: "5.2",
+                        planned_content: "xxx",
+                        insert_code: { status: false, content: "" },
+                        insert_mermaid: { status: false, content: "" },
+                        insert_latex_formula: { status: false, content: "" },
+                        insert_table: { status: false, content: "" },
+                        insert_plot: { status: false, content: "" },
+                      },
+                    ],
+                  },
+                  {
+                    chapter_num: "第六章",
+                    title: "研究局限与未来展望",
+                    sections: [
+                      {
+                        title: "研究局限",
+                        num: "6.1",
+                        planned_content: "xxx",
+                        insert_code: { status: false, content: "" },
+                        insert_mermaid: { status: false, content: "" },
+                        insert_latex_formula: { status: false, content: "" },
+                        insert_table: { status: false, content: "" },
+                        insert_plot: { status: false, content: "" },
+                      },
+                      {
+                        title: "未来研究方向提出展望",
+                        num: "6.2",
+                        planned_content: "xxx",
+                        insert_code: { status: false, content: "" },
+                        insert_mermaid: { status: false, content: "" },
+                        insert_latex_formula: { status: false, content: "" },
+                        insert_table: { status: false, content: "" },
+                        insert_plot: { status: false, content: "" },
+                      },
+                    ],
+                  },
+                ],
+              },
+            },
+          };
+          eventBus.emit("successOutline", res.result.outline.outline); // 发布事件
+        }, 3000);
 
         // });
       } else {

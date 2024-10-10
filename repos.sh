@@ -20,12 +20,6 @@ fi
 # 获取当前分支名称
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-# 检查是否有未提交的更改
-if git status | grep -q "Changes not staged for commit"; then
-  echo "有未提交的更改。请先提交或暂存它们。"
-  exit 1
-fi
-
 # 拉取最新的代码
 echo "从 $REMOTE_ORIGIN/$CURRENT_BRANCH 拉取最新代码..."
 git pull $REMOTE_ORIGIN $CURRENT_BRANCH

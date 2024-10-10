@@ -1,7 +1,9 @@
 <template>
   <div class="mainContentSec" ref="mainSec">
     <!-- 页面名称 -->
-    <swiper-one class="topSwiper"></swiper-one>
+    <div style="padding: 0 10px">
+      <swiper-one class="topSwiper"></swiper-one>
+    </div>
 
     <!-- tabs写论文  -->
     <div class="tabsListWrapper" ref="tasListWrapper">
