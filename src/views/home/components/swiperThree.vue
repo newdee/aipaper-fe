@@ -43,11 +43,7 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img
-              class="illustration"
-              src="@/assets/images/wenjian3.png"
-              alt=""
-            />
+            <img class="illustration" src="@/assets/images/wenjian3.jpg" />
             <div class="txt">
               <p class="title">一种自监督的消息传递图表示学习方法</p>
               <p class="text">
@@ -65,7 +61,7 @@
           <div class="newSlider">
             <img
               class="illustration"
-              src="@/assets/images/wenjian4.png"
+              src="@/assets/images/wenjian4.jpg"
               alt=""
             />
             <div class="txt">
@@ -103,7 +99,7 @@
           <div class="newSlider">
             <img
               class="illustration"
-              src="@/assets/images/wenjian4.png"
+              src="@/assets/images/wenjian1.png"
               alt=""
             />
             <div class="txt">
@@ -128,7 +124,7 @@
           <div class="newSlider">
             <img
               class="illustration"
-              src="@/assets/images/wenjian4.png"
+              src="@/assets/images/wenjian2.png"
               alt=""
             />
             <div class="txt">
@@ -187,7 +183,7 @@
           <div class="newSlider">
             <img
               class="illustration"
-              src="@/assets/images/wenjian3.png"
+              src="@/assets/images/wenjian3.jpg"
               alt=""
             />
             <div class="txt">
@@ -207,7 +203,7 @@
           <div class="newSlider">
             <img
               class="illustration"
-              src="@/assets/images/wenjian4.png"
+              src="@/assets/images/wenjian4.jpg"
               alt=""
             />
             <div class="txt">
@@ -245,7 +241,7 @@
           <div class="newSlider">
             <img
               class="illustration"
-              src="@/assets/images/wenjian4.png"
+              src="@/assets/images/wenjian4.jpg"
               alt=""
             />
             <div class="txt">
@@ -270,7 +266,7 @@
           <div class="newSlider">
             <img
               class="illustration"
-              src="@/assets/images/wenjian4.png"
+              src="@/assets/images/wenjian4.jpg"
               alt=""
             />
             <div class="txt">

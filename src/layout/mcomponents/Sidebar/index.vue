@@ -1,6 +1,6 @@
 <template>
   <div class="qysytxy" :key="timeKey">
-    <div @click="$jumpUrl('/')" class="logoEr">
+    <div @click="$jumpUrl('/home/home')" class="logoEr">
       <img src="@/assets/images/MIXPAPER.png" alt="" />
     </div>
     <div class="mSiderBar">
