@@ -48,22 +48,31 @@ export const constantRoutes = [
     component: () => import("@/views/dashboard/index"),
     hidden: true,
   },
+    //  {
+    //     path: "/home",
+    //    name: "/home",
+    //     component: () => import("@/views/home/index"),
+    //     meta: {
+    //       title: "home",
+    //       icon: "dashboard",
+    //     },
+    //   },
 
   {
     path: "/",
     component: Layout,
-    redirect: "/home",
-    children: [
-      {
-        path: "home",
-        name: "home",
-        component: () => import("@/views/home/index"),
-        meta: {
-          title: "home",
-          icon: "dashboard",
-        },
-      },
-    ],
+    redirect: "/main/writepaper",
+    // children: [
+    //   {
+    //     path: "home",
+    //     name: "home",
+    //     component: () => import("@/views/home/index"),
+    //     meta: {
+    //       title: "home",
+    //       icon: "dashboard",
+    //     },
+    //   },
+    // ],
   },
 
   {
@@ -106,13 +115,11 @@ export const constantRoutes = [
   {
     path: "/home",
     component: Layout,
-    redirect: "/home",
-
     children: [
       {
         path: "home",
         name: "home",
-        component: () => import("@/views/main/index"),
+        component: () => import("@/views/home/index"),
 
         meta: {
           title: "home",

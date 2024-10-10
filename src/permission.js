@@ -13,6 +13,7 @@ NProgress.configure({
 const whiteList = [
   "/login",
   "/home",
+  '/home/home',
   "/paperPreview",
   "/main",
   "/reduceRepetition",
