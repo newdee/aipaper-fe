@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="swiperWrapper">
     <!-- 底图页面 -->
     <div class="swiperBox">
       <swiper :options="swiperOption" ref="mySwiper1">
@@ -15,9 +15,8 @@
           </div>
         </swiper-slide>
         <!-- 其他 slides... -->
-
         <!-- 分页器 -->
-        <div class="swiper-pagination" slot="pagination"></div>
+        <div class="swiper-pagination1" slot="pagination"></div>
       </swiper>
     </div>
   </div>
@@ -29,12 +28,16 @@ export default {
   data() {
     return {
       swiperOption: {
-        spaceBetween: 30,
-        mousewheel: true,
         slidesPerView: 1,
         loop: true,
         autoplay: 4000,
         autoplayDisableOnInteraction: false,
+        observer: true, // 修改Swiper自己或子元素时自动初始化
+        observeParents: true, // 修改Swiper的父元素时自动初始化
+        // pagination: {
+        //   el: ".swiper-pagination1",
+        //   clickable: true,
+        // },
       },
     };
   },
@@ -87,10 +90,33 @@ export default {
 }
 
 // 确保分页器样式没有问题
-.swiper-pagination {
+.swiper-pagination1 {
+  // position: absolute;
+  // bottom: 10px;
+  // left: 50%;
+  // transform: translateX(-50%);
+}
+
+.swiper-pagination1 {
   position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+  width: 100%;
+  height: 4px;
+  text-align: center;
+  bottom: 15px;
+  z-index: 100;
+
+  &::v-deep > .swiper-pagination-bullet {
+    width: 40px;
+    height: 4px;
+    display: inline-block;
+    border-radius: 4px;
+    background: #fff;
+    opacity: 0.5;
+  }
+
+  &::v-deep > .swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background: #fff;
+    opacity: 1;
+  }
 }
 </style>

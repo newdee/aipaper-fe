@@ -554,7 +554,7 @@ export default {
       payStatus: false,
       defaultProps: {
         children: "sections",
-        label: "title",
+        label: "label",
       },
       numberValidateForm: {
         appendValue: "",
@@ -622,6 +622,68 @@ export default {
         },
       ],
       data: [
+        {
+          id: 1,
+          level: 1,
+          label: "请修改标题",
+          children: [
+            {
+              id: 4,
+              level: 1,
+              label: "二级 1-1",
+              children: [
+                {
+                  content: "介绍艺术批评与设计实践之间的关系和重要性", // 标题
+                  level: 3, // 大纲层级
+                  id: 9, // 大纲ID
+                  label: "三级 1-1-1",
+                  insert_data_table: {
+                    enabled: false, // bool值，表示是否插入数据表
+                    table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
+                  },
+                  insert_image: {
+                    enabled: false, // bool值，表示是否插入图形
+                    image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
+                  },
+                  insert_formula: {
+                    enabled: false, // bool值，表示是否插入公式
+                    formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
+                  },
+                  insert_code: {
+                    enabled: false, // bool值，表示是否插入代码段
+                    code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
+                    code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
+                    code_content: "代码内容", // 代码段的具体内容, 可选
+                  },
+                },
+                {
+                  content: "介绍艺术批评与设计实践之间的关系和重要性",
+                  level: 3,
+                  id: 10,
+                  label: "三级 1-1-2",
+                  insert_data_table: {
+                    enabled: false, // bool值，表示是否插入数据表
+                    table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
+                  },
+                  insert_image: {
+                    enabled: false, // bool值，表示是否插入图形
+                    image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
+                  },
+                  insert_formula: {
+                    enabled: false, // bool值，表示是否插入公式
+                    formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
+                  },
+                  insert_code: {
+                    enabled: false, // bool值，表示是否插入代码段
+                    code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
+                    code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
+                    code_content: "代码内容", // 代码段的具体内容, 可选
+                  },
+                },
+              ],
+            },
+          ],
+        },
         {
           id: 2,
           level: 1,

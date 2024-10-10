@@ -1,13 +1,13 @@
 // sidebar
-$menuText:#bfcbd9;
-$menuActiveText:#409EFF;
-$subMenuActiveText:#f4f4f5; //https://github.com/ElemeFE/element/issues/12951
+$menuText: #bfcbd9;
+$menuActiveText: #409eff;
+$subMenuActiveText: #f4f4f5; //https://github.com/ElemeFE/element/issues/12951
 
-$menuBg:#304156;
-$menuHover:#263445;
+$menuBg: #304156;
+$menuHover: #263445;
 
-$subMenuBg:#1f2d3d;
-$subMenuHover:#001528;
+$subMenuBg: #1f2d3d;
+$subMenuHover: #001528;
 
 $sideBarWidth: 230px;
 $navBarHeight: 80px;
@@ -16,7 +16,7 @@ $white: #ffffff;
 // the :export directive is the magic sauce for webpack
 
 // 公共常用色
-$colorWarning:#ea4f3d;
+$colorWarning: #ea4f3d;
 
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
 :export {
@@ -33,36 +33,36 @@ $colorWarning:#ea4f3d;
 }
 @mixin center-content($fontSize) {
   font-family: PingFangSC, PingFang SC;
-    font-weight: 600;
-    font-size: $fontSize;
-    color: #212121;
-    line-height: 28px;
-    text-align: left;
-    font-style: normal;
-    background: linear-gradient(
-      45.000000000000014deg,
-      #00d5ff 0%,
-      #0091ff 29%,
-      #6236ff 62%,
-      #b620e0 100%
-    );
-    color: transparent;
-    background-clip: text;
+  font-weight: 600;
+  font-size: $fontSize;
+  color: #212121;
+  line-height: 28px;
+  text-align: left;
+  font-style: normal;
+  background: linear-gradient(
+    45.000000000000014deg,
+    #00d5ff 0%,
+    #0091ff 29%,
+    #6236ff 62%,
+    #b620e0 100%
+  ) !important;
+  color: transparent !important;
+  background-clip: text !important;
 }
 .paperColor {
-  
 }
 
-// 3.0版本颜色 
+// 3.0版本颜色
 $mainBgColor: #e6f5ff;
-$textMain:#3b82f6;
-$importantColor:#d75300;
+$textMain: #3b82f6;
+$importantColor: #d75300;
 
 //4.0
-$textColor4:#d4a11c;
+$textColor4: #d4a11c;
 
 .icon {
-  width: 1em; height: 1em;
+  width: 1em;
+  height: 1em;
   vertical-align: -0.15em;
   fill: currentColor;
 }

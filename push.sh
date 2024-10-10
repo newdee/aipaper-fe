@@ -50,4 +50,5 @@ git merge dev -m "合并 dev 分支到 main"
 # 再次推送到远程仓库
 git push $REMOTE main
 
+git checkout dev
 echo "操作完成"
