@@ -117,7 +117,10 @@
         </p>
       </div>
       <!-- 生成大纲 -->
-      <div @click="sendOutlineForm" class="outlineBtn g_poin">
+      <div
+        @click="sendOutlineForm"
+        :class="['outlineBtn', 'g_poin', index == 2 ? 'paperMain' : '']"
+      >
         <p>生成大纲</p>
       </div>
     </div>
@@ -476,7 +479,15 @@ export default {
     }
   }
 }
-
+.paperMain {
+  background: linear-gradient(
+    135deg,
+    #00bfff 0%,
+    #0091ff 29%,
+    #6236ff 62%,
+    #b620e0 100%
+  ) !important;
+}
 .outRight {
   width: 117px;
   height: 40px;
