@@ -74,4 +74,6 @@ git tag $TAG_NAME
 echo "向 $REMOTE_GITHUB 推送标签 $TAG_NAME..."
 git push $REMOTE_GITHUB $TAG_NAME
 
+# 切换到开发分支
+git checkout dev
 echo "部署完成！"

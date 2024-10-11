@@ -68,6 +68,12 @@ export function delOrder(params) {
     method: "delete",
   });
 }
+export function orderDetailById(params) {
+  return request({
+    url: "/api/ai-paper/orders/order/" + params,
+    method: "get",
+  });
+}
 
 export function logout() {
   return request({

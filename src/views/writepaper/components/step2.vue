@@ -329,8 +329,8 @@
       </el-checkbox>
     </div>
     <div class="warningP generateSpan">
-      <!-- <span class="g_poin" @click="generateForm">生成全文</span> -->
-      <span class="g_poin" @click="textF">生成全文</span>
+      <span class="g_poin" @click="generateForm">生成全文</span>
+      <!-- <span class="g_poin" @click="textF">生成全文</span> -->
     </div>
     <!-- 付款成功弹窗 -->
     <el-dialog
@@ -542,7 +542,7 @@ import mitt from "mitt";
 import { getToken } from "@/utils/auth"; //
 import { mapGetters } from "vuex";
 // 方法
-import { getOrder } from "@/api/user";
+import { getOrder, orderDetailById } from "@/api/user";
 export default {
   name: "step2",
   data() {
@@ -1036,20 +1036,32 @@ export default {
               },
             ],
           };
-          getOrder(data)
-            .then((res) => {
-              console.log("res", res);
-              this.payStatus = true;
-              // if(res.)
-            })
-            .catch(() => {
-              this.$message({
-                type: "info",
-                message: "已取消生成",
-              });
-            });
+          this.getDetail(34);
+          // getOrder(data)
+          //   .then((res) => {
+          //     console.log("res", res);
+          //     this.payStatus = true;
+          //     console.log("res", res);
+          //     this.payStatus = true;
+          //     let payUrl = res.result.pay_link;
+          //     console.log("payUrl", payUrl);
+
+          //     if (payUrl) {
+          //       window.open(payUrl, "_blank");
+          //     }
+          //   })
+          //   .catch(() => {
+          //     this.$message({
+          //       type: "info",
+          //       message: "已取消生成",
+          //     });
+          //   });
         }
       }
+    },
+    getDetail(index) {
+      let dataId = index;
+      orderDetailById(dataId).then((res) => {});
     },
     agreeGenerate() {
       // 关闭确认弹窗

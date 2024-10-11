@@ -1102,7 +1102,10 @@ export default {
             .then((res) => {
               console.log("res", res);
               this.payStatus = true;
-              // if(res.)
+              let payUrl = res.result.pay_link;
+              if (payUrl) {
+                window.open(payUrl);
+              }
             })
             .catch(() => {
               this.$message({
