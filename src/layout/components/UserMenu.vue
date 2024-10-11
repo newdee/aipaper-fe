@@ -6,7 +6,12 @@
       </div>
     </div>
     <transition name="fade">
-      <div class="userMenuContainer" id="userMenuContainer" v-if="isPopupVisible" @click.stop="popupFn">
+      <div
+        class="userMenuContainer"
+        id="userMenuContainer"
+        v-if="isPopupVisible"
+        @click.stop="popupFn"
+      >
         <!-- 头像菜单 -->
         <div class="userMenu">
           <div class="menuHeader">
@@ -28,9 +33,13 @@
                 <i class="el-icon-house"></i>
                 我的个人主页
               </div>
-              <div class="menuItem" @click="showOrderList">
+              <div class="menuItem" @click="showOrderList(1)">
                 <i class="el-icon-goods"></i>
                 订单管理
+              </div>
+              <div class="menuItem" @click="showOrderList(2)">
+                <i class="el-icon-tickets"></i>
+                我的大纲
               </div>
             </div>
             <div class="menuGroup menuAboutMixPaper">
@@ -80,12 +89,19 @@
       </div>
     </transition>
     <!-- 用户订单 -->
-    <el-drawer :visible.sync="ordersDrawer" :direction="orderDirection" append-to-body size="500px">
+    <el-drawer
+      :visible.sync="ordersDrawer"
+      :direction="orderDirection"
+      append-to-body
+      :size="isPhone ? '30%' : '30%'"
+    >
       <template #title>
-        <div>我的订单</div>
+        <div v-if="orderTabs == 1" class="titleDrawer">我的订单</div>
+        <div v-else class="titleDrawer">我的大纲</div>
       </template>
       <div class="drawBox">
-        <user-orders :listId="listId"></user-orders>
+        <user-orders v-if="orderTabs == 1" :listId="listId"></user-orders>
+        <user-outlines v-if="orderTabs == 2" :listId="listId"></user-outlines>
       </div>
     </el-drawer>
   </div>
@@ -97,11 +113,13 @@
 import { getToken, removeToken } from "@/utils/auth"; // get token from cookie
 import { mapGetters } from "vuex";
 import UserOrders from "./UserOrders.vue";
+import UserOutlines from "./UserOutlines.vue";
 
 export default {
   name: "UserMenu",
   components: {
     UserOrders,
+    UserOutlines,
   },
   data() {
     return {
@@ -110,6 +128,8 @@ export default {
       listId: 0,
       orderDirection: "ltr", //用户订单抽屉方向
       ordersDrawer: false,
+      orderTabs: 1,
+      isPhone: false,
     };
   },
   mounted() {
@@ -153,7 +173,8 @@ export default {
     jumpDetail(path) {
       this.$router.push(path);
     },
-    showOrderList() {
+    showOrderList(status) {
+      this.orderTabs = status;
       // 本菜单仅在用户已登录状态可见,所以这里在查看订单前不再校验用户是否已登录
       this.listId = new Date().getTime();
       console.log("this.", this.listId);
@@ -282,5 +303,9 @@ export default {
   width: 100%;
   height: 0px;
   border-top: 1px solid #0000001f;
+}
+.titleDrawer {
+  font-size: 16px;
+  color: #000;
 }
 </style>

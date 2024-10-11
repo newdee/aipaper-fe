@@ -66,6 +66,15 @@
             降重/降AIGC率
           </div>
         </div>
+        <div v-if="!showContent" class="logo-box phoneLogo">
+          <div class="logoR phoneRLogo">
+            <img :src="logoMax" alt="" title="logo" />
+          </div>
+          <div class="logoL phoneLLogo">
+            <!-- <p>万象学术</p> -->
+            <img :src="logo" alt="" title="logo" />
+          </div>
+        </div>
       </div>
       <div :class="[showContent ? '' : 'leftNavbarPosition']">
         <div class="flex navBarRight">
@@ -112,6 +121,32 @@
         <div>我的菜单</div>
       </template>
       <div class="flex flex-star">
+        <div
+          v-if="!hasLogin"
+          class="text-main items-center siderbar-item"
+          @click="pushLogin"
+        >
+          登录
+        </div>
+        <div
+          v-else
+          class="text-main items-center siderbar-item"
+          @click="$jumpUrl('/userInfo')"
+        >
+          我的个人主页
+        </div>
+        <div
+          class="text-main items-center siderbar-item"
+          @click="showOrderList(1)"
+        >
+          我的订单
+        </div>
+        <div
+          class="text-main items-center siderbar-item"
+          @click="showOrderList(2)"
+        >
+          我的大纲
+        </div>
         <div
           class="text-main items-center siderbar-item"
           @click="toView(0, '/home')"
@@ -160,26 +195,6 @@
         >
           降重/降AIGC率
         </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="showOrderList"
-        >
-          查看订单
-        </div>
-        <div
-          v-if="!hasLogin"
-          class="text-main items-center siderbar-item"
-          @click="pushLogin"
-        >
-          登录
-        </div>
-        <div
-          v-else
-          class="text-main items-center siderbar-item"
-          @click="$jumpUrl('/userInfo')"
-        >
-          我的个人主页
-        </div>
       </div>
     </el-drawer>
     <!-- 用户订单 -->
@@ -188,13 +203,15 @@
       :direction="orderDirection"
       :before-close="handleOrdersClose"
       append-to-body
-      size="500px"
+      size="80%"
     >
       <template #title>
-        <div>我的订单</div>
+        <div v-if="orderTabs == 1" class="titleDrawer">我的订单</div>
+        <div v-else class="titleDrawer">我的大纲</div>
       </template>
       <div class="drawBox">
-        <user-orders :listId="listId"></user-orders>
+        <user-orders v-if="orderTabs == 1" :listId="listId"></user-orders>
+        <user-outlines v-if="orderTabs == 2" :listId="listId"></user-outlines>
       </div>
     </el-drawer>
   </div>
@@ -206,6 +223,8 @@ import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 import UserMenu from "./UserMenu.vue";
 import UserOrders from "./UserOrders.vue";
+import UserOutlines from "./UserOutlines.vue";
+
 import { getToken, setToken } from "@/utils/auth"; // get token from cookie
 export default {
   components: {
@@ -213,6 +232,7 @@ export default {
     Hamburger,
     UserMenu,
     UserOrders,
+    UserOutlines,
   },
   props: {
     showContent: {
@@ -234,6 +254,7 @@ export default {
       orderDirection: "ltr", //用户订单抽屉方向
       hasLogin: true,
       ordersDrawer: false,
+      orderTabs: 1,
 
       activeIndex: 1,
     };
@@ -246,10 +267,12 @@ export default {
     this.hasLogin = getToken();
   },
   methods: {
-    showOrderList() {
+    showOrderList(status) {
       const hasToken = getToken();
       console.log("hasToken", hasToken);
       if (hasToken) {
+        this.orderTabs = status;
+
         this.listId = new Date().getTime();
         console.log("this.", this.listId);
         this.ordersDrawer = true;
@@ -331,7 +354,7 @@ export default {
   padding: 0 10px;
   max-width: 1100px;
   align-items: center;
-  height: 80px;
+  height: 100%;
   margin: 0 auto;
   justify-content: space-between;
 }
@@ -416,8 +439,20 @@ export default {
       height: 100%;
     }
   }
+  .phoneRLogo {
+    height: 24px;
+  }
 }
-
+.phoneLogo {
+  display: none;
+}
+.mobile .phoneLogo {
+  display: flex !important;
+}
+.mobile .navbarHome {
+  height: 50px !important;
+  overflow: hidden;
+}
 .logoL {
   width: 117px;
   height: 40px;
@@ -444,7 +479,12 @@ export default {
     transform: rotateX(45deg) scaleX(1.2);
   }
 }
-
+.phoneLLogo {
+  img {
+    width: 90px;
+    height: 15px;
+  }
+}
 .el-col {
   border-radius: 4px;
 }
@@ -583,7 +623,7 @@ export default {
 
 // 重置订单抽屉样式
 .drawBox {
-  padding: 0 1.25rem 0 1.25rem;
+  padding-left: 10px;
   position: relative;
 }
 

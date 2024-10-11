@@ -1,15 +1,15 @@
 <template>
   <div class="ordersList">
     <div class="btns">
-      <el-button type="primary" round @click="delList">删除订单</el-button>
-      <el-button type="primary" round @click="getList">刷新订单</el-button>
+      <el-button type="primary" round @click="delList">删除大纲</el-button>
+      <el-button type="primary" round @click="getList">刷新大纲</el-button>
     </div>
-    <!-- 订单列表 -->
+    <!-- 大纲列表 -->
     <el-checkbox-group v-model="checkList" @change="handleCheckAllChange">
       <div
         class="orderBox"
-        v-for="orderObj in orderList"
-        :key="orderObj.order.id"
+        v-for="(orderObj, index) in orderList"
+        :key="index + 'outline'"
       >
         <el-checkbox
           :label="orderObj.order.id"
@@ -17,55 +17,33 @@
         ></el-checkbox>
         <div class="order">
           <div class="orderNum rowBetween">
-            <!-- <div class="left">订单号：{{ orderObj.order.out_trade_no }}</div> -->
+            <!-- <div class="left">大纲号：{{ orderObj.order.out_trade_no }}</div> -->
             <div class="left"></div>
             <div class="right">时间：{{ orderObj.order.created_at }}</div>
           </div>
-          <template v-for="(item, j) in orderObj.order_item_response">
-            <div class="orderTitle" :key="item.paper.title + j">
-              {{ item.paper.title }}
-            </div>
-            <div
-              class="orderText rowBetween handleRow"
-              :key="item.product.id + j"
-            >
-              <div class="left">{{ item.product.name }}</div>
+          <div>
+            <div class="orderTitle">大纲名称: 大纲名称大纲名称</div>
+            <div class="orderText rowBetween handleRow">
+              <div class="left">大纲状态:已生成</div>
               <div class="right">
-                <span class="handle">下载</span>
-                <svg class="icon svg-icon" aria-hidden="true">
-                  <use xlink:href="#icon-download"></use>
-                </svg>
+                <i class="el-icon-view"></i>
+                <span class="handle">查看大纲</span>
               </div>
             </div>
-          </template>
-          <!-- <div class="orderOutline rowBetween handleRow">
-            <div class="left">[本科·约2万字]</div>
-            <div class="right">
-              查看大纲
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-view"></use>
-              </svg>
-            </div>
           </div>
+
           <div class="orderText rowBetween handleRow">
-            <div class="left">正文（含无限改稿）</div>
-            <div class="right">
-              改稿下载
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-download"></use>
-              </svg>
+            <div class="left">
+              大纲价格<span class="price">￥: 0.01元</span>
             </div>
-          </div> -->
-          <div class="orderText rowBetween handleRow">
-            <div class="left">订单价格</div>
             <div class="right">
-              <span class="price">￥{{ orderObj.order.total_price }}</span>
-              <span
+              <!-- <span class="price">￥: 0.01元</span> -->
+              <!-- <span
                 class="handle"
                 v-if="orderObj.order.payment_status == 'WAIT_BUYER_PAY'"
                 style="color: crimson"
                 >去支付</span
-              >
+              > -->
             </div>
           </div>
         </div>
