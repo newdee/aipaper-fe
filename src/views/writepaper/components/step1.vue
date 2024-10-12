@@ -5,9 +5,7 @@
       <p class="introTitle">编辑大纲，生成全文</p>
       <p class="introSubtitle">
         🔔
-        大纲可直接<span>点击编辑</span>，点击小节右侧按钮，为小节增加<span>参考资料、数据(表)、图、公式、代码段</span>，对该小节进行<span
-          >增加、删减</span
-        >
+        大纲可直接<span>点击编辑</span>，点击小节右侧按钮，为小节增加<span>参考资料、数据(表)、图、公式、代码段</span>，对该小节进行<span>增加、删减</span>
       </p>
     </div>
     <!-- 论文标题
@@ -17,12 +15,7 @@
     <!-- 页面名称 -->
     <div class="progressBox">
       <div class="pgBoxEl">
-        <el-progress
-          :text-inside="true"
-          :percentage="currentNumber"
-          type="circle"
-          :width="150"
-        ></el-progress>
+        <el-progress :text-inside="true" :percentage="currentNumber" type="circle" :width="150"></el-progress>
         <div class="progressText">
           <p>大纲生成<i class="el-icon-loading"></i></p>
           <p class="progressNumber">{{ currentNumber }}%</p>
@@ -113,6 +106,7 @@ export default {
   background-color: #fff;
   max-width: 1200px;
 }
+
 .progressBox {
   margin-top: 30px;
   width: 150px;
@@ -122,13 +116,16 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   .pgBoxEl {
     width: 150px;
     position: relative;
   }
+
   .progressNumber {
     margin-top: 10px;
   }
+
   .progressText {
     position: absolute;
     font-weight: bold;
@@ -147,25 +144,30 @@ export default {
     margin: 0 auto;
   }
 }
+
 .outlineIntroNew {
   max-width: 688px;
   padding-top: 50px;
   margin: 0 auto;
   text-align: center;
+
   .introTitle {
     font-size: 16px;
     font-weight: bold;
     color: #3b82f6;
   }
+
   .introSubtitle {
     font-size: 14px;
     line-height: 20px;
     margin-top: 30px;
+
     span {
       color: #d75300;
     }
   }
 }
+
 .oulineTitlePaper {
   font-size: 20px;
   color: #000;
@@ -174,6 +176,7 @@ export default {
   text-align: center;
   font-weight: bold;
 }
+
 .outlineTitleDesc {
   text-align: center;
   font-weight: bold;

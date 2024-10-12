@@ -1,5 +1,5 @@
 <template>
-    <div :class="['footer', $route.fullPath == '/home' ? 'isHome' : '']">
+    <div :class="['footer', $route.fullPath == '/home/home' ? 'isHome' : '']">
         <!-- 网站信息 -->
         <section class="siteInfo">
             <div class="col col_1">
@@ -32,7 +32,7 @@
         <!-- 底部栏 -->
         <div class="footerP">
             <p style="text-align: center; color: #2e2e2e">
-                © 2024 石家庄浅思科技有限公司 关于我们
+                <span>© 2024 石家庄浅思科技有限公司 关于我们</span>
                 <a href="https://beian.miit.gov.cn" target="_blank">冀ICP备2024060058号-2</a>
             </p>
         </div>
@@ -132,6 +132,7 @@ export default {
     grid-template-columns: 8fr 8fr 5fr;
     text-align: left;
     padding: 32px 0px;
+    position: relative;
 
     .col {
         padding: 0 20px;
@@ -173,6 +174,19 @@ export default {
     padding: 24px 0;
     text-align: center;
     font-size: 12px;
+
+    p {
+        color: rgb(46, 46, 46);
+        display: flex;
+        width: 100%;
+        padding: 0 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        span {
+            padding: 0 5px;
+        }
+    }
 }
 
 .floatMenuWrapper {
