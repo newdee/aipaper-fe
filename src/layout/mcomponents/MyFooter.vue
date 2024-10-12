@@ -132,6 +132,7 @@ export default {
     grid-template-columns: 8fr 8fr 5fr;
     text-align: left;
     padding: 32px 0px;
+    position: relative;
 
     .col {
         padding: 0 20px;
