@@ -1,12 +1,9 @@
 <template>
-  <div :class="['navbarHome', $route.fullPath !== '/home' ? 'grayBg' : '']">
+  <div :class="['navbarHome', $route.fullPath !== '/home/home' ? 'grayBg' : '']">
     <div class="navMain">
       <div>
         <div v-if="showContent" class="navItems flex">
-          <div
-            @click="$jumpUrl('/home/home')"
-            class="grid-content nav_left flex items-center"
-          >
+          <div @click="$jumpUrl('/home/home')" class="grid-content nav_left flex items-center">
             <div class="logo-box">
               <div class="logoR">
                 <img :src="logoMax" alt="" title="logo" />
@@ -17,56 +14,32 @@
               </div>
             </div>
           </div>
-          <div
-            :class="['navItem', activeIndex == '1' ? 'active' : '']"
-            @click="toView(0, '/home')"
-          >
+          <div :class="['navItem', activeIndex == '1' ? 'active' : '']" @click="toView(0, '/home')">
             搜论文
           </div>
-          <div
-            :class="['navItem', activeIndex == '2' ? 'active' : '']"
-            @click="toView(1, '/main/writepaper')"
-          >
+          <div :class="['navItem', activeIndex == '2' ? 'active' : '']" @click="toView(1, '/main/writepaper')">
             写论文
           </div>
-          <div
-            :class="['navItem', activeIndex == '3' ? 'active' : '']"
-            @click="toView(2, '/main/readpaper')"
-          >
+          <div :class="['navItem', activeIndex == '3' ? 'active' : '']" @click="toView(2, '/main/readpaper')">
             读论文
           </div>
-          <div
-            :class="['navItem', activeIndex == '4' ? 'active' : '']"
-            @click="toView(3, '/main/amendpaper')"
-          >
+          <div :class="['navItem', activeIndex == '4' ? 'active' : '']" @click="toView(3, '/main/amendpaper')">
             改论文
           </div>
-          <div
-            :class="['navItem', activeIndex == '5' ? 'active' : '']"
-            @click="toView(4, '/main/integratedservices')"
-          >
+          <div :class="['navItem', activeIndex == '5' ? 'active' : '']" @click="toView(4, '/main/integratedservices')">
             综合服务
           </div>
-          <div
-            :class="['navItem', activeIndex == '6' ? 'active' : '']"
-            @click="toView(5, '/main/explore')"
-          >
+          <div :class="['navItem', activeIndex == '6' ? 'active' : '']" @click="toView(5, '/main/explore')">
             精品课程
           </div>
-          <div
-            :class="['navItem', activeIndex == '7' ? 'active' : '']"
-            @click="toView(6, '/main/aitools')"
-          >
+          <div :class="['navItem', activeIndex == '7' ? 'active' : '']" @click="toView(6, '/main/aitools')">
             AI工具
           </div>
-          <div
-            :class="['navItem', activeIndex == '8' ? 'active' : '']"
-            @click="toView(7, '/main/reduceRepetition')"
-          >
+          <div :class="['navItem', activeIndex == '8' ? 'active' : '']" @click="toView(7, '/main/reduceRepetition')">
             降重/降AIGC率
           </div>
         </div>
-        <div v-if="!showContent" class="logo-box phoneLogo">
+        <div v-if="!showContent" class="logo-box phoneLogo" @click="$jumpUrl('/home/home')">
           <div class="logoR phoneRLogo">
             <img :src="logoMax" alt="" title="logo" />
           </div>
@@ -84,11 +57,7 @@
           <div class="btn" @click="$devf">升级专业版</div>
 
           <template>
-            <div
-              v-if="!hasLogin"
-              @click="pushLogin"
-              class="login_box hidden-xs-only"
-            >
+            <div v-if="!hasLogin" @click="pushLogin" class="login_box hidden-xs-only">
               <div class="img">登录</div>
             </div>
             <div v-else class="login_box hidden-xs-only">
@@ -109,102 +78,53 @@
     </div>
 
     <!-- 菜单栏 -->
-    <el-drawer
-      size="40%"
-      :visible.sync="drawerStatus"
-      :direction="direction"
-      :before-close="handleClose"
-      :show-close="false"
-      append-to-body
-    >
+    <el-drawer size="40%" :visible.sync="drawerStatus" :direction="direction" :before-close="handleClose"
+      :show-close="false" append-to-body>
       <template slot="title">
         <div>我的菜单</div>
       </template>
       <div class="flex flex-star">
-        <div
-          v-if="!hasLogin"
-          class="text-main items-center siderbar-item"
-          @click="pushLogin"
-        >
+        <div v-if="!hasLogin" class="text-main items-center siderbar-item" @click="pushLogin">
           登录
         </div>
-        <div
-          v-else
-          class="text-main items-center siderbar-item"
-          @click="$jumpUrl('/userInfo')"
-        >
+        <div v-else class="text-main items-center siderbar-item" @click="$jumpUrl('/userInfo')">
           我的个人主页
         </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="showOrderList(1)"
-        >
+        <div class="text-main items-center siderbar-item" @click="showOrderList(1)">
           我的订单
         </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="showOrderList(2)"
-        >
+        <div class="text-main items-center siderbar-item" @click="showOrderList(2)">
           我的大纲
         </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="toView(0, '/home')"
-        >
+        <div class="text-main items-center siderbar-item" @click="toView(0, '/home')">
           搜论文
         </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="toView(1, '/main/writepaper')"
-        >
+        <div class="text-main items-center siderbar-item" @click="toView(1, '/main/writepaper')">
           写论文
         </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="toView(2, '/main/readpaper')"
-        >
+        <div class="text-main items-center siderbar-item" @click="toView(2, '/main/readpaper')">
           读论文
         </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="toView(3, '/main/amendpaper')"
-        >
+        <div class="text-main items-center siderbar-item" @click="toView(3, '/main/amendpaper')">
           改论文
         </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="toView(4, '/main/integratedservices')"
-        >
+        <div class="text-main items-center siderbar-item" @click="toView(4, '/main/integratedservices')">
           综合服务
         </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="toView(5, '/main/explore')"
-        >
+        <div class="text-main items-center siderbar-item" @click="toView(5, '/main/explore')">
           精品课程
         </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="toView(6, '/main/aitools')"
-        >
+        <div class="text-main items-center siderbar-item" @click="toView(6, '/main/aitools')">
           AI工具
         </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="toView(7, '/main/reduceRepetition')"
-        >
+        <div class="text-main items-center siderbar-item" @click="toView(7, '/main/reduceRepetition')">
           降重/降AIGC率
         </div>
       </div>
     </el-drawer>
     <!-- 用户订单 -->
-    <el-drawer
-      :visible.sync="ordersDrawer"
-      :direction="orderDirection"
-      :before-close="handleOrdersClose"
-      append-to-body
-      size="80%"
-    >
+    <el-drawer :visible.sync="ordersDrawer" :direction="orderDirection" :before-close="handleOrdersClose" append-to-body
+      size="80%">
       <template #title>
         <div v-if="orderTabs == 1" class="titleDrawer">我的订单</div>
         <div v-else class="titleDrawer">我的大纲</div>
@@ -439,20 +359,43 @@ export default {
       height: 100%;
     }
   }
+
   .phoneRLogo {
     height: 24px;
   }
 }
+
 .phoneLogo {
   display: none;
 }
+
+.mobile .logo-box {
+  margin-right: 0px;
+
+}
+
 .mobile .phoneLogo {
   display: flex !important;
 }
+
 .mobile .navbarHome {
   height: 50px !important;
   overflow: hidden;
+
+  .logoL {
+    height: 24px;
+
+    img {
+      width: 90px;
+      height: 15px;
+    }
+  }
+
+  .logoR {
+    height: 24px;
+  }
 }
+
 .logoL {
   width: 117px;
   height: 40px;
@@ -479,12 +422,14 @@ export default {
     transform: rotateX(45deg) scaleX(1.2);
   }
 }
+
 .phoneLLogo {
   img {
     width: 90px;
     height: 15px;
   }
 }
+
 .el-col {
   border-radius: 4px;
 }
@@ -505,7 +450,7 @@ export default {
   border-radius: 4px;
   height: 100%;
 
-  &:hover > div {
+  &:hover>div {
     cursor: pointer;
   }
 }
@@ -639,7 +584,7 @@ export default {
 }
 
 .navItems {
-  & > div:hover {
+  &>div:hover {
     cursor: pointer;
   }
 
@@ -694,7 +639,7 @@ export default {
   height: 100%;
   align-items: center;
 
-  > div {
+  >div {
     margin: 0 10px;
   }
 

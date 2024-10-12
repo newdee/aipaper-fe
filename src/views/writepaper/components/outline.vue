@@ -3,17 +3,11 @@
     <!-- 页面名称 -->
     <div class="outlineTab">
       <div class="outLeft">
-        <p
-          @click="checkoutPaper(1)"
-          :class="['outLeftTitle', index == 1 ? 'activeLT' : '']"
-        >
+        <p @click="checkoutPaper(1)" :class="['outLeftTitle', index == 1 ? 'activeLT' : '']">
           万象专业版
           <span class="underLeft"></span>
         </p>
-        <p
-          @click="checkoutPaper(2)"
-          :class="['outLeftTitle', 'paperClass', index == 2 ? 'activeLT' : '']"
-        >
+        <p @click="checkoutPaper(2)" :class="['outLeftTitle', 'paperClass', index == 2 ? 'activeLT' : '']">
           万象学术版
           <span class="underLeft"></span>
         </p>
@@ -28,12 +22,7 @@
         <p class="formItemLabel">生成语言</p>
         <div class="formItemCon">
           <el-select v-model="requestForm.language" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
         </div>
@@ -43,36 +32,19 @@
         <p class="formItemLabel">论文类型</p>
         <div class="formItemCon">
           <el-radio-group v-model="requestForm.type">
-            <el-radio
-              v-for="item in homeData.category_list"
-              :key="item.name"
-              :label="item.name"
-            >
+            <el-radio v-for="item in homeData.category_list" :key="item.name" :label="item.name">
               <div class="labelBox">
                 <div class="left">
                   <!-- <svg class="icon svg-icon" aria-hidden="true">
                     <use xlink:href="#icon-tubiaozoushitu"></use>
                   </svg> -->
-                  <img
-                    v-if="requestForm.type == item.name"
-                    class="home-icon"
-                    src="@/assets/images/bank-white.png"
-                    alt=""
-                  />
-                  <img
-                    v-else
-                    class="home-icon"
-                    src="@/assets/images/bank-dark.png"
-                    alt=""
-                  />
+                  <img v-if="requestForm.type == item.name" class="home-icon" src="@/assets/images/bank-white.png"
+                    alt="" />
+                  <img v-else class="home-icon" src="@/assets/images/bank-dark.png" alt="" />
                   {{ item.name }}({{ item.description }})
                 </div>
                 <div class="right">
-                  <svg
-                    v-if="requestForm.type == item.name"
-                    class="icon svg-icon"
-                    aria-hidden="true"
-                  >
+                  <svg v-if="requestForm.type == item.name" class="icon svg-icon" aria-hidden="true">
                     <use xlink:href="#icon-duigou-cu"></use>
                   </svg>
                   <svg v-else class="icon svg-icon" aria-hidden="true">
@@ -88,21 +60,12 @@
       <div class="selectLang formItem">
         <p class="formItemLabel">科目与题目</p>
         <div class="formItemCon phoneFlex">
-          <el-cascader
-            placeholder="请选择科目"
-            v-model="requestForm.field"
-            :options="homeData.subject_list"
-            :props="carProp"
-            @change="handleChange"
-          >
+          <el-cascader placeholder="请选择科目" v-model="requestForm.field" :options="homeData.subject_list" :props="carProp"
+            @change="handleChange">
           </el-cascader>
           <div class="userInputCon">
-            <el-input
-              v-model="requestForm.title"
-              maxlength="50"
-              show-word-limit
-              placeholder="请输入完整题目，题目越完整大纲越准确"
-            ></el-input>
+            <el-input v-model="requestForm.title" maxlength="50" show-word-limit
+              placeholder="请输入完整题目，题目越完整大纲越准确"></el-input>
           </div>
         </div>
       </div>
@@ -117,10 +80,7 @@
         </p>
       </div>
       <!-- 生成大纲 -->
-      <div
-        @click="sendOutlineForm"
-        :class="['outlineBtn', 'g_poin', index == 2 ? 'paperMain' : '']"
-      >
+      <div @click="sendOutlineForm" :class="['outlineBtn', 'g_poin', index == 2 ? 'paperMain' : '']">
         <p>生成大纲</p>
       </div>
     </div>
@@ -455,7 +415,7 @@ export default {
           });
       }
     },
-    addE() {},
+    addE() { },
     // 定义方法
     handleChange(value) {
       console.log(value);
@@ -524,15 +484,15 @@ export default {
     }
   }
 }
+
 .paperMain {
-  background: linear-gradient(
-    135deg,
-    #00bfff 0%,
-    #0091ff 29%,
-    #6236ff 62%,
-    #b620e0 100%
-  ) !important;
+  background: linear-gradient(135deg,
+      #00bfff 0%,
+      #0091ff 29%,
+      #6236ff 62%,
+      #b620e0 100%) !important;
 }
+
 .outRight {
   width: 117px;
   height: 40px;
@@ -600,7 +560,7 @@ export default {
 .labelBox {
   font-size: 16px;
 
-  > div {
+  >div {
     display: inline-block;
 
     &.right {
@@ -628,10 +588,10 @@ export default {
 
   &.is-checked {
     background: #3355ff;
-    border: none;
+    border-color: #3355ff;
   }
 
-  .el-radio__input.is-checked + .el-radio__label {
+  .el-radio__input.is-checked+.el-radio__label {
     color: #fff !important;
   }
 
@@ -641,6 +601,31 @@ export default {
 
   .el-radio__label {
     padding-left: 0px;
+  }
+}
+
+.mobile {
+  .formItem {
+    margin-top: 10px !important;
+
+    .formItemLabel {
+      font-size: 16px;
+    }
+
+    .formItemCon {
+      margin-top: 10px;
+
+      &::v-deep .el-radio {
+        margin-right: 10px;
+        margin-bottom: 10px;
+        height: 30px;
+        line-height: 28px;
+      }
+
+      &.phoneFlex {
+        padding-right: 20px;
+      }
+    }
   }
 }
 </style>
