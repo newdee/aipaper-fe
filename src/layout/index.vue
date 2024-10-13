@@ -1,16 +1,12 @@
 <template>
   <div :class="classObj" class="app-wrapper">
-    <div
-      v-if="device === 'mobile' && sidebar.opened"
-      class="drawer-bg"
-      @click="handleClickOutside"
-    />
+    <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <div class="main-container">
       <div :class="{ 'fixed-header': fixedHeader }">
         <navbar :showContent="true" />
       </div>
       <app-main />
-      <my-footer />
+      <my-footer :showContent="true" />
     </div>
   </div>
 </template>

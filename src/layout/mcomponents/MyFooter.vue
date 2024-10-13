@@ -1,5 +1,5 @@
 <template>
-    <div :class="['footer', $route.fullPath == '/home/home' ? 'isHome' : '']">
+    <div :class="['footer', showContent ? 'isHome' : '']">
         <!-- 网站信息 -->
         <section class="siteInfo">
             <div class="col col_1">
@@ -85,6 +85,15 @@ export default {
     },
     components: {
         // webinfo,
+    },
+    props: {
+        showContent: {
+            require: true,
+            type: Boolean,
+            default: () => {
+                return true;
+            },
+        },
     },
     mounted() {
         // 页面初始化
