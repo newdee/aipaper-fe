@@ -108,7 +108,7 @@ export default {
       this.activeIndex = 1;
       this.$nextTick(() => {
         // TODO: 计时器时间 大纲 生成
-        eventBus.emit("beginTime", 60);
+        eventBus.emit("beginTime", 120);
         this.$scrollTo("#step1", 500, { offset: -100 });
       });
     },
