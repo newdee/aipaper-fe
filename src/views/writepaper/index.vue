@@ -68,7 +68,7 @@ export default {
   data() {
     return {
       // 定义变量
-      activeIndex: 2,
+      activeIndex: 3,
       isScrollActive: false,
       outlineData: {},
     };
@@ -107,7 +107,9 @@ export default {
       console.log("ddddd", this.activeIndex);
       this.activeIndex = 1;
       this.$nextTick(() => {
-        eventBus.emit("beginTime", 5);
+        // TODO: 计时器时间 大纲 生成
+        eventBus.emit("beginTime", 60);
+        this.$scrollTo("#step1", 500, { offset: -100 });
       });
     },
     showOutLine(data) {

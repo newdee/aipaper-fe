@@ -5,7 +5,9 @@
       <p class="introTitle">编辑大纲，生成全文</p>
       <p class="introSubtitle">
         🔔
-        大纲可直接<span>点击编辑</span>，点击小节右侧按钮，为小节增加<span>参考资料、数据(表)、图、公式、代码段</span>，对该小节进行<span>增加、删减</span>
+        大纲可直接<span>点击编辑</span>，点击小节右侧按钮，为小节增加<span>参考资料、数据(表)、图、公式、代码段</span>，对该小节进行<span
+          >增加、删减</span
+        >
       </p>
     </div>
     <!-- 论文标题
@@ -15,13 +17,20 @@
     <!-- 页面名称 -->
     <div class="progressBox">
       <div class="pgBoxEl">
-        <el-progress :text-inside="true" :percentage="currentNumber" type="circle" :width="150"></el-progress>
+        <el-progress
+          :text-inside="true"
+          :percentage="currentNumber"
+          type="circle"
+          :width="150"
+        ></el-progress>
         <div class="progressText">
           <p>大纲生成<i class="el-icon-loading"></i></p>
           <p class="progressNumber">{{ currentNumber }}%</p>
         </div>
       </div>
     </div>
+    <!-- 滚动标签 -->
+    <div id="step1"></div>
   </div>
 </template>
 <script>
@@ -40,6 +49,7 @@ export default {
       currentNumber: 0,
       title: "艺术批评的时间作用及发展历程",
       descri: "1201 艺术学理论类",
+      intervalId: null,
     };
   },
   components: {

@@ -25,6 +25,9 @@
         </div>
       </div>
     </div>
+    <div class="pdfBox">
+      <PdfViewer :pdfUrl="pdfUrl" ref="pdfViewer" />
+    </div>
   </div>
 </template>
 <script>
@@ -32,6 +35,7 @@
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 // import eventBus from "@/utils/eventBus";
+import PdfViewer from "./PdfViewer.vue";
 
 export default {
   name: "step3",
@@ -39,10 +43,11 @@ export default {
     return {
       // 定义变量
       data: "",
+      pdfUrl: require("@/assets/third_output.pdf"),
     };
   },
   components: {
-    // webinfo,
+    PdfViewer,
   },
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
@@ -59,6 +64,15 @@ export default {
   },
   methods: {
     // 定义方法
+    onViewFile(item) {
+      if (item.fileName.split(".").pop() === "pdf") {
+        let url =
+          "/pdfjs/web/viewer.html?file=" +
+          process.env.VUE_APP_BASE_API +
+          item.filePath;
+        window.open(url, "_blank");
+      }
+    },
   },
 };
 </script>
@@ -70,11 +84,11 @@ export default {
 // 媒体查询
 // @media only screen and (max-width: 939px) {
 // }
+.pdfBox {
+}
 .pdfShowBox {
-  height: 2000px;
+  min-height: 200px;
   background-color: #fff;
-  margin-bottom: 16px;
-  padding: 40px;
 }
 
 .my-bullet {

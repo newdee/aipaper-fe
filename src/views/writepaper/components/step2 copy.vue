@@ -1428,6 +1428,7 @@ export default {
 }
 
 .outlineMain {
+  text-align: left;
   max-width: 860px;
   margin: 0 auto;
   border-radius: 8px;
