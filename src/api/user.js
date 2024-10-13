@@ -68,9 +68,10 @@ export function delOrder(params) {
     method: "delete",
   });
 }
+// 查询单个订单状态
 export function orderDetailById(params) {
   return request({
-    url: "/api/ai-paper/orders/order/" + params,
+    url: "/api/ai-paper/orders/order/" + params.key,
     method: "get",
   });
 }

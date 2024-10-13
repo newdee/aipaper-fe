@@ -354,25 +354,7 @@
       <span class="g_poin" @click="generateForm">生成全文</span>
       <!-- <span class="g_poin" @click="textF">生成全文</span> -->
     </div>
-    <!-- 付款成功弹窗 -->
-    <el-dialog
-      :append-to-body="true"
-      :lock-scroll="false"
-      title="确认支付"
-      :visible.sync="payStatus"
-      width="30%"
-    >
-      <i>支付确认弹窗，暂定会跳转订单页</i>
-      <p>TODO：暂未增加跳转</p>
 
-      <p>您是否已成功支付？</p>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取消支付</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
-          >确定支付</el-button
-        >
-      </span>
-    </el-dialog>
     <!-- 生成全文操作前置声明 -->
     <el-dialog
       title="提示"
@@ -582,6 +564,11 @@
         <el-button type="primary" @click="closeFDialog"> 确 定 </el-button>
       </span>
     </el-dialog>
+    <!--  -->
+    <order-dialog
+      :requestKey="requestKey"
+      :payStatus="payStatus"
+    ></order-dialog>
   </div>
 </template>
 
@@ -591,6 +578,9 @@ import { getToken } from "@/utils/auth"; //
 import { mapGetters } from "vuex";
 // 方法
 import { getOrder, orderDetailById } from "@/api/user";
+import polling from "@/utils/get-order-detail.js";
+import orderDialog from "./orderDialog.vue";
+
 import { title } from "@/settings";
 export default {
   name: "step2",
@@ -1028,7 +1018,9 @@ export default {
           ],
         },
       ],
-
+      timestamp: null,
+      requestKey: "",
+      paperPercentage: 0,
       imgExcelSetStatus: false,
 
       editData: {},
@@ -1060,6 +1052,7 @@ export default {
       idCount: 1,
       // 计算当前是几级大纲
       maxLevel: 2,
+      out_trade_no: "",
     };
   },
   props: {
@@ -1067,6 +1060,9 @@ export default {
       type: Object,
       require: true,
     },
+  },
+  components: {
+    orderDialog,
   },
   created() {
     this.generateIndexes(this.outline);
@@ -1265,11 +1261,13 @@ export default {
     textF() {
       this.statementDialogVisible = true;
     },
+
     // 生成全文
     generateForm() {
       if (!this.checked) {
         this.statementDialogVisible = true;
       } else {
+        this.payStatus = false;
         const hasToken = getToken();
         if (hasToken) {
           let data = {
@@ -1289,33 +1287,31 @@ export default {
               },
             ],
           };
-          this.getDetail(34);
-          // getOrder(data)
-          //   .then((res) => {
-          //     console.log("res", res);
-          //     this.payStatus = true;
-          //     console.log("res", res);
-          //     this.payStatus = true;
-          //     let payUrl = res.result.pay_link;
-          //     console.log("payUrl", payUrl);
-
-          //     if (payUrl) {
-          //       window.open(payUrl, "_blank");
-          //     }
-          //   })
-          //   .catch(() => {
-          //     this.$message({
-          //       type: "info",
-          //       message: "已取消生成",
-          //     });
-          //   });
+          // this.getDetail(34);
+          getOrder(data)
+            .then((res) => {
+              console.log("res", res);
+              console.log("res", res);
+              this.payStatus = true;
+              let payUrl = res.result.pay_link;
+              console.log("payUrl", payUrl);
+              // this.requestKey = res.result.out_trade_no;
+              // this.requestKey = "5e0c2e41-e865-4269-a02d-fb0b919cd822";
+              this.requestKey = "bef3662c-7dfa-4a71-ba53-9cae629322dd";
+              if (payUrl) {
+                window.open(payUrl, "_blank");
+              }
+            })
+            .catch(() => {
+              this.$message({
+                type: "info",
+                message: "已取消生成",
+              });
+            });
         }
       }
     },
-    getDetail(index) {
-      let dataId = index;
-      orderDetailById(dataId).then((res) => {});
-    },
+
     agreeGenerate() {
       // 关闭确认弹窗
       this.statementDialogVisible = false;

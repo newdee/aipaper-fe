@@ -3,11 +3,17 @@
     <!-- 页面名称 -->
     <div class="outlineTab">
       <div class="outLeft">
-        <p @click="checkoutPaper(1)" :class="['outLeftTitle', index == 1 ? 'activeLT' : '']">
+        <p
+          @click="checkoutPaper(1)"
+          :class="['outLeftTitle', index == 1 ? 'activeLT' : '']"
+        >
           万象专业版
           <span class="underLeft"></span>
         </p>
-        <p @click="checkoutPaper(2)" :class="['outLeftTitle', 'paperClass', index == 2 ? 'activeLT' : '']">
+        <p
+          @click="checkoutPaper(2)"
+          :class="['outLeftTitle', 'paperClass', index == 2 ? 'activeLT' : '']"
+        >
           万象学术版
           <span class="underLeft"></span>
         </p>
@@ -22,7 +28,12 @@
         <p class="formItemLabel">生成语言</p>
         <div class="formItemCon">
           <el-select v-model="requestForm.language" placeholder="请选择">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
             </el-option>
           </el-select>
         </div>
@@ -32,19 +43,36 @@
         <p class="formItemLabel">论文类型</p>
         <div class="formItemCon">
           <el-radio-group v-model="requestForm.type">
-            <el-radio v-for="item in homeData.category_list" :key="item.name" :label="item.name">
+            <el-radio
+              v-for="item in homeData.category_list"
+              :key="item.name"
+              :label="item.name"
+            >
               <div class="labelBox">
                 <div class="left">
                   <!-- <svg class="icon svg-icon" aria-hidden="true">
                     <use xlink:href="#icon-tubiaozoushitu"></use>
                   </svg> -->
-                  <img v-if="requestForm.type == item.name" class="home-icon" src="@/assets/images/bank-white.png"
-                    alt="" />
-                  <img v-else class="home-icon" src="@/assets/images/bank-dark.png" alt="" />
+                  <img
+                    v-if="requestForm.type == item.name"
+                    class="home-icon"
+                    src="@/assets/images/bank-white.png"
+                    alt=""
+                  />
+                  <img
+                    v-else
+                    class="home-icon"
+                    src="@/assets/images/bank-dark.png"
+                    alt=""
+                  />
                   {{ item.name }}({{ item.description }})
                 </div>
                 <div class="right">
-                  <svg v-if="requestForm.type == item.name" class="icon svg-icon" aria-hidden="true">
+                  <svg
+                    v-if="requestForm.type == item.name"
+                    class="icon svg-icon"
+                    aria-hidden="true"
+                  >
                     <use xlink:href="#icon-duigou-cu"></use>
                   </svg>
                   <svg v-else class="icon svg-icon" aria-hidden="true">
@@ -60,12 +88,21 @@
       <div class="selectLang formItem">
         <p class="formItemLabel">科目与题目</p>
         <div class="formItemCon phoneFlex">
-          <el-cascader placeholder="请选择科目" v-model="requestForm.field" :options="homeData.subject_list" :props="carProp"
-            @change="handleChange">
+          <el-cascader
+            placeholder="请选择科目"
+            v-model="requestForm.field"
+            :options="homeData.subject_list"
+            :props="carProp"
+            @change="handleChange"
+          >
           </el-cascader>
           <div class="userInputCon">
-            <el-input v-model="requestForm.title" maxlength="50" show-word-limit
-              placeholder="请输入完整题目，题目越完整大纲越准确"></el-input>
+            <el-input
+              v-model="requestForm.title"
+              maxlength="50"
+              show-word-limit
+              placeholder="请输入完整题目，题目越完整大纲越准确"
+            ></el-input>
           </div>
         </div>
       </div>
@@ -80,7 +117,10 @@
         </p>
       </div>
       <!-- 生成大纲 -->
-      <div @click="sendOutlineForm" :class="['outlineBtn', 'g_poin', index == 2 ? 'paperMain' : '']">
+      <div
+        @click="sendOutlineForm"
+        :class="['outlineBtn', 'g_poin', index == 2 ? 'paperMain' : '']"
+      >
         <p>生成大纲</p>
       </div>
     </div>
@@ -138,6 +178,7 @@ export default {
           label: "西班牙语",
         },
       ],
+      requestKey: "是是是",
     };
   },
   components: {
@@ -171,232 +212,27 @@ export default {
           });
           return false;
         }
-        eventBus.emit("emitOulineClick", 3); // 发布事件
-        console.log("lunwen", this.requestForm);
-        this.$store.dispatch("app/setRequestForm", this.requestForm);
-        // 保存用户输入数据
 
+        // 保存用户输入数据
         let data = {
           title: "如何治理环境污染",
           language: "中文",
           field: "计算机",
           type: "本科",
         };
-        // outlineCreate(data).then((res) => {
-        //   console.log("outlineCreateres", res);
-        //   let key = res.result.key;
-        // let key = "b846ba3f-5764-4e48-a5d6-59da6d46d694";
-        // polling({ key: key }).then((res) => {
-        //   console.log("ddddd", res);
-        //   alert("大纲生成成功");
-        //   eventBus.emit("successOutline", res); // 发布事件
-        // });
-        // });
-
-        setTimeout(() => {
-          let res = {
-            code: 200,
-            message: "success",
-            result: {
-              status: "生成成功",
-              outline: {
-                outline: [
-                  {
-                    chapter_num: "第一章",
-                    title: "引言",
-                    sections: [
-                      {
-                        title: "研究背景与意义",
-                        num: "1.1",
-                        planned_content: "xxx",
-                        insert_code: { status: false, content: "" },
-                        insert_mermaid: { status: false, content: "" },
-                        insert_latex_formula: { status: false, content: "" },
-                        insert_table: { status: false, content: "" },
-                        insert_plot: { status: false, content: "" },
-                      },
-                      {
-                        title: "本研究的主要贡献和创新点",
-                        num: "1.2",
-                        planned_content: "xxx",
-                        insert_code: { status: false, content: "" },
-                        insert_mermaid: { status: false, content: "" },
-                        insert_latex_formula: { status: false, content: "" },
-                        insert_table: { status: false, content: "" },
-                        insert_plot: { status: false, content: "" },
-                      },
-                    ],
-                  },
-                  {
-                    chapter_num: "第二章",
-                    title: "文献综述",
-                    sections: [
-                      {
-                        title: "研究理论基础",
-                        num: "2.1",
-                        planned_content: "xxx",
-                        insert_code: { status: false, content: "" },
-                        insert_mermaid: { status: false, content: "" },
-                        insert_latex_formula: { status: false, content: "" },
-                        insert_table: { status: false, content: "" },
-                        insert_plot: { status: false, content: "" },
-                      },
-                      {
-                        title: "研究现状",
-                        num: "2.2",
-                        planned_content: "xxx",
-                        insert_code: { status: false, content: "" },
-                        insert_mermaid: { status: false, content: "" },
-                        insert_latex_formula: { status: false, content: "" },
-                        insert_table: { status: false, content: "" },
-                        insert_plot: { status: false, content: "" },
-                      },
-                      {
-                        title: "本研究的创新点",
-                        num: "2.3",
-                        planned_content: "xxx",
-                        insert_code: { status: false, content: "" },
-                        insert_mermaid: { status: false, content: "" },
-                        insert_latex_formula: { status: false, content: "" },
-                        insert_table: { status: false, content: "" },
-                        insert_plot: { status: false, content: "" },
-                      },
-                    ],
-                  },
-                  {
-                    chapter_num: "第三章",
-                    title: "xxx的研究方法",
-                    sections: [
-                      {
-                        title: "xxx技术说明",
-                        num: "3.1",
-                        planned_content: "xxx",
-                        insert_code: { status: false, content: "" },
-                        insert_mermaid: ["xxx技术流程图"],
-                        insert_latex_formula: [
-                          "具体的Latex公式说明（注意json中需要转义），F(T) = \\\\sum_{i=1}^{n} \\\\alpha_i \\\\cdot f_i(T)",
-                        ],
-                        insert_table: { status: false, content: "" },
-                        insert_plot: { status: false, content: "" },
-                      },
-                      {
-                        title: "xxx方法说明",
-                        num: "3.2",
-                        planned_content: "xxx",
-                        insert_code: { status: false, content: "" },
-                        insert_mermaid: { status: false, content: "" },
-                        insert_latex_formula: { status: false, content: "" },
-                        insert_table: { status: false, content: "" },
-                        insert_plot: { status: false, content: "" },
-                      },
-                      {
-                        title: "本研究的方法设计",
-                        num: "3.3",
-                        planned_content: "xxx",
-                        insert_code: { status: false, content: "" },
-                        insert_mermaid: { status: false, content: "" },
-                        insert_latex_formula: { status: false, content: "" },
-                        insert_table: { status: false, content: "" },
-                        insert_plot: { status: false, content: "" },
-                      },
-                    ],
-                  },
-                  {
-                    chapter_num: "第四章",
-                    title: "xxx结果分析",
-                    sections: [
-                      {
-                        title: "xxx的分析",
-                        num: "4.1",
-                        planned_content: "xxx",
-                        insert_code: { status: false, content: "" },
-                        insert_mermaid: { status: false, content: "" },
-                        insert_latex_formula: { status: false, content: "" },
-                        insert_table: ["xxx分析表格1"],
-                        insert_plot: ["xxx分析图表1"],
-                      },
-                      {
-                        title: "xxx的分析",
-                        num: "4.2",
-                        planned_content: "xxx",
-                        insert_code: { status: false, content: "" },
-                        insert_mermaid: { status: false, content: "" },
-                        insert_latex_formula: { status: false, content: "" },
-                        insert_table: ["xxx分析表格1", "xxx分析表格2"],
-                        insert_plot: ["xxx分析图表1", "xxx分析图表2"],
-                      },
-                      {
-                        title: "结果分析",
-                        num: "4.3",
-                        planned_content: "xxx",
-                        insert_code: { status: false, content: "" },
-                        insert_mermaid: { status: false, content: "" },
-                        insert_latex_formula: { status: false, content: "" },
-                        insert_table: ["xxx分析表格1", "xxx分析表格2"],
-                        insert_plot: ["xxx分析图表1"],
-                      },
-                    ],
-                  },
-                  {
-                    chapter_num: "第五章",
-                    title: "讨论与结论",
-                    sections: [
-                      {
-                        title: "讨论",
-                        num: "5.1",
-                        planned_content: "xxx",
-                        insert_code: { status: false, content: "" },
-                        insert_mermaid: { status: false, content: "" },
-                        insert_latex_formula: { status: false, content: "" },
-                        insert_table: { status: false, content: "" },
-                        insert_plot: { status: false, content: "" },
-                      },
-                      {
-                        title: "结论",
-                        num: "5.2",
-                        planned_content: "xxx",
-                        insert_code: { status: false, content: "" },
-                        insert_mermaid: { status: false, content: "" },
-                        insert_latex_formula: { status: false, content: "" },
-                        insert_table: { status: false, content: "" },
-                        insert_plot: { status: false, content: "" },
-                      },
-                    ],
-                  },
-                  {
-                    chapter_num: "第六章",
-                    title: "研究局限与未来展望",
-                    sections: [
-                      {
-                        title: "研究局限",
-                        num: "6.1",
-                        planned_content: "xxx",
-                        insert_code: { status: false, content: "" },
-                        insert_mermaid: { status: false, content: "" },
-                        insert_latex_formula: { status: false, content: "" },
-                        insert_table: { status: false, content: "" },
-                        insert_plot: { status: false, content: "" },
-                      },
-                      {
-                        title: "未来研究方向提出展望",
-                        num: "6.2",
-                        planned_content: "xxx",
-                        insert_code: { status: false, content: "" },
-                        insert_mermaid: { status: false, content: "" },
-                        insert_latex_formula: { status: false, content: "" },
-                        insert_table: { status: false, content: "" },
-                        insert_plot: { status: false, content: "" },
-                      },
-                    ],
-                  },
-                ],
-              },
-            },
-          };
-          eventBus.emit("successOutline", res.result.outline.outline); // 发布事件
-        }, 3000);
-
-        // });
+        outlineCreate(data).then((res) => {
+          console.log("outlineCreateres", res);
+          eventBus.emit("emitOulineClick", 3); // 发布事件
+          console.log("lunwen", this.requestForm);
+          this.$store.dispatch("app/setRequestForm", this.requestForm);
+          // this.requestKey = res.result.key;
+          this.requestKey = "eb3a2422-301c-47ba-be1f-7c334e15c655";
+          // TODO: 生成大纲
+          polling({ key: this.requestKey }, 3000).then((res) => {
+            console.log("ddddd", res);
+            eventBus.emit("successOutline", res); // 发布事件
+          });
+        });
       } else {
         this.$confirm("生成大纲需要登录, 是否跳转到登录页?", "提示", {
           confirmButtonText: "确定",
@@ -415,7 +251,7 @@ export default {
           });
       }
     },
-    addE() { },
+    addE() {},
     // 定义方法
     handleChange(value) {
       console.log(value);
@@ -486,11 +322,13 @@ export default {
 }
 
 .paperMain {
-  background: linear-gradient(135deg,
-      #00bfff 0%,
-      #0091ff 29%,
-      #6236ff 62%,
-      #b620e0 100%) !important;
+  background: linear-gradient(
+    135deg,
+    #00bfff 0%,
+    #0091ff 29%,
+    #6236ff 62%,
+    #b620e0 100%
+  ) !important;
 }
 
 .outRight {
@@ -560,7 +398,7 @@ export default {
 .labelBox {
   font-size: 16px;
 
-  >div {
+  > div {
     display: inline-block;
 
     &.right {
@@ -591,7 +429,7 @@ export default {
     border-color: #3355ff;
   }
 
-  .el-radio__input.is-checked+.el-radio__label {
+  .el-radio__input.is-checked + .el-radio__label {
     color: #fff !important;
   }
 
