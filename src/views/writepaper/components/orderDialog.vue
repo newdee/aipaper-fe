@@ -22,7 +22,9 @@
         </div>
         <p class="dialog-text">正文生成中, 预计时间五分钟, 请稍等</p>
         <p class="dialog-text">
-          如您关闭此弹窗,请在我的订单页面, 查看您生成的正文
+          如您关闭此弹窗,请在
+          <span class="dialog_pay_text">我的订单</span>
+          页面, 查看您生成的正文
         </p>
       </div>
 
@@ -141,6 +143,9 @@ export default {
             console.log("case", order_item_response[0].case.paper_case.stage);
             if (order_item_response[0].case.paper_case.stage == 2) {
               this.caseStatus = false;
+              let pdfUrl =
+                "https://oss.mixpaper.cn/server/third_output.pdf?Content-Disposition=attachment%3B%20filename%3D%22third_output.pdf%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=admin%2F20241013%2F%2Fs3%2Faws4_request&X-Amz-Date=20241013T115433Z&X-Amz-Expires=432000&X-Amz-SignedHeaders=host&X-Amz-Signature=1659c58c99dee4ce503374c902343693799093d70fdb6d4ac63ad378a19d41ae";
+              store.dispatch("app/togglePDFUrl", pdfUrl);
             }
           }
 

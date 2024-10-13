@@ -8,5 +8,6 @@ const getters = {
   homeData: (state) => state.app.homeData,
   lineTitle: (state) => state.app.lineTitle,
   requestForm: (state) => state.app.requestForm,
+  step3PdfUrl: (state) => state.app.step3PdfUrl,
 };
 export default getters;

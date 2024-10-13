@@ -159,7 +159,7 @@ export default {
       },
       options: [
         {
-          value: "简体中文",
+          value: "中文",
           label: "简体中文",
         },
         {
@@ -216,10 +216,10 @@ export default {
 
         // 保存用户输入数据
         let data = {
-          title: "如何治理环境污染",
-          language: "中文",
-          field: "计算机",
-          type: "本科",
+          title: this.requestForm.title,
+          language: this.requestForm.language,
+          field: this.requestForm.field,
+          type: this.requestForm.type,
         };
         outlineCreate(data).then((res) => {
           console.log("outlineCreateres", res);
@@ -227,8 +227,8 @@ export default {
           console.log("lunwen", this.requestForm);
           this.requestForm.key = res.result.key;
           this.$store.dispatch("app/setRequestForm", this.requestForm);
-          // this.requestKey = res.result.key;
-          this.requestKey = "eb3a2422-301c-47ba-be1f-7c334e15c655";
+          this.requestKey = res.result.key;
+          // this.requestKey = "eb3a2422-301c-47ba-be1f-7c334e15c655";
           // TODO: 生成大纲
           polling({ key: this.requestKey }, 3000).then((res) => {
             console.log("ddddd", res);

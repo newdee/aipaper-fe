@@ -12,6 +12,7 @@ const state = {
   homeData: {},
   lineTitle: "论文标题",
   requestForm: {},
+  step3PdfUrl: "",
 };
 
 const mutations = {
@@ -31,6 +32,9 @@ const mutations = {
   },
   TOGGLE_DEVICE: (state, device) => {
     state.device = device;
+  },
+  TOGGLE_PDF: (state, step3PdfUrl) => {
+    state.step3PdfUrl = step3PdfUrl;
   },
   TOGGLE_FORM: (state, requestForm) => {
     state.requestForm = requestForm;
@@ -52,6 +56,9 @@ const actions = {
   },
   toggleDevice({ commit }, device) {
     commit("TOGGLE_DEVICE", device);
+  },
+  togglePDFUrl({ commit }, device) {
+    commit("TOGGLE_PDF", device);
   },
   setHomeData({ commit }, data) {
     commit("SET_HOME_DATA", data);

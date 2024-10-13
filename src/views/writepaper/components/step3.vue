@@ -31,7 +31,7 @@
   </div>
 </template>
 <script>
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 // import eventBus from "@/utils/eventBus";
@@ -43,11 +43,25 @@ export default {
     return {
       // 定义变量
       data: "",
-      pdfUrl: require("@/assets/third_output.pdf"),
+      // pdfUrl: require("@/assets/third_output.pdf"),
+      pdfUrl: "",
     };
   },
   components: {
     PdfViewer,
+  },
+  computed: {
+    // 计算属性
+    ...mapGetters(["step3PdfUrl"]),
+  },
+
+  watch: {
+    pdfUrl: {
+      handler(newVal, oldVal) {
+        this.pdfUrl = newVal;
+      },
+      deep: true, // 启用深度监听
+    },
   },
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
