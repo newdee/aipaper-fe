@@ -148,6 +148,7 @@ export default {
         language: "简体中文",
         type: "专科/本科",
         field: "哲学类",
+        key: "",
       },
       index: 1,
       carProp: {
@@ -224,6 +225,7 @@ export default {
           console.log("outlineCreateres", res);
           eventBus.emit("emitOulineClick", 3); // 发布事件
           console.log("lunwen", this.requestForm);
+          this.requestForm.key = res.result.key;
           this.$store.dispatch("app/setRequestForm", this.requestForm);
           // this.requestKey = res.result.key;
           this.requestKey = "eb3a2422-301c-47ba-be1f-7c334e15c655";

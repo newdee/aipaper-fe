@@ -1274,6 +1274,8 @@ export default {
             user_id: 1,
             payment_method: "alipay",
             total_amount: 154.75,
+            // outline_id: this.requestForm.key,
+            key: "eb3a2422-301c-47ba-be1f-7c334e15c655",
             items: [
               {
                 product_id: "1",
@@ -1295,9 +1297,10 @@ export default {
               this.payStatus = true;
               let payUrl = res.result.pay_link;
               console.log("payUrl", payUrl);
+              // TODO: 去除固定key
               // this.requestKey = res.result.out_trade_no;
               // this.requestKey = "5e0c2e41-e865-4269-a02d-fb0b919cd822";
-              this.requestKey = "bef3662c-7dfa-4a71-ba53-9cae629322dd";
+              this.requestKey = "15b41aa3-ec35-45e9-ac6b-bfe3b7ba3d8d";
               if (payUrl) {
                 window.open(payUrl, "_blank");
               }
