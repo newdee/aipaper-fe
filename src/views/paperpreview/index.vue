@@ -19,88 +19,7 @@
       <img src="@/assets/images/aigc.png" />
     </section>
     <section class="sec sec3">
-      <div class="imgbox">
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/1.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/2.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/3.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/4.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/5.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/6.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/7.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/8.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/9.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/10.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/11.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/12.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/13.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/14.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/15.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/16.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/17.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/18.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/19.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/20.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/21.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/22.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/23.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/24.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/25.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/26.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/27.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/28.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/29.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/30.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/31.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/32.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/33.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/34.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/35.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/36.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/37.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/38.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/39.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/40.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/41.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/42.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/43.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/44.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/45.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/46.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/47.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/48.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/49.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/50.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/51.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/52.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/53.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/54.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/55.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/56.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/57.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/58.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/59.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/60.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/61.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/62.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/63.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/64.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/65.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/66.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/67.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/68.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/69.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/70.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/71.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/72.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/73.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/74.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/75.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/76.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/77.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/78.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/79.jpg" alt="" />
-        <img src="https://aijar-content.yyjjtech.com/demo/vue/main/80.jpg" alt="" />
-      </div>
+      <PdfViewer :pdfUrl="pdfUrl" ref="pdfViewer" />
     </section>
   </div>
 </template>
@@ -108,12 +27,14 @@
 // import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
+import PdfViewer from "@/views/writepaper/components/PdfViewer.vue";
 
 export default {
   name: "maincon",
   data() {
     return {
       // 定义变量
+      pdfUrl: require("@/assets/third_output.pdf"),
       sampleTitle: 1,
       sampleMaterial: 1,
       sampleTiles: [1, 2, 3],
@@ -326,7 +247,7 @@ export default {
     };
   },
   components: {
-    // webinfo,
+    PdfViewer,
   },
   mounted() {
     // 页面初始化

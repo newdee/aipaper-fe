@@ -1,11 +1,6 @@
 <template>
   <div class="pdfCom">
-    <canvas
-      class="canvasClass"
-      :id="'canvas' + item"
-      v-for="item in pdfHTML"
-      :key="item"
-    />
+    <canvas class="canvasClass" :id="'canvas' + item" v-for="item in pdfHTML" :key="item" />
   </div>
 </template>
 
@@ -47,7 +42,7 @@ export default {
         let canvas = document.getElementById(`canvas${item}`);
         const ctx = canvas.getContext("2d");
         this.pdfDoc.getPage(item).then((page) => {
-          const viewport = page.getViewport(1); // 可以根据需求调整缩放比例
+          const viewport = page.getViewport(4); // 可以根据需求调整缩放比例
           canvas.width = viewport.width;
           canvas.height = viewport.height;
 
@@ -57,14 +52,14 @@ export default {
           };
           page.render(renderContext);
 
-          // 增加：累加当前页面的高度
-          totalHeight += viewport.height;
+          // // 增加：累加当前页面的高度
+          // totalHeight += viewport.height;
 
-          // 如果这是最后一个页面，更新父容器的高度
-          if (item === nums) {
-            const container = document.querySelector(".pdfCom");
-            container.style.height = `${totalHeight}px`; // 设置容器高度为所有页面高度之和
-          }
+          // // 如果这是最后一个页面，更新父容器的高度
+          // if (item === nums) {
+          //   const container = document.querySelector(".pdfCom");
+          //   container.style.height = `${totalHeight}px`; // 设置容器高度为所有页面高度之和
+          // }
         });
       }
     },
@@ -85,9 +80,13 @@ export default {
 .pdfCom {
   width: 100%;
   /* 高度由JavaScript动态设置 */
-  overflow-y: auto; /* 添加滚动条，如果内容超出容器高度 */
+  /* overflow-y: auto; */
+  /* 添加滚动条，如果内容超出容器高度 */
   height: 100%;
+  font-size: 0px;
+  /* font-siez:0px Ensure no gaps between each canvas*/
 }
+
 .canvasClass {
   width: 100%;
 }
