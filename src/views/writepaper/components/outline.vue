@@ -145,7 +145,7 @@ export default {
       requestForm: {
         title: "",
         threeCon: false,
-        language: "简体中文",
+        language: "中文",
         type: "专科/本科",
         field: "哲学类",
         key: "",
@@ -219,7 +219,8 @@ export default {
           title: this.requestForm.title,
           language: this.requestForm.language,
           field: this.requestForm.field,
-          type: this.requestForm.type,
+          // type: this.requestForm.type,
+          type: "本科",
         };
         outlineCreate(data).then((res) => {
           console.log("outlineCreateres", res);

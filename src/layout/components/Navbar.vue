@@ -1,5 +1,5 @@
 <template>
-  <div :class="['navbarHome', $route.fullPath !== '/home/home' ? 'grayBg' : '']">
+  <div :class="['navbarHome', !showContent ? 'grayBg' : '']">
     <div class="navMain">
       <div>
         <div v-if="showContent" class="navItems flex">
