@@ -46,8 +46,9 @@
       </div>
 
       <el-tree
-        :data="outlineData"
+        :data="outline"
         node-key="id"
+        :props="defaultProps"
         default-expand-all
         @node-drag-start="handleDragStart"
         @node-drag-enter="handleDragEnter"
@@ -96,7 +97,7 @@
               ></span>
             </div>
 
-            <div v-if="data.level == 3" class="iconRight">
+            <div v-if="data.level >= maxLevel" class="iconRight">
               <div>
                 <el-tooltip placement="top" content="插入图表配置">
                   <span @click="showImgF(data)">
@@ -132,9 +133,29 @@
                 </el-tooltip>
               </div>
               <div class="rightbottom">
-                <i class="el-icon-document-remove"></i>
-                <i class="el-icon-document-remove"></i>
-                <i class="el-icon-document-remove"></i>
+                <!-- 表 -->
+                <i
+                  v-show="data.insert_table && data.insert_table.status"
+                  class="el-icon-s-marketing"
+                ></i>
+                <!-- 图 -->
+                <i
+                  v-show="data.insert_plot && data.insert_plot.status"
+                  class="el-icon-picture"
+                ></i>
+                <!-- 公式 -->
+                <i
+                  v-show="
+                    data.insert_latex_formula &&
+                    data.insert_latex_formula.status
+                  "
+                  class="el-icon-s-flag"
+                ></i>
+                <!-- 代码 -->
+                <i
+                  v-show="data.insert_code && data.insert_code.status"
+                  class="el-icon-s-management"
+                ></i>
               </div>
             </div>
           </div>
@@ -158,6 +179,7 @@
       </p>
     </div>
     <!-- 付费项选择 -->
+
     <div class="spendingBox">
       <p class="fuTitle">您将获得</p>
       <div class="maintxt">
@@ -386,7 +408,7 @@
       <el-form
         :model="numberValidateForm"
         ref="numberValidateForm"
-        label-width="100px"
+        label-width="120px"
         class="demo-ruleForm"
       >
         <el-form-item
@@ -397,6 +419,13 @@
           <el-input
             placeholder="请输入章节"
             v-model="numberValidateForm.appendValue"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="请输入章节内容" prop="appendValue">
+          <el-input
+            placeholder="请输入章节内容"
+            v-model="numberValidateForm.appendContent"
             autocomplete="off"
           ></el-input>
         </el-form-item>
@@ -427,7 +456,7 @@
         <el-form-item prop="appendValue">
           <div class="leftLabel" slot="label">
             <el-switch
-              v-model="currentRow.insert_data_table.enabled"
+              v-model="currentRow.insert_table.status"
               active-color="#13ce66"
               inactive-color="#ff4949"
             >
@@ -437,15 +466,16 @@
           <el-input
             type="textarea"
             autosize
-            placeholder="请输入插入数据表"
-            v-model="currentRow.insert_data_table.table_id"
+            placeholder="请用自然语言描述您要插入数据表的信息"
+            v-model="currentRow.insert_table.content"
             autocomplete="off"
           ></el-input>
         </el-form-item>
+        <!-- 插入图 -->
         <el-form-item prop="appendValue">
           <div class="leftLabel" slot="label">
             <el-switch
-              v-model="currentRow.insert_image.enabled"
+              v-model="currentRow.insert_plot.status"
               active-color="#13ce66"
               inactive-color="#ff4949"
             >
@@ -455,33 +485,51 @@
           <el-input
             type="textarea"
             autosize
-            placeholder="请输入图的名称"
-            v-model="currentRow.insert_image.image_id"
+            placeholder="请用自然语言描述 图形 的相关信息"
+            v-model="currentRow.insert_plot.content"
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item prop="appendValue">
+        <!-- <el-form-item prop="appendValue">
           <div class="leftLabel" slot="label">
             <el-switch
-              v-model="currentRow.insert_formula.enabled"
+              v-model="currentRow.insert_mermaid.status"
               active-color="#13ce66"
               inactive-color="#ff4949"
             >
             </el-switch>
-            <span class="labelSpan">插入公式</span>
+            <span class="labelSpan">插入Mermaid图形</span>
+          </div>
+          <el-input
+            type="textarea"
+            autosize
+            placeholder="请输入图的名称"
+            v-model="currentRow.insert_mermaid.content"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item> -->
+        <el-form-item prop="appendValue">
+          <div class="leftLabel" slot="label">
+            <el-switch
+              v-model="currentRow.insert_latex_formula.status"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            >
+            </el-switch>
+            <span class="labelSpan">请用自然语言描述 插入公式</span>
           </div>
           <el-input
             type="textarea"
             autosize
             placeholder="请输入插入公式"
-            v-model="currentRow.insert_formula.formula_id"
+            v-model="currentRow.insert_latex_formula.content"
             autocomplete="off"
           ></el-input>
         </el-form-item>
         <el-form-item prop="appendValue">
           <div class="leftLabel" slot="label">
             <el-switch
-              v-model="currentRow.insert_code.enabled"
+              v-model="currentRow.insert_code.status"
               active-color="#13ce66"
               inactive-color="#ff4949"
             >
@@ -493,7 +541,7 @@
               type="textarea"
               autosize
               placeholder="请输入插入代码段"
-              v-model="currentRow.insert_code.code_content"
+              v-model="currentRow.insert_code.content"
               autocomplete="off"
             ></el-input>
             <el-select
@@ -543,6 +591,7 @@ import { getToken } from "@/utils/auth"; //
 import { mapGetters } from "vuex";
 // 方法
 import { getOrder, orderDetailById } from "@/api/user";
+import { title } from "@/settings";
 export default {
   name: "step2",
   data() {
@@ -558,310 +607,459 @@ export default {
       },
       numberValidateForm: {
         appendValue: "",
+        appendContent: "",
       },
       selectForm: {
         data1: "",
         checked: "",
       },
       outline: [
-        // 第一章
         {
-          id: 1,
-          level: 1,
-          chapter: "引言",
-          children: [
+          chapter_num: "第一章",
+          title: "引言",
+          sections: [
             {
-              // chapter: "引言",
-              id: 2,
-              level: 2,
               title: "研究背景与意义",
+              num: "1.1",
               summary:
-                "随着城市化进程的加快，环境污染问题日益严重。特别是城市道路空气污染，对公众健康和城市生态环境构成了重大威胁。如何利用现代技术手段有效治理环境污染成为当前研究的热点。",
-              // title_num: "1.1",
-              // chapter_num: "第一章",
+                "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
+              insert_code: {
+                status: false,
+                content: "",
+              },
+              insert_mermaid: {
+                status: false,
+                content: "",
+              },
+              insert_latex_formula: {
+                status: false,
+                content: "",
+              },
+              insert_table: {
+                status: false,
+                content: "",
+              },
+              insert_plot: {
+                status: false,
+                content: "",
+              },
             },
             {
-              // chapter: "引言",
-              id: 3,
-              level: 3,
               title: "本研究的主要贡献和创新点",
+              num: "1.2",
               summary:
-                "本研究通过整合移动监测数据和街景图像（SVIs），采用机器学习算法，提出了一种预测和治理道路空气污染的创新策略。研究表明，该策略在预测污染物浓度方面显著优于传统方法。",
-              // title_num: "1.2",
-              // chapter_num: "第一章",
+                "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
+              insert_code: {
+                status: false,
+                content: "",
+              },
+              insert_mermaid: {
+                status: false,
+                content: "",
+              },
+              insert_latex_formula: {
+                status: false,
+                content: "",
+              },
+              insert_table: {
+                status: false,
+                content: "",
+              },
+              insert_plot: {
+                status: false,
+                content: "",
+              },
             },
           ],
         },
-        // 第二章
         {
-          id: 1,
-          level: 1,
-          chapter: "文献综述",
-          children: [
+          chapter_num: "第二章",
+          title: "文献综述",
+          sections: [
             {
-              // chapter: "引言",
-              id: 2,
-              level: 2,
               title: "研究理论基础",
+              num: "2.1",
               summary:
-                "随着城市化进程的加快，环境污染问题日益严重。特别是城市道路空气污染，对公众健康和城市生态环境构成了重大威胁。如何利用现代技术手段有效治理环境污染成为当前研究的热点。",
-              // title_num: "1.1",
-              // chapter_num: "第一章",
+                "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
+              insert_code: {
+                status: false,
+                content: "",
+              },
+              insert_mermaid: {
+                status: false,
+                content: "",
+              },
+              insert_latex_formula: {
+                status: false,
+                content: "",
+              },
+              insert_table: {
+                status: false,
+                content: "",
+              },
+              insert_plot: {
+                status: false,
+                content: "",
+              },
             },
             {
-              // chapter: "引言",
-              id: 3,
-              level: 3,
               title: "研究现状",
+              num: "2.2",
               summary:
-                "本研究通过整合移动监测数据和街景图像（SVIs），采用机器学习算法，提出了一种预测和治理道路空气污染的创新策略。研究表明，该策略在预测污染物浓度方面显著优于传统方法。",
-              // title_num: "1.2",
-              // chapter_num: "第一章",
-            },
-          ],
-        },
-      ],
-      data: [
-        {
-          id: 2,
-          level: 1,
-          label: "请修改标题",
-          children: [
-            {
-              content: "介绍艺术批评与设计实践之间的关系和重要性",
-              level: 3,
-              id: 511,
-              label: "二级 2-1",
-              children: [
-                {
-                  content: "介绍艺术批评与设计实践之间的关系和重要性",
-                  level: 3,
-                  id: 19,
-                  label: "三级 1-1-1",
-                  insert_data_table: {
-                    enabled: false, // bool值，表示是否插入数据表
-                    table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
-                  },
-                  insert_image: {
-                    enabled: false, // bool值，表示是否插入图形
-                    image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
-                  },
-                  insert_formula: {
-                    enabled: false, // bool值，表示是否插入公式
-                    formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
-                  },
-                  insert_code: {
-                    enabled: false, // bool值，表示是否插入代码段
-                    code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
-                    code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
-                    code_content: "代码内容", // 代码段的具体内容, 可选
-                  },
-                },
-                {
-                  content: "介绍艺术批评与设计实践之间的关系和重要性",
-                  level: 3,
-                  id: 210,
-                  label: "三级 1-1-2",
-                  insert_data_table: {
-                    enabled: false, // bool值，表示是否插入数据表
-                    table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
-                  },
-                  insert_image: {
-                    enabled: false, // bool值，表示是否插入图形
-                    image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
-                  },
-                  insert_formula: {
-                    enabled: false, // bool值，表示是否插入公式
-                    formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
-                  },
-                  insert_code: {
-                    enabled: false, // bool值，表示是否插入代码段
-                    code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
-                    code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
-                    code_content: "代码内容", // 代码段的具体内容, 可选
-                  },
-                },
-              ],
+                "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
+              insert_code: {
+                status: false,
+                content: "",
+              },
+              insert_mermaid: {
+                status: false,
+                content: "",
+              },
+              insert_latex_formula: {
+                status: false,
+                content: "",
+              },
+              insert_table: {
+                status: false,
+                content: "",
+              },
+              insert_plot: {
+                status: false,
+                content: "",
+              },
             },
             {
-              content: "介绍艺术批评与设计实践之间的关系和重要性",
-              level: 3,
-              id: 611,
-              label: "二级 2-2",
-              children: [
-                {
-                  content: "介绍艺术批评与设计实践之间的关系和重要性",
-                  level: 3,
-                  id: 449,
-                  label: "三级 1-1-1",
-                  insert_data_table: {
-                    enabled: false, // bool值，表示是否插入数据表
-                    table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
-                  },
-                  insert_image: {
-                    enabled: false, // bool值，表示是否插入图形
-                    image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
-                  },
-                  insert_formula: {
-                    enabled: false, // bool值，表示是否插入公式
-                    formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
-                  },
-                  insert_code: {
-                    enabled: false, // bool值，表示是否插入代码段
-                    code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
-                    code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
-                    code_content: "代码内容", // 代码段的具体内容, 可选
-                  },
-                },
-                {
-                  content: "介绍艺术批评与设计实践之间的关系和重要性",
-                  level: 3,
-                  id: 101,
-                  label: "三级 1-1-2",
-                  insert_data_table: {
-                    enabled: false, // bool值，表示是否插入数据表
-                    table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
-                  },
-                  insert_image: {
-                    enabled: false, // bool值，表示是否插入图形
-                    image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
-                  },
-                  insert_formula: {
-                    enabled: false, // bool值，表示是否插入公式
-                    formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
-                  },
-                  insert_code: {
-                    enabled: false, // bool值，表示是否插入代码段
-                    code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
-                    code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
-                    code_content: "代码内容", // 代码段的具体内容, 可选
-                  },
-                },
-              ],
+              title: "本研究的创新点",
+              num: "2.3",
+              summary:
+                "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
+              insert_code: {
+                status: false,
+                content: "",
+              },
+              insert_mermaid: {
+                status: false,
+                content: "",
+              },
+              insert_latex_formula: {
+                status: false,
+                content: "",
+              },
+              insert_table: {
+                status: false,
+                content: "",
+              },
+              insert_plot: {
+                status: false,
+                content: "",
+              },
             },
           ],
         },
         {
-          id: 3,
-          level: 1,
-          label: "请修改标题",
-          children: [
+          chapter_num: "第三章",
+          title: "xxx的研究方法",
+          sections: [
             {
-              id: 7,
-              label: "二级 3-1",
+              title: "xxx技术说明",
+              num: "3.1",
+              summary:
+                "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
+              insert_code: {
+                status: false,
+                content: "",
+              },
+              insert_table: {
+                status: false,
+                content: "",
+              },
+              insert_plot: {
+                status: false,
+                content: "",
+              },
             },
             {
-              id: 8,
-              label: "二级 3-2",
-              content: "介绍艺术批评与设计实践之间的关系和重要性",
-              children: [
-                {
-                  content: "介绍艺术批评与设计实践之间的关系和重要性",
-                  level: 3,
-                  id: 11,
-                  label: "三级 3-2-1",
-                  insert_data_table: {
-                    enabled: false, // bool值，表示是否插入数据表
-                    table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
-                  },
-                  insert_image: {
-                    enabled: false, // bool值，表示是否插入图形
-                    image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
-                  },
-                  insert_formula: {
-                    enabled: false, // bool值，表示是否插入公式
-                    formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
-                  },
-                  insert_code: {
-                    enabled: false, // bool值，表示是否插入代码段
-                    code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
-                    code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
-                    code_content: "代码内容", // 代码段的具体内容, 可选
-                  },
-                },
-                {
-                  content: "介绍艺术批评与设计实践之间的关系和重要性",
-                  level: 3,
-                  id: 12,
-                  label: "三级 3-2-2",
-                  insert_data_table: {
-                    enabled: false, // bool值，表示是否插入数据表
-                    table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
-                  },
-                  insert_image: {
-                    enabled: false, // bool值，表示是否插入图形
-                    image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
-                  },
-                  insert_formula: {
-                    enabled: false, // bool值，表示是否插入公式
-                    formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
-                  },
-                  insert_code: {
-                    enabled: false, // bool值，表示是否插入代码段
-                    code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
-                    code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
-                    code_content: "代码内容", // 代码段的具体内容, 可选
-                  },
-                },
-                {
-                  id: 13,
-                  level: 3,
-                  content: "介绍艺术批评与设计实践之间的关系和重要性",
-                  label: "三级 3-2-3",
-                  insert_data_table: {
-                    enabled: false, // bool值，表示是否插入数据表
-                    table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
-                  },
-                  insert_image: {
-                    enabled: false, // bool值，表示是否插入图形
-                    image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
-                  },
-                  insert_formula: {
-                    enabled: false, // bool值，表示是否插入公式
-                    formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
-                  },
-                  insert_code: {
-                    enabled: false, // bool值，表示是否插入代码段
-                    code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
-                    code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
-                    code_content: "代码内容", // 代码段的具体内容, 可选
-                  },
-                },
-              ],
+              title:
+                "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多方法说明",
+              num: "3.2",
+              summary:
+                "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
+              insert_code: {
+                status: false,
+                content: "",
+              },
+              insert_mermaid: {
+                status: false,
+                content: "",
+              },
+              insert_latex_formula: ["公式1"],
+              insert_table: {
+                status: false,
+                content: "",
+              },
+              insert_plot: {
+                status: false,
+                content: "",
+              },
+            },
+            {
+              title: "本研究的方法设计",
+              num: "3.3",
+              summary:
+                "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
+              insert_code: {
+                status: false,
+                content: "",
+              },
+              insert_mermaid: {
+                status: false,
+                content: "",
+              },
+              insert_latex_formula: ["公式1", "公式2"],
+              insert_table: {
+                status: false,
+                content: "",
+              },
+              insert_plot: {
+                status: false,
+                content: "",
+              },
+            },
+          ],
+        },
+        {
+          chapter_num: "第四章",
+          title: "xxx结果分析",
+          sections: [
+            {
+              title: "xxx的分析",
+              num: "4.1",
+              summary:
+                "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
+              insert_code: {
+                status: false,
+                content: "",
+              },
+              insert_mermaid: {
+                status: false,
+                content: "",
+              },
+              insert_latex_formula: {
+                status: false,
+                content: "",
+              },
+              insert_table: {
+                status: false,
+                content: "xxx分析表格1",
+              },
+              insert_plot: {
+                status: false,
+                content: "xxx分析图表1",
+              },
+            },
+            {
+              title: "xxx的分析",
+              num: "4.2",
+              summary:
+                "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , ",
+              insert_code: {
+                status: false,
+                content: "",
+              },
+              insert_mermaid: {
+                status: false,
+                content: "",
+              },
+              insert_latex_formula: {
+                status: false,
+                content: "",
+              },
+              insert_table: {
+                status: true,
+                content: ["xxx分析表格1", "xxx分析表格2"],
+              },
+              insert_plot: {
+                status: false,
+                content: ["xxx分析表格1", "xxx分析表格2"],
+              },
+            },
+            {
+              title: "结果分析",
+              num: "4.3",
+              summary:
+                "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , ",
+              insert_code: {
+                status: false,
+                content: "",
+              },
+              insert_mermaid: {
+                status: false,
+                content: "",
+              },
+              insert_latex_formula: {
+                status: false,
+                content: "",
+              },
+              insert_table: {
+                status: false,
+                content: ["xxx分析表格1", "xxx分析表格2"],
+              },
+              insert_plot: {
+                status: false,
+                content: "xxx分析图表1",
+              },
+            },
+          ],
+        },
+        {
+          chapter_num: "第五章",
+          title: "讨论与结论",
+          sections: [
+            {
+              title: "讨论",
+              num: "5.1",
+              summary:
+                "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , ",
+              insert_code: {
+                status: false,
+                content: "",
+              },
+              insert_mermaid: {
+                status: false,
+                content: "",
+              },
+              insert_latex_formula: {
+                status: false,
+                content: "",
+              },
+              insert_table: {
+                status: false,
+                content: "",
+              },
+              insert_plot: {
+                status: false,
+                content: "",
+              },
+            },
+            {
+              title: "结论",
+              num: "5.2",
+              summary:
+                "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , ",
+              insert_code: {
+                status: false,
+                content: "",
+              },
+              insert_mermaid: {
+                status: false,
+                content: "",
+              },
+              insert_latex_formula: {
+                status: false,
+                content: "",
+              },
+              insert_table: {
+                status: false,
+                content: "",
+              },
+              insert_plot: {
+                status: false,
+                content: "",
+              },
+            },
+          ],
+        },
+        {
+          chapter_num: "第六章",
+          title: "研究局限与未来展望",
+          sections: [
+            {
+              title: "研究局限",
+              num: "6.1",
+              summary:
+                "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , ",
+              insert_code: {
+                status: false,
+                content: "",
+              },
+              insert_mermaid: {
+                status: false,
+                content: "",
+              },
+              insert_latex_formula: {
+                status: false,
+                content: "",
+              },
+              insert_table: {
+                status: false,
+                content: "",
+              },
+              insert_plot: {
+                status: false,
+                content: "",
+              },
+            },
+            {
+              title: "未来研究方向提出展望",
+              num: "6.2",
+              summary:
+                "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , ",
+              insert_code: {
+                status: false,
+                content: "",
+              },
+              insert_mermaid: {
+                status: false,
+                content: "",
+              },
+              insert_latex_formula: {
+                status: false,
+                content: "",
+              },
+              insert_table: {
+                status: false,
+                content: "",
+              },
+              insert_plot: {
+                status: false,
+                content: "",
+              },
             },
           ],
         },
       ],
+
       imgExcelSetStatus: false,
 
       editData: {},
-      defaultProps: {
-        children: "children",
-        label: "label",
-      },
       editStatus: false,
       checkboxGroup1: [],
       statementDialogVisible: false,
       currentRow: {
-        insert_data_table: {
-          enabled: false, // bool值，表示是否插入数据表
-          table_id: "数据表ID", // 如果插入数据表，这里提供数据表的ID, 可选
-        },
-        insert_image: {
-          enabled: false, // bool值，表示是否插入图形
-          image_id: "图形ID", // 如果插入图形，这里提供图形的ID, 可选
-        },
-        insert_formula: {
-          enabled: false, // bool值，表示是否插入公式
-          formula_id: "公式ID", // 如果插入公式，这里提供公式的ID, 可选
-        },
         insert_code: {
-          enabled: false, // bool值，表示是否插入代码段
-          code_id: "代码段ID", // 如果插入代码段，这里提供代码段的ID, 可选
-          code_language: "代码语言", // 代码段的语言, 可选，如：Python、Java等
-          code_content: "代码内容", // 代码段的具体内容, 可选
+          status: false,
+          content: "",
+        },
+        insert_mermaid: {
+          status: false,
+          content: "",
+        },
+        insert_latex_formula: {
+          status: false,
+          content: "",
+        },
+        insert_table: {
+          status: false,
+          content: "",
+        },
+        insert_plot: {
+          status: false,
+          content: "",
         },
       },
+      idCount: 1,
+      // 计算当前是几级大纲
+      maxLevel: 2,
     };
   },
   props: {
@@ -871,8 +1069,11 @@ export default {
     },
   },
   created() {
-    this.generateIndexes(this.outlineData);
+    this.generateIndexes(this.outline);
+
+    console.log(this.outline, "outline");
   },
+
   computed: {
     // 计算属性
     ...mapGetters(["requestForm"]),
@@ -884,30 +1085,59 @@ export default {
       this.currentRow = item;
     },
     addPageOne() {
-      this.data.push({
+      this.outline.push({
         id: new Date().getTime(),
         level: 1,
-        label: "请修改标题",
-        content: "请修改标题",
-        children: [
+        title: "请修改标题",
+        sections: [
           {
             id: new Date().getTime() - 100,
-            label: "请修改标题",
+            title: "请修改标题",
             content: "请修改标题",
+            level: 2,
+            insert_code: {
+              status: false,
+              content: "",
+            },
+            insert_mermaid: {
+              status: false,
+              content: "",
+            },
+            insert_latex_formula: {
+              status: false,
+              content: "",
+            },
+            insert_table: {
+              status: false,
+              content: "",
+            },
+            insert_plot: {
+              status: false,
+              content: "",
+            },
           },
         ],
       });
-      this.generateIndexes(this.data);
+      this.generateIndexes(this.outline);
     },
-    generateIndexes(nodes, parentIndex = "") {
+    generateIndexes(nodes, parentIndex = "", level = 1) {
       let counter = 1;
       nodes.forEach((node) => {
         const index = parentIndex
           ? `${parentIndex}-${counter++}`
           : `${counter++}`;
         this.$set(node, "index", index);
-        if (node.children && node.children.length > 0) {
-          this.generateIndexes(node.children, index);
+        // 设置 level 属性
+        this.$set(node, "level", level);
+        if (!node.id) {
+          const uniqueId = "node" + this.idCount++;
+          this.$set(node, "id", uniqueId);
+        }
+        // if (level > this.maxLevel) {
+        //   this.maxLevel = level;
+        // }
+        if (node.sections && node.sections.length > 0) {
+          this.generateIndexes(node.sections, index, level + 1);
         }
       });
     },
@@ -923,7 +1153,7 @@ export default {
     },
     updateApiGroup(data) {
       console.log(data);
-      this.generateIndexes(this.data);
+      this.generateIndexes(this.outline);
       // updateApiGroup(1, data)
       //   .then((response) => {
       //     console.log(response);
@@ -958,24 +1188,47 @@ export default {
         id: timestamp,
         isEdit: 0,
         apiGroupName: "T" + timestamp,
-        label: this.numberValidateForm.appendValue,
-        children: [],
+        title: this.numberValidateForm.appendValue,
+        summary: this.numberValidateForm.appendContent
+          ? this.numberValidateForm.appendContent
+          : "章节内容",
+        insert_code: {
+          status: false,
+          content: "",
+        },
+        insert_mermaid: {
+          status: false,
+          content: "",
+        },
+        insert_latex_formula: {
+          status: false,
+          content: "",
+        },
+        insert_table: {
+          status: false,
+          content: "",
+        },
+        insert_plot: {
+          status: false,
+          content: "",
+        },
+        sections: [],
       };
-      if (!data.children) {
-        this.$set(data, "children", []);
+      if (!data.sections) {
+        this.$set(data, "sections", []);
       }
-      data.children.push(newChild);
-      this.updateApiGroup(this.data);
+      data.sections.push(newChild);
+      this.updateApiGroup(this.outline);
       this.$refs.numberValidateForm.resetFields();
       this.editStatus = false;
     },
 
     remove(node, data) {
       const parent = node.parent;
-      const children = parent.data.children || parent.data;
-      const index = children.findIndex((d) => d.id === data.id);
-      children.splice(index, 1);
-      this.updateApiGroup(this.data);
+      const sections = parent.data.sections || parent.data;
+      const index = sections.findIndex((d) => d.id === data.id);
+      sections.splice(index, 1);
+      this.updateApiGroup(this.outline);
     },
     edit(node, data) {
       console.log(
@@ -1005,8 +1258,8 @@ export default {
         this.newlabel = "";
         this.$set(data, "isEdit", 0);
         // console.log('after:', data.id, data.label)
-        // console.log(this.data)
-        this.updateApiGroup(this.data);
+        // console.log(this.outline)
+        this.updateApiGroup(this.outline);
       }
     },
     textF() {
@@ -1071,7 +1324,7 @@ export default {
       // 接下来弹出付款二维码,走付款流程
     },
     handleDragStart(node, ev) {
-      console.log("drag start", node);
+      console.log("drag start");
     },
     handleDragEnter(draggingNode, dropNode, ev) {
       console.log("tree drag enter: ", dropNode.label);
@@ -1087,13 +1340,10 @@ export default {
     },
     handleDrop(draggingNode, dropNode, dropType, ev) {
       console.log("tree drop: ", dropNode.label, dropType);
+      this.generateIndexes(this.outline);
     },
     allowDrop(draggingNode, dropNode, type) {
-      if (dropNode.data.label === "二级 3-1") {
-        return type !== "inner";
-      } else {
-        return true;
-      }
+      return true;
     },
     numberToChinese(num) {
       const chineseNums = [
@@ -1140,7 +1390,8 @@ export default {
       return result;
     },
     allowDrag(draggingNode) {
-      return draggingNode.data.label.indexOf("三级 3-2-2") === -1;
+      console.log(draggingNode.data);
+      return draggingNode.data.title.indexOf("hahah") === -1;
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -1562,6 +1813,8 @@ export default {
   color: #1f2937;
 }
 .rightbottom {
+  color: #3355fe;
+  font-size: 18px;
 }
 .labelSpan {
   font-family: PingFangSC, PingFang SC;
