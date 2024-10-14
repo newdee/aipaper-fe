@@ -3,11 +3,17 @@
     <swiper-one class="topSwiper"></swiper-one>
     <div class="outlineTab">
       <div class="outLeft">
-        <p @click="checkoutPaper(1)" :class="['outLeftTitle', activeIndex == 1 ? 'activeLT' : '']">
+        <p
+          @click="checkoutPaper(1)"
+          :class="['outLeftTitle', activeIndex == 1 ? 'activeLT' : '']"
+        >
           降低重复率
           <span class="underLeft"></span>
         </p>
-        <p @click="checkoutPaper(2)" :class="['outLeftTitle', activeIndex == 2 ? 'activeLT' : '']">
+        <p
+          @click="checkoutPaper(2)"
+          :class="['outLeftTitle', activeIndex == 2 ? 'activeLT' : '']"
+        >
           降低AIGC率
           <span class="underLeft"></span>
         </p>
@@ -15,12 +21,28 @@
     </div>
     <div class="edit flex">
       <div class="edit-1">
-        <el-input type="textarea" :rows="15" placeholder="请输入文章段落，待降重、待降AIGC率均可，每次最多1000字" maxlength="1000"
-          show-word-limit v-model="textareaIn" resize="false" :autosize="{ minRows: 7 }">
+        <el-input
+          type="textarea"
+          :rows="15"
+          placeholder="请输入文章段落，待降重、待降AIGC率均可，每次最多1000字"
+          maxlength="1000"
+          show-word-limit
+          v-model="textareaIn"
+          resize="false"
+          :autosize="{ minRows: 7 }"
+        >
         </el-input>
         <div class="btns">
-          <el-button for="reduceRR" v-if="activeIndex == 1" type="primary" round>开始生成</el-button>
-          <el-button for="reduceAIGC" v-if="activeIndex == 2" type="primary" round>开始生成</el-button>
+          <el-button for="reduceRR" v-if="activeIndex == 1" type="primary" round
+            >开始生成</el-button
+          >
+          <el-button
+            for="reduceAIGC"
+            v-if="activeIndex == 2"
+            type="primary"
+            round
+            >开始生成</el-button
+          >
         </div>
       </div>
       <!-- <div class="edit-2 flex align-center">
@@ -40,8 +62,11 @@
         </el-button>
       </div> -->
       <div class="edit-3">
-        <textarea readonly v-model="textareaOut"
-          placeholder="请在左侧输入待降重复率、或待降AIGC率的文章段落，点击“一键降”按钮，稍等片刻，成品会显示在这里"></textarea>
+        <textarea
+          readonly
+          v-model="textareaOut"
+          placeholder="请在左侧输入待降重复率、或待降AIGC率的文章段落，点击“一键降”按钮，稍等片刻，成品会显示在这里"
+        ></textarea>
         <div class="btns">
           <el-button for="copyRes" type="primary" round>复制结果</el-button>
         </div>
@@ -51,7 +76,7 @@
 </template>
 
 <script>
-import swiperOne from "@/views/home/components/inputMain.vue";
+import swiperOne from "@/views/writepaper/components/swiperOne.vue";
 
 export default {
   name: "reduceRepetition",
@@ -95,9 +120,11 @@ export default {
   height: 300px;
   top: 0px;
   left: 0px;
-  background-image: radial-gradient(circle at 0% -230%,
-      #e4f4fe 30%,
-      transparent 55%);
+  background-image: radial-gradient(
+    circle at 0% -230%,
+    #e4f4fe 30%,
+    transparent 55%
+  );
 }
 
 .flex {
@@ -115,7 +142,7 @@ export default {
   padding-bottom: 16px;
   flex-wrap: wrap;
 
-  >div {
+  > div {
     background: #fff;
     border-radius: 12px;
     padding: 35px 35px 75px;
