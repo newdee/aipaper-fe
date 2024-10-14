@@ -47,5 +47,4 @@ export default {
 
 // 媒体查询
 // @media only screen and (max-width: 939px) {
-// }
-</style>
+// }</style>

@@ -14,7 +14,7 @@
               </div>
             </div>
           </div>
-          <div :class="['navItem', activeIndex == '1' ? 'active' : '']" @click="toView(0, '/home')">
+          <div :class="['navItem', activeIndex == '1' ? 'active' : '']" @click="toView(0, '/home/home')">
             搜论文
           </div>
           <div :class="['navItem', activeIndex == '2' ? 'active' : '']" @click="toView(1, '/main/writepaper')">
@@ -96,7 +96,7 @@
         <div class="text-main items-center siderbar-item" @click="showOrderList(2)">
           我的大纲
         </div>
-        <div class="text-main items-center siderbar-item" @click="toView(0, '/home')">
+        <div class="text-main items-center siderbar-item" @click="toView(0, '/home/home')">
           搜论文
         </div>
         <div class="text-main items-center siderbar-item" @click="toView(1, '/main/writepaper')">
