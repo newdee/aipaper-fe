@@ -1,6 +1,11 @@
 <template>
   <div class="pdfCom">
-    <canvas class="canvasClass" :id="'canvas' + item" v-for="item in pdfHTML" :key="item" />
+    <canvas
+      class="canvasClass"
+      :id="'canvas' + item"
+      v-for="item in pdfHTML"
+      :key="item"
+    />
   </div>
 </template>
 
@@ -13,14 +18,14 @@ import PDFJS from "pdfjs-dist/build/pdf.js";
 export default {
   props: {
     // 组件引入的pdf地址
-    pdfUrl: {
-      type: String,
-      default: "",
-    },
+    // pdfUrl: {
+    //   type: String,
+    //   default: "",
+    // },
   },
   data() {
     return {
-      // pdfUrl: "",
+      pdfUrl: "https://file.mixpaper.cn/pdf/third_output.pdf",
       pdfDoc: null, // pdfjs 生成的对象
       pdfHTML: 0, // pdfjs 生成的对象
     };
