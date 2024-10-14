@@ -48,15 +48,15 @@ export const constantRoutes = [
     component: () => import("@/views/dashboard/index"),
     hidden: true,
   },
-    //  {
-    //     path: "/home",
-    //    name: "/home",
-    //     component: () => import("@/views/home/index"),
-    //     meta: {
-    //       title: "home",
-    //       icon: "dashboard",
-    //     },
-    //   },
+  //  {
+  //     path: "/home",
+  //    name: "/home",
+  //     component: () => import("@/views/home/index"),
+  //     meta: {
+  //       title: "home",
+  //       icon: "dashboard",
+  //     },
+  //   },
 
   {
     path: "/",
@@ -148,6 +148,7 @@ export const constantRoutes = [
           keepAlive: true,
           title: "explore",
           icon: "table",
+          sideBarIndex: 5,
         },
       },
       {
@@ -158,6 +159,7 @@ export const constantRoutes = [
           title: "writepaper",
           keepAlive: true,
           icon: "tree",
+          sideBarIndex: 1,
         },
       },
       // 读论文
@@ -169,9 +171,11 @@ export const constantRoutes = [
           keepAlive: true,
           title: "readpaper",
           icon: "tree",
+          sideBarIndex: 2,
+          underDevelopment: true,
         },
       },
-      // 该论文
+      // 改论文
       {
         path: "amendpaper",
         name: "amendpaper",
@@ -180,6 +184,8 @@ export const constantRoutes = [
           title: "amendpaper",
           keepAlive: true,
           icon: "tree",
+          sideBarIndex: 3,
+          underDevelopment: true,
         },
       },
       // 综合服务
@@ -191,6 +197,8 @@ export const constantRoutes = [
           keepAlive: true,
           title: "integratedservices",
           icon: "tree",
+          sideBarIndex: 4,
+          underDevelopment: true,
         },
       },
       // ai工具
@@ -202,6 +210,8 @@ export const constantRoutes = [
           title: "aitools",
           keepAlive: true,
           icon: "tree",
+          sideBarIndex: 6,
+          underDevelopment: true,
         },
       },
       // 降重/降aigc率
@@ -212,6 +222,7 @@ export const constantRoutes = [
         meta: {
           title: "reduceRepetition",
           icon: "tree",
+          sideBarIndex: 7,
           keepAlive: true,
         },
       },
