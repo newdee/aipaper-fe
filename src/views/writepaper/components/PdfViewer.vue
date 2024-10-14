@@ -1,11 +1,15 @@
 <template>
   <div class="pdfCom">
-    <canvas
+    <iframe
+      src="https://file.mixpaper.cn/paper/case/4fd240e4-cad3-4e87-a8d4-1eda7a2cbe4d/second/output.pdf"
+      frameborder="0"
+    ></iframe>
+    <!-- <canvas
       class="canvasClass"
       :id="'canvas' + item"
       v-for="item in pdfHTML"
       :key="item"
-    />
+    /> -->
   </div>
 </template>
 
@@ -18,14 +22,14 @@ import PDFJS from "pdfjs-dist/build/pdf.js";
 export default {
   props: {
     // 组件引入的pdf地址
-    // pdfUrl: {
-    //   type: String,
-    //   default: "",
-    // },
+    pdfUrl: {
+      type: String,
+      default: "",
+    },
   },
   data() {
     return {
-      pdfUrl: "https://file.mixpaper.cn/pdf/third_output.pdf",
+      // pdfUrl: "",
       pdfDoc: null, // pdfjs 生成的对象
       pdfHTML: 0, // pdfjs 生成的对象
     };
