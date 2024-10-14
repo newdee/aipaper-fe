@@ -9,11 +9,6 @@
     <div class="tabsListWrapper" ref="tasListWrapper">
       <div class="tabsList">
         <div
-          @click="
-            showIndex3(
-              'https://oss.mixpaper.cn/server/third_output.pdf?Content-Disposition=attachment%3B%20filename%3D%22third_output.pdf%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=admin%2F20241013%2F%2Fs3%2Faws4_request&X-Amz-Date=20241013T115433Z&X-Amz-Expires=432000&X-Amz-SignedHeaders=host&X-Amz-Signature=1659c58c99dee4ce503374c902343693799093d70fdb6d4ac63ad378a19d41ae'
-            )
-          "
           :class="[
             'tabLi',
             activeIndex == 1 || activeIndex == 0 ? 'activeTab' : '',
@@ -73,7 +68,7 @@ export default {
   data() {
     return {
       // 定义变量
-      activeIndex: 3,
+      activeIndex: 0,
       isScrollActive: false,
       outlineData: {},
     };
@@ -118,10 +113,11 @@ export default {
         this.$scrollTo("#step1", 500, { offset: -100 });
       });
     },
-    showIndex3() {
+    showIndex3(pdfUrl) {
       console.log("showIndex3showIndex3showIndex3showIndex3");
+      // let pdfUrl =
+      // "https://file.mixpaper.cn/paper/case/4fd240e4-cad3-4e87-a8d4-1eda7a2cbe4d/second/output.pdf";
       this.activeIndex = 3;
-      let pdfUrl = "https://file.mixpaper.cn/pdf/third_output.pdf";
 
       this.$nextTick(() => {
         this.$store.dispatch("app/togglePDFUrl", pdfUrl);
