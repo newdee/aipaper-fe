@@ -24,10 +24,15 @@
           </div>
         </div>
       </div>
+      <iframe
+        :src="step3PdfUrl + '#view=FitH,top'"
+        frameborder="0"
+        style="width: 100%; height: 100%"
+      ></iframe>
     </div>
-    <div class="pdfBox">
-      <PdfViewer :pdfUrl="pdfUrl" ref="pdfViewer" />
-    </div>
+    <!-- <div class="pdfBox">
+      <PdfViewer :pdfUrl="step3PdfUrl" ref="pdfViewer" />
+    </div> -->
   </div>
 </template>
 <script>
@@ -44,7 +49,8 @@ export default {
       // 定义变量
       data: "",
       // pdfUrl: require("@/assets/third_output.pdf"),
-      pdfUrl: "https://file.mixpaper.cn/pdf/third_output.pdf",
+      pdfUrl:
+        "https://file.mixpaper.cn/paper/case/4fd240e4-cad3-4e87-a8d4-1eda7a2cbe4d/second/output.pdf",
     };
   },
   components: {
@@ -73,9 +79,7 @@ export default {
   beforeDestroy() {
     // eventBus.off("sendOutline", this.addE); // 移除事件监听
   },
-  computed: {
-    // 计算属性
-  },
+
   methods: {
     // 定义方法
     onViewFile(item) {
@@ -101,10 +105,23 @@ export default {
 .pdfBox {
 }
 .pdfShowBox {
-  min-height: 200px;
+  height: 33000px;
   background-color: #fff;
 }
-
+.iframe-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 这个比例可以根据你的需求调整 */
+  height: 0;
+  overflow: hidden;
+}
+.iframe-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 .my-bullet {
   width: 0.1rem;
   height: 0.1rem;

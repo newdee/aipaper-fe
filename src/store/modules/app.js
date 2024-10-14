@@ -34,6 +34,7 @@ const mutations = {
     state.device = device;
   },
   TOGGLE_PDF: (state, step3PdfUrl) => {
+    console.log("ddd", state, step3PdfUrl);
     state.step3PdfUrl = step3PdfUrl;
   },
   TOGGLE_FORM: (state, requestForm) => {
@@ -57,8 +58,8 @@ const actions = {
   toggleDevice({ commit }, device) {
     commit("TOGGLE_DEVICE", device);
   },
-  togglePDFUrl({ commit }, device) {
-    commit("TOGGLE_PDF", device);
+  togglePDFUrl({ commit }, str) {
+    commit("TOGGLE_PDF", str);
   },
   setHomeData({ commit }, data) {
     commit("SET_HOME_DATA", data);

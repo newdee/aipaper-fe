@@ -171,9 +171,9 @@ export default {
             this.listData = order_item_response; // 假设这里是你想更新的数据
             this.isPolling = false;
             eventBus.emit("pdfSuccessClick", realUrl); // 发布事件
-            this.$nextTick(() => {
-              this.$store.dispatch("app/togglePDFUrl", realUrl);
-            });
+            // this.$nextTick(() => {
+            //   this.$store.dispatch("app/togglePDFUrl", realUrl);
+            // });
           }
         })
         .catch((error) => {
