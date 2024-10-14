@@ -44,7 +44,7 @@ export default {
       // 定义变量
       data: "",
       // pdfUrl: require("@/assets/third_output.pdf"),
-      pdfUrl: "",
+      pdfUrl: "https://file.mixpaper.cn/pdf/third_output.pdf",
     };
   },
   components: {

@@ -133,7 +133,7 @@ export default {
     // 定义方法
     getList() {
       let data = {
-        page_size: 10,
+        page_size: 100,
       };
       getOrderList(data).then((res) => {
         console.log("res", res);

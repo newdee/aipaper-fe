@@ -147,7 +147,7 @@ export default {
         threeCon: false,
         language: "中文",
         type: "专科/本科",
-        field: "哲学类",
+        field: ["哲学", "哲学类"],
         key: "",
       },
       index: 1,
@@ -218,7 +218,7 @@ export default {
         let data = {
           title: this.requestForm.title,
           language: this.requestForm.language,
-          field: this.requestForm.field,
+          field: this.requestForm.field[1],
           // type: this.requestForm.type,
           type: "本科",
         };

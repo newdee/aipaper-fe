@@ -39,7 +39,7 @@
 // import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
-// import eventBus from "@/utils/eventBus";
+import eventBus from "@/utils/eventBus";
 import polling from "@/utils/get-order-detail.js";
 import { getOrder, orderDetailById } from "@/api/user";
 
@@ -118,8 +118,15 @@ export default {
      * 获取列表数据，支持轮询
      * @param {Object} data 请求参数
      * @param {Number} delay 轮询间隔时间，默认2000ms
+     * @param {Number} maxRetries 最大重试次数，默认为5次
+     * @param {Number} currentRetry 当前重试次数，默认为0
      */
-    getList(data, delay = this.pollingInterval) {
+    getList(
+      data,
+      delay = this.pollingInterval,
+      maxRetries = 5,
+      currentRetry = 0
+    ) {
       console.log("执行一次");
       if (this.isPolling) {
         console.warn("轮询正在进行中...");
@@ -143,9 +150,6 @@ export default {
             console.log("case", order_item_response[0].case.paper_case.stage);
             if (order_item_response[0].case.paper_case.stage == 2) {
               this.caseStatus = false;
-              let pdfUrl =
-                "https://oss.mixpaper.cn/server/third_output.pdf?Content-Disposition=attachment%3B%20filename%3D%22third_output.pdf%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=admin%2F20241013%2F%2Fs3%2Faws4_request&X-Amz-Date=20241013T115433Z&X-Amz-Expires=432000&X-Amz-SignedHeaders=host&X-Amz-Signature=1659c58c99dee4ce503374c902343693799093d70fdb6d4ac63ad378a19d41ae";
-              store.dispatch("app/togglePDFUrl", pdfUrl);
             }
           }
 
@@ -153,18 +157,38 @@ export default {
             // 如果满足继续轮询的条件，则设置延时后再次调用此方法
             let _this = this;
             setTimeout(() => {
-              _this.getList(data, delay);
+              _this.getList(data, delay, maxRetries, currentRetry);
             }, delay);
           } else {
-            alert("论文生成了");
+            // 请求成功, 激活tab3
+
+            let pdfUrl = "https://file.mixpaper.cn/pdf/third_output.pdf";
+            let pdfUrl2 = order_item_response[0].case.file_urls.pdf;
+            let realUrl = pdfUrl2 ? pdfUrl2 : pdfUrl;
+            console.log("realUrl", realUrl);
+
             // 满足停止轮询的条件，更新数据并结束轮询
             this.listData = order_item_response; // 假设这里是你想更新的数据
             this.isPolling = false;
+            eventBus.emit("pdfSuccessClick", realUrl); // 发布事件
+            this.$nextTick(() => {
+              this.$store.dispatch("app/togglePDFUrl", realUrl);
+            });
           }
         })
         .catch((error) => {
           console.error("请求失败", error);
-          this.isPolling = false; // 出现错误也要停止轮询
+          if (currentRetry + 1 < maxRetries) {
+            // 如果当前重试次数小于最大重试次数，则等待一段时间后再次尝试
+            let _this = this;
+            setTimeout(() => {
+              _this.getList(data, delay, maxRetries, currentRetry + 1);
+            }, delay);
+          } else {
+            // 如果已经达到最大重试次数，则停止轮询
+            this.isPolling = false;
+            console.error("达到最大重试次数，停止轮询");
+          }
         });
     },
     getDetail(index) {
