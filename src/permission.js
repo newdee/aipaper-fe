@@ -13,7 +13,7 @@ NProgress.configure({
 const whiteList = [
   "/login",
   "/home",
-  '/home/home',
+  "/home/home",
   "/paperPreview",
   "/main",
   "/reduceRepetition",
@@ -37,7 +37,21 @@ const whiteList = [
 router.beforeEach(async (to, from, next) => {
   // start progress bar
   NProgress.start();
-
+  if (to.path == "/main/explore") {
+    store.dispatch("app/setActiveSidebar", 5);
+  } else if (to.path == "/main/writepaper") {
+    store.dispatch("app/setActiveSidebar", 1);
+  } else if (to.path == "/main/readpaper") {
+    store.dispatch("app/setActiveSidebar", 2);
+  } else if (to.path == "/main/amendpaper") {
+    store.dispatch("app/setActiveSidebar", 3);
+  } else if (to.path == "/main/integratedservices") {
+    store.dispatch("app/setActiveSidebar", 4);
+  } else if (to.path == "/main/aitools") {
+    store.dispatch("app/setActiveSidebar", 6);
+  } else if (to.path == "/main/reduceRepetition") {
+    store.dispatch("app/setActiveSidebar", 7);
+  }
   // set page title
   document.title = getPageTitle(to.meta.title);
 
