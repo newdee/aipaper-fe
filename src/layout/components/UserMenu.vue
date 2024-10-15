@@ -41,6 +41,10 @@
                 <i class="el-icon-tickets"></i>
                 我的大纲
               </div>
+              <div class="menuItem" @click="$jumpUrl('/user/promotion')">
+                <i class="el-icon-tickets"></i>
+                我的推广
+              </div>
             </div>
             <div class="menuGroup menuAboutMixPaper">
               <div class="menuItem" @click="$devf">

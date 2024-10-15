@@ -16,6 +16,10 @@ import "@/icons"; // icon
 import "@/permission"; // permission control
 import "@/utils/rem";
 import "@/assets/js/iconfont";
+import * as filters from "./filters"; // global filters
+Object.keys(filters).forEach((key) => {
+  Vue.filter(key, filters[key]);
+});
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -43,7 +47,7 @@ import VueAwesomeSwiper from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
 Vue.use(VueAwesomeSwiper /* { default options with global component } */);
 
-import GlobalMethodsPlugin from '@/utils/globalMethods';
+import GlobalMethodsPlugin from "@/utils/globalMethods";
 Vue.use(GlobalMethodsPlugin);
 
 Vue.config.productionTip = false;

@@ -129,6 +129,23 @@ export const constantRoutes = [
     ],
     hidden: true,
   },
+  {
+    path: "/user",
+    component: Layout,
+    children: [
+      {
+        path: "promotion",
+        name: "promotion",
+        component: () => import("@/views/user/index.vue"),
+
+        meta: {
+          title: "promotion",
+          icon: "dashboard",
+        },
+      },
+    ],
+    hidden: true,
+  },
 
   {
     path: "/main",
