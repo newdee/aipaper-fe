@@ -2,7 +2,9 @@
   <div class="step2Box">
     <div id="top" class="outLineTitle">
       <p class="oulineTitlePaper"><span>题目: </span>{{ requestForm.title }}</p>
-      <p class="outlineTitleDesc"><span>科目: </span>{{ requestForm.field }}</p>
+      <p class="outlineTitleDesc">
+        <span>科目: </span>{{ requestForm.field[1] }}
+      </p>
     </div>
     <!-- 大纲 -->
     <!-- {{ outlineData }} -->

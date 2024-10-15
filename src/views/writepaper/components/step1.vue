@@ -13,7 +13,9 @@
     <!-- 论文标题
         -->
     <p class="oulineTitlePaper"><span>题目: </span>{{ requestForm.title }}</p>
-    <p class="outlineTitleDesc"><span>科目: </span>{{ requestForm.field }}</p>
+    <p class="outlineTitleDesc">
+      <span>科目: </span>{{ requestForm.field[1] }}
+    </p>
     <!-- 页面名称 -->
     <div class="progressBox">
       <div class="pgBoxEl">
