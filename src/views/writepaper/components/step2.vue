@@ -46,7 +46,7 @@
       </div>
 
       <el-tree
-        :data="outline"
+        :data="outlineData"
         node-key="id"
         :props="defaultProps"
         default-expand-all
