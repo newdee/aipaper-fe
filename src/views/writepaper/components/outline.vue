@@ -231,7 +231,7 @@ export default {
           this.requestKey = res.result.key;
           // this.requestKey = "eb3a2422-301c-47ba-be1f-7c334e15c655";
           // TODO: 生成大纲
-          polling({ key: this.requestKey }, 300000).then((res) => {
+          polling({ key: this.requestKey }, 3000).then((res) => {
             console.log("ddddd", res);
             eventBus.emit("successOutline", res); // 发布事件
           });
