@@ -17,6 +17,7 @@
   "dependencies": {
     "axios": "0.18.1",
     "core-js": "3.6.5",
+    "echarts": "^4.2.1",
     "element-ui": "2.13.2",
     "js-cookie": "2.2.0",
     "mitt": "^3.0.1",
@@ -28,6 +29,7 @@
     "swiper": "^5.4.5",
     "vue": "^2.6.10",
     "vue-awesome-swiper": "^2.6.7",
+    "vue-count-to": "^1.0.13",
     "vue-router": "3.0.6",
     "vue-scrollto": "^2.20.0",
     "vue-splitpane": "^1.0.6",

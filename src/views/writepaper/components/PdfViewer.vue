@@ -1,9 +1,9 @@
 <template>
   <div class="pdfCom">
-    <iframe
+    <!-- <iframe
       src="https://file.mixpaper.cn/paper/case/4fd240e4-cad3-4e87-a8d4-1eda7a2cbe4d/second/output.pdf"
       frameborder="0"
-    ></iframe>
+    ></iframe> -->
     <!-- <canvas
       class="canvasClass"
       :id="'canvas' + item"

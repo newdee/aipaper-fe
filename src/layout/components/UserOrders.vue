@@ -19,25 +19,32 @@
           <div class="orderNum rowBetween">
             <!-- <div class="left">订单号：{{ orderObj.order.out_trade_no }}</div> -->
             <div class="left"></div>
-            <div class="right">时间：{{ orderObj.order.created_at }}</div>
+            <div class="right">
+              时间：{{ orderObj.order.created_at | dateFormatter }}
+            </div>
           </div>
-          <template v-for="(item, j) in orderObj.order_item_response">
-            <div class="orderTitle" :key="item.paper.title + j">
-              {{ item.paper.title }}
-            </div>
-            <div
-              class="orderText rowBetween handleRow"
-              :key="item.product.id + j"
-            >
-              <div class="left">{{ item.product.name }}</div>
-              <div class="right">
-                <span class="handle">下载</span>
-                <svg class="icon svg-icon" aria-hidden="true">
-                  <use xlink:href="#icon-download"></use>
-                </svg>
+          <div v-if="orderObj.order_item_response.length > 0">
+            <template v-for="(item, j) in orderObj.order_item_response">
+              <div class="orderTitle" :key="'case2' + j">
+                论文题目: {{ item.case.paper_case.title }}
               </div>
-            </div>
-          </template>
+              <div class="orderTitle" :key="'case3' + j">
+                生成状态: {{ item.case.paper_case.stage }}
+              </div>
+              <div class="orderTitle" :key="'title' + j">
+                {{ item.product.name }}
+              </div>
+              <div class="orderText rowBetween handleRow" :key="'case' + j">
+                <div class="left">{{ item.product.name }}</div>
+                <div class="right">
+                  <span class="handle">下载</span>
+                  <svg class="icon svg-icon" aria-hidden="true">
+                    <use xlink:href="#icon-download"></use>
+                  </svg>
+                </div>
+              </div>
+            </template>
+          </div>
           <!-- <div class="orderOutline rowBetween handleRow">
             <div class="left">[本科·约2万字]</div>
             <div class="right">
@@ -57,7 +64,7 @@
             </div>
           </div> -->
           <div class="orderText rowBetween handleRow">
-            <div class="left">订单价格</div>
+            <div class="left">订单价格:</div>
             <div class="right">
               <span class="price">￥{{ orderObj.order.total_price }}</span>
               <span
@@ -137,11 +144,7 @@ export default {
       };
       getOrderList(data).then((res) => {
         console.log("res", res);
-        this.orderList = res.result;
-        let data = res.result;
-        if (Object.keys(data).length > 0) {
-          this.orderList = data.order_resp_list || [];
-        }
+        this.orderList = res.result.order_resp_list;
       });
     },
   },
