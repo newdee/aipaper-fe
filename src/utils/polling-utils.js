@@ -24,7 +24,7 @@ export default function polling(
           }, delay);
         } else {
           // 如果不是生成中状态，则解析结果
-          resolve(res);
+          resolve(res.result.outline.outline);
         }
       })
       .catch((error) => {

@@ -70,7 +70,7 @@ export default {
       // 定义变量
       activeIndex: 0,
       isScrollActive: false,
-      outlineData: {},
+      outlineData: [],
     };
   },
   components: {
@@ -109,7 +109,7 @@ export default {
       this.activeIndex = 1;
       this.$nextTick(() => {
         // TODO: 计时器时间 大纲 生成
-        eventBus.emit("beginTime", 120);
+        eventBus.emit("beginTime", 500);
         this.$scrollTo("#step1", 500, { offset: -100 });
       });
     },
