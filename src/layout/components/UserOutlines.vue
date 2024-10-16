@@ -2,29 +2,25 @@
   <div class="ordersList">
     <div class="btns">
       <el-button type="primary" round @click="delList">删除大纲</el-button>
-      <el-button type="primary" round @click="getList">刷新大纲</el-button>
+      <el-button type="primary" round @click="refresh">刷新大纲</el-button>
     </div>
     <!-- 大纲列表 -->
     <el-checkbox-group v-model="checkList" @change="handleCheckAllChange">
-      <div
-        class="orderBox"
-        v-for="(orderObj, index) in orderList"
-        :key="index + 'outline'"
-      >
-        <el-checkbox
-          :label="orderObj.order.id"
-          :value="orderObj.order.id"
-        ></el-checkbox>
+      <div class="orderBox" v-for="(orderObj, index) in orderList" :key="index + 'outline'">
+        <el-checkbox :label="orderObj.id" :value="orderObj.id"></el-checkbox>
         <div class="order">
           <div class="orderNum rowBetween">
             <!-- <div class="left">大纲号：{{ orderObj.order.out_trade_no }}</div> -->
             <div class="left"></div>
-            <div class="right">时间：{{ orderObj.order.created_at }}</div>
+            <div class="right">时间：
+              <!-- {{ orderObj.created_at | dateFormatter }} -->
+              <!-- 创建时间还是生成时间? -->
+            </div>
           </div>
           <div>
-            <div class="orderTitle">大纲名称: 大纲名称大纲名称</div>
+            <div class="orderTitle">{{ orderObj.title }}</div>
             <div class="orderText rowBetween handleRow">
-              <div class="left">大纲状态:已生成</div>
+              <div class="left">大纲状态：{{ orderObj.status }}</div>
               <div class="right">
                 <i class="el-icon-view"></i>
                 <span class="handle">查看大纲</span>
@@ -49,6 +45,11 @@
         </div>
       </div>
     </el-checkbox-group>
+    <div class="block">
+      <el-pagination :small="true" layout="total, prev, pager, next" :total="page.total" :page-size="page.page_size"
+        :current-page="page.page_num" @current-change="handleCurrentChange">
+      </el-pagination>
+    </div>
   </div>
 </template>
 <script>
@@ -56,7 +57,8 @@
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 import { getList } from "@/api/table";
-import { getOrderList, delOrder } from "@/api/user";
+import { getOutlineList } from "@/api/user";
+import { throttle } from 'lodash';
 
 export default {
   name: "UserOrders",
@@ -71,6 +73,11 @@ export default {
       // 定义变量
       checkList: [],
       orderList: [],
+      page: {
+        page_num: 0,
+        page_size: 5,
+        total: null
+      }
     };
   },
   components: {
@@ -81,18 +88,21 @@ export default {
     listId(newVal, oldVal) {
       console.log("listId changed from " + oldVal + " to " + newVal);
       // 在这里处理listId变化后需要做的事情
-      this.getList();
+      this.handleCurrentChange(1);
     },
   },
   mounted() {
     // 页面初始化
-    this.getList();
+    this.handleCurrentChange(1);
   },
 
   computed: {
     // 计算属性
   },
   methods: {
+    refresh() {
+      this.handleCurrentChange(1);
+    },
     handleCheckAllChange(val) {
       if (val.length > 1) {
         this.$message({
@@ -104,24 +114,26 @@ export default {
     },
     delList() {
       console.log(this.checkList);
-      delOrder(this.checkList).then((res) => {
-        console.log(res);
-      });
+      // delOrder(this.checkList).then((res) => {
+      //   console.log(res);
+      // });
     },
-    // 定义方法
-    getList() {
-      let data = {
-        page_size: 10,
-      };
-      getOrderList(data).then((res) => {
-        console.log("res", res);
-        this.orderList = res.result;
+    handleCurrentChange: throttle(function (newPage) {
+      console.log('当前页:', newPage);
+      // 这里可以添加你的分页逻辑，例如发送请求获取新的数据
+      let params = {
+        page_num: newPage,
+        page_size: this.page.page_size
+      }
+      getOutlineList(params).then((res) => {
         let data = res.result;
         if (Object.keys(data).length > 0) {
-          this.orderList = data.order_resp_list || [];
+          this.orderList = data.outline_list || [];
+          this.page.page_num = data.page_num;
+          this.page.total = data.total;
         }
       });
-    },
+    }, 300), // 300毫秒内最多执行一次
   },
 };
 </script>
@@ -140,10 +152,13 @@ export default {
   overflow: auto;
   padding-right: 10px;
 }
+
 /* 整个滚动条 */
 .ordersList::-webkit-scrollbar {
-  width: 8px; /* 滚动条宽度 */
-  background-color: #f5f5f5; /* 背景颜色 */
+  width: 8px;
+  /* 滚动条宽度 */
+  background-color: #f5f5f5;
+  /* 背景颜色 */
 }
 
 /* 滚动条轨道 */
@@ -162,6 +177,7 @@ export default {
 .ordersList::-webkit-scrollbar-thumb:hover {
   background-color: #666;
 }
+
 .orderBox {
   display: flex;
   flex-wrap: nowrap;
@@ -169,6 +185,7 @@ export default {
   align-items: center;
   margin-bottom: 15px;
 }
+
 .orderBox .order {
   display: block;
   flex-grow: 1;
@@ -180,37 +197,46 @@ export default {
   border-radius: 5px;
   margin-left: 10px;
 }
+
 .orderBox ::v-deep .el-checkbox .el-checkbox__label {
   display: none;
 }
+
 .rowBetween {
   display: flex;
   justify-content: space-between;
   line-height: 2em;
 }
+
 .rowBetween .left {
   color: #666;
 }
+
 .rowBetween .right {
   color: #409eff;
 }
+
 .orderNum.rowBetween div {
   color: #999;
   font-size: 12px;
 }
+
 .orderTitle {
   color: #202020;
   font-weight: 600;
 }
+
 .handleRow:not(:last-child) {
   border-bottom: var(--border-bottom);
   margin-bottom: 10px;
 }
+
 .btns {
   text-align: right;
   // border-top: var(--border-bottom);
   padding: 15px 0;
 }
+
 .handle {
   cursor: pointer;
   margin-left: 5px;
