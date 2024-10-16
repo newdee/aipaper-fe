@@ -82,3 +82,11 @@ export function logout() {
     method: "post",
   });
 }
+
+export function getOutlineList(params) {
+  return request({
+    url: "/api/ai-paper/paper/outline/list",
+    method: "get",
+    params,
+  });
+}

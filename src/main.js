@@ -4,7 +4,6 @@ import "normalize.css/normalize.css"; // A modern alternative to CSS resets
 
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
-import locale from "element-ui/lib/locale/lang/en"; // lang i18n
 import "element-ui/lib/theme-chalk/display.css";
 import "@/styles/index.scss"; // global css
 
@@ -32,7 +31,7 @@ if (process.env.NODE_ENV === "production") {
   const { mockXHR } = require("../mock");
   mockXHR();
 }
-
+import locale from 'element-ui/lib/locale/lang/zh-CN';
 // set ElementUI lang to EN
 Vue.use(ElementUI, {
   locale,

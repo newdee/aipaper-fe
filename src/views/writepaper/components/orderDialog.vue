@@ -83,7 +83,7 @@ export default {
         // 在这里执行你需要的操作
         this.ownPayStatus = newVal;
         if (newVal) {
-          this.addE(600);
+          this.addE(1500);
         }
       },
       immediate: true, // 立即触发一次监听器
@@ -148,8 +148,12 @@ export default {
           let caseStatus = true;
           if (order_item_response.length > 0) {
             console.log("case", order_item_response[0].case.paper_case.stage);
+            console.log(
+              "case",
+              order_item_response[0].case.paper_case.stage == 2
+            );
             if (order_item_response[0].case.paper_case.stage == 2) {
-              this.caseStatus = false;
+              caseStatus = false;
             }
           }
 
@@ -194,7 +198,7 @@ export default {
     getDetail(index) {
       console.log("d1111", this.requestKey);
       if (this.requestKey) {
-        this.getList({ key: this.requestKey }, 3000);
+        this.getList({ key: this.requestKey }, 10000);
         // polling({ key: this.requestKey }, 3000).then((res) => {
         //   // TODO: 获取pdf链接及word链接
         //   console.log("ddddd", res);
