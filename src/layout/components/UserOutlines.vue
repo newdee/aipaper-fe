@@ -6,14 +6,19 @@
     </div>
     <!-- 大纲列表 -->
     <el-checkbox-group v-model="checkList" @change="handleCheckAllChange">
-      <div class="orderBox" v-for="(orderObj, index) in orderList" :key="index + 'outline'">
+      <div
+        class="orderBox"
+        v-for="(orderObj, index) in orderList"
+        :key="index + 'outline'"
+      >
         <el-checkbox :label="orderObj.id" :value="orderObj.id"></el-checkbox>
         <div class="order">
           <div class="orderNum rowBetween">
             <!-- <div class="left">大纲号：{{ orderObj.order.out_trade_no }}</div> -->
             <div class="left"></div>
-            <div class="right">时间：
-              <!-- {{ orderObj.created_at | dateFormatter }} -->
+            <div class="right">
+              时间：
+              {{ orderObj.updated_at | dateFormatter }}
               <!-- 创建时间还是生成时间? -->
             </div>
           </div>
@@ -21,7 +26,7 @@
             <div class="orderTitle">{{ orderObj.title }}</div>
             <div class="orderText rowBetween handleRow">
               <div class="left">大纲状态：{{ orderObj.status }}</div>
-              <div class="right">
+              <div class="right" @click="jumpStep2(orderObj)">
                 <i class="el-icon-view"></i>
                 <span class="handle">查看大纲</span>
               </div>
@@ -30,7 +35,12 @@
 
           <div class="orderText rowBetween handleRow">
             <div class="left">
-              大纲价格<span class="price">￥: 0.01元</span>
+              类型:
+              <span class="price">{{ orderObj.type }}</span>
+            </div>
+            <div class="left">
+              科目:
+              <span class="price">{{ orderObj.field }}</span>
             </div>
             <div class="right">
               <!-- <span class="price">￥: 0.01元</span> -->
@@ -46,8 +56,15 @@
       </div>
     </el-checkbox-group>
     <div class="block">
-      <el-pagination :small="true" layout="total, prev, pager, next" :total="page.total" :page-size="page.page_size"
-        :current-page="page.page_num" @current-change="handleCurrentChange">
+      <el-pagination
+        background
+        small
+        layout="total, prev, pager, next"
+        :total="page.total"
+        :page-size="page.page_size"
+        :current-page="page.page_num"
+        @current-change="handleCurrentChange"
+      >
       </el-pagination>
     </div>
   </div>
@@ -58,7 +75,7 @@
 // import webinfo from "@/components/webinfo.vue";
 import { getList } from "@/api/table";
 import { getOutlineList } from "@/api/user";
-import { throttle } from 'lodash';
+import { throttle } from "lodash";
 
 export default {
   name: "UserOrders",
@@ -76,8 +93,8 @@ export default {
       page: {
         page_num: 0,
         page_size: 5,
-        total: null
-      }
+        total: null,
+      },
     };
   },
   components: {
@@ -100,6 +117,14 @@ export default {
     // 计算属性
   },
   methods: {
+    jumpStep2(row) {
+      console.log("row-------------", row);
+      // row.key1
+      this.$router.push({
+        path: "/main/writepaper",
+        query: { key1: row.key1, field: row.field },
+      });
+    },
     refresh() {
       this.handleCurrentChange(1);
     },
@@ -119,17 +144,17 @@ export default {
       // });
     },
     handleCurrentChange: throttle(function (newPage) {
-      console.log('当前页:', newPage);
+      console.log("当前页:", newPage);
       // 这里可以添加你的分页逻辑，例如发送请求获取新的数据
       let params = {
         page_num: newPage,
-        page_size: this.page.page_size
-      }
+        page_size: this.page.page_size,
+      };
       getOutlineList(params).then((res) => {
         let data = res.result;
         if (Object.keys(data).length > 0) {
           this.orderList = data.outline_list || [];
-          this.page.page_num = data.page_num;
+          this.page.page_num = data.page_num - 0;
           this.page.total = data.total;
         }
       });
@@ -224,6 +249,7 @@ export default {
 .orderTitle {
   color: #202020;
   font-weight: 600;
+  margin-top: 15px;
 }
 
 .handleRow:not(:last-child) {
@@ -240,5 +266,8 @@ export default {
 .handle {
   cursor: pointer;
   margin-left: 5px;
+}
+.price {
+  color: #303133;
 }
 </style>

@@ -20,7 +20,7 @@
         <div class="paperProgress">
           <el-progress type="circle" :percentage="currentNumber"></el-progress>
         </div>
-        <p class="dialog-text">正文生成中, 预计时间五分钟, 请稍等</p>
+        <p class="dialog-text">正文生成中, 预计时间30分钟, 请稍等</p>
         <p class="dialog-text">
           如您关闭此弹窗,请在
           <span class="dialog_pay_text">我的订单</span>

@@ -21,6 +21,10 @@ export default {
   created() {
     // 添加 beforeunload 事件监听器
     window.addEventListener("beforeunload", this.handleBeforeUnload);
+    let _this = this;
+    setTimeout(() => {
+      _this.closePage();
+    }, 5000);
   },
   beforeDestroy() {
     // 移除 beforeunload 事件监听器

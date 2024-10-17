@@ -29,9 +29,9 @@
         <div class="formItemCon">
           <el-select v-model="requestForm.language" placeholder="请选择">
             <el-option
-              v-for="item in options"
+              v-for="item in homeData.language_list"
               :key="item.value"
-              :label="item.label"
+              :label="item.language"
               :value="item.value"
             >
             </el-option>
@@ -141,6 +141,8 @@ export default {
   name: "outline",
   data() {
     return {
+      // 是否点击大纲
+      sendStatus: false,
       // 定义变量
       requestForm: {
         title: "",
@@ -196,6 +198,16 @@ export default {
   },
   methods: {
     sendOutlineForm() {
+      // TODO: 重置按钮状态
+      if (!this.sendStatus) {
+        this.sendStatus = true;
+      } else {
+        this.$message({
+          type: "warning",
+          message: "大纲生成中,请勿重复点击!",
+        });
+        return false;
+      }
       // 判断是否登录,否则跳转到登录页面
       const hasToken = getToken();
       if (hasToken) {
@@ -233,7 +245,11 @@ export default {
           // TODO: 生成大纲
           polling({ key: this.requestKey }, 5000).then((res) => {
             console.log("ddddd", res);
-            eventBus.emit("successOutline", res); // 发布事件
+            if (res.result.status == "生成失败") {
+              eventBus.emit("errorOutline", res); // 发布事件
+            } else {
+              eventBus.emit("successOutline", res); // 发布事件
+            }
           });
         });
       } else {

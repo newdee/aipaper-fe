@@ -62,6 +62,7 @@ import step3 from "./components/step3.vue";
 import { getHomeInfo } from "@/api/user";
 import eventBus from "@/utils/eventBus";
 import emitter from "@/utils/eventBus";
+import { outlineStatus } from "@/api/user";
 
 export default {
   name: "writepaper",
@@ -125,6 +126,8 @@ export default {
     },
     showOutLine(data) {
       console.log("indexOutline", data);
+      this.outlineData = {};
+
       this.outlineData = data;
       this.tabsClick(2);
     },
@@ -158,6 +161,30 @@ export default {
     eventBus.off("pdfSuccessClick", this.showIndex3); // 订阅事件
 
     window.removeEventListener("scroll", this.handleScroll);
+  },
+  beforeRouteUpdate(to, from, next) {
+    // 当路由的查询参数发生变化时，这个方法会被调用
+    // this.activeIndex = to.query.activeIndex || 0;
+    if (to.query.key1) {
+      let data = {
+        key: to.query.key1,
+      };
+      outlineStatus(data).then((res) => {
+        this.showOutLine(res.result.outline.outline);
+        // 复现大纲接口
+        let data = {
+          title: res.result.title,
+          language: res.result.language,
+          field: to.query.field,
+          // type: this.requestForm.type,
+          key: to.query.key1,
+          type: "本科",
+        };
+        this.$store.dispatch("app/setRequestForm", data);
+      });
+    }
+    console.log("Query parameter changed:", to.query);
+    next();
   },
 };
 </script>
