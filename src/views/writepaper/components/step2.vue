@@ -48,7 +48,7 @@
       </div>
 
       <el-tree
-        :data="outlineData"
+        :data="outline"
         node-key="id"
         :props="defaultProps"
         default-expand-all
@@ -1061,6 +1061,15 @@ export default {
     outlineData: {
       type: Object,
       require: true,
+    },
+  },
+  watch: {
+    outlineData: {
+      deep: true,
+      immediate: true,
+      handler(val) {
+        this.outline = val;
+      },
     },
   },
   components: {
