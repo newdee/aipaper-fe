@@ -6,8 +6,15 @@
     </div>
     <!-- 订单列表 -->
     <el-checkbox-group v-model="checkList" @change="handleCheckAllChange">
-      <div class="orderBox" v-for="(orderObj, i) in orderList" :key="orderObj.order.id + '-' + i">
-        <el-checkbox :label="orderObj.order.id" :value="orderObj.order.id"></el-checkbox>
+      <div
+        class="orderBox"
+        v-for="(orderObj, i) in orderList"
+        :key="orderObj.order.id + '-' + i"
+      >
+        <el-checkbox
+          :label="orderObj.order.id"
+          :value="orderObj.order.id"
+        ></el-checkbox>
         <div class="order">
           <div class="orderNum rowBetween">
             <!-- <div class="left">订单号：{{ orderObj.order.out_trade_no }}</div> -->
@@ -60,16 +67,27 @@
             <div class="left">订单价格:</div>
             <div class="right">
               <span class="price">￥{{ orderObj.order.total_price }}</span>
-              <span class="handle" v-if="orderObj.order.payment_status == 'WAIT_BUYER_PAY'"
-                style="color: crimson">去支付</span>
+              <span
+                class="handle"
+                v-if="orderObj.order.payment_status == 'WAIT_BUYER_PAY'"
+                style="color: crimson"
+                >去支付</span
+              >
             </div>
           </div>
         </div>
       </div>
     </el-checkbox-group>
     <div class="block">
-      <el-pagination :small="true" layout="total, prev, pager, next" :total="page.total" :page-size="page.page_size"
-        :current-page="page.page_num" @current-change="handleCurrentChange">
+      <el-pagination
+        background
+        small
+        layout="total, prev, pager, next"
+        :total="page.total"
+        :page-size="page.page_size"
+        :current-page="page.page_num"
+        @current-change="handleCurrentChange"
+      >
       </el-pagination>
     </div>
   </div>
@@ -80,7 +98,7 @@
 // import webinfo from "@/components/webinfo.vue";
 import { getList } from "@/api/table";
 import { getOrderList, delOrder } from "@/api/user";
-import { throttle } from 'lodash';
+import { throttle } from "lodash";
 
 export default {
   name: "UserOrders",
@@ -98,8 +116,8 @@ export default {
       page: {
         page_num: 0,
         page_size: 5,
-        total: null
-      }
+        total: null,
+      },
     };
   },
   components: {
@@ -141,17 +159,17 @@ export default {
       });
     },
     handleCurrentChange: throttle(function (newPage) {
-      console.log('当前页:', newPage);
+      console.log("当前页:", newPage);
       // 这里可以添加你的分页逻辑，例如发送请求获取新的数据
       let params = {
         page_num: newPage,
-        page_size: this.page.page_size
-      }
+        page_size: this.page.page_size,
+      };
       getOrderList(params).then((res) => {
         let data = res.result;
         if (Object.keys(data).length > 0) {
           this.orderList = res.result.order_resp_list || [];
-          this.page.page_num = data.page_num;
+          this.page.page_num = data.page_num - 0;
           this.page.total = data.total;
         }
       });
@@ -210,6 +228,7 @@ export default {
 
 .orderBox .order {
   display: block;
+
   flex-grow: 1;
   height: fit-content;
   font-size: 14px;

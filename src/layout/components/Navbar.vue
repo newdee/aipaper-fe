@@ -463,7 +463,6 @@ export default {
 
 .mobile .navbarHome {
   height: 50px !important;
-  overflow: hidden;
 
   .logoL {
     height: 24px;

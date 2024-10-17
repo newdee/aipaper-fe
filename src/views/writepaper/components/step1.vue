@@ -17,7 +17,7 @@
       <span>科目: </span>{{ requestForm.field[1] }}
     </p>
     <!-- 页面名称 -->
-    <div class="progressBox">
+    <div v-if="errLineStatus" class="progressBox">
       <div class="pgBoxEl">
         <el-progress
           :text-inside="true"
@@ -26,10 +26,13 @@
           :width="150"
         ></el-progress>
         <div class="progressText">
-          <p>大纲生成<i class="el-icon-loading"></i></p>
+          <p>{{ outlineStatusText }}<i class="el-icon-loading"></i></p>
           <p class="progressNumber">{{ currentNumber }}%</p>
         </div>
       </div>
+    </div>
+    <div v-else class="errText outlineTitleDesc">
+      <p>大纲生成失败, 请重试...</p>
     </div>
     <!-- 滚动标签 -->
     <div id="step1"></div>
@@ -49,9 +52,12 @@ export default {
     return {
       // 定义变量
       currentNumber: 0,
+      errLineStatus: true,
       title: "艺术批评的时间作用及发展历程",
       descri: "1201 艺术学理论类",
       intervalId: null,
+      currentIndex: 0,
+      textArr: ["分析题目", "检索文献", "AI创作", "规划章节", "生成大纲."],
     };
   },
   components: {
@@ -62,23 +68,35 @@ export default {
     // 页面初始化
   },
   created() {
+    eventBus.on("errorOutline", this.errLine); // 订阅事件
+
     eventBus.on("beginTime", this.addE); // 订阅事件
   },
   beforeDestroy() {
+    eventBus.off("errorOutline", this.errLine); // 移除事件监听
     eventBus.off("beginTime", this.addE); // 移除事件监听
   },
   computed: {
     ...mapGetters(["requestForm"]),
     // 计算属性
+    outlineStatusText() {
+      return this.textArr[this.currentIndex];
+    },
   },
   methods: {
+    errLine() {
+      clearInterval(this.intervalId); // 达到目标数字时清除定时器
+      this.errLineStatus = false;
+    },
     // 定义方法
     // 生成大纲
     addE(index) {
+      this.errLineStatus = true;
       clearInterval(this.intervalId); // 达到目标数字时清除定时器
       this.currentNumber = 0;
       this.countUpToHundred(index);
     },
+
     countUpToHundred(seconds) {
       this.currentNumber = 0;
       const targetNumber = 99;
@@ -89,7 +107,18 @@ export default {
 
       this.intervalId = setInterval(() => {
         this.currentNumber++;
-
+        if (this.currentNumber == 5) {
+          this.currentIndex = 1;
+        }
+        if (this.currentNumber == 10) {
+          this.currentIndex = 2;
+        }
+        if (this.currentNumber == 20) {
+          this.currentIndex = 3;
+        }
+        if (this.currentNumber == 30) {
+          this.currentIndex = 4;
+        }
         if (this.currentNumber >= targetNumber) {
           clearInterval(this.intervalId); // 达到目标数字时清除定时器
           this.getList();
@@ -193,5 +222,8 @@ export default {
   text-align: center;
   font-weight: bold;
   font-size: 16px;
+}
+.errText {
+  margin-top: 40px;
 }
 </style>

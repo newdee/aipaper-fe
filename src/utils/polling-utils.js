@@ -22,6 +22,8 @@ export default function polling(
           setTimeout(() => {
             resolve(polling(data, delay, maxRetries, currentRetry));
           }, delay);
+        } else if (res.result.status == "生成失败") {
+          resolve(res.result.status);
         } else {
           // 如果不是生成中状态，则解析结果
           resolve(res.result.outline.outline);

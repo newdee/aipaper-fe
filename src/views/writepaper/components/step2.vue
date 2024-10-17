@@ -3,7 +3,8 @@
     <div id="top" class="outLineTitle">
       <p class="oulineTitlePaper"><span>题目: </span>{{ requestForm.title }}</p>
       <p class="outlineTitleDesc">
-        <span>科目: </span>{{ requestForm.field[1] }}
+        <span>科目: </span
+        >{{ requestForm.field ? requestForm.field[1] : "跳转" }}
       </p>
     </div>
     <!-- 大纲 -->
@@ -1059,7 +1060,7 @@ export default {
   },
   props: {
     outlineData: {
-      type: Object,
+      type: Array,
       require: true,
     },
   },
