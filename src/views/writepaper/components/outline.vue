@@ -245,7 +245,7 @@ export default {
           // TODO: 生成大纲
           polling({ key: this.requestKey }, 5000).then((res) => {
             console.log("ddddd", res);
-            if (res.result.status == "生成失败") {
+            if (res == "生成失败") {
               eventBus.emit("errorOutline", res); // 发布事件
             } else {
               eventBus.emit("successOutline", res); // 发布事件
