@@ -1070,6 +1070,7 @@ export default {
       immediate: true,
       handler(val) {
         this.outline = val;
+        this.generateIndexes(this.outline);
       },
     },
   },

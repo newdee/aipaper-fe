@@ -97,6 +97,7 @@
       :visible.sync="ordersDrawer"
       :direction="orderDirection"
       append-to-body
+      :lock-scroll="false"
       :size="isPhone ? '30%' : '30%'"
     >
       <template #title>
