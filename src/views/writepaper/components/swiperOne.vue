@@ -28,9 +28,9 @@ export default {
   data() {
     return {
       swiperOption: {
-        slidesPerView: 1,
-        loop: true,
-        autoplay: 4000,
+        slidesPerView: 1, //当前页数
+        loop: true, // 是否可循环
+        autoplay: 4000, // 延迟时间
         autoplayDisableOnInteraction: false,
         observer: true, // 修改Swiper自己或子元素时自动初始化
         observeParents: true, // 修改Swiper的父元素时自动初始化
@@ -105,7 +105,7 @@ export default {
   bottom: 15px;
   z-index: 100;
 
-  &::v-deep > .swiper-pagination-bullet {
+  &::v-deep>.swiper-pagination-bullet {
     width: 40px;
     height: 4px;
     display: inline-block;
@@ -114,7 +114,7 @@ export default {
     opacity: 0.5;
   }
 
-  &::v-deep > .swiper-pagination-bullet.swiper-pagination-bullet-active {
+  &::v-deep>.swiper-pagination-bullet.swiper-pagination-bullet-active {
     background: #fff;
     opacity: 1;
   }
