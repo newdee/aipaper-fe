@@ -5,20 +5,12 @@
     <section class="sec sec1">
       <p class="title-1">选择范文题目：</p>
       <el-radio-group v-model="sampleTitle">
-        <el-radio
-          v-for="(titleType, i) in sampleTiles"
-          :label="titleType"
-          :key="'title' + i"
-          >{{ titleMap[titleType] }}</el-radio
-        >
+        <el-radio v-for="(titleType, i) in sampleTiles" :label="titleType" :key="'title' + i">{{ titleMap[titleType]
+          }}</el-radio>
       </el-radio-group>
       <p class="title-1">选择范文材料：</p>
       <el-radio-group v-model="sampleMaterial">
-        <el-radio
-          v-for="(material, j) in sampleMaterials"
-          :label="material"
-          :key="'material' + j"
-        >
+        <el-radio v-for="(material, j) in sampleMaterials" :label="material" :key="'material' + j">
           <div v-html="JSON.parse(materialMap[material])"></div>
         </el-radio>
       </el-radio-group>
@@ -312,7 +304,7 @@ export default {
   vertical-align: top;
 }
 
-.sec1 ::v-deep .el-radio__input.is-checked + .el-radio__label {
+.sec1 ::v-deep .el-radio__input.is-checked+.el-radio__label {
   color: #606266 !important;
 }
 
@@ -357,5 +349,4 @@ export default {
 }
 
 // .el-radio__input {
-// }
-</style>
+// }</style>

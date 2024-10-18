@@ -17,15 +17,21 @@
             payStatusObject[payTitleStatus]
           }}</span>
         </p>
-        <div class="paperProgress">
-          <el-progress type="circle" :percentage="currentNumber"></el-progress>
+        <!-- 订单支付成功展示页面 -->
+        <div v-if="payTitleStatus == 'TRADE_SUCCESS'">
+          <div class="paperProgress">
+            <el-progress
+              type="circle"
+              :percentage="currentNumber"
+            ></el-progress>
+          </div>
+          <p class="dialog-text">正文生成中, 预计时间30分钟, 请稍等</p>
+          <p class="dialog-text">
+            如您关闭此弹窗,请在
+            <span class="dialog_pay_text">我的订单</span>
+            页面, 查看您生成的正文
+          </p>
         </div>
-        <p class="dialog-text">正文生成中, 预计时间30分钟, 请稍等</p>
-        <p class="dialog-text">
-          如您关闭此弹窗,请在
-          <span class="dialog_pay_text">我的订单</span>
-          页面, 查看您生成的正文
-        </p>
       </div>
 
       <span slot="footer" class="dialog-footer">
@@ -82,9 +88,6 @@ export default {
         console.log("支付状态发生变化", "新值:", newVal, "旧值:", oldVal);
         // 在这里执行你需要的操作
         this.ownPayStatus = newVal;
-        if (newVal) {
-          this.addE(1500);
-        }
       },
       immediate: true, // 立即触发一次监听器
     },
@@ -142,6 +145,9 @@ export default {
           // 判断支付状态
           if (orderData.payment_status) {
             this.payTitleStatus = orderData.payment_status;
+            if (this.payTitleStatus == "TRADE_SUCCESS") {
+              this.addE(1500);
+            }
           }
           // 判断论文生成状态
           const { order_item_response } = res.result;
