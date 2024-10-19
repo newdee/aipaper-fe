@@ -9,5 +9,6 @@ const getters = {
   lineTitle: (state) => state.app.lineTitle,
   requestForm: (state) => state.app.requestForm,
   step3PdfUrl: (state) => state.app.step3PdfUrl,
+  produceLineStatus: (state) => state.app.produceLineStatus,
 };
 export default getters;

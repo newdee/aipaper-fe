@@ -10,9 +10,10 @@ const state = {
   },
   device: "desktop",
   homeData: {},
-  lineTitle: "论文标题",
-  requestForm: {},
-  step3PdfUrl: "",
+  lineTitle: "论文标题", //
+  requestForm: {}, // step1 用户输入内容
+  step3PdfUrl: "", // 正文链接
+  produceLineStatus: false, // 生成大纲状态, true:生成中 false: 未生成
 };
 
 const mutations = {
@@ -36,6 +37,10 @@ const mutations = {
   TOGGLE_PDF: (state, step3PdfUrl) => {
     console.log("ddd", state, step3PdfUrl);
     state.step3PdfUrl = step3PdfUrl;
+  },
+  TOGGLE_PROSTATE: (state, produceLineStatus) => {
+    console.log("ddd", state, produceLineStatus);
+    state.produceLineStatus = produceLineStatus;
   },
   TOGGLE_FORM: (state, requestForm) => {
     state.requestForm = requestForm;
@@ -69,6 +74,9 @@ const actions = {
   },
   setActiveSidebar({ commit }, index) {
     commit("CHANGE_ACTIVE_SIDEBAR_ITEM", index);
+  },
+  setProStatus({ commit }, status) {
+    commit("TOGGLE_PROSTATE", status);
   },
 };
 

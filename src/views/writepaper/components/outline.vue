@@ -119,7 +119,12 @@
       <!-- 生成大纲 -->
       <div
         @click="sendOutlineForm"
-        :class="['outlineBtn', 'g_poin', index == 2 ? 'paperMain' : '']"
+        :class="[
+          'outlineBtn',
+          'g_poin',
+          index == 2 ? 'paperMain' : '',
+          produceLineStatus ? 'produceClass' : '',
+        ]"
       >
         <p>生成大纲</p>
       </div>
@@ -141,8 +146,6 @@ export default {
   name: "outline",
   data() {
     return {
-      // 是否点击大纲
-      sendStatus: false,
       // 定义变量
       requestForm: {
         title: "",
@@ -203,12 +206,12 @@ export default {
 
   computed: {
     // 计算属性
-    ...mapGetters(["homeData"]),
+    ...mapGetters(["homeData", "produceLineStatus"]),
   },
   methods: {
     sendOutlineForm() {
       // TODO: 重置按钮状态
-      if (this.sendStatus) {
+      if (this.produceLineStatus) {
         this.$message({
           type: "warning",
           message: "大纲生成中,请勿重复点击!",
@@ -242,7 +245,8 @@ export default {
           type: "本科",
         };
         outlineCreate(data).then((res) => {
-          this.sendStatus = true;
+          this.$store.dispatch("app/setProStatus", true);
+
           console.log("outlineCreateres", res);
           eventBus.emit("emitOulineClick", 3); // 发布事件
           console.log("lunwen", this.requestForm);
@@ -251,14 +255,24 @@ export default {
           this.requestKey = res.result.key;
           // this.requestKey = "eb3a2422-301c-47ba-be1f-7c334e15c655";
           // TODO: 生成大纲
-          polling({ key: this.requestKey }, 5000).then((res) => {
-            console.log("ddddd", res);
-            if (res == "生成失败") {
-              eventBus.emit("errorOutline", res); // 发布事件
-            } else {
-              eventBus.emit("successOutline", res); // 发布事件
-            }
-          });
+          polling({ key: this.requestKey }, 5000)
+            .then((res) => {
+              console.log("ddddd", res);
+              if (res == "生成失败") {
+                eventBus.emit("errorOutline", res); // 发布事件
+              } else {
+                eventBus.emit("successOutline", res); // 发布事件
+              }
+            })
+            .catch((error) => {
+              console.log(error, "eeeeeerrrror");
+              this.$message({
+                type: "error",
+                message: "大纲生成失败, 请稍后重试",
+              });
+              eventBus.emit("errorOutline"); // 发布事件
+              this.$emit("errorBack", "关闭index");
+            });
         });
       } else {
         this.$confirm("生成大纲需要登录, 是否跳转到登录页?", "提示", {
@@ -356,9 +370,9 @@ export default {
 .tabMainActive {
   background: linear-gradient(
     135deg,
-    #00bfff33 0%,
-    #0091ff33 29%,
-    #6236ff33 62%,
+    #ffffff 0%,
+    #00bfff33 50%,
+    #6236ff33 82%,
     #b620e033 100%
   ) !important;
 }
@@ -371,7 +385,14 @@ export default {
     #b620e0 100%
   ) !important;
 }
-
+.produceClass {
+  background: #cccccc !important;
+  // font-size: ;
+  color: #000;
+  &:hover {
+    cursor: not-allowed;
+  }
+}
 .outRight {
   width: 117px;
   height: 40px;

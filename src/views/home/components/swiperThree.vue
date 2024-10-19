@@ -2,10 +2,17 @@
   <div class="swiperWrapper">
     <!-- 中间行的轮播图 -->
     <div class="swiperNews">
+      <p class="swiperListTitle">
+        <span> 品天下论文</span>
+      </p>
       <swiper class="swiper" ref="mySwiper2" :options="swiperOptionNew">
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/wenjian1.png" alt="" />
+            <img
+              class="illustration"
+              src="@/assets/images/wenjian1.png"
+              alt=""
+            />
             <div class="txt">
               <p class="title">后生产主义乡村:乡村振兴的一个理论视角</p>
               <p class="text">
@@ -20,7 +27,11 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/wenjian2.png" alt="" />
+            <img
+              class="illustration"
+              src="@/assets/images/wenjian2.png"
+              alt=""
+            />
             <div class="txt">
               <p class="title">边缘损失约束下的多尺度动态图卷积点云分割网络</p>
               <p class="text">
@@ -51,7 +62,11 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/wenjian4.jpg" alt="" />
+            <img
+              class="illustration"
+              src="@/assets/images/wenjian4.jpg"
+              alt=""
+            />
             <div class="txt">
               <p class="title">
                 贝叶斯框架下利用GPS数据反演震源参数的一种改进MCMC算法
@@ -85,7 +100,11 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/wenjian1.png" alt="" />
+            <img
+              class="illustration"
+              src="@/assets/images/wenjian1.png"
+              alt=""
+            />
             <div class="txt">
               <p class="title">
                 多层级公共服务供给对大城市租房群体居住分异的影响——基于北京市的实证研究
@@ -106,7 +125,11 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/wenjian2.png" alt="" />
+            <img
+              class="illustration"
+              src="@/assets/images/wenjian2.png"
+              alt=""
+            />
             <div class="txt">
               <p class="title">生物医学领域突破性论文识别</p>
               <p class="text">
@@ -123,7 +146,11 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/wenjian1.png" alt="" />
+            <img
+              class="illustration"
+              src="@/assets/images/wenjian1.png"
+              alt=""
+            />
             <div class="txt">
               <p class="title">后生产主义乡村:乡村振兴的一个理论视角</p>
               <p class="text">
@@ -138,7 +165,11 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/wenjian2.png" alt="" />
+            <img
+              class="illustration"
+              src="@/assets/images/wenjian2.png"
+              alt=""
+            />
             <div class="txt">
               <p class="title">边缘损失约束下的多尺度动态图卷积点云分割网络</p>
               <p class="text">
@@ -153,7 +184,11 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/wenjian3.jpg" alt="" />
+            <img
+              class="illustration"
+              src="@/assets/images/wenjian3.jpg"
+              alt=""
+            />
             <div class="txt">
               <p class="title">一种自监督的消息传递图表示学习方法</p>
               <p class="text">
@@ -169,7 +204,11 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/wenjian4.jpg" alt="" />
+            <img
+              class="illustration"
+              src="@/assets/images/wenjian4.jpg"
+              alt=""
+            />
             <div class="txt">
               <p class="title">
                 贝叶斯框架下利用GPS数据反演震源参数的一种改进MCMC算法
@@ -203,7 +242,11 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/wenjian4.jpg" alt="" />
+            <img
+              class="illustration"
+              src="@/assets/images/wenjian4.jpg"
+              alt=""
+            />
             <div class="txt">
               <p class="title">
                 多层级公共服务供给对大城市租房群体居住分异的影响——基于北京市的实证研究
@@ -224,7 +267,11 @@
         </swiper-slide>
         <swiper-slide>
           <div class="newSlider">
-            <img class="illustration" src="@/assets/images/wenjian4.jpg" alt="" />
+            <img
+              class="illustration"
+              src="@/assets/images/wenjian4.jpg"
+              alt=""
+            />
             <div class="txt">
               <p class="title">生物医学领域突破性论文识别</p>
               <p class="text">
@@ -499,6 +546,20 @@ export default {
       color: #999;
       margin-top: 10px;
     }
+  }
+}
+.swiperListTitle {
+  text-align: center;
+  margin: 0 auto;
+  width: 260px;
+  position: relative;
+  background: rgb(19, 34, 122);
+  height: 60px;
+  border-radius: 30px;
+  line-height: 60px;
+  span {
+    font-size: 30px;
+    color: #fff;
   }
 }
 </style>

@@ -3,7 +3,8 @@
     <div id="top" class="outLineTitle">
       <p class="oulineTitlePaper"><span>题目: </span>{{ requestForm.title }}</p>
       <p class="outlineTitleDesc">
-        <span>科目: </span>{{ requestForm.field ? requestForm.field[1] : "跳转" }}
+        <span>科目: </span
+        >{{ requestForm.field ? requestForm.field[1] : "跳转" }}
       </p>
     </div>
     <!-- 大纲 -->
@@ -22,8 +23,19 @@
             circle
           ></el-button>
         </el-tooltip> -->
-        <el-tooltip class="item" effect="dark" content="添加一级章节" placement="top">
-          <el-button size="mini" type="success" @click="addPageOne" icon="el-icon-circle-plus-outline" circle>
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="添加一级章节"
+          placement="top"
+        >
+          <el-button
+            size="mini"
+            type="success"
+            @click="addPageOne"
+            icon="el-icon-circle-plus-outline"
+            circle
+          >
           </el-button>
         </el-tooltip>
         <!-- <el-button type="info" icon="el-icon-message" circle></el-button>
@@ -31,22 +43,40 @@
         <el-button type="danger" icon="el-icon-delete" circle></el-button> -->
       </div>
 
-      <el-tree :data="outline" node-key="id" :props="defaultProps" default-expand-all @node-drag-start="handleDragStart"
-        @node-drag-enter="handleDragEnter" @node-drag-leave="handleDragLeave" @node-drag-over="handleDragOver"
-        @node-drag-end="handleDragEnd" @node-drop="handleDrop" draggable :expand-on-click-node="false"
-        :allow-drop="allowDrop" :allow-drag="allowDrag">
+      <el-tree
+        :data="outline"
+        node-key="id"
+        :props="defaultProps"
+        default-expand-all
+        @node-drag-start="handleDragStart"
+        @node-drag-enter="handleDragEnter"
+        @node-drag-leave="handleDragLeave"
+        @node-drag-over="handleDragOver"
+        @node-drag-end="handleDragEnd"
+        @node-drop="handleDrop"
+        draggable
+        :expand-on-click-node="false"
+        :allow-drop="allowDrop"
+        :allow-drag="allowDrag"
+      >
         <div class="slotContentBox" slot-scope="{ node, data }">
           <div class="custom-tree-node">
             <div class="inputBoxMain">
               <!-- 如果是编辑状态 -->
               <div class="pageSource">
-                <span v-if="data.index < 99">第{{ numberToChinese(data.index) }}章
+                <span v-if="data.index < 99"
+                  >第{{ numberToChinese(data.index) }}章
                 </span>
                 <span v-else> {{ data.index }} </span>
               </div>
               <template v-if="data.isEdit == 1">
-                <input ref="input" class="editInput" size="mini" @blur="() => submitEdit(node, data)"
-                  v-model="newlabel" />
+                <input
+                  ref="input"
+                  class="editInput"
+                  size="mini"
+                  @blur="() => submitEdit(node, data)"
+                  v-model="data.title"
+                />
 
                 <!-- 放弃、提交按钮废弃，改为失去焦点自动提交 -->
                 <!-- <el-button type="text"
@@ -57,7 +87,12 @@
               @click="() => submitEdit(node,data)">S</el-button> -->
               </template>
               <!-- 如果不是编辑状态 -->
-              <span v-else class="showSpan" @click="() => edit(node, data)" v-text="data.title"></span>
+              <span
+                v-else
+                class="showSpan"
+                @click="() => edit(node, data)"
+                v-text="data.title"
+              ></span>
             </div>
 
             <div v-if="data.level >= maxLevel" class="iconRight">
@@ -69,40 +104,74 @@
                   </span>
                 </el-tooltip>
                 <!-- 新增 -->
-                <el-tooltip :num="data.index.split('-').length" v-if="data.index.split('-').length < 3" class="item"
-                  effect="dark" content="新增下一级" placement="top">
-                  <i @click="() => appendShow(node, data)" class="el-icon-circle-plus-outline g_poin"></i>
+                <el-tooltip
+                  :num="data.index.split('-').length"
+                  v-if="data.index.split('-').length < 3"
+                  class="item"
+                  effect="dark"
+                  content="新增下一级"
+                  placement="top"
+                >
+                  <i
+                    @click="() => appendShowSibling(node, data)"
+                    class="el-icon-circle-plus-outline g_poin"
+                  ></i>
                   <!-- <i @click="() => appendSections(node, data)" class="el-icon-circle-plus-outline g_poin"></i> -->
                 </el-tooltip>
-                <el-tooltip :num="data.index.split('-').length" class="item" effect="dark" content="新增同级"
+                <!-- <el-tooltip :num="data.index.split('-').length" class="item" effect="dark" content="新增同级"
                   placement="top">
                   <i @click="() => appendShowSibling(node, data)" class="el-icon-circle-plus-outline g_poin"
                     style="color:red;"></i>
-                  <!-- <i @click="() => appendSections(node, data)" class="el-icon-circle-plus-outline g_poin"></i> -->
-                </el-tooltip>
+                </el-tooltip> -->
                 <!-- 删除 -->
-                <el-tooltip class="item" effect="dark" content="删除" placement="top">
-                  <i @click="() => remove(node, data)" class="el-icon-delete g_poin"></i>
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="删除"
+                  placement="top"
+                >
+                  <i
+                    @click="() => remove(node, data)"
+                    class="el-icon-delete g_poin"
+                  ></i>
                 </el-tooltip>
               </div>
               <div class="rightbottom">
                 <!-- 表 -->
-                <i v-show="data.insert_table && data.insert_table.status" class="el-icon-s-marketing"></i>
+                <i
+                  v-show="data.insert_table && data.insert_table.status"
+                  class="el-icon-s-marketing"
+                ></i>
                 <!-- 图 -->
-                <i v-show="data.insert_plot && data.insert_plot.status" class="el-icon-picture"></i>
+                <i
+                  v-show="data.insert_plot && data.insert_plot.status"
+                  class="el-icon-picture"
+                ></i>
                 <!-- 公式 -->
-                <i v-show="data.insert_latex_formula &&
-                  data.insert_latex_formula.status
-                  " class="el-icon-s-flag"></i>
+                <i
+                  v-show="
+                    data.insert_latex_formula &&
+                    data.insert_latex_formula.status
+                  "
+                  class="el-icon-s-flag"
+                ></i>
                 <!-- 代码 -->
-                <i v-show="data.insert_code && data.insert_code.status" class="el-icon-s-management"></i>
+                <i
+                  v-show="data.insert_code && data.insert_code.status"
+                  class="el-icon-s-management"
+                ></i>
               </div>
             </div>
           </div>
           <div v-if="data.summary" class="contentInput">
             <!-- <textarea type="textarea" v-model="data.content"  /> -->
-            <textarea-autosize class="ownInput" rows="1" placeholder="Type something here..." ref="myTextarea"
-              v-model="data.summary" />
+            <textarea-autosize
+              class="ownInput"
+              rows="1"
+              placeholder="Type something here..."
+              ref="myTextarea"
+              v-model="data.summary"
+            />
           </div>
         </div>
       </el-tree>
@@ -206,7 +275,11 @@
         <!-- <div class="item">
                     <p></p>
                 </div> -->
-        <el-checkbox-group class="addService" v-model="checkboxGroup1" size="small">
+        <el-checkbox-group
+          class="addService"
+          v-model="checkboxGroup1"
+          size="small"
+        >
           <el-checkbox label="1" border>
             <div class="cusLabel">
               <p>开题报告</p>
@@ -287,14 +360,28 @@
     </div>
 
     <!-- 生成全文操作前置声明 -->
-    <el-dialog title="提示" :append-to-body="true" :lock-scroll="false" :visible.sync="statementDialogVisible"
-      width="30%">
-      <span>平台所生成的全文为范文，仅用作参考，不用做毕业论文、发表刊物等</span>
+    <el-dialog
+      title="提示"
+      :append-to-body="true"
+      :lock-scroll="false"
+      :visible.sync="statementDialogVisible"
+      width="30%"
+    >
+      <span
+        >平台所生成的全文为范文，仅用作参考，不用做毕业论文、发表刊物等</span
+      >
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="agreeGenerate">同意并生成全文</el-button>
+        <el-button type="primary" @click="agreeGenerate"
+          >同意并生成全文</el-button
+        >
       </span>
     </el-dialog>
-    <el-dialog :append-to-body="true" :lock-scroll="false" :visible.sync="editStatus" width="40%">
+    <el-dialog
+      :append-to-body="true"
+      :lock-scroll="false"
+      :visible.sync="editStatus"
+      width="40%"
+    >
       <div slot="title">
         <p class="dialogTitle">
           <i class="el-icon-folder-add dialogIcon"></i>
@@ -304,16 +391,36 @@
           🔔 全文生成效果受章节数和概要内容影响，请谨慎修改
         </p>
       </div>
-      <el-form :model="numberValidateForm" ref="numberValidateForm" label-width="120px" class="demo-ruleForm">
-        <el-radio-group v-if="insertSibling" v-model="numberValidateForm.insertPosition">
+      <el-form
+        :model="numberValidateForm"
+        ref="numberValidateForm"
+        label-width="120px"
+        class="demo-ruleForm"
+      >
+        <!-- <el-radio-group
+          v-if="insertSibling"
+          v-model="numberValidateForm.insertPosition"
+        >
           <el-radio label="after">本章之后</el-radio>
           <el-radio label="before">本章之前</el-radio>
-        </el-radio-group>
-        <el-form-item label="请输入章节" prop="appendValue" :rules="[{ required: true, message: '章节不能为空' }]">
-          <el-input placeholder="请输入章节" v-model="numberValidateForm.appendValue" autocomplete="off"></el-input>
+        </el-radio-group> -->
+        <el-form-item
+          label="请输入章节"
+          prop="appendValue"
+          :rules="[{ required: true, message: '章节不能为空' }]"
+        >
+          <el-input
+            placeholder="请输入章节"
+            v-model="numberValidateForm.appendValue"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
         <el-form-item label="请输入章节内容" prop="appendValue">
-          <el-input placeholder="请输入章节内容" v-model="numberValidateForm.appendContent" autocomplete="off"></el-input>
+          <el-input
+            placeholder="请输入章节内容"
+            v-model="numberValidateForm.appendContent"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
       </el-form>
 
@@ -325,27 +432,56 @@
       </span>
     </el-dialog>
     <!-- 插入图表 -->
-    <el-dialog :append-to-body="true" :lock-scroll="false" title="插入图表" :visible.sync="imgExcelSetStatus" width="80%"
-      label-width="130px">
-      <el-form :model="numberValidateForm" ref="numberValidateForm" label-width="140px" class="demo-ruleForm">
+    <el-dialog
+      :append-to-body="true"
+      :lock-scroll="false"
+      title="插入图表"
+      :visible.sync="imgExcelSetStatus"
+      width="80%"
+      label-width="130px"
+    >
+      <el-form
+        :model="numberValidateForm"
+        ref="numberValidateForm"
+        label-width="140px"
+        class="demo-ruleForm"
+      >
         <el-form-item prop="appendValue">
           <div class="leftLabel" slot="label">
-            <el-switch v-model="currentRow.insert_table.status" active-color="#13ce66" inactive-color="#ff4949">
+            <el-switch
+              v-model="currentRow.insert_table.status"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            >
             </el-switch>
             <span class="labelSpan">插入数据表</span>
           </div>
-          <el-input type="textarea" autosize placeholder="请用自然语言描述您要插入数据表的信息" v-model="currentRow.insert_table.content"
-            autocomplete="off"></el-input>
+          <el-input
+            type="textarea"
+            autosize
+            placeholder="请用自然语言描述您要插入数据表的信息"
+            v-model="currentRow.insert_table.content"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
         <!-- 插入图 -->
         <el-form-item prop="appendValue">
           <div class="leftLabel" slot="label">
-            <el-switch v-model="currentRow.insert_plot.status" active-color="#13ce66" inactive-color="#ff4949">
+            <el-switch
+              v-model="currentRow.insert_plot.status"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            >
             </el-switch>
             <span class="labelSpan">插入图形</span>
           </div>
-          <el-input type="textarea" autosize placeholder="请用自然语言描述 图形 的相关信息" v-model="currentRow.insert_plot.content"
-            autocomplete="off"></el-input>
+          <el-input
+            type="textarea"
+            autosize
+            placeholder="请用自然语言描述 图形 的相关信息"
+            v-model="currentRow.insert_plot.content"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
         <!-- <el-form-item prop="appendValue">
           <div class="leftLabel" slot="label">
@@ -367,23 +503,44 @@
         </el-form-item> -->
         <el-form-item prop="appendValue">
           <div class="leftLabel" slot="label">
-            <el-switch v-model="currentRow.insert_latex_formula.status" active-color="#13ce66" inactive-color="#ff4949">
+            <el-switch
+              v-model="currentRow.insert_latex_formula.status"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            >
             </el-switch>
             <span class="labelSpan">请用自然语言描述 插入公式</span>
           </div>
-          <el-input type="textarea" autosize placeholder="请输入插入公式" v-model="currentRow.insert_latex_formula.content"
-            autocomplete="off"></el-input>
+          <el-input
+            type="textarea"
+            autosize
+            placeholder="请输入插入公式"
+            v-model="currentRow.insert_latex_formula.content"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
         <el-form-item prop="appendValue">
           <div class="leftLabel" slot="label">
-            <el-switch v-model="currentRow.insert_code.status" active-color="#13ce66" inactive-color="#ff4949">
+            <el-switch
+              v-model="currentRow.insert_code.status"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            >
             </el-switch>
             <span class="labelSpan">插入代码段</span>
           </div>
           <div class="codeSelectInfo">
-            <el-input type="textarea" autosize placeholder="请输入插入代码段" v-model="currentRow.insert_code.content"
-              autocomplete="off"></el-input>
-            <el-select v-model="currentRow.insert_code.code_language" placeholder="请选择">
+            <el-input
+              type="textarea"
+              autosize
+              placeholder="请输入插入代码段"
+              v-model="currentRow.insert_code.content"
+              autocomplete="off"
+            ></el-input>
+            <el-select
+              v-model="currentRow.insert_code.code_language"
+              placeholder="请选择"
+            >
               <el-option tag="q1" label="Python" value="Python"> </el-option>
               <el-option tag="q2" label="Java" value="Java"> </el-option>
               <el-option tag="q3" label="JavaScript" value="JavaScript">
@@ -419,7 +576,10 @@
       </span>
     </el-dialog>
     <!--  -->
-    <order-dialog :requestKey="requestKey" :payStatus="payStatus"></order-dialog>
+    <order-dialog
+      :requestKey="requestKey"
+      :payStatus="payStatus"
+    ></order-dialog>
   </div>
 </template>
 
@@ -449,6 +609,7 @@ export default {
       numberValidateForm: {
         appendValue: "",
         appendContent: "",
+        insertPosition: "after",
       },
       selectForm: {
         data1: "",
@@ -919,8 +1080,8 @@ export default {
       deep: true,
       immediate: true,
       handler(val) {
-        // this.outline = val;
-        // this.generateIndexes(this.outline);
+        this.outline = val;
+        this.generateIndexes(this.outline);
       },
     },
   },
@@ -1011,7 +1172,7 @@ export default {
       // return draggingNode.data.apiGroupName.indexOf('三级 3-2-2') === -1
     },
     updateApiGroup(data) {
-      console.log('1014---当前大纲对象:', data);
+      console.log("1014---当前大纲对象:", data);
       this.generateIndexes(this.outline);
       // updateApiGroup(1, data)
       //   .then((response) => {
@@ -1023,8 +1184,8 @@ export default {
     },
     appendShow(node, data) {
       this.editData = data;
-      if (this.numberValidateForm.hasOwnProperty('insertPosition')) {
-        delete this.numberValidateForm.insertPosition
+      if (this.numberValidateForm.hasOwnProperty("insertPosition")) {
+        delete this.numberValidateForm.insertPosition;
       }
       this.insertSibling = false;
       this.editStatus = true;
@@ -1033,12 +1194,12 @@ export default {
       });
     },
     appendShowSibling(node, data) {
-      console.log('1030---node和data:', node, data);
+      console.log("1030---node和data:", node, data);
       this.editData = data;
       this.editParentData = node.parent.data;
-      console.log('1039---node.parent:', this.editParentData);
+      console.log("1039---node.parent:", this.editParentData);
       this.editStatus = true;
-      this.$set(this.numberValidateForm, 'insertPosition', 'after');
+      this.$set(this.numberValidateForm, "insertPosition", "after");
       this.insertSibling = true;
       this.$nextTick(() => {
         this.$refs.numberValidateForm.resetFields();
@@ -1136,18 +1297,22 @@ export default {
         },
         sections: [],
       };
-      if (!parentNodeData.hasOwnProperty('sections')) {
+      if (!parentNodeData.hasOwnProperty("sections")) {
         this.$set(parentNodeData, "sections", []);
       }
-      console.log('1141----parentNode.sections:', parentNodeData.sections);
+      console.log("1141----parentNode.sections:", parentNodeData.sections);
 
-      if (this.numberValidateForm.insertPosition == 'after') {
-        const targetIndex = parentNodeData.sections.findIndex(item => item.index === data.index);
+      if (this.numberValidateForm.insertPosition == "after") {
+        const targetIndex = parentNodeData.sections.findIndex(
+          (item) => item.index === data.index
+        );
         if (targetIndex !== -1) {
           parentNodeData.sections.splice(targetIndex + 1, 0, newChild);
         }
-      } else if (this.numberValidateForm.insertPosition == 'before') {
-        const targetIndex = parentNodeData.sections.findIndex(item => item.index === data.index);
+      } else if (this.numberValidateForm.insertPosition == "before") {
+        const targetIndex = parentNodeData.sections.findIndex(
+          (item) => item.index === data.index
+        );
         if (targetIndex !== -1) {
           parentNodeData.sections.splice(targetIndex, 0, newChild);
         }
@@ -1393,7 +1558,7 @@ export default {
   border-radius: 8px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 
-  >p {
+  > p {
     font-size: 18px;
     padding: 0 10px;
   }
@@ -1485,9 +1650,11 @@ export default {
         flex-direction: row-reverse;
         padding: 10px;
         margin: 5px 8px;
-        background-image: linear-gradient(45deg,
-            rgb(252, 243, 205),
-            transparent);
+        background-image: linear-gradient(
+          45deg,
+          rgb(252, 243, 205),
+          transparent
+        );
         border: 1px solid #d4a11c;
         border-radius: 5px;
         align-items: center;
@@ -1641,7 +1808,7 @@ export default {
   padding-top: 3px;
   padding-bottom: 20px;
 
-  &>div {
+  & > div {
     background-color: #fff;
   }
 }

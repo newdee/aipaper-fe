@@ -6,7 +6,7 @@
         <p>MIXPAPER</p>
         <p>万象写作</p>
       </div>
-      <div class="mainInput">
+      <!-- <div class="mainInput">
         <p class="inputName">AI 论文快查</p>
         <div class="selectText">
           <el-select v-model="value" placeholder="请选择">
@@ -19,7 +19,6 @@
             </el-option>
           </el-select>
         </div>
-        <!-- 输入框 -->
         <div class="inputBox">
           <input placeholder="输入你想查找的论文信息" type="text" />
         </div>
@@ -28,7 +27,7 @@
             <img src="@/assets/images/search.png" alt="" />
           </span>
         </div>
-      </div>
+      </div> -->
       <div class="inputDesc g_poin" @click="$jumpUrl('/main/writepaper')">
         <p>全网首家免费在线编辑的AI写作平台</p>
         <div>
