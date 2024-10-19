@@ -4,7 +4,7 @@
       <img src="@/assets/images/MIXPAPER.png" alt="" />
     </div>
     <div class="mSiderBar">
-      <div @click="$jumpUrl('/home/home')" :active="$route.meta.sideBarIndex == 0" class="mItemWrapper">
+      <div @click="$jumpUrl('/home/home')" :active="'home' == $route.name" class="mItemWrapper">
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>首页</div>
           <span class="right imgIcon"></span>
