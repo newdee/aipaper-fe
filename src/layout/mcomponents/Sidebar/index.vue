@@ -1,8 +1,22 @@
 <template>
   <div class="qysytxy" :key="timeKey">
-    <div @click="$jumpUrl('/home/home')" class="logoEr">
-      <img src="@/assets/images/MIXPAPER.png" alt="" />
+    <div @click="$jumpUrl('/home/home')" class="grid-content nav_left flex items-center">
+      <div class="logo-box2">
+        <div class="logoR">
+          <img :src="logoMax" alt="" title="logo" />
+        </div>
+        <div class="logoL">
+          <!-- <p>万象学术</p> -->
+          <img :src="logo" alt="" title="logo" />
+        </div>
+      </div>
     </div>
+    <!-- <div @click="$jumpUrl('/home/home')" class="logoEr">
+      <div class="logoSecClass">
+        <img :src="logoMax" alt="" title="logo" />
+      </div>
+      <img src="@/assets/images/MIXPAPER.png" alt="" />
+    </div> -->
     <div class="mSiderBar">
       <div @click="$jumpUrl('/home/home')" :active="'home' == $route.name" class="mItemWrapper">
         <div class="mSliderItem">
@@ -35,6 +49,9 @@ export default {
   data() {
     return {
       active: 1,
+      logoMax: require("@/assets/images/logoMax.png"),
+      logo: require("@/assets/images/MIXPAPER.png"),
+
       timeKey: null,
       fullPath: this.$route.fullPath,
       routerList: [], //展示在导航栏的菜单路由
@@ -210,6 +227,63 @@ export default {
     // height: 100%;
     width: 115px;
     height: 18px;
+  }
+}
+
+.grid-content {
+  border-radius: 4px;
+
+  &:hover>div {
+    cursor: pointer;
+  }
+}
+
+.logo-box2 {
+  padding-left: 36px;
+  // width: 176px;
+  height: 80px;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .logoR {
+    width: 48px;
+    height: 40px;
+    margin-right: 10px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+}
+
+.logoL {
+  width: 117px;
+  height: 40px;
+  font-family: DOUYINSANSBOLD, DOUYINSANSBOLD;
+  font-weight: normal;
+  font-size: 24px;
+  color: #3355ff;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  img {
+    width: 117px;
+    height: 19px;
+  }
+
+  p {
+    width: 100%;
+    font-family: arial, "Hiragino Sans GB", "Microsoft Yahei", "微软雅黑",
+      "宋体", 宋体, Tahoma, Arial, Helvetica, STHeiti;
+    text-align: center;
+    font-weight: 600;
+    transform: rotateX(45deg) scaleX(1.2);
   }
 }
 </stlyle>

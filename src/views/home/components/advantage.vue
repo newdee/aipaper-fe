@@ -1,7 +1,11 @@
 <template>
   <div class="adBox">
     <!-- 页面名称 -->
-    <div class="newLi" v-for="(item, index) in advantageList" :key="index + 'ad'">
+    <div
+      class="newLi"
+      v-for="(item, index) in advantageList"
+      :key="index + 'ad'"
+    >
       {{ item.label }}
       <p class="advanP">
         {{ item.name }}
@@ -36,14 +40,6 @@ export default {
         {
           name: "7*24小时在线服务，全天专业服务，顾问式支持完成定稿",
           label: "在线服务",
-        },
-        {
-          name: "支持学术思考、论文写作、论文编辑、论文搜索",
-          label: "一站服务",
-        },
-        {
-          name: "AIGC率超过25%全额退款，查重率超过15%全额退款",
-          label: "过稿无忧",
         },
       ],
     };

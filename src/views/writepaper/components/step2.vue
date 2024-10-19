@@ -12,22 +12,17 @@
     <div class="outlineMain">
       <p class="tips">拖拽章节,可实现章节排序</p>
       <div class="tipOutline">
-        <el-tooltip
-          class="item"
-          effect="dark"
-          content="重置所有章节"
-          placement="top"
-        >
+        <!-- <el-tooltip class="item" effect="dark" content="重置所有章节" placement="top">
           <el-button size="mini" icon="el-icon-search" circle></el-button>
-        </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="AI生成" placement="top">
+        </el-tooltip> -->
+        <!-- <el-tooltip class="item" effect="dark" content="AI生成" placement="top">
           <el-button
             type="primary"
             size="mini"
             icon="el-icon-edit"
             circle
           ></el-button>
-        </el-tooltip>
+        </el-tooltip> -->
         <el-tooltip
           class="item"
           effect="dark"
@@ -118,7 +113,7 @@
                   placement="top"
                 >
                   <i
-                    @click="() => appendShow(node, data)"
+                    @click="() => appendSections(node, data)"
                     class="el-icon-circle-plus-outline g_poin"
                   ></i>
                 </el-tooltip>
@@ -259,7 +254,7 @@
             </svg>
           </div>
           <div class="right">
-            <p>[致谢模板]</p>
+            <p>[学术创新]</p>
             <p>x1</p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
@@ -1182,54 +1177,55 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // alert('submit!');
-          this.append();
+          this.appendSections();
         } else {
           console.log("error submit!!");
           return false;
         }
       });
     },
-    append(node, data) {
-      data = this.editData;
-      // var pid = data.parentApiGroupId + ':' + data.id
-      var timestamp = new Date().getTime();
-      const newChild = {
-        id: timestamp,
-        isEdit: 0,
-        apiGroupName: "T" + timestamp,
-        title: this.numberValidateForm.appendValue,
-        summary: this.numberValidateForm.appendContent
-          ? this.numberValidateForm.appendContent
-          : "章节内容",
-        insert_code: {
-          status: false,
-          content: "",
-        },
-        insert_mermaid: {
-          status: false,
-          content: "",
-        },
-        insert_latex_formula: {
-          status: false,
-          content: "",
-        },
-        insert_table: {
-          status: false,
-          content: "",
-        },
-        insert_plot: {
-          status: false,
-          content: "",
-        },
-        sections: [],
-      };
-      if (!data.sections) {
-        this.$set(data, "sections", []);
-      }
-      data.sections.push(newChild);
-      this.updateApiGroup(this.outline);
-      this.$refs.numberValidateForm.resetFields();
-      this.editStatus = false;
+    appendSections(node, data) {
+      console.log("data", node, data);
+      // data = this.editData;
+      // // var pid = data.parentApiGroupId + ':' + data.id
+      // var timestamp = new Date().getTime();
+      // const newChild = {
+      //   id: timestamp,
+      //   isEdit: 0,
+      //   apiGroupName: "T" + timestamp,
+      //   title: this.numberValidateForm.appendValue,
+      //   summary: this.numberValidateForm.appendContent
+      //     ? this.numberValidateForm.appendContent
+      //     : "章节内容",
+      //   insert_code: {
+      //     status: false,
+      //     content: "",
+      //   },
+      //   insert_mermaid: {
+      //     status: false,
+      //     content: "",
+      //   },
+      //   insert_latex_formula: {
+      //     status: false,
+      //     content: "",
+      //   },
+      //   insert_table: {
+      //     status: false,
+      //     content: "",
+      //   },
+      //   insert_plot: {
+      //     status: false,
+      //     content: "",
+      //   },
+      //   sections: [],
+      // };
+      // if (!data.sections) {
+      //   this.$set(data, "sections", []);
+      // }
+      // data.sections.push(newChild);
+      // this.updateApiGroup(this.outline);
+      // this.$refs.numberValidateForm.resetFields();
+      // this.editStatus = false;
     },
 
     remove(node, data) {
@@ -1439,10 +1435,12 @@ export default {
 .popperTitle {
   font-size: 10px;
 }
+
 .outlineRepeat {
   text-align: center;
   margin-top: 50px;
   margin-bottom: 64px;
+
   p {
     display: inline-block;
     padding: 0 18px;
@@ -1464,10 +1462,12 @@ export default {
   border: 1px solid #ebeef5;
   border-radius: 8px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
   > p {
     font-size: 18px;
     padding: 0 10px;
   }
+
   .borderBox {
     border: 1px solid transparent;
     border-radius: 5px;
@@ -1476,64 +1476,79 @@ export default {
     align-items: center;
     padding: 15px 10px;
     margin: 5px 8px;
+
     .left {
       flex: none;
+
       svg.icon {
         width: 35px;
         height: 35px;
       }
     }
+
     .right {
       flex-grow: 1;
       position: relative;
       padding-left: 5px;
+
       .alignR {
         text-align: right;
         position: absolute;
         right: 0;
         bottom: -8px;
+
         svg.icon {
           width: 14px;
           height: 14px;
           color: #018417;
         }
       }
+
       p {
         margin: 0;
         line-height: 1.5em;
       }
+
       p:first-child {
         padding: 5px 0;
       }
     }
   }
+
   .att {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
   }
+
   .maintxt .borderBox {
     border-color: #d4a11c;
+
     svg.icon {
       color: #d4a11c;
     }
   }
+
   .att .borderBox {
     width: 150px;
     border-color: #01847f;
     font-size: 12px;
+
     .right p {
       white-space: nowrap;
     }
+
     svg.icon {
       color: #01847f;
     }
   }
+
   .adds {
     .addService {
       display: flex;
       flex-wrap: wrap;
+
       label.el-checkbox {
         width: 150px;
         display: flex;
@@ -1550,17 +1565,21 @@ export default {
         align-items: center;
         height: auto;
         justify-content: space-between;
+
         .cusLabel {
           font-size: 14px;
+
           p {
             margin: 0px;
             line-height: 1.5em;
             color: #202020;
           }
+
           .price span:first-child {
             color: #ee6562;
             font-weight: 600;
           }
+
           .price span:last-child {
             font-size: 12px;
             color: #7e7e7e;
@@ -1569,11 +1588,13 @@ export default {
         }
       }
     }
+
     .tips {
       padding: 0 15px;
       font-size: 10px;
       margin: 0px 0px 5px 0;
       cursor: pointer;
+
       span {
         color: #ee6562;
       }
@@ -1586,11 +1607,15 @@ export default {
   margin: 0 auto;
   margin-top: 20px;
 }
+
 .agreeText {
-  white-space: nowrap; /* 防止文字换行 */
-  overflow: hidden; /* 隐藏超出的内容 */
+  white-space: nowrap;
+  /* 防止文字换行 */
+  overflow: hidden;
+  /* 隐藏超出的内容 */
   text-overflow: ellipsis;
 }
+
 // @import "@/index.scss";
 .warningText {
   color: #ffa500;
@@ -1601,6 +1626,7 @@ export default {
 .generateSpan {
   text-align: center;
   padding-bottom: 60px;
+
   span {
     display: inline-block;
     background: #d4a11c;
@@ -1650,10 +1676,12 @@ export default {
   margin-top: 32px;
   padding: 16px;
 }
+
 .tipOutline {
   text-align: right;
   margin-bottom: 10px;
 }
+
 .custom-tree-node {
   width: 100%;
   height: 40px;
@@ -1684,10 +1712,12 @@ export default {
   padding: 10px;
   padding-top: 3px;
   padding-bottom: 20px;
+
   & > div {
     background-color: #fff;
   }
 }
+
 .oulineTitlePaper {
   font-size: 20px;
   color: #000;
@@ -1705,23 +1735,29 @@ export default {
   position: relative;
   top: 8px;
 }
+
 .codeSelectInfo {
   display: flex;
+
   :deep(.el-input__inner) {
     height: 30px;
   }
+
   .el-input__inner {
     height: 30px;
   }
+
   ::deep .el-input__inner {
     height: 30px;
   }
 }
+
 .outlineTitleDesc {
   text-align: center;
   font-weight: bold;
   font-size: 16px;
 }
+
 .editInput {
   outline: none;
   border: none;
@@ -1777,6 +1813,7 @@ export default {
   font-size: 14px;
   font-weight: bold;
 }
+
 .step2Box {
   max-width: 1200px;
   padding-top: 60px;
@@ -1784,6 +1821,7 @@ export default {
   margin-top: 16px;
   border-radius: 12px;
 }
+
 .slotContentBox {
   font-size: 14px;
   font-weight: bold;
@@ -1791,6 +1829,7 @@ export default {
   width: 100%;
   color: #333639;
 }
+
 .ownInput {
   border: none;
   width: 100%;
@@ -1801,33 +1840,40 @@ export default {
   max-width: 500px;
   // padding-top: 10px;
   padding: 10px;
+
   // padding-top: 0px;
   // padding-bottom: 20px;
   &:hover {
     border: 1px solid #3355fe;
   }
+
   &:focus {
     border: 1px solid #3355fe;
   }
+
   &:active {
     border: 1px solid #3355fe;
   }
+
   &:focus {
     border-color: #3355fe;
     box-shadow: 0 0 5px #3355fe;
     outline: none;
   }
 }
+
 .fuTitle {
   font-size: 18xp;
   font-weight: bold;
   margin: 32px 0;
   color: #1f2937;
 }
+
 .rightbottom {
   color: #3355fe;
   font-size: 18px;
 }
+
 .labelSpan {
   font-family: PingFangSC, PingFang SC;
   margin-left: 16px;
@@ -1837,6 +1883,7 @@ export default {
   line-height: 20px;
   text-align: left;
 }
+
 .leftLabel {
   display: flex;
   align-items: center;

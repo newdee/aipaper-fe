@@ -23,7 +23,7 @@
       </div>
     </div>
     <!-- 用户输入页面 -->
-    <div class="uesrInputBox">
+    <div :class="['uesrInputBox', index == 2 ? 'tabMainActive' : '']">
       <div class="selectLang formItem">
         <p class="formItemLabel">生成语言</p>
         <div class="formItemCon">
@@ -107,7 +107,7 @@
         </div>
       </div>
       <!-- 三级大纲 -->
-      <div class="selectLang formItem">
+      <!-- <div class="selectLang formItem">
         <p class="formItemLabel">
           三级大纲
           <span class="switchBox">
@@ -115,7 +115,7 @@
             </el-switch>
           </span>
         </p>
-      </div>
+      </div> -->
       <!-- 生成大纲 -->
       <div
         @click="sendOutlineForm"
@@ -190,6 +190,15 @@ export default {
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
+    // 查看用户输入数据是否存在
+    let jsonStr = localStorage.getItem("userInput");
+    if (!!jsonStr) {
+      this.requestForm = JSON.parse(jsonStr);
+      console.log("用户输入有数据", this.requestForm);
+      this.$nextTick(() => {
+        localStorage.removeItem("userInput");
+      });
+    }
   },
 
   computed: {
@@ -199,9 +208,7 @@ export default {
   methods: {
     sendOutlineForm() {
       // TODO: 重置按钮状态
-      if (!this.sendStatus) {
-        this.sendStatus = true;
-      } else {
+      if (this.sendStatus) {
         this.$message({
           type: "warning",
           message: "大纲生成中,请勿重复点击!",
@@ -235,6 +242,7 @@ export default {
           type: "本科",
         };
         outlineCreate(data).then((res) => {
+          this.sendStatus = true;
           console.log("outlineCreateres", res);
           eventBus.emit("emitOulineClick", 3); // 发布事件
           console.log("lunwen", this.requestForm);
@@ -260,7 +268,8 @@ export default {
           center: true,
         })
           .then(() => {
-            this.$router.push("/login");
+            // 存储用户数据并跳转
+            this.saveInput();
           })
           .catch(() => {
             this.$message({
@@ -269,6 +278,12 @@ export default {
             });
           });
       }
+    },
+    saveInput() {
+      // 获取用户数据
+      console.log("ssss", this.requestForm);
+      localStorage.setItem("userInput", JSON.stringify(this.requestForm));
+      this.$router.push("/login");
     },
     addE() {},
     // 定义方法
@@ -292,7 +307,6 @@ export default {
 // }
 .outlineMain {
   max-width: 1200px;
-  padding-bottom: 40px;
   background: #ffffff;
   border-radius: 0px 0px 12px 12px;
 }
@@ -339,7 +353,15 @@ export default {
     }
   }
 }
-
+.tabMainActive {
+  background: linear-gradient(
+    135deg,
+    #00bfff33 0%,
+    #0091ff33 29%,
+    #6236ff33 62%,
+    #b620e033 100%
+  ) !important;
+}
 .paperMain {
   background: linear-gradient(
     135deg,
@@ -398,7 +420,13 @@ export default {
     flex: 1;
   }
 }
-
+.uesrInputBox {
+  padding-top: 25px;
+  padding-bottom: 40px;
+  .selectLang:first-child {
+    margin-top: 0px;
+  }
+}
 .outlineBtn {
   width: auto;
   height: 44px;
