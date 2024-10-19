@@ -38,7 +38,7 @@
     </div>
     <!-- step3不展示论文 -->
     <div v-if="activeIndex !== 3" class="outlineBox">
-      <outline></outline>
+      <outline @errorBack="errorBack"></outline>
     </div>
     <div class="stepContent">
       <step1 v-if="activeIndex == 1"></step1>
@@ -104,6 +104,10 @@ export default {
   },
   methods: {
     // 定义方法
+    errorBack() {
+      // this.tabsClick(0);
+      this.activeIndex = 0;
+    },
     // 点击生成大纲
     showIndex() {
       console.log("ddddd", this.activeIndex);
@@ -165,6 +169,8 @@ export default {
   beforeRouteUpdate(to, from, next) {
     // 当路由的查询参数发生变化时，这个方法会被调用
     // this.activeIndex = to.query.activeIndex || 0;
+    // console.log("dddddddddddddddddddd---------", to, from,);
+
     if (to.query.key1) {
       let data = {
         key: to.query.key1,
@@ -216,6 +222,7 @@ export default {
   max-width: 1200px;
   padding-top: 16px;
 }
+
 .tabsList {
   display: flex;
   align-items: center;
@@ -315,6 +322,7 @@ export default {
     background-color: #3355ff;
   }
 }
+
 .stepContent {
   margin-top: 16px;
   margin-bottom: 16px;

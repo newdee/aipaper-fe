@@ -23,7 +23,7 @@
       </div>
     </div>
     <!-- 用户输入页面 -->
-    <div class="uesrInputBox">
+    <div :class="['uesrInputBox', index == 2 ? 'tabMainActive' : '']">
       <div class="selectLang formItem">
         <p class="formItemLabel">生成语言</p>
         <div class="formItemCon">
@@ -107,7 +107,7 @@
         </div>
       </div>
       <!-- 三级大纲 -->
-      <div class="selectLang formItem">
+      <!-- <div class="selectLang formItem">
         <p class="formItemLabel">
           三级大纲
           <span class="switchBox">
@@ -115,11 +115,16 @@
             </el-switch>
           </span>
         </p>
-      </div>
+      </div> -->
       <!-- 生成大纲 -->
       <div
         @click="sendOutlineForm"
-        :class="['outlineBtn', 'g_poin', index == 2 ? 'paperMain' : '']"
+        :class="[
+          'outlineBtn',
+          'g_poin',
+          index == 2 ? 'paperMain' : '',
+          produceLineStatus ? 'produceClass' : '',
+        ]"
       >
         <p>生成大纲</p>
       </div>
@@ -141,8 +146,6 @@ export default {
   name: "outline",
   data() {
     return {
-      // 是否点击大纲
-      sendStatus: false,
       // 定义变量
       requestForm: {
         title: "",
@@ -190,18 +193,25 @@ export default {
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
+    // 查看用户输入数据是否存在
+    let jsonStr = localStorage.getItem("userInput");
+    if (!!jsonStr) {
+      this.requestForm = JSON.parse(jsonStr);
+      console.log("用户输入有数据", this.requestForm);
+      this.$nextTick(() => {
+        localStorage.removeItem("userInput");
+      });
+    }
   },
 
   computed: {
     // 计算属性
-    ...mapGetters(["homeData"]),
+    ...mapGetters(["homeData", "produceLineStatus"]),
   },
   methods: {
     sendOutlineForm() {
       // TODO: 重置按钮状态
-      if (!this.sendStatus) {
-        this.sendStatus = true;
-      } else {
+      if (this.produceLineStatus) {
         this.$message({
           type: "warning",
           message: "大纲生成中,请勿重复点击!",
@@ -235,6 +245,8 @@ export default {
           type: "本科",
         };
         outlineCreate(data).then((res) => {
+          this.$store.dispatch("app/setProStatus", true);
+
           console.log("outlineCreateres", res);
           eventBus.emit("emitOulineClick", 3); // 发布事件
           console.log("lunwen", this.requestForm);
@@ -243,14 +255,24 @@ export default {
           this.requestKey = res.result.key;
           // this.requestKey = "eb3a2422-301c-47ba-be1f-7c334e15c655";
           // TODO: 生成大纲
-          polling({ key: this.requestKey }, 5000).then((res) => {
-            console.log("ddddd", res);
-            if (res == "生成失败") {
-              eventBus.emit("errorOutline", res); // 发布事件
-            } else {
-              eventBus.emit("successOutline", res); // 发布事件
-            }
-          });
+          polling({ key: this.requestKey }, 5000)
+            .then((res) => {
+              console.log("ddddd", res);
+              if (res == "生成失败") {
+                eventBus.emit("errorOutline", res); // 发布事件
+              } else {
+                eventBus.emit("successOutline", res); // 发布事件
+              }
+            })
+            .catch((error) => {
+              console.log(error, "eeeeeerrrror");
+              this.$message({
+                type: "error",
+                message: "大纲生成失败, 请稍后重试",
+              });
+              eventBus.emit("errorOutline"); // 发布事件
+              this.$emit("errorBack", "关闭index");
+            });
         });
       } else {
         this.$confirm("生成大纲需要登录, 是否跳转到登录页?", "提示", {
@@ -260,7 +282,8 @@ export default {
           center: true,
         })
           .then(() => {
-            this.$router.push("/login");
+            // 存储用户数据并跳转
+            this.saveInput();
           })
           .catch(() => {
             this.$message({
@@ -269,6 +292,12 @@ export default {
             });
           });
       }
+    },
+    saveInput() {
+      // 获取用户数据
+      console.log("ssss", this.requestForm);
+      localStorage.setItem("userInput", JSON.stringify(this.requestForm));
+      this.$router.push("/login");
     },
     addE() {},
     // 定义方法
@@ -292,7 +321,6 @@ export default {
 // }
 .outlineMain {
   max-width: 1200px;
-  padding-bottom: 40px;
   background: #ffffff;
   border-radius: 0px 0px 12px 12px;
 }
@@ -339,7 +367,15 @@ export default {
     }
   }
 }
-
+.tabMainActive {
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #00bfff33 50%,
+    #6236ff33 82%,
+    #b620e033 100%
+  ) !important;
+}
 .paperMain {
   background: linear-gradient(
     135deg,
@@ -349,7 +385,14 @@ export default {
     #b620e0 100%
   ) !important;
 }
-
+.produceClass {
+  background: #cccccc !important;
+  // font-size: ;
+  color: #000;
+  &:hover {
+    cursor: not-allowed;
+  }
+}
 .outRight {
   width: 117px;
   height: 40px;
@@ -398,7 +441,13 @@ export default {
     flex: 1;
   }
 }
-
+.uesrInputBox {
+  padding-top: 25px;
+  padding-bottom: 40px;
+  .selectLang:first-child {
+    margin-top: 0px;
+  }
+}
 .outlineBtn {
   width: auto;
   height: 44px;

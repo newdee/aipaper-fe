@@ -431,9 +431,9 @@
             </div>
           </el-checkbox>
         </el-checkbox-group>
-        <p class="tips" @click="reduceAIGC">
+        <!-- <p class="tips" @click="reduceAIGC">
           AIGC率知网超25%<span>包退费</span>
-        </p>
+        </p> -->
       </div>
     </div>
     <div class="warningP">

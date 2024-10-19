@@ -18,53 +18,24 @@
             </div>
           </div>
           <div
-            :class="['navItem', activeIndex == '1' ? 'active' : '']"
+            :class="['navItem', 'home' == $route.name ? 'active' : '']"
             @click="toView(0, '/home/home')"
           >
-            搜论文
+            首页
           </div>
-          <div
-            :class="['navItem', activeIndex == '2' ? 'active' : '']"
-            @click="toView(1, '/main/writepaper')"
-          >
-            写论文
-          </div>
-          <div
-            :class="['navItem', activeIndex == '3' ? 'active' : '']"
-            @click="toView(2, '/main/readpaper')"
-          >
-            读论文
-          </div>
-          <div
-            :class="['navItem', activeIndex == '4' ? 'active' : '']"
-            @click="toView(3, '/main/amendpaper')"
-          >
-            改论文
-          </div>
-          <div
-            :class="['navItem', activeIndex == '5' ? 'active' : '']"
-            @click="toView(4, '/main/integratedservices')"
-          >
-            综合服务
-          </div>
-          <div
-            :class="['navItem', activeIndex == '6' ? 'active' : '']"
-            @click="toView(5, '/main/explore')"
-          >
-            精品课程
-          </div>
-          <div
-            :class="['navItem', activeIndex == '7' ? 'active' : '']"
-            @click="toView(6, '/main/aitools')"
-          >
-            AI工具
-          </div>
-          <div
-            :class="['navItem', activeIndex == '8' ? 'active' : '']"
-            @click="toView(7, '/main/reduceRepetition')"
-          >
-            降重/降AIGC率
-          </div>
+          <template v-for="(route, i) in routerList">
+            <div
+              :key="'route_' + i"
+              :class="[
+                'navItem',
+                route.meta.inDevelopment ? 'gray' : '',
+                route.name == $route.name ? 'active' : '',
+              ]"
+              @click="$jumpUrl('/main/' + route.path)"
+            >
+              {{ route.meta.title }}
+            </div>
+          </template>
         </div>
         <div
           v-if="!showContent"
@@ -82,11 +53,10 @@
       </div>
       <div :class="[showContent ? '' : 'leftNavbarPosition']">
         <div class="flex navBarRight">
-          <div class="gift">
+          <!-- <div class="gift">
             <span class="num">1</span>
-          </div>
-          <div class="btn" @click="$devf">升级专业版</div>
-
+          </div> -->
+          <!-- <div class="btn" @click="$devf">升级专业版</div> -->
           <template>
             <div
               v-if="!hasLogin"
@@ -96,11 +66,9 @@
               <div class="img">登录</div>
             </div>
             <div v-else class="login_box hidden-xs-only">
-              <!-- 已登录状态下拉菜单栏 -->
               <UserMenu>
                 <div class="img">
-                  <!-- <img src="@/assets/images/user/userImg.png" alt="" /> -->
-                  <span>{{ name.slice(0, 1) }}</span>
+                  <img :src="avatar" alt="" />
                 </div>
               </UserMenu>
             </div>
@@ -125,80 +93,89 @@
         <div>我的菜单</div>
       </template>
       <div class="flex flex-star">
+        <template v-if="!hasLogin">
+          <div
+            class="text-main items-center siderbar-item"
+            @click="
+              drawerStatus = false;
+              pushLogin;
+            "
+          >
+            登录
+          </div>
+          <div
+            :class="[
+              'text-main items-center siderbar-item',
+              'home' == $route.name ? 'active' : '',
+            ]"
+            @click="
+              drawerStatus = false;
+              $jumpUrl('/home/home');
+            "
+          >
+            首页
+          </div>
+        </template>
+        <template v-else>
+          <div
+            :class="[
+              'text-main items-center siderbar-item',
+              'home' == $route.name ? 'active' : '',
+            ]"
+            @click="
+              drawerStatus = false;
+              $jumpUrl('/home/home');
+            "
+          >
+            首页
+          </div>
+          <div
+            :class="[
+              'text-main items-center siderbar-item',
+              'userInfo' == $route.name ? 'active' : '',
+            ]"
+            @click="
+              drawerStatus = false;
+              $jumpUrl('/user/userInfo');
+            "
+          >
+            我的个人主页
+          </div>
+        </template>
         <div
-          v-if="!hasLogin"
           class="text-main items-center siderbar-item"
-          @click="pushLogin"
-        >
-          登录
-        </div>
-        <div
-          v-else
-          class="text-main items-center siderbar-item"
-          @click="$jumpUrl('/userInfo')"
-        >
-          我的个人主页
-        </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="showOrderList(1)"
+          @click="
+            drawerStatus = false;
+            showOrderList(1);
+          "
         >
           我的订单
         </div>
         <div
           class="text-main items-center siderbar-item"
-          @click="showOrderList(2)"
+          @click="
+            drawerStatus = false;
+            showOrderList(2);
+          "
         >
           我的大纲
         </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="toView(0, '/home/home')"
-        >
-          搜论文
-        </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="toView(1, '/main/writepaper')"
-        >
-          写论文
-        </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="toView(2, '/main/readpaper')"
-        >
-          读论文
-        </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="toView(3, '/main/amendpaper')"
-        >
-          改论文
-        </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="toView(4, '/main/integratedservices')"
-        >
-          综合服务
-        </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="toView(5, '/main/explore')"
-        >
-          精品课程
-        </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="toView(6, '/main/aitools')"
-        >
-          AI工具
-        </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="toView(7, '/main/reduceRepetition')"
-        >
-          降重/降AIGC率
-        </div>
+        <template v-for="(route, j) in routerList">
+          <div
+            :key="'route_in_right_nav_' + j"
+            :class="[
+              'text-main items-center siderbar-item',
+              route.meta.inDevelopment ? 'gray' : '',
+              route.name == $route.name ? 'active' : '',
+            ]"
+            @click="
+              drawerStatus = false;
+              $jumpUrl('/main/' + route.path);
+            "
+          >
+            {{ route.meta.title }}
+          </div>
+        </template>
       </div>
     </el-drawer>
     <!-- 用户订单 -->
@@ -230,6 +207,7 @@ import UserOrders from "./UserOrders.vue";
 import UserOutlines from "./UserOutlines.vue";
 
 import { getToken, setToken } from "@/utils/auth"; // get token from cookie
+const _ = require("lodash");
 export default {
   components: {
     Breadcrumb,
@@ -260,7 +238,7 @@ export default {
       ordersDrawer: false,
       orderTabs: 1,
 
-      activeIndex: 1,
+      routerList: [], //展示在导航栏的菜单路由
     };
   },
   computed: {
@@ -269,6 +247,12 @@ export default {
   mounted() {
     console.log("tokend", getToken());
     this.hasLogin = getToken();
+    console.log("routes:", this.$router.options.routes);
+    let arr = _.find(
+      this.$router.options.routes,
+      (obj) => obj.name == "main" && obj.meta.id == "5"
+    );
+    this.routerList = arr.children;
   },
   methods: {
     showOrderList(status) {
@@ -647,6 +631,17 @@ export default {
 .siderbar-item {
   padding-left: 20px;
   padding-bottom: 15px;
+
+  &.active {
+    color: rgb(59 130 246 / 1);
+  }
+
+  &.gray {
+    color: #777777b5;
+  }
+  &.gray:hover {
+    cursor: not-allowed;
+  }
 }
 
 // 重置订单抽屉样式
@@ -679,6 +674,10 @@ export default {
 
   .navItem {
     padding: 0 10px;
+
+    &.gray {
+      color: #777777d5;
+    }
 
     &:hover {
       font-weight: 600;

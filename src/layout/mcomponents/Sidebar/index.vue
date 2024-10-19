@@ -1,51 +1,38 @@
 <template>
   <div class="qysytxy" :key="timeKey">
-    <div @click="$jumpUrl('/home/home')" class="logoEr">
-      <img src="@/assets/images/MIXPAPER.png" alt="" />
+    <div @click="$jumpUrl('/home/home')" class="grid-content nav_left flex items-center">
+      <div class="logo-box2">
+        <div class="logoR">
+          <img :src="logoMax" alt="" title="logo" />
+        </div>
+        <div class="logoL">
+          <!-- <p>万象学术</p> -->
+          <img :src="logo" alt="" title="logo" />
+        </div>
+      </div>
     </div>
+    <!-- <div @click="$jumpUrl('/home/home')" class="logoEr">
+      <div class="logoSecClass">
+        <img :src="logoMax" alt="" title="logo" />
+      </div>
+      <img src="@/assets/images/MIXPAPER.png" alt="" />
+    </div> -->
     <div class="mSiderBar">
-      <div @click="$jumpUrl('/main/explore')" :active="$route.meta.sideBarIndex == 5" class="mItemWrapper">
+      <div @click="$jumpUrl('/home/home')" :active="'home' == $route.name" class="mItemWrapper">
         <div class="mSliderItem">
-          <div class="left"><span class="imgIcon"></span>搜论文</div>
+          <div class="left"><span class="imgIcon"></span>首页</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div @click="$jumpUrl('/main/writepaper')" :active="$route.meta.sideBarIndex == 1" class="mItemWrapper">
-        <div class="mSliderItem">
-          <div class="left"><span class="imgIcon"></span>写论文</div>
-          <span class="right imgIcon"></span>
+      <template v-for="(route, i) in routerList">
+        <div :key="'route_' + i" :class="['mItemWrapper', route.meta.inDevelopment ? 'gray' : '']"
+          :active="route.name == $route.name" @click="$jumpUrl('/main/' + route.path)">
+          <div class="mSliderItem">
+            <div class="left"><span class="imgIcon"></span>{{ route.meta.title }}</div>
+            <span class="right imgIcon"></span>
+          </div>
         </div>
-      </div>
-      <div @click="$jumpUrl('/main/readpaper')" :active="$route.meta.sideBarIndex == 2" class="mItemWrapper">
-        <div class="mSliderItem">
-          <div class="left"><span class="imgIcon"></span>读论文</div>
-          <span class="right imgIcon"></span>
-        </div>
-      </div>
-      <div @click="$jumpUrl('/main/amendpaper')" :active="$route.meta.sideBarIndex == 3" class="mItemWrapper">
-        <div class="mSliderItem">
-          <div class="left"><span class="imgIcon"></span>改论文</div>
-          <span class="right imgIcon"></span>
-        </div>
-      </div>
-      <div @click="$jumpUrl('/main/integratedservices')" :active="$route.meta.sideBarIndex == 4" class="mItemWrapper">
-        <div class="mSliderItem">
-          <div class="left"><span class="imgIcon"></span>综合服务</div>
-          <span class="right imgIcon"></span>
-        </div>
-      </div>
-      <div @click="$jumpUrl('/main/aitools')" :active="$route.meta.sideBarIndex == 6" class="mItemWrapper">
-        <div class="mSliderItem">
-          <div class="left"><span class="imgIcon"></span>AI工具</div>
-          <span class="right imgIcon"></span>
-        </div>
-      </div>
-      <div @click="$jumpUrl('/main/reduceRepetition')" :active="$route.meta.sideBarIndex == 7" class="mItemWrapper">
-        <div class="mSliderItem">
-          <div class="left"><span class="imgIcon"></span>降重/降AIGC率</div>
-          <span class="right imgIcon"></span>
-        </div>
-      </div>
+      </template>
     </div>
   </div>
 </template>
@@ -55,14 +42,19 @@ import { mapGetters } from "vuex";
 import Logo from "./Logo";
 import SidebarItem from "./SidebarItem";
 import variables from "@/styles/variables.scss";
+const _ = require('lodash');
 
 export default {
   name: "Sidebar",
   data() {
     return {
       active: 1,
+      logoMax: require("@/assets/images/logoMax.png"),
+      logo: require("@/assets/images/MIXPAPER.png"),
+
       timeKey: null,
       fullPath: this.$route.fullPath,
+      routerList: [], //展示在导航栏的菜单路由
     };
   },
   components: { SidebarItem, Logo },
@@ -115,6 +107,10 @@ export default {
     //   }
     //   this.timeKey = JSON.stringify(new Date().getMilliseconds);
     // },
+  },
+  mounted() {
+    let arr = _.find(this.$router.options.routes, obj => obj.name == 'main' && obj.meta.id == '5');
+    this.routerList = arr.children;
   },
   methods: {},
 };
@@ -181,6 +177,10 @@ export default {
       }
     }
 
+    &.gray {
+      color: #777777d5;
+    }
+
     &:hover .mSliderItem {
       background-color: #3355ff !important;
       color: #fff;
@@ -227,6 +227,63 @@ export default {
     // height: 100%;
     width: 115px;
     height: 18px;
+  }
+}
+
+.grid-content {
+  border-radius: 4px;
+
+  &:hover>div {
+    cursor: pointer;
+  }
+}
+
+.logo-box2 {
+  padding-left: 36px;
+  // width: 176px;
+  height: 80px;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .logoR {
+    width: 48px;
+    height: 40px;
+    margin-right: 10px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+}
+
+.logoL {
+  width: 117px;
+  height: 40px;
+  font-family: DOUYINSANSBOLD, DOUYINSANSBOLD;
+  font-weight: normal;
+  font-size: 24px;
+  color: #3355ff;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  img {
+    width: 117px;
+    height: 19px;
+  }
+
+  p {
+    width: 100%;
+    font-family: arial, "Hiragino Sans GB", "Microsoft Yahei", "微软雅黑",
+      "宋体", 宋体, Tahoma, Arial, Helvetica, STHeiti;
+    text-align: center;
+    font-weight: 600;
+    transform: rotateX(45deg) scaleX(1.2);
   }
 }
 </stlyle>

@@ -91,12 +91,12 @@
                 二级大纲(1.1)：极速简约，结构清晰<br />
                 三级大纲(1.1.1)：内容丰富，深度思考
               </div>
-              <el-switch
+              <!-- <el-switch
                 style="display: block"
                 v-model="value2"
                 active-text="使用三级大纲"
               >
-              </el-switch>
+              </el-switch> -->
             </el-tooltip>
           </div>
         </div>

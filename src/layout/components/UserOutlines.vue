@@ -118,12 +118,18 @@ export default {
   },
   methods: {
     jumpStep2(row) {
-      console.log("row-------------", row);
-      // row.key1
       this.$router.push({
         path: "/main/writepaper",
-        query: { key1: row.key1, field: row.field },
       });
+      console.log("row-------------", row);
+      // row.key1
+      let _this = this;
+      setTimeout(() => {
+        _this.$router.push({
+          path: "/main/writepaper",
+          query: { key1: row.key1, field: row.field },
+        });
+      }, 1000);
     },
     refresh() {
       this.handleCurrentChange(1);

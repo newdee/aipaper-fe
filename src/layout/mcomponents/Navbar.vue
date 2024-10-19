@@ -1,82 +1,6 @@
 <template>
   <div class="navbar">
     <el-row :gutter="10">
-      <el-col :xs="18" :sm="18" :lg="18">
-        <!-- <div class="navItems flex">
-          <div
-            :class="['navItem', activeIndex == '1' ? 'active' : '']"
-            @click="
-              activeIndex = 1;
-              jumpDetail('/home');
-            "
-          >
-            首页
-          </div>
-          <div
-            :class="['navItem', activeIndex == '2' ? 'active' : '']"
-            @click="
-              activeIndex = 2;
-              jumpDetail('/main/writepaper');
-            "
-          >
-            写论文
-          </div>
-          <div
-            :class="['navItem', activeIndex == '3' ? 'active' : '']"
-            @click="
-              activeIndex = 3;
-              jumpDetail('/main/readpaper');
-            "
-          >
-            读论文
-          </div>
-          <div
-            :class="['navItem', activeIndex == '4' ? 'active' : '']"
-            @click="
-              activeIndex = 4;
-              jumpDetail('/main/amendpaper');
-            "
-          >
-            改论文
-          </div>
-          <div
-            :class="['navItem', activeIndex == '5' ? 'active' : '']"
-            @click="
-              activeIndex = 5;
-              jumpDetail('/main/integratedservices');
-            "
-          >
-            综合服务
-          </div>
-          <div
-            :class="['navItem', activeIndex == '6' ? 'active' : '']"
-            @click="
-              activeIndex = 6;
-              jumpDetail('/main/explore');
-            "
-          >
-            精品课程
-          </div>
-          <div
-            :class="['navItem', activeIndex == '7' ? 'active' : '']"
-            @click="
-              activeIndex = 7;
-              jumpDetail('/main/aitools');
-            "
-          >
-            AI工具
-          </div>
-          <div
-            :class="['navItem', activeIndex == '8' ? 'active' : '']"
-            @click="
-              activeIndex = 8;
-              jumpDetail('/main/reduceRepetition');
-            "
-          >
-            降重/降AIGC率
-          </div>
-        </div> -->
-      </el-col>
       <el-col :xs="6" :sm="6" :lg="6">
         <div class="flex navBarRight">
           <div class="gift">
@@ -120,7 +44,7 @@
         <div v-if="!hasLogin" class="text-main items-center siderbar-item" @click="pushLogin">
           登录
         </div>
-        <div v-else class="text-main items-center siderbar-item" @click="jumpDetail('/userInfo')">
+        <div v-else class="text-main items-center siderbar-item" @click="jumpDetail('/user/userInfo')">
           我的个人主页
         </div>
       </div>

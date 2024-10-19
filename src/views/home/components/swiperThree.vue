@@ -2,6 +2,9 @@
   <div class="swiperWrapper">
     <!-- 中间行的轮播图 -->
     <div class="swiperNews">
+      <p class="swiperListTitle">
+        <span> 品天下论文</span>
+      </p>
       <swiper class="swiper" ref="mySwiper2" :options="swiperOptionNew">
         <swiper-slide>
           <div class="newSlider">
@@ -340,7 +343,6 @@ export default {
 
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
-    console.log("Current Swiper instance object", this.swiper);
 
     // 页面初始化
     // this.swiper.slideTo(3, 1000, false);
@@ -544,6 +546,20 @@ export default {
       color: #999;
       margin-top: 10px;
     }
+  }
+}
+.swiperListTitle {
+  text-align: center;
+  margin: 0 auto;
+  width: 260px;
+  position: relative;
+  background: rgb(19, 34, 122);
+  height: 60px;
+  border-radius: 30px;
+  line-height: 60px;
+  span {
+    font-size: 30px;
+    color: #fff;
   }
 }
 </style>
