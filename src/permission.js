@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue from "vue";
 import router from "./router";
 import store from "./store";
 import { Message } from "element-ui";
@@ -38,14 +38,14 @@ const whiteList = [
 router.beforeEach(async (to, from, next) => {
   // start progress bar
   NProgress.start();
-  console.log('41---from:', from, '\n', to);
+  console.log("40---", to);
 
   if (to.meta.inDevelopment) {
     // 弹出提示并阻止导航
     Vue.prototype.$devf();
     NProgress.done();
     next(false); // 阻止导航
-    return
+    return;
   }
   // set page title
   document.title = getPageTitle(to.meta.title);
@@ -53,7 +53,6 @@ router.beforeEach(async (to, from, next) => {
   // determine whether the user has logged in
   // const hasToken = getToken() ? getToken() : setToken("editor-token");
   const hasToken = getToken();
-  console.log("46-permission---hasToken:", hasToken);
   if (hasToken) {
     if (to.path === "/login" && hasToken == "editor-token") {
       // if is logged in, redirect to the home page
@@ -61,7 +60,6 @@ router.beforeEach(async (to, from, next) => {
       NProgress.done();
     } else {
       const hasGetUserInfo = store.getters.name;
-      console.log("hasGetUserInfo", hasGetUserInfo);
 
       if (hasGetUserInfo) {
         next();

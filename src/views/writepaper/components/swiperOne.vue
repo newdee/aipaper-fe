@@ -11,7 +11,12 @@
         </swiper-slide>
         <swiper-slide>
           <div class="slider1Img">
-            <img src="@/assets/images/swiperWrite.png" alt="" />
+            <img src="@/assets/images/swiperWrite2.png" alt="" />
+          </div>
+        </swiper-slide>
+        <swiper-slide>
+          <div class="slider1Img">
+            <img src="@/assets/images/swiperWrite3.png" alt="" />
           </div>
         </swiper-slide>
         <!-- 其他 slides... -->
@@ -41,9 +46,7 @@ export default {
       },
     };
   },
-  mounted() {
-    console.log(this.swiper); // 检查 Swiper 实例
-  },
+  mounted() {},
   computed: {
     swiper() {
       return this.$refs.mySwiper1.swiper;
@@ -105,7 +108,7 @@ export default {
   bottom: 15px;
   z-index: 100;
 
-  &::v-deep>.swiper-pagination-bullet {
+  &::v-deep > .swiper-pagination-bullet {
     width: 40px;
     height: 4px;
     display: inline-block;
@@ -114,7 +117,7 @@ export default {
     opacity: 0.5;
   }
 
-  &::v-deep>.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  &::v-deep > .swiper-pagination-bullet.swiper-pagination-bullet-active {
     background: #fff;
     opacity: 1;
   }

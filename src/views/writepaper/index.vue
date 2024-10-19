@@ -165,6 +165,8 @@ export default {
   beforeRouteUpdate(to, from, next) {
     // 当路由的查询参数发生变化时，这个方法会被调用
     // this.activeIndex = to.query.activeIndex || 0;
+    // console.log("dddddddddddddddddddd---------", to, from,);
+
     if (to.query.key1) {
       let data = {
         key: to.query.key1,
@@ -216,6 +218,7 @@ export default {
   max-width: 1200px;
   padding-top: 16px;
 }
+
 .tabsList {
   display: flex;
   align-items: center;
@@ -315,6 +318,7 @@ export default {
     background-color: #3355ff;
   }
 }
+
 .stepContent {
   margin-top: 16px;
   margin-bottom: 16px;

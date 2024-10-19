@@ -92,6 +92,9 @@
           margin-right: 20px;
         }
       }
+      .infoBottom {
+        display: none;
+      }
     }
   }
   .step2Box {
@@ -123,5 +126,17 @@
   // shouye
   .swiperBg {
     padding-bottom: 0px !important;
+  }
+}
+
+@media only screen and (max-width: 1007px) {
+  // 底部栏
+  .main-container {
+    .footer {
+      padding-left: 0 !important;
+    }
+    .phoneFlex {
+      display: block !important;
+    }
   }
 }

@@ -24,7 +24,7 @@
         <el-input
           type="textarea"
           :rows="15"
-          placeholder="请输入文章段落，待降重、待降AIGC率均可，每次最多1000字"
+          :placeholder="placeText[activeIndex - 1]"
           maxlength="1000"
           show-word-limit
           v-model="textareaIn"
@@ -65,7 +65,7 @@
         <textarea
           readonly
           v-model="textareaOut"
-          placeholder="请在左侧输入待降重复率、或待降AIGC率的文章段落，点击“一键降”按钮，稍等片刻，成品会显示在这里"
+          :placeholder="reduceText[activeIndex - 1]"
         ></textarea>
         <div class="btns">
           <el-button for="copyRes" type="primary" round>复制结果</el-button>
@@ -91,6 +91,14 @@ export default {
       textareaIn: "",
       textareaOut: "",
       activeIndex: 1,
+      placeText: [
+        "请输入文章段落，待降重均可，每次最多1000字",
+        "请输入文章段落，待降AIGC率，每次最多1000字",
+      ],
+      reduceText: [
+        "请在左侧输入待降重复率的文章段落，点击“开始生成”按钮，稍等片刻，成品会显示在这里",
+        "请在左侧输入待降AIGC率的文章段落，点击“开始生成”按钮，稍等片刻，成品会显示在这里",
+      ],
     };
   },
   computed: {},

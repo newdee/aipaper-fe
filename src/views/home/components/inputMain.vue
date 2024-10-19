@@ -24,6 +24,16 @@
             <img src="@/assets/images/banner/banner4.png" alt="" />
           </div>
         </swiper-slide>
+        <swiper-slide>
+          <div class="slider1Img">
+            <img src="@/assets/images/banner/banner5.png" alt="" />
+          </div>
+        </swiper-slide>
+        <swiper-slide>
+          <div class="slider1Img">
+            <img src="@/assets/images/banner/banner6.png" alt="" />
+          </div>
+        </swiper-slide>
         <!-- 其他 slides... -->
 
         <!-- 分页器 -->
@@ -43,8 +53,8 @@ export default {
         loop: true,
         autoplay: 4000,
         autoplayDisableOnInteraction: false,
-        pagination: '.swiper-pagination1',
-        paginationType: 'bullets',
+        pagination: ".swiper-pagination1",
+        paginationType: "bullets",
         paginationClickable: true,
         // pagination: {
         //   el: ".swiper-pagination1",
@@ -53,9 +63,7 @@ export default {
       },
     };
   },
-  mounted() {
-    console.log(this.swiper); // 检查 Swiper 实例
-  },
+  mounted() {},
   computed: {
     swiper() {
       return this.$refs.mySwiper1.swiper;
@@ -103,7 +111,6 @@ export default {
 
 // 确保分页器样式没有问题
 .swiper-pagination1 {
-
   // position: absolute;
   // bottom: 10px;
   // left: 50%;
@@ -118,16 +125,16 @@ export default {
   bottom: 15px;
   z-index: 100;
 
-  &::v-deep>.swiper-pagination-bullet {
+  &::v-deep > .swiper-pagination-bullet {
     width: 40px;
     height: 4px;
     display: inline-block;
     border-radius: 4px;
     background: #fff;
-    opacity: .5;
+    opacity: 0.5;
   }
 
-  &::v-deep>.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  &::v-deep > .swiper-pagination-bullet.swiper-pagination-bullet-active {
     background: #fff;
     opacity: 1;
   }
