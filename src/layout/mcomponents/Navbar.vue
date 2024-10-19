@@ -120,7 +120,7 @@
         <div v-if="!hasLogin" class="text-main items-center siderbar-item" @click="pushLogin">
           登录
         </div>
-        <div v-else class="text-main items-center siderbar-item" @click="jumpDetail('/userInfo')">
+        <div v-else class="text-main items-center siderbar-item" @click="jumpDetail('/user/userInfo')">
           我的个人主页
         </div>
       </div>

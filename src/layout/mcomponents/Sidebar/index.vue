@@ -4,48 +4,21 @@
       <img src="@/assets/images/MIXPAPER.png" alt="" />
     </div>
     <div class="mSiderBar">
-      <div @click="$jumpUrl('/main/explore')" :active="$route.meta.sideBarIndex == 5" class="mItemWrapper">
+      <div @click="$jumpUrl('/home/home')" :active="$route.meta.sideBarIndex == 0" class="mItemWrapper">
         <div class="mSliderItem">
-          <div class="left"><span class="imgIcon"></span>搜论文</div>
+          <div class="left"><span class="imgIcon"></span>首页</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
-      <div @click="$jumpUrl('/main/writepaper')" :active="$route.meta.sideBarIndex == 1" class="mItemWrapper">
-        <div class="mSliderItem">
-          <div class="left"><span class="imgIcon"></span>写论文</div>
-          <span class="right imgIcon"></span>
+      <template v-for="(route, i) in routerList">
+        <div :key="'route_' + i" :class="['mItemWrapper', route.meta.inDevelopment ? 'gray' : '']"
+          :active="route.name == $route.name" @click="$jumpUrl('/main/' + route.path)">
+          <div class="mSliderItem">
+            <div class="left"><span class="imgIcon"></span>{{ route.meta.title }}</div>
+            <span class="right imgIcon"></span>
+          </div>
         </div>
-      </div>
-      <div @click="$jumpUrl('/main/readpaper')" :active="$route.meta.sideBarIndex == 2" class="mItemWrapper">
-        <div class="mSliderItem">
-          <div class="left"><span class="imgIcon"></span>读论文</div>
-          <span class="right imgIcon"></span>
-        </div>
-      </div>
-      <div @click="$jumpUrl('/main/amendpaper')" :active="$route.meta.sideBarIndex == 3" class="mItemWrapper">
-        <div class="mSliderItem">
-          <div class="left"><span class="imgIcon"></span>改论文</div>
-          <span class="right imgIcon"></span>
-        </div>
-      </div>
-      <div @click="$jumpUrl('/main/integratedservices')" :active="$route.meta.sideBarIndex == 4" class="mItemWrapper">
-        <div class="mSliderItem">
-          <div class="left"><span class="imgIcon"></span>综合服务</div>
-          <span class="right imgIcon"></span>
-        </div>
-      </div>
-      <div @click="$jumpUrl('/main/aitools')" :active="$route.meta.sideBarIndex == 6" class="mItemWrapper">
-        <div class="mSliderItem">
-          <div class="left"><span class="imgIcon"></span>AI工具</div>
-          <span class="right imgIcon"></span>
-        </div>
-      </div>
-      <div @click="$jumpUrl('/main/reduceRepetition')" :active="$route.meta.sideBarIndex == 7" class="mItemWrapper">
-        <div class="mSliderItem">
-          <div class="left"><span class="imgIcon"></span>降重/降AIGC率</div>
-          <span class="right imgIcon"></span>
-        </div>
-      </div>
+      </template>
     </div>
   </div>
 </template>
@@ -55,6 +28,7 @@ import { mapGetters } from "vuex";
 import Logo from "./Logo";
 import SidebarItem from "./SidebarItem";
 import variables from "@/styles/variables.scss";
+const _ = require('lodash');
 
 export default {
   name: "Sidebar",
@@ -63,6 +37,7 @@ export default {
       active: 1,
       timeKey: null,
       fullPath: this.$route.fullPath,
+      routerList: [], //展示在导航栏的菜单路由
     };
   },
   components: { SidebarItem, Logo },
@@ -115,6 +90,10 @@ export default {
     //   }
     //   this.timeKey = JSON.stringify(new Date().getMilliseconds);
     // },
+  },
+  mounted() {
+    let arr = _.find(this.$router.options.routes, obj => obj.name == 'main' && obj.meta.id == '5');
+    this.routerList = arr.children;
   },
   methods: {},
 };
@@ -179,6 +158,10 @@ export default {
         background-image: url("../../../assets//images/caret-left-white.png");
         display: none;
       }
+    }
+
+    &.gray {
+      color: #777777d5;
     }
 
     &:hover .mSliderItem {

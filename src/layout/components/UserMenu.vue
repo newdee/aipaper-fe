@@ -6,12 +6,7 @@
       </div>
     </div>
     <transition name="fade">
-      <div
-        class="userMenuContainer"
-        id="userMenuContainer"
-        v-if="isPopupVisible"
-        @click.stop="popupFn"
-      >
+      <div class="userMenuContainer" id="userMenuContainer" v-if="isPopupVisible" @click.stop="popupFn">
         <!-- 头像菜单 -->
         <div class="userMenu">
           <div class="menuHeader">
@@ -29,7 +24,7 @@
           </div>
           <div class="menuBody">
             <div class="menuGroup menuAboutUer">
-              <div class="menuItem" @click="jumpDetail('/userInfo')">
+              <div class="menuItem" @click="jumpDetail('/user/userInfo')">
                 <i class="el-icon-house"></i>
                 我的个人主页
               </div>
@@ -93,13 +88,8 @@
       </div>
     </transition>
     <!-- 用户订单 -->
-    <el-drawer
-      :visible.sync="ordersDrawer"
-      :direction="orderDirection"
-      append-to-body
-      :lock-scroll="false"
-      :size="isPhone ? '30%' : '30%'"
-    >
+    <el-drawer :visible.sync="ordersDrawer" :direction="orderDirection" append-to-body :lock-scroll="false"
+      :size="isPhone ? '30%' : '30%'">
       <template #title>
         <div v-if="orderTabs == 1" class="titleDrawer">我的订单</div>
         <div v-else class="titleDrawer">我的大纲</div>
@@ -309,6 +299,7 @@ export default {
   height: 0px;
   border-top: 1px solid #0000001f;
 }
+
 .titleDrawer {
   font-size: 16px;
   color: #000;

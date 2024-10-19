@@ -36,17 +36,34 @@ export const constantRoutes = [
     path: "/login",
     component: () => import("@/views/login/index"),
     hidden: true,
+    meta: {
+      id: '0',
+    }
   },
-
   {
-    path: "/userInfo",
-    component: () => import("@/views/user/userinfo"),
+    path: "/404",
+    component: () => import("@/views/404"),
     hidden: true,
+    meta: {
+      id: '1',
+    }
+  },
+  // 404 page must be placed at the end !!!
+  {
+    path: "*",
+    redirect: "/404",
+    hidden: true,
+    meta: {
+      id: '2',
+    }
   },
   {
     path: "/dashboard",
     component: () => import("@/views/dashboard/index"),
     hidden: true,
+    meta: {
+      id: '3',
+    }
   },
   //  {
   //     path: "/home",
@@ -57,11 +74,13 @@ export const constantRoutes = [
   //       icon: "dashboard",
   //     },
   //   },
-
   {
     path: "/",
     component: Layout,
     redirect: "/main/writepaper",
+    meta: {
+      id: '4',
+    }
     // children: [
     //   {
     //     path: "home",
@@ -76,6 +95,154 @@ export const constantRoutes = [
   },
 
   {
+    path: "/main",
+    component: mLayout,
+    redirect: "/main/explore",
+    name: "main",
+    meta: {
+      title: "主页",
+      icon: "el-icon-s-help",
+      id: '5',
+    },
+    children: [
+      {
+        path: "explore",
+        name: "explore",
+        component: () => import("@/views/explore/index"),
+        meta: {
+          keepAlive: true,
+          title: "搜论文",
+          icon: "table",
+          id: '5-1',
+          parentId: '5',
+          inDevelopment: false,
+        },
+      },
+      {
+        path: "writepaper",
+        name: "writepaper",
+        component: () => import("@/views/writepaper/index"),
+        meta: {
+          keepAlive: true,
+          title: "写论文",
+          icon: "tree",
+          id: '5-2',
+          parentId: '5',
+          inDevelopment: false,
+        },
+      },
+      // 读论文
+      {
+        path: "readpaper",
+        name: "readpaper",
+        component: () => import("@/views/readpaper/index"),
+        meta: {
+          keepAlive: true,
+          title: "读论文",
+          icon: "tree",
+          id: '5-3',
+          parentId: '5',
+          inDevelopment: true,
+        },
+      },
+      // 改论文
+      {
+        path: "amendpaper",
+        name: "amendpaper",
+        component: () => import("@/views/amendpaper/index"),
+        meta: {
+          keepAlive: true,
+          title: "改论文",
+          icon: "tree",
+          id: '5-4',
+          parentId: '5',
+          inDevelopment: true,
+        },
+      },
+      // 综合服务
+      {
+        path: "integratedservices",
+        name: "integratedservices",
+        component: () => import("@/views/integratedservices/index"),
+        meta: {
+          keepAlive: true,
+          title: "综合服务",
+          icon: "tree",
+          id: '5-5',
+          parentId: '5',
+          inDevelopment: true,
+        },
+      },
+      // 精品课程
+      {
+        path: "aitools",
+        name: "aitools",
+        component: () => import("@/views/aitools/index"),
+        meta: {
+          keepAlive: true,
+          title: "精品课程",
+          icon: "tree",
+          id: '5-6',
+          parentId: '5',
+          inDevelopment: true,
+        },
+      },
+      // ai工具
+      {
+        path: "aitools",
+        name: "aitools",
+        component: () => import("@/views/aitools/index"),
+        meta: {
+          keepAlive: true,
+          title: "AI工具",
+          icon: "tree",
+          id: '5-7',
+          parentId: '5',
+          inDevelopment: true,
+        },
+      },
+      // 降重/降aigc率
+      {
+        path: "reduceRepetition",
+        name: "reduceRepetition",
+        component: () => import("@/views/reduceRepetition/index.vue"),
+        meta: {
+          keepAlive: true,
+          title: "降重/降AIGC率",
+          icon: "tree",
+          id: '5-8',
+          parentId: '5',
+          inDevelopment: false,
+        },
+      },
+    ],
+  },
+  {
+    path: "/user",
+    component: Layout,
+    children: [
+
+      {
+        path: "promotion",
+        name: "promotion",
+        component: () => import("@/views/user/index.vue"),
+        meta: {
+          title: "我的推广",
+          icon: "dashboard",
+        },
+      },
+      {
+        path: "userInfo",
+        name: "userInfo",
+        component: () => import("@/views/user/userinfo"),
+        meta: {
+          title: "我的个人主页",
+        }
+      },
+    ],
+    hidden: true,
+  },
+  {
     path: "/paper",
     component: Layout,
     redirect: "/paper/preview",
@@ -87,6 +254,7 @@ export const constantRoutes = [
         meta: {
           title: "范文样例",
           icon: "dashboard",
+          inDevelopment: false,
         },
       },
       {
@@ -96,6 +264,7 @@ export const constantRoutes = [
         meta: {
           title: "智能降重",
           icon: "dashboard",
+          inDevelopment: false,
         },
       },
     ],
@@ -122,141 +291,18 @@ export const constantRoutes = [
         component: () => import("@/views/home/index"),
 
         meta: {
-          title: "home",
+          title: "首页",
           icon: "dashboard",
-        },
-      },
-    ],
-    hidden: true,
-  },
-  {
-    path: "/user",
-    component: Layout,
-    children: [
-      {
-        path: "promotion",
-        name: "promotion",
-        component: () => import("@/views/user/index.vue"),
-
-        meta: {
-          title: "promotion",
-          icon: "dashboard",
+          inDevelopment: false,
         },
       },
     ],
     hidden: true,
   },
 
-  {
-    path: "/main",
-    component: mLayout,
-    redirect: "/main/explore",
-    name: "main",
-    meta: {
-      title: "main",
-      icon: "el-icon-s-help",
-    },
-    children: [
-      {
-        path: "explore",
-        name: "explore",
-        component: () => import("@/views/explore/index"),
-        meta: {
-          keepAlive: true,
-          title: "explore",
-          icon: "table",
-          sideBarIndex: 5,
-        },
-      },
-      {
-        path: "writepaper",
-        name: "writepaper",
-        component: () => import("@/views/writepaper/index"),
-        meta: {
-          title: "writepaper",
-          keepAlive: true,
-          icon: "tree",
-          sideBarIndex: 1,
-        },
-      },
-      // 读论文
-      {
-        path: "readpaper",
-        name: "readpaper",
-        component: () => import("@/views/readpaper/index"),
-        meta: {
-          keepAlive: true,
-          title: "readpaper",
-          icon: "tree",
-          sideBarIndex: 2,
-          underDevelopment: true,
-        },
-      },
-      // 改论文
-      {
-        path: "amendpaper",
-        name: "amendpaper",
-        component: () => import("@/views/amendpaper/index"),
-        meta: {
-          title: "amendpaper",
-          keepAlive: true,
-          icon: "tree",
-          sideBarIndex: 3,
-          underDevelopment: true,
-        },
-      },
-      // 综合服务
-      {
-        path: "integratedservices",
-        name: "integratedservices",
-        component: () => import("@/views/integratedservices/index"),
-        meta: {
-          keepAlive: true,
-          title: "integratedservices",
-          icon: "tree",
-          sideBarIndex: 4,
-          underDevelopment: true,
-        },
-      },
-      // ai工具
-      {
-        path: "aitools",
-        name: "aitools",
-        component: () => import("@/views/aitools/index"),
-        meta: {
-          title: "aitools",
-          keepAlive: true,
-          icon: "tree",
-          sideBarIndex: 6,
-          underDevelopment: true,
-        },
-      },
-      // 降重/降aigc率
-      {
-        path: "reduceRepetition",
-        name: "reduceRepetition",
-        component: () => import("@/views/reduceRepetition/index.vue"),
-        meta: {
-          title: "reduceRepetition",
-          icon: "tree",
-          sideBarIndex: 7,
-          keepAlive: true,
-        },
-      },
-    ],
-  },
 
-  {
-    path: "/404",
-    component: () => import("@/views/404"),
-    hidden: true,
-  },
-  // 404 page must be placed at the end !!!
-  {
-    path: "*",
-    redirect: "/404",
-    hidden: true,
-  },
+
+
 ];
 
 const createRouter = () =>

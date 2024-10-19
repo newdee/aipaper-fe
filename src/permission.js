@@ -23,7 +23,7 @@ const whiteList = [
   "/paper",
   "/paper/preview",
   "/paper/reduceRepetition",
-  "/userInfo",
+  "/user/userInfo",
   "/main",
   "/explore",
   "/main/explore",
@@ -38,9 +38,9 @@ const whiteList = [
 router.beforeEach(async (to, from, next) => {
   // start progress bar
   NProgress.start();
-  console.log('40---', to);
+  console.log('41---from:', from, '\n', to);
 
-  if (to.meta.underDevelopment) {
+  if (to.meta.inDevelopment) {
     // 弹出提示并阻止导航
     Vue.prototype.$devf();
     NProgress.done();

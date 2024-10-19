@@ -24,7 +24,7 @@
           </div>
           <div class="menuBody">
             <div class="menuGroup menuAboutUer">
-              <div class="menuItem" @click="jumpDetail('/userInfo')">
+              <div class="menuItem" @click="jumpDetail('/user/userInfo')">
                 <i class="el-icon-house"></i>
                 我的个人主页
               </div>
