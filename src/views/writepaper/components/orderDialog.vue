@@ -5,6 +5,7 @@
     <el-dialog
       :append-to-body="true"
       :lock-scroll="false"
+      :close-on-click-modal="false"
       title="订单查询"
       :visible.sync="ownPayStatus"
       width="40%"

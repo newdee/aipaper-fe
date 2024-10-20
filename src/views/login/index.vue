@@ -22,14 +22,14 @@
             </p>
           </div>
           <div data-v-5eb08d16="" class="name-box">
-            <img
+            <!-- <img
               data-v-5eb08d16=""
               class="avatar"
               src="https://sso-cdn.lanhuapp.com/ssoweb/img/liugaozheng.b6e3f007.png"
-            />
+            /> -->
             <div data-v-5eb08d16="" class="text-name">
-              <div data-v-5eb08d16="" class="name">乔布斯</div>
-              <div data-v-5eb08d16="" class="signature">APPLE · 设计负责人</div>
+              <!-- <div data-v-5eb08d16="" class="name">乔布斯</div>
+              <div data-v-5eb08d16="" class="signature">APPLE · 设计负责人</div> -->
             </div>
           </div>
         </div>
@@ -117,17 +117,19 @@
                   <span class="canClick">我已阅读并同意</span>
                   <span class="lanhu" @click="openNewWindow">服务协议</span>
                   <span>和</span>
-                  <span class="lanhu canClick">隐私协议</span>
+                  <span class="lanhu canClick" @click="openNewWindowYinsi"
+                    >隐私协议</span
+                  >
                 </span>
               </div>
               <div class="thirdLogin center">
-                <div class="center" style="width: 100%; height: 100%">
+                <!-- <div class="center" style="width: 100%; height: 100%">
                   <div class="line"></div>
                   <div class="text center">或</div>
-                </div>
+                </div> -->
               </div>
               <div @click="openLogin" class="open_wx_btn center login-btn">
-                <div class="wx-box center">
+                <!-- <div class="wx-box center">
                   <el-tooltip
                     class="item"
                     effect="dark"
@@ -143,34 +145,19 @@
                   </el-tooltip>
                 </div>
                 <div class="dingding-box center">
-                  <el-tooltip
-                    class="item"
-                    effect="dark"
-                    content="飞书"
-                    placement="top"
-                  >
-                    <svg
-                      class="svg-icon"
-                      style="width: 40px; height: 40px; color: rgb(0, 0, 0)"
-                    >
+                  <el-tooltip class="item" effect="dark" content="飞书" placement="top">
+                    <svg class="svg-icon" style="width: 40px; height: 40px; color: rgb(0, 0, 0)">
                       <use xlink:href="#icon-feishu" fill="#000"></use>
                     </svg>
                   </el-tooltip>
                 </div>
                 <div class="sso-box center">
-                  <el-tooltip
-                    class="item"
-                    effect="dark"
-                    content="GitHub"
-                    placement="top"
-                    ><svg
-                      class="svg-icon"
-                      style="width: 40px; height: 40px; color: rgb(0, 0, 0)"
-                    >
+                  <el-tooltip class="item" effect="dark" content="GitHub" placement="top"><svg class="svg-icon"
+                      style="width: 40px; height: 40px; color: rgb(0, 0, 0)">
                       <use xlink:href="#icon-github" fill="#000"></use>
                     </svg>
                   </el-tooltip>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -183,7 +170,7 @@
         <span class="canClick">点击确定表示您已阅读并同意</span>
         <span class="lanhu" @click="openNewWindow">服务协议</span>
         <span>和</span>
-        <span class="lanhu canClick">隐私协议</span>
+        <span class="lanhu canClick" @click="openNewWindowYinsi">隐私协议</span>
       </span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
@@ -197,6 +184,7 @@
 import inputCode from "./components/inputCode.vue";
 
 import { sms } from "@/api/login";
+import { throttle } from "lodash";
 
 export default {
   data() {
@@ -279,7 +267,13 @@ export default {
     },
     openNewWindow() {
       window.open(
-        "https://lhcdn.lanhuapp.com/declaration/%E8%93%9D%E6%B9%96%E6%9C%8D%E5%8A%A1%E5%8D%8F%E8%AE%AEV2.pdf",
+        "https://file.mixpaper.cn/pdf/%E6%9C%8D%E5%8A%A1%E6%9D%A1%E6%AC%BE.pdf",
+        "_blank"
+      );
+    },
+    openNewWindowYinsi() {
+      window.open(
+        "https://file.mixpaper.cn/pdf/%E9%9A%90%E7%A7%81%E6%9D%A1%E6%AC%BE.pdf",
         "_blank"
       );
     },
@@ -306,7 +300,7 @@ export default {
         }
       }
     },
-    loginOrRegister(phoneNum) {
+    loginOrRegister: throttle(function (phoneNum) {
       if (phoneNum.trim() == "") {
         console.log("178---无输入内容", phoneNum);
         this.butNoPhoneNum = true;
@@ -337,7 +331,7 @@ export default {
           });
         }
       }
-    },
+    }, 2000), // 2000毫秒内最多执行一次
     getCode() {
       this.vaildPhone();
       if (!this.vailStatus) {

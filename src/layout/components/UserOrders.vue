@@ -12,8 +12,8 @@
         :key="orderObj.order.id + '-' + i"
       >
         <el-checkbox
-          :label="orderObj.order.id"
-          :value="orderObj.order.id"
+          :label="orderObj.order.out_trade_no"
+          :value="orderObj.order.out_trade_no"
         ></el-checkbox>
         <div class="order">
           <div class="orderNum rowBetween">
@@ -29,7 +29,8 @@
                 论文题目: {{ item.case.paper_case.title }}
               </div>
               <div class="orderTitle" :key="'case3' + j">
-                生成状态: {{ item.case.paper_case.stage }}
+                生成状态:
+                {{ item.case.paper_case.stage | orderStatusFormatter }}
               </div>
               <div class="orderTitle" :key="'title' + j">
                 {{ item.product.name }}

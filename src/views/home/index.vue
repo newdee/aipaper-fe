@@ -4,11 +4,18 @@
     <!-- 页面名称 -->
     <!-- <el-button type="success" @click="jump2">跳转详情页</el-button> -->
     <search-paper class="searchPaper"></search-paper>
+
     <div class="swiperBg">
       <input-main class="swiper swiper1"></input-main>
+      <div class="swiperBg swiperNews pwrapper">
+        <p class="swiper swiperListTitle">
+          <span> 精选论文推荐</span>
+        </p>
+      </div>
       <swiper-three class="swiper swiper2"></swiper-three>
     </div>
     <!-- 优势页面 -->
+
     <advantage class="swiper swiper3"></advantage>
   </div>
 </template>
@@ -72,8 +79,29 @@ export default {
 // 引入scss
 // @import "@/styles/variables.scss";
 @import "./index.scss";
+
 .swiperBg {
   background: #fff;
   padding-bottom: 40px;
+}
+
+.pwrapper {
+  padding-bottom: 0px;
+  margin-top: 60px;
+  .swiperListTitle {
+    text-align: left;
+    padding-top: 22px;
+
+    span {
+      display: inline-block;
+      text-align: center;
+      background: rgb(19, 34, 122);
+      border-radius: 30px;
+      line-height: 60px;
+      font-size: 30px;
+      color: #fff;
+      padding: 0 1.7em;
+    }
+  }
 }
 </style>

@@ -1,15 +1,23 @@
 <template>
-  <div class="adBox">
-    <!-- 页面名称 -->
-    <div
-      class="newLi"
-      v-for="(item, index) in advantageList"
-      :key="index + 'ad'"
-    >
-      {{ item.label }}
+  <div class="adMain">
+    <div>
+      <p class="swiperListTitle">
+        <span> 推广合作</span>
+      </p>
+    </div>
+    <div class="adBox">
+      <!-- 页面名称 -->
+      <div
+        class="newLi"
+        v-for="(item, index) in advantageList"
+        :key="index + 'ad'"
+      >
+        <img :src="item.imageUrl" alt="" />
+        <!-- {{ item.label }}
       <p class="advanP">
         {{ item.name }}
-      </p>
+      </p> -->
+      </div>
     </div>
   </div>
 </template>
@@ -28,18 +36,23 @@ export default {
         {
           name: "全网首家免费论文在线编辑，方便排版，一次定稿",
           label: "免费编辑",
+          imageUrl: require("@/assets/images/avantage1.jpg"),
         },
         {
           name: "全网最专业学术平台，最专业学术论文生成，蕴含硕士博士的学术经验",
           label: "专业论文",
+          imageUrl: require("@/assets/images/avantage2.jpg"),
         },
         {
           name: "全网最优质AI生成的论文内容，富含学术性创新，一次搞定",
+          imageUrl: require("@/assets/images/avantage3.jpg"),
+
           label: "优质内容",
         },
         {
           name: "7*24小时在线服务，全天专业服务，顾问式支持完成定稿",
           label: "在线服务",
+          imageUrl: require("@/assets/images/avantage4.jpg"),
         },
       ],
     };

@@ -24,7 +24,7 @@ export default {
     let _this = this;
     setTimeout(() => {
       _this.closePage();
-    }, 5000);
+    }, 3000);
   },
   beforeDestroy() {
     // 移除 beforeunload 事件监听器
