@@ -1377,7 +1377,7 @@ export default {
           let data = {
             user_id: 1,
             payment_method: "alipay",
-            total_amount: 154.75,
+            total_amount: 149.85,
             key: this.requestForm.key,
             // key: "eb3a2422-301c-47ba-be1f-7c334e15c655",
             items: [
@@ -1385,11 +1385,6 @@ export default {
                 product_id: "1",
                 quantity: 1,
                 price: 149.85,
-              },
-              {
-                product_id: "7",
-                quantity: 1,
-                price: 4.9,
               },
             ],
           };
@@ -1505,7 +1500,7 @@ export default {
       this.editStatus = false;
     },
     closeFDialog() {
-      this.numberValidateForm = false;
+      this.imgExcelSetStatus = false;
     },
     resetForm() {
       this.appendValue = "";

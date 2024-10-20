@@ -1,10 +1,9 @@
 .mainBackground {
-  padding-top: 100px;
-  height: 612px;
+  padding-top: 60px;
   width: 100%;
 
   background-size: cover;
-  height: 612px;
+  height: 312px;
   width: 100%;
   .leftMainText {
     max-width: 1100px;
@@ -99,7 +98,7 @@
 .inputDesc {
   max-width: 1100px;
   margin: 0 auto;
-  margin-top: 90px;
+  margin-top: 10px;
   // height: 48px;
   display: flex;
   white-space: nowrap; /* 防止文字换行 */
@@ -144,13 +143,31 @@
   align-items: center;
   justify-content: space-between;
   background: #f5f8ff;
+}
+.adMain {
   padding: 30px 0;
 }
-
+.swiperListTitle {
+  text-align: center;
+  width: 260px;
+  position: relative;
+  background: rgb(19, 34, 122);
+  height: 60px;
+  border-radius: 30px;
+  line-height: 60px;
+  span {
+    font-size: 30px;
+    color: #fff;
+  }
+}
 .newLi {
   width: 222px;
-  height: 485px;
-  padding: 13px;
+  height: 390px;
+  // padding: 13px;
+  overflow: hidden;
+  img {
+    width: 100%;
+  }
   text-align: center;
   background: rgba(51, 85, 255, 0.1);
   border-radius: 8px;
@@ -159,7 +176,6 @@
   font-size: 25px;
   font-family: "等线";
   color: #3960b8;
-  line-height: 6em;
   margin-top: 30px;
 }
 .advanP {

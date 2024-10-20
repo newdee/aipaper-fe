@@ -8,7 +8,11 @@
           </div>
           <div class="btn" @click="$devf">升级专业版</div>
           <template>
-            <div v-if="!hasLogin" @click="pushLogin" class="login_box hidden-xs-only">
+            <div
+              v-if="!hasLogin"
+              @click="pushLogin"
+              class="login_box hidden-xs-only"
+            >
               <div class="img">登录</div>
             </div>
             <div v-else class="login_box hidden-xs-only">
@@ -26,37 +30,65 @@
     </el-row>
 
     <!-- 菜单栏 -->
-    <el-drawer size="40%" :visible.sync="drawer" :direction="direction" :before-close="handleClose" :show-close="false"
-      append-to-body>
+    <el-drawer
+      size="40%"
+      :visible.sync="drawer"
+      :direction="direction"
+      :before-close="handleClose"
+      :show-close="false"
+      append-to-body
+    >
       <template slot="title">
         <div>我的菜单</div>
       </template>
       <div class="flex flex-star">
-        <div class="text-main items-center siderbar-item" @click="jumpDetail('/paper/reduceRepetiton')">
+        <div
+          class="text-main items-center siderbar-item"
+          @click="jumpDetail('/paper/reduceRepetiton')"
+        >
           降重/降AIGC率
         </div>
-        <div class="text-main items-center siderbar-item" @click="showOrderList">
+        <div
+          class="text-main items-center siderbar-item"
+          @click="showOrderList"
+        >
           我的订单
         </div>
-        <div class="text-main items-center siderbar-item" @click="jumpDetail('/paper/preview')">
+        <div
+          class="text-main items-center siderbar-item"
+          @click="jumpDetail('/paper/preview')"
+        >
           范文样例
         </div>
-        <div v-if="!hasLogin" class="text-main items-center siderbar-item" @click="pushLogin">
+        <div
+          v-if="!hasLogin"
+          class="text-main items-center siderbar-item"
+          @click="pushLogin"
+        >
           登录
         </div>
-        <div v-else class="text-main items-center siderbar-item" @click="jumpDetail('/user/userInfo')">
+        <div
+          v-else
+          class="text-main items-center siderbar-item"
+          @click="jumpDetail('/user/userInfo')"
+        >
           我的个人主页
         </div>
       </div>
     </el-drawer>
     <!-- 用户订单 -->
-    <el-drawer :visible.sync="ordersDrawer" :direction="orderDirection" :before-close="handleOrdersClose" append-to-body
-      size="500px">
+    <el-drawer
+      :visible.sync="ordersDrawer"
+      :direction="orderDirection"
+      :before-close="handleOrdersClose"
+      append-to-body
+      size="500px"
+    >
       <template #title>
         <div>我的订单</div>
       </template>
       <div class="drawBox">
-        <user-orders :listId="listId"></user-orders>
+        <!-- <user-orders :listId="listId"></user-orders> -->
       </div>
     </el-drawer>
   </div>
@@ -67,14 +99,14 @@ import { mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 import UserMenu from "./UserMenu.vue";
-import UserOrders from "./UserOrders.vue";
+// import UserOrders from "./UserOrders.vue";
 import { getToken, setToken } from "@/utils/auth"; // get token from cookie
 export default {
   components: {
     Breadcrumb,
     Hamburger,
     UserMenu,
-    UserOrders,
+    // UserOrders,
   },
   data() {
     return {
@@ -157,8 +189,6 @@ export default {
   },
 };
 </script>
-
-
 
 <style lang="scss" scoped>
 @import "@/styles/variables.scss";
@@ -252,7 +282,7 @@ export default {
   border-radius: 4px;
   height: 100%;
 
-  &:hover>div {
+  &:hover > div {
     cursor: pointer;
   }
 }
@@ -262,7 +292,7 @@ export default {
   height: $navBarHeight;
   // overflow: hidden;
   position: relative;
-  background: #F5F8FF;
+  background: #f5f8ff;
   // box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
   .hamburger-container {
@@ -431,7 +461,7 @@ export default {
   height: 100%;
   align-items: center;
 
-  >div {
+  > div {
     margin: 0 10px;
   }
 

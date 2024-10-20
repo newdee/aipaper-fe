@@ -176,7 +176,7 @@ export default {
         let data = {
           title: res.result.title,
           language: res.result.language,
-          field: to.query.field,
+          field: ["查看大纲", to.query.field],
           // type: this.requestForm.type,
           key: to.query.key1,
           type: "本科",

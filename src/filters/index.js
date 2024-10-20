@@ -90,3 +90,30 @@ export function dateFormatter(dateString) {
   // 返回格式化的日期字符串
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+
+export function orderStatusFormatter(status) {
+  // 解析 ISO8601 格式的日期字符串
+  // 状态含义映射
+  // var StageDescriptions = map[int]string{
+  // 	Waiting:    "等待中",
+  // 	Generating: "生成中",
+  // 	Success:    "生成成功",
+  // 	Failed:     "生成失败",
+  // }
+  // Waiting = 0
+  // Generating = 1
+  // Success = 2
+  // Failed =3
+  if (status == 0) {
+    return "等待中";
+  }
+  if (status == 1) {
+    return "生成中";
+  }
+  if (status == 2) {
+    return "生成成功";
+  }
+  if (status == 3) {
+    return "生成失败";
+  }
+}
