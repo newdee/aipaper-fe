@@ -8,12 +8,10 @@
     <!-- tabs写论文  -->
     <div class="tabsListWrapper" ref="tasListWrapper">
       <div class="tabsList">
-        <div
-          :class="[
-            'tabLi',
-            activeIndex == 1 || activeIndex == 0 ? 'activeTab' : '',
-          ]"
-        >
+        <div :class="[
+          'tabLi',
+          activeIndex == 1 || activeIndex == 0 ? 'activeTab' : '',
+        ]">
           <p class="tabsTitle">Step 1</p>
           <div class="tabIcon">
             <span></span>
@@ -43,10 +41,7 @@
     <div class="stepContent">
       <step1 v-if="activeIndex == 1"></step1>
       <step2 :outlineData="outlineData" v-if="activeIndex == 2"></step2>
-      <step3
-        v-if="activeIndex == 3"
-        :class="[isScrollActive ? 'fixed' : '']"
-      ></step3>
+      <step3 v-if="activeIndex == 3" :class="[isScrollActive ? 'fixed' : '']"></step3>
     </div>
   </div>
 </template>
@@ -282,12 +277,12 @@ export default {
   span {
     color: #3355ff;
     margin-left: -5px;
+    font-weight: bold;
   }
 }
 
 .activeTab {
-  background: url("../../assets/images/shape-left.png") no-repeat 0 0 / 100%
-    100% !important;
+  background: url("../../assets/images/shape-left.png") no-repeat 0 0 / 100% 100% !important;
 
   .tabsTitle {
     color: #3355ff;
@@ -311,8 +306,7 @@ export default {
 }
 
 .activeTab3 {
-  background: url("../../assets/images/shape-right.png") no-repeat 0 0 / 100%
-    100% !important;
+  background: url("../../assets/images/shape-right.png") no-repeat 0 0 / 100% 100% !important;
 
   .tabsTitle {
     color: #3355ff;

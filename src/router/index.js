@@ -106,19 +106,6 @@ export const constantRoutes = [
     },
     children: [
       {
-        path: "explore",
-        name: "explore",
-        component: () => import("@/views/explore/index"),
-        meta: {
-          keepAlive: true,
-          title: "搜论文",
-          icon: "table",
-          id: '5-1',
-          parentId: '5',
-          inDevelopment: false,
-        },
-      },
-      {
         path: "writepaper",
         name: "writepaper",
         component: () => import("@/views/writepaper/index"),
@@ -126,6 +113,19 @@ export const constantRoutes = [
           keepAlive: true,
           title: "写论文",
           icon: "tree",
+          id: '5-1',
+          parentId: '5',
+          inDevelopment: false,
+        },
+      },
+      {
+        path: "explore",
+        name: "explore",
+        component: () => import("@/views/explore/index"),
+        meta: {
+          keepAlive: true,
+          title: "搜论文",
+          icon: "table",
           id: '5-2',
           parentId: '5',
           inDevelopment: false,

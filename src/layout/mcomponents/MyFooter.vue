@@ -48,9 +48,7 @@
     <div class="footerP">
       <p style="text-align: center; color: #2e2e2e">
         <span>© 2024 石家庄浅思科技有限公司 关于我们</span>
-        <a href="https://beian.miit.gov.cn" target="_blank"
-          >冀ICP备2024060058号-2</a
-        >
+        <a href="https://beian.miit.gov.cn" target="_blank">冀ICP备2024060058号-2</a>
       </p>
     </div>
     <!-- 悬浮菜单 --><!-- 显示条件怎么设置? -->
@@ -63,6 +61,7 @@
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-a-ziyuan4"></use>
             </svg>
+            <p style="width: 3em;">万象AI助手</p>
           </div>
         </el-button>
         <!-- <el-button v-popover:popover2> -->
@@ -71,6 +70,7 @@
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-ai-service"></use>
             </svg>
+            <p>联系客服</p>
           </div>
         </el-button>
         <el-button v-popover:popover3>
@@ -78,32 +78,18 @@
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-jiaruwomen"></use>
             </svg>
+            <p>商务合作</p>
           </div>
         </el-button>
       </div>
     </div>
-    <el-popover
-      ref="popover1"
-      placement="left-start"
-      width="125"
-      trigger="click"
-    >
+    <el-popover ref="popover1" placement="left-start" width="125" trigger="click">
       AI写作
     </el-popover>
-    <el-popover
-      ref="popover2"
-      placement="left-start"
-      width="125"
-      trigger="click"
-    >
+    <el-popover ref="popover2" placement="left-start" width="125" trigger="click">
       在线客服
     </el-popover>
-    <el-popover
-      ref="popover3"
-      placement="left-start"
-      width="125"
-      trigger="click"
-    >
+    <el-popover ref="popover3" placement="left-start" width="125" trigger="click">
       <div class="qrBox" title="团队二维码">
         <img class="qrcode" src="@/assets/images/wx.jpg" alt="" />
       </div>
@@ -169,8 +155,7 @@ export default {
   }
 }
 
-.infoBottom {
-}
+.infoBottom {}
 
 .siteInfo {
   display: grid;
@@ -196,7 +181,7 @@ export default {
   }
 
   .col_1 {
-    > img {
+    >img {
       height: 20px;
       width: auto;
     }
@@ -254,19 +239,26 @@ export default {
     }
 
     .item {
-      width: 44px;
-      height: 44px;
-      font-size: 28px;
+      width: 60px;
+      height: auto;
+      font-size: 16px;
       background: #ffffff;
       border-radius: 8px;
       border: 1px solid #cccccc;
       display: grid;
       justify-content: center;
       align-items: center;
+      justify-items: center;
+      padding: 5px;
 
-      img {
-        width: 23px;
-        height: auto;
+      .icon {
+        width: 2em;
+        height: 2em;
+      }
+
+      p {
+        width: 2em;
+        text-wrap: wrap;
       }
     }
 
@@ -314,16 +306,20 @@ export default {
     }
   }
 }
+
 .infoBottom {
   font-size: 14px;
   line-height: 28px;
+
   .bottomTitle {
     font-weight: bold;
     color: #000;
   }
+
   .bottomLink {
     color: #333;
   }
 }
+
 @import "@/styles/mediaMain.scss";
 </style>

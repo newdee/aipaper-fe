@@ -3,18 +3,10 @@
     <div class="login_cont">
       <div class="left_width">
         <div class="grid-content app-left">
-          <img
-            data-v-5eb08d16=""
-            class="left-bg"
-            src="https://sso-cdn.lanhuapp.com/ssoweb/img/left.a267cc0b.svg"
-            loading="lazy"
-          />
-          <img
-            data-v-5eb08d16=""
-            class="logo white"
-            src="https://sso-cdn.lanhuapp.com/ssoweb/img/logo.ac863f07.svg"
-            loading="lazy"
-          />
+          <img data-v-5eb08d16="" class="left-bg" src="https://sso-cdn.lanhuapp.com/ssoweb/img/left.a267cc0b.svg"
+            loading="lazy" />
+          <img data-v-5eb08d16="" class="logo white" src="https://sso-cdn.lanhuapp.com/ssoweb/img/logo.ac863f07.svg"
+            loading="lazy" />
 
           <div class="left_content">
             <p>
@@ -22,11 +14,8 @@
             </p>
           </div>
           <div data-v-5eb08d16="" class="name-box">
-            <img
-              data-v-5eb08d16=""
-              class="avatar"
-              src="https://sso-cdn.lanhuapp.com/ssoweb/img/liugaozheng.b6e3f007.png"
-            />
+            <img data-v-5eb08d16="" class="avatar"
+              src="https://sso-cdn.lanhuapp.com/ssoweb/img/liugaozheng.b6e3f007.png" />
             <div data-v-5eb08d16="" class="text-name">
               <div data-v-5eb08d16="" class="name">乔布斯</div>
               <div data-v-5eb08d16="" class="signature">APPLE · 设计负责人</div>
@@ -35,12 +24,8 @@
         </div>
       </div>
       <div class="app-right">
-        <img
-          data-v-5eb08d16=""
-          class="logo blue"
-          src="https://sso-cdn.lanhuapp.com/ssoweb/img/logo_blue.771c60ce.svg"
-          loading="lazy"
-        />
+        <img data-v-5eb08d16="" class="logo blue" src="https://sso-cdn.lanhuapp.com/ssoweb/img/logo_blue.771c60ce.svg"
+          loading="lazy" />
 
         <div class="home app_router">
           <div class="loginView mainContent">
@@ -49,35 +34,19 @@
               <div class="passView">
                 <div class="inputTitle">
                   手机号登录
-                  <i style="font-size: 10px"
-                    >验证即登录，未注册将自动创建账号</i
-                  >
+                  <i style="font-size: 10px">验证即登录，未注册将自动创建账号</i>
                 </div>
                 <div class="">
                   <div>
-                    <input
-                      @change="vaildPhone"
-                      :class="['phoneView', butNoPhoneNum ? 'warning' : '']"
-                      v-model="phoneNum"
-                      placeholder="请输入手机号"
-                      autocomplete="on"
-                      name="username"
-                      type="text"
-                      style="margin-bottom: 4px"
-                    />
+                    <input @change="vaildPhone" :class="['phoneView', butNoPhoneNum ? 'warning' : '']"
+                      v-model="phoneNum" placeholder="请输入手机号" autocomplete="on" name="username" type="text"
+                      style="margin-bottom: 4px" />
                   </div>
                   <div class="codeInput">
-                    <input
-                      type="text"
-                      v-model="sms_code"
-                      placeholder="验证码"
-                    />
+                    <input type="text" v-model="sms_code" placeholder="验证码" />
                     <div class="codeLeft g_poin">
                       <span v-show="codeTimeStatus"> {{ secondsLeft }} </span>
-                      <span
-                        v-show="!codeTimeStatus && index == 0"
-                        @click="getCode"
-                      >
+                      <span v-show="!codeTimeStatus && index == 0" @click="getCode">
                         发送验证码
                       </span>
                       <span v-show="!codeTimeStatus && index != 0">
@@ -91,27 +60,16 @@
                   <p v-if="rightPhoneNum">你需要输入一个手机号</p>
                 </div>
               </div>
-              <el-button
-                :disabled="!agreeStatus"
-                class="loginButton registerButton center"
-                @click="loginOrRegister(phoneNum)"
-              >
+              <el-button :disabled="!agreeStatus" class="loginButton registerButton center"
+                @click="loginOrRegister(phoneNum)">
                 登录
               </el-button>
               <div class="agreement lanhuText">
                 <div data-v-688ca5dc="" class="checkBox" @click="canClick">
-                  <img
-                    data-v-688ca5dc=""
-                    src="https://sso-cdn.lanhuapp.com/ssoweb/img/checked.eb4ff298.svg"
-                    alt=""
-                    v-show="agreeStatus"
-                  />
-                  <img
-                    v-show="!agreeStatus"
-                    data-v-688ca5dc=""
-                    src="https://sso-cdn.lanhuapp.com/ssoweb/img/uncheck.b1534115.svg"
-                    alt=""
-                  />
+                  <img data-v-688ca5dc="" src="https://sso-cdn.lanhuapp.com/ssoweb/img/checked.eb4ff298.svg" alt=""
+                    v-show="agreeStatus" />
+                  <img v-show="!agreeStatus" data-v-688ca5dc=""
+                    src="https://sso-cdn.lanhuapp.com/ssoweb/img/uncheck.b1534115.svg" alt="" />
                 </div>
                 <span class="lanhuParent">
                   <span class="canClick">我已阅读并同意</span>
@@ -128,45 +86,22 @@
               </div>
               <div @click="openLogin" class="open_wx_btn center login-btn">
                 <div class="wx-box center">
-                  <el-tooltip
-                    class="item"
-                    effect="dark"
-                    content="微信"
-                    placement="top"
-                  >
-                    <svg
-                      class="svg-icon"
-                      style="width: 40px; height: 40px; color: rgb(0, 0, 0)"
-                    >
+                  <el-tooltip class="item" effect="dark" content="微信" placement="top">
+                    <svg class="svg-icon" style="width: 40px; height: 40px; color: rgb(0, 0, 0)">
                       <use xlink:href="#icon-weixin" fill="#000"></use>
                     </svg>
                   </el-tooltip>
                 </div>
                 <div class="dingding-box center">
-                  <el-tooltip
-                    class="item"
-                    effect="dark"
-                    content="飞书"
-                    placement="top"
-                  >
-                    <svg
-                      class="svg-icon"
-                      style="width: 40px; height: 40px; color: rgb(0, 0, 0)"
-                    >
+                  <el-tooltip class="item" effect="dark" content="飞书" placement="top">
+                    <svg class="svg-icon" style="width: 40px; height: 40px; color: rgb(0, 0, 0)">
                       <use xlink:href="#icon-feishu" fill="#000"></use>
                     </svg>
                   </el-tooltip>
                 </div>
                 <div class="sso-box center">
-                  <el-tooltip
-                    class="item"
-                    effect="dark"
-                    content="GitHub"
-                    placement="top"
-                    ><svg
-                      class="svg-icon"
-                      style="width: 40px; height: 40px; color: rgb(0, 0, 0)"
-                    >
+                  <el-tooltip class="item" effect="dark" content="GitHub" placement="top"><svg class="svg-icon"
+                      style="width: 40px; height: 40px; color: rgb(0, 0, 0)">
                       <use xlink:href="#icon-github" fill="#000"></use>
                     </svg>
                   </el-tooltip>
@@ -197,6 +132,7 @@
 import inputCode from "./components/inputCode.vue";
 
 import { sms } from "@/api/login";
+import { throttle } from "lodash";
 
 export default {
   data() {
@@ -271,7 +207,7 @@ export default {
         message: "此功能暂未开放",
       });
     },
-    backInputPhone() {},
+    backInputPhone() { },
     setAgreeF() {
       this.agreeStatus = true;
       this.dialogVisible = false;
@@ -306,7 +242,7 @@ export default {
         }
       }
     },
-    loginOrRegister(phoneNum) {
+    loginOrRegister: throttle(function (phoneNum) {
       if (phoneNum.trim() == "") {
         console.log("178---无输入内容", phoneNum);
         this.butNoPhoneNum = true;
@@ -337,7 +273,7 @@ export default {
           });
         }
       }
-    },
+    }, 2000),// 2000毫秒内最多执行一次
     getCode() {
       this.vaildPhone();
       if (!this.vailStatus) {
@@ -365,6 +301,7 @@ export default {
 
 <style lang="scss" scoped>
 @media only screen and (max-width: 939px) {
+
   .app-left,
   .app_logo {
     display: none;
@@ -560,7 +497,7 @@ export default {
   padding: 0 60px;
 }
 
-.open_wx_btn > div :hover {
+.open_wx_btn>div :hover {
   cursor: pointer;
 }
 
