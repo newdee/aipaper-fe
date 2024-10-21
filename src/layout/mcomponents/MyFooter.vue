@@ -48,7 +48,9 @@
     <div class="footerP">
       <p style="text-align: center; color: #2e2e2e">
         <span>© 2024 石家庄浅思科技有限公司 关于我们</span>
-        <a href="https://beian.miit.gov.cn" target="_blank">冀ICP备2024060058号-2</a>
+        <a href="https://beian.miit.gov.cn" target="_blank"
+          >冀ICP备2024060058号-2</a
+        >
       </p>
     </div>
     <!-- 悬浮菜单 --><!-- 显示条件怎么设置? -->
@@ -56,17 +58,17 @@
       <div class="menu">
         <!-- <el-button v-popover:popover1> -->
         <el-button @click="$devf">
-          <div class="item ai">
+          <div class="itemLi ai">
             <!-- <img src="@/assets/images/robat-ai.png" alt="" /> -->
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-a-ziyuan4"></use>
             </svg>
-            <p style="width: 3em;">万象AI助手</p>
+            <p style="width: 3em">万象AI助手</p>
           </div>
         </el-button>
         <!-- <el-button v-popover:popover2> -->
         <el-button @click="$devf">
-          <div class="item">
+          <div class="itemLi">
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-ai-service"></use>
             </svg>
@@ -74,7 +76,7 @@
           </div>
         </el-button>
         <el-button v-popover:popover3>
-          <div class="item">
+          <div class="itemLi">
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-jiaruwomen"></use>
             </svg>
@@ -83,13 +85,28 @@
         </el-button>
       </div>
     </div>
-    <el-popover ref="popover1" placement="left-start" width="125" trigger="click">
+    <el-popover
+      ref="popover1"
+      placement="left-start"
+      width="125"
+      trigger="click"
+    >
       AI写作
     </el-popover>
-    <el-popover ref="popover2" placement="left-start" width="125" trigger="click">
+    <el-popover
+      ref="popover2"
+      placement="left-start"
+      width="125"
+      trigger="click"
+    >
       在线客服
     </el-popover>
-    <el-popover ref="popover3" placement="left-start" width="125" trigger="click">
+    <el-popover
+      ref="popover3"
+      placement="left-start"
+      width="125"
+      trigger="click"
+    >
       <div class="qrBox" title="团队二维码">
         <img class="qrcode" src="@/assets/images/wx.jpg" alt="" />
       </div>
@@ -155,7 +172,8 @@ export default {
   }
 }
 
-.infoBottom {}
+.infoBottom {
+}
 
 .siteInfo {
   display: grid;
@@ -181,7 +199,7 @@ export default {
   }
 
   .col_1 {
-    >img {
+    > img {
       height: 20px;
       width: auto;
     }
@@ -238,10 +256,13 @@ export default {
       margin: 0px !important;
     }
 
-    .item {
-      width: 60px;
+    .itemLi {
+      &:hover {
+        cursor: pointer;
+      }
+      width: 45px;
       height: auto;
-      font-size: 16px;
+      font-size: 12px;
       background: #ffffff;
       border-radius: 8px;
       border: 1px solid #cccccc;
@@ -249,7 +270,7 @@ export default {
       justify-content: center;
       align-items: center;
       justify-items: center;
-      padding: 5px;
+      padding: 3px;
 
       .icon {
         width: 2em;
@@ -259,6 +280,9 @@ export default {
       p {
         width: 2em;
         text-wrap: wrap;
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
 

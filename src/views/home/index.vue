@@ -8,7 +8,7 @@
     <div class="swiperBg">
       <input-main class="swiper swiper1"></input-main>
       <div class="swiperBg swiperNews pwrapper">
-        <p class="swiper swiperListTitle">
+        <p class="swiper swiperListTitle1">
           <span> 精选论文推荐</span>
         </p>
       </div>
@@ -88,7 +88,7 @@ export default {
 .pwrapper {
   padding-bottom: 0px;
   margin-top: 60px;
-  .swiperListTitle {
+  .swiperListTitle1 {
     text-align: left;
     padding-top: 22px;
 
