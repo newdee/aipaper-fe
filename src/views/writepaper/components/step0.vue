@@ -33,15 +33,13 @@
                 orderObj.updated_at | dateFormatter
               }}</span>
             </div>
-            <div class="right">
-              <!-- <span class="price">￥: 0.01元</span> -->
-              <!-- <span
+            <!-- <span class="price">￥: 0.01元</span> -->
+            <!-- <span
                 class="handle"
                 v-if="orderObj.order.payment_status == 'WAIT_BUYER_PAY'"
                 style="color: crimson"
                 >去支付</span
               > -->
-            </div>
           </div>
         </div>
       </div>
