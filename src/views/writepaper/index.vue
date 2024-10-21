@@ -8,10 +8,12 @@
     <!-- tabs写论文  -->
     <div class="tabsListWrapper" ref="tasListWrapper">
       <div class="tabsList">
-        <div :class="[
-          'tabLi',
-          activeIndex == 1 || activeIndex == 0 ? 'activeTab' : '',
-        ]">
+        <div
+          :class="[
+            'tabLi',
+            activeIndex == 1 || activeIndex == 0 ? 'activeTab' : '',
+          ]"
+        >
           <p class="tabsTitle">Step 1</p>
           <div class="tabIcon">
             <span></span>
@@ -38,18 +40,26 @@
     <div v-if="activeIndex !== 3" class="outlineBox">
       <outline @errorBack="errorBack"></outline>
     </div>
+
     <div class="stepContent">
+      <step0></step0>
+
       <step1 v-if="activeIndex == 1"></step1>
       <step2 :outlineData="outlineData" v-if="activeIndex == 2"></step2>
-      <step3 v-if="activeIndex == 3" :class="[isScrollActive ? 'fixed' : '']"></step3>
+      <step3
+        v-if="activeIndex == 3"
+        :class="[isScrollActive ? 'fixed' : '']"
+      ></step3>
     </div>
   </div>
 </template>
 <script>
 // import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
+
 import swiperOne from "./components/swiperOne.vue";
 // import eventBus from "@/utils/eventBus";
+import step0 from "./components/step0.vue";
 import step1 from "./components/step1.vue";
 import step2 from "./components/step2.vue";
 import outline from "./components/outline.vue";
@@ -76,6 +86,7 @@ export default {
     step3,
     step2,
     step1,
+    step0,
   },
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
@@ -282,7 +293,8 @@ export default {
 }
 
 .activeTab {
-  background: url("../../assets/images/shape-left.png") no-repeat 0 0 / 100% 100% !important;
+  background: url("../../assets/images/shape-left.png") no-repeat 0 0 / 100%
+    100% !important;
 
   .tabsTitle {
     color: #3355ff;
@@ -306,7 +318,8 @@ export default {
 }
 
 .activeTab3 {
-  background: url("../../assets/images/shape-right.png") no-repeat 0 0 / 100% 100% !important;
+  background: url("../../assets/images/shape-right.png") no-repeat 0 0 / 100%
+    100% !important;
 
   .tabsTitle {
     color: #3355ff;
