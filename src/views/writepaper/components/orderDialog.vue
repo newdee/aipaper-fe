@@ -68,6 +68,7 @@ export default {
       listData: [], // 存储请求返回的数据
       pollingInterval: 2000, // 轮询间隔时间，单位毫秒
       isPolling: false, // 是否正在进行轮询
+      successIndex: 0,
     };
   },
   props: {
@@ -146,8 +147,12 @@ export default {
           // 判断支付状态
           if (orderData.payment_status) {
             this.payTitleStatus = orderData.payment_status;
-            if (this.payTitleStatus == "TRADE_SUCCESS") {
+            if (
+              this.payTitleStatus == "TRADE_SUCCESS" &&
+              this.successIndex <= 0
+            ) {
               this.addE(1500);
+              this.successIndex += 1;
             }
           }
           // 判断论文生成状态
