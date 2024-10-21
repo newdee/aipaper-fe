@@ -1,6 +1,15 @@
 @import "./variables.scss";
 @media only screen and (max-width: 760px) {
   // step1 写论文页面
+  .outlineListClass .left {
+    width: 120px !important;
+  }
+  .rowStart {
+    flex-wrap: wrap;
+    .left:last-child {
+      width: 200px !important;
+    }
+  }
   .outlineBox {
     .outlineTab {
       padding: 0 20px !important;
