@@ -210,7 +210,6 @@ export default {
   },
   methods: {
     sendOutlineForm() {
-      // TODO: 重置按钮状态
       if (this.produceLineStatus) {
         this.$message({
           type: "warning",
@@ -254,7 +253,6 @@ export default {
           this.$store.dispatch("app/setRequestForm", this.requestForm);
           this.requestKey = res.result.key;
           // this.requestKey = "eb3a2422-301c-47ba-be1f-7c334e15c655";
-          // TODO: 生成大纲
           polling({ key: this.requestKey }, 5000)
             .then((res) => {
               console.log("ddddd", res);

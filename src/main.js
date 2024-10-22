@@ -1,6 +1,7 @@
 import Vue from "vue";
 
 import "normalize.css/normalize.css"; // A modern alternative to CSS resets
+import Cookies from "js-cookie";
 
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
@@ -15,6 +16,8 @@ import "@/icons"; // icon
 import "@/permission"; // permission control
 import "@/utils/rem";
 import "@/assets/js/iconfont";
+import i18n from "./lang"; // internationalization
+
 import * as filters from "./filters"; // global filters
 Object.keys(filters).forEach((key) => {
   Vue.filter(key, filters[key]);
@@ -34,10 +37,9 @@ if (process.env.NODE_ENV === "production") {
 import locale from "element-ui/lib/locale/lang/zh-CN";
 // set ElementUI lang to EN
 Vue.use(ElementUI, {
-  locale,
+  size: Cookies.get("size") || "medium", // set element-ui default size
+  i18n: (key, value) => i18n.t(key, value),
 });
-// 如果想要中文版 element-ui，按如下方式声明
-// Vue.use(ElementUI)
 
 import VueAwesomeSwiper from "vue-awesome-swiper";
 // import style
@@ -72,6 +74,7 @@ new Vue({
   el: "#app",
   router,
   store,
+  i18n,
   render: (h) => h(App),
   beforeCreate() {
     this.$setMinWindowWidth(); // 在 Vue 实例创建前设置窗口大小限制
