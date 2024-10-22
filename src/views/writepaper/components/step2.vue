@@ -138,28 +138,57 @@
               </div>
               <div class="rightbottom">
                 <!-- 表 -->
-                <i
-                  v-show="data.insert_table && data.insert_table.status"
-                  class="el-icon-s-marketing"
-                ></i>
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="已插入表格"
+                  placement="top"
+                >
+                  <i
+                    v-show="data.insert_table && data.insert_table.status"
+                    class="el-icon-s-marketing"
+                  ></i>
+                </el-tooltip>
+
                 <!-- 图 -->
-                <i
-                  v-show="data.insert_plot && data.insert_plot.status"
-                  class="el-icon-picture"
-                ></i>
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="已插入图形"
+                  placement="top"
+                >
+                  <i
+                    v-show="data.insert_plot && data.insert_plot.status"
+                    class="el-icon-picture"
+                  ></i>
+                </el-tooltip>
                 <!-- 公式 -->
-                <i
-                  v-show="
-                    data.insert_latex_formula &&
-                    data.insert_latex_formula.status
-                  "
-                  class="el-icon-s-flag"
-                ></i>
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="已插入公式"
+                  placement="top"
+                >
+                  <i
+                    v-show="
+                      data.insert_latex_formula &&
+                      data.insert_latex_formula.status
+                    "
+                    class="el-icon-s-flag"
+                  ></i>
+                </el-tooltip>
                 <!-- 代码 -->
-                <i
-                  v-show="data.insert_code && data.insert_code.status"
-                  class="el-icon-s-management"
-                ></i>
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="已插入代码"
+                  placement="top"
+                >
+                  <i
+                    v-show="data.insert_code && data.insert_code.status"
+                    class="el-icon-s-management"
+                  ></i>
+                </el-tooltip>
               </div>
             </div>
           </div>
@@ -1080,7 +1109,7 @@ export default {
       deep: true,
       immediate: true,
       handler(val) {
-        this.outline = val;
+        // this.outline = val;
         this.generateIndexes(this.outline);
       },
     },
@@ -1396,7 +1425,6 @@ export default {
               this.payStatus = true;
               let payUrl = res.result.pay_link;
               console.log("payUrl", payUrl);
-              // TODO: 去除固定key
               this.requestKey = res.result.out_trade_no;
               // this.requestKey = "5e0c2e41-e865-4269-a02d-fb0b919cd822";
               // this.requestKey = "15b41aa3-ec35-45e9-ac6b-bfe3b7ba3d8d";
@@ -1870,7 +1898,9 @@ export default {
 
 .showSpan {
   display: inline-block;
-  width: 100%;
+  max-width: 600px;
+  white-space: nowrap; /* 防止文本换行 */
+  text-overflow: ellipsis; /* 溢出部分用省略号表示 */
   font-size: 14px;
   font-weight: bold;
   color: #333639;

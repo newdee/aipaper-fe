@@ -211,10 +211,6 @@ export default {
       console.log("d1111", this.requestKey);
       if (this.requestKey) {
         this.getList({ key: this.requestKey }, 10000);
-        // polling({ key: this.requestKey }, 3000).then((res) => {
-        //   // TODO: 获取pdf链接及word链接
-        //   console.log("ddddd", res);
-        // });
       } else {
         this.$message({
           type: "warning",

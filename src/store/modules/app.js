@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import { getLanguage } from "@/lang/index";
 
 const state = {
   sidebar: {
@@ -10,6 +11,8 @@ const state = {
   },
   device: "desktop",
   homeData: {},
+  language: getLanguage(),
+
   lineTitle: "论文标题", //
   requestForm: {}, // step1 用户输入内容
   step3PdfUrl: "", // 正文链接
@@ -17,6 +20,10 @@ const state = {
 };
 
 const mutations = {
+  SET_LANGUAGE: (state, language) => {
+    state.language = language;
+    Cookies.set("language", language);
+  },
   TOGGLE_SIDEBAR: (state) => {
     state.sidebar.opened = !state.sidebar.opened;
     state.sidebar.withoutAnimation = false;
@@ -54,6 +61,9 @@ const mutations = {
 };
 
 const actions = {
+  setLanguage({ commit }, language) {
+    commit("SET_LANGUAGE", language);
+  },
   toggleSideBar({ commit }) {
     commit("TOGGLE_SIDEBAR");
   },

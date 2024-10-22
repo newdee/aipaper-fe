@@ -1,6 +1,9 @@
 <template>
   <div class="qysytxy" :key="timeKey">
-    <div @click="$jumpUrl('/home/home')" class="grid-content nav_left flex items-center">
+    <div
+      @click="$jumpUrl('/home/home')"
+      class="grid-content nav_left flex items-center"
+    >
       <div class="logo-box2">
         <div class="logoR">
           <img :src="logoMax" alt="" title="logo" />
@@ -18,17 +21,27 @@
       <img src="@/assets/images/MIXPAPER.png" alt="" />
     </div> -->
     <div class="mSiderBar">
-      <div @click="$jumpUrl('/home/home')" :active="'home' == $route.name" class="mItemWrapper">
+      <div
+        @click="$jumpUrl('/home/home')"
+        :active="'home' == $route.name"
+        class="mItemWrapper"
+      >
         <div class="mSliderItem">
           <div class="left"><span class="imgIcon"></span>首页</div>
           <span class="right imgIcon"></span>
         </div>
       </div>
       <template v-for="(route, i) in routerList">
-        <div :key="'route_' + i" :class="['mItemWrapper', route.meta.inDevelopment ? 'gray' : '']"
-          :active="route.name == $route.name" @click="$jumpUrl('/main/' + route.path)">
+        <div
+          :key="'route_' + i"
+          :class="['mItemWrapper', route.meta.inDevelopment ? 'gray' : '']"
+          :active="route.name == $route.name"
+          @click="$jumpUrl('/main/' + route.path)"
+        >
           <div class="mSliderItem">
-            <div class="left"><span class="imgIcon"></span>{{ route.meta.title }}</div>
+            <div class="left">
+              <span class="imgIcon"></span>{{ route.meta.title }}
+            </div>
             <span class="right imgIcon"></span>
           </div>
         </div>
@@ -42,7 +55,7 @@ import { mapGetters } from "vuex";
 import Logo from "./Logo";
 import SidebarItem from "./SidebarItem";
 import variables from "@/styles/variables.scss";
-const _ = require('lodash');
+const _ = require("lodash");
 
 export default {
   name: "Sidebar",
@@ -109,7 +122,10 @@ export default {
     // },
   },
   mounted() {
-    let arr = _.find(this.$router.options.routes, obj => obj.name == 'main' && obj.meta.id == '5');
+    let arr = _.find(
+      this.$router.options.routes,
+      (obj) => obj.name == "main" && obj.meta.id == "5"
+    );
     this.routerList = arr.children;
   },
   methods: {},
@@ -178,6 +194,7 @@ export default {
     }
 
     &.gray {
+      cursor: not-allowed;
       color: #777777d5;
     }
 
@@ -233,7 +250,7 @@ export default {
 .grid-content {
   border-radius: 4px;
 
-  &:hover>div {
+  &:hover > div {
     cursor: pointer;
   }
 }
@@ -257,7 +274,6 @@ export default {
       height: 100%;
     }
   }
-
 }
 
 .logoL {

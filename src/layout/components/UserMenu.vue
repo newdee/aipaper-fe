@@ -6,7 +6,12 @@
       </div>
     </div>
     <transition name="fade">
-      <div class="userMenuContainer" id="userMenuContainer" v-if="isPopupVisible" @click.stop="popupFn">
+      <div
+        class="userMenuContainer"
+        id="userMenuContainer"
+        v-if="isPopupVisible"
+        @click.stop="popupFn"
+      >
         <!-- 头像菜单 -->
         <div class="userMenu">
           <div class="menuHeader">
@@ -26,7 +31,7 @@
             <div class="menuGroup menuAboutUer">
               <div class="menuItem" @click="jumpDetail('/user/userInfo')">
                 <i class="el-icon-house"></i>
-                我的个人主页
+                {{ $t("navbar.dashboard") }}
               </div>
               <div class="menuItem" @click="showOrderList(1)">
                 <i class="el-icon-goods"></i>
@@ -42,18 +47,18 @@
               </div>
             </div>
             <div class="menuGroup menuAboutMixPaper">
-              <div class="menuItem" @click="$devf">
+              <div class="menuItem gray" @click="$devf">
                 <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-updatelog"></use>
                 </svg>
                 更新日志
               </div>
-              <div class="menuItem" @click="$devf">
+              <div class="menuItem gray" @click="$devf">
                 <i class="el-icon-position"></i>
                 <!-- <i class="el-icon-discover"></i> -->
                 官方网站
               </div>
-              <div class="menuItem" @click="$devf">
+              <div class="menuItem gray" @click="$devf">
                 <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-joinus"></use>
                 </svg>
@@ -69,11 +74,12 @@
                   语言切换
                 </div>
                 <div class="menuItem_right">
-                  中
+                  <lang-select class="right-menu-item hover-effect" />
+                  <!-- 中
                   <svg class="icon svg-icon" aria-hidden="true">
                     <use xlink:href="#icon-qiehuan1"></use>
                   </svg>
-                  英
+                  英 -->
                 </div>
               </div>
               <div @click="loginOut" class="menuItem logOutBox">
@@ -88,8 +94,13 @@
       </div>
     </transition>
     <!-- 用户订单 -->
-    <el-drawer :visible.sync="ordersDrawer" :direction="orderDirection" append-to-body :lock-scroll="false"
-      :size="isPhone ? '30%' : '30%'">
+    <el-drawer
+      :visible.sync="ordersDrawer"
+      :direction="orderDirection"
+      append-to-body
+      :lock-scroll="false"
+      :size="isPhone ? '30%' : '30%'"
+    >
       <template #title>
         <div v-if="orderTabs == 1" class="titleDrawer">我的订单</div>
         <div v-else class="titleDrawer">我的大纲</div>
@@ -109,11 +120,13 @@ import { getToken, removeToken } from "@/utils/auth"; // get token from cookie
 import { mapGetters } from "vuex";
 import UserOrders from "./UserOrders.vue";
 import UserOutlines from "./UserOutlines.vue";
+import LangSelect from "@/components/LangSelect";
 
 export default {
   name: "UserMenu",
   components: {
     UserOrders,
+    LangSelect,
     UserOutlines,
   },
   data() {

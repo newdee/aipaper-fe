@@ -42,7 +42,7 @@
     </div>
 
     <div class="stepContent">
-      <step0></step0>
+      <step0 v-if="activeIndex != 3"></step0>
 
       <step1 v-if="activeIndex == 1"></step1>
       <step2 :outlineData="outlineData" v-if="activeIndex == 2"></step2>
@@ -74,7 +74,7 @@ export default {
   data() {
     return {
       // 定义变量
-      activeIndex: 0,
+      activeIndex: 2,
       isScrollActive: false,
       outlineData: [],
     };
@@ -119,7 +119,6 @@ export default {
       console.log("ddddd", this.activeIndex);
       this.activeIndex = 1;
       this.$nextTick(() => {
-        // TODO: 计时器时间 大纲 生成
         eventBus.emit("beginTime", 500);
         this.$scrollTo("#step1", 500, { offset: -100 });
       });
