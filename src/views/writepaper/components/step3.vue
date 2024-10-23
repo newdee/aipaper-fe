@@ -15,7 +15,7 @@
             </div>
             <div class="pdfNavItem">
               <i class="el-icon-film"></i>
-              <span>降重/降AIGC率</span>
+              <span>{{ $t("route.reduceRepetition") }}</span>
             </div>
           </div>
           <div class="pdfNavRight g_poin">

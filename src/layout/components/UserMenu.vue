@@ -19,10 +19,10 @@
               <img :src="avatar" alt="" />
             </div>
             <div class="info">
-              <p class="name">用户名</p>
+              <p class="name">{{ $t("login.username") }}</p>
               <p class="tel">{{ userInfo.phone }}</p>
               <div class="tel">
-                <span class="tel">上次登录：</span>
+                <span class="tel">{{ $t("login.lastLogin") }}：</span>
                 <p class="tel">{{ userInfo.last_login_time }}</p>
               </div>
             </div>
@@ -35,15 +35,15 @@
               </div>
               <div class="menuItem" @click="showOrderList(1)">
                 <i class="el-icon-goods"></i>
-                订单管理
+                {{ $t("navbar.orderManagement") }}
               </div>
               <div class="menuItem" @click="showOrderList(2)">
                 <i class="el-icon-tickets"></i>
-                我的大纲
+                {{ $t("navbar.myOutline") }}
               </div>
               <div class="menuItem" @click="$jumpUrl('/user/promotion')">
                 <i class="el-icon-tickets"></i>
-                我的推广
+                {{ $t("navbar.myPromotion") }}
               </div>
             </div>
             <div class="menuGroup menuAboutMixPaper">
@@ -51,18 +51,18 @@
                 <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-updatelog"></use>
                 </svg>
-                更新日志
+                {{ $t("navbar.updateLog") }}
               </div>
               <div class="menuItem gray" @click="$devf">
                 <i class="el-icon-position"></i>
                 <!-- <i class="el-icon-discover"></i> -->
-                官方网站
+                {{ $t("navbar.officialWebsite") }}
               </div>
               <div class="menuItem gray" @click="$devf">
                 <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-joinus"></use>
                 </svg>
-                加入我们
+                {{ $t("navbar.joinUs") }}
               </div>
             </div>
             <div class="menuGroup menuAboutSetting">
@@ -71,7 +71,7 @@
                   <svg class="icon svg-icon" aria-hidden="true">
                     <use xlink:href="#icon-zhongyingwen"></use>
                   </svg>
-                  语言切换
+                  {{ $t("navbar.languageSwitch") }}
                 </div>
                 <div class="menuItem_right">
                   <lang-select class="right-menu-item hover-effect" />
@@ -86,7 +86,7 @@
                 <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-logout"></use>
                 </svg>
-                退出登录
+                {{ $t("navbar.logOut") }}
               </div>
             </div>
           </div>

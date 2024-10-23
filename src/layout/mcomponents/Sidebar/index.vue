@@ -27,7 +27,9 @@
         class="mItemWrapper"
       >
         <div class="mSliderItem">
-          <div class="left"><span class="imgIcon"></span>首页</div>
+          <div class="left">
+            <span class="imgIcon"></span>{{ $t("route.homePage") }}
+          </div>
           <span class="right imgIcon"></span>
         </div>
       </div>
@@ -40,7 +42,8 @@
         >
           <div class="mSliderItem">
             <div class="left">
-              <span class="imgIcon"></span>{{ route.meta.title }}
+              <span class="imgIcon"></span>
+              {{ generateTitle(route.meta.title) }}
             </div>
             <span class="right imgIcon"></span>
           </div>
@@ -56,6 +59,7 @@ import Logo from "./Logo";
 import SidebarItem from "./SidebarItem";
 import variables from "@/styles/variables.scss";
 const _ = require("lodash");
+import { generateTitle } from "@/utils/i18n";
 
 export default {
   name: "Sidebar",
@@ -128,7 +132,9 @@ export default {
     );
     this.routerList = arr.children;
   },
-  methods: {},
+  methods: {
+    generateTitle,
+  },
 };
 </script>
 <stlyle lang="scss" scoped>

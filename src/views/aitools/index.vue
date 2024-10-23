@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 页面名称 -->
-    ai工具
+    {{ $t("route.reduceRepetition") }}
   </div>
 </template>
 <script>

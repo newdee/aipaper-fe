@@ -5,7 +5,7 @@
       <swiper-one class="topSwiper"></swiper-one>
     </div>
 
-    <!-- tabs写论文  -->
+    <!-- tabs{{ $t("route.writePaper") }}  -->
     <div class="tabsListWrapper" ref="tasListWrapper">
       <div class="tabsList">
         <div

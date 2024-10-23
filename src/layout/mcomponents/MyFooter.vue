@@ -37,8 +37,12 @@
       <div class="infoBottom">
         <p class="bottomTitle">产品服务</p>
         <ul class="bottomLink">
-          <li @click="$jumpUrl('/main/explore')">搜论文</li>
-          <li @click="$jumpUrl('/main/writepaper')">写论文</li>
+          <li @click="$jumpUrl('/main/explore')">
+            {{ $t("route.searchPaper") }}
+          </li>
+          <li @click="$jumpUrl('/main/writepaper')">
+            {{ $t("route.writePaper") }}
+          </li>
           <li @click="$jumpUrl('/main/readpaper')">读论文</li>
           <li @click="$jumpUrl('/main/amendpaper')">改论文</li>
         </ul>
