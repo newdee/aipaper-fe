@@ -74,7 +74,7 @@ export default {
   data() {
     return {
       // 定义变量
-      activeIndex: 2,
+      activeIndex: 0,
       isScrollActive: false,
       outlineData: [],
     };
