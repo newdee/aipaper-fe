@@ -46,7 +46,7 @@
           class="text-main items-center siderbar-item"
           @click="jumpDetail('/paper/reduceRepetiton')"
         >
-          降重/降AIGC率
+          {{ $t("route.reduceRepetition") }}
         </div>
         <div
           class="text-main items-center siderbar-item"

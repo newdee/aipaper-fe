@@ -37,16 +37,16 @@ export const constantRoutes = [
     component: () => import("@/views/login/index"),
     hidden: true,
     meta: {
-      id: '0',
-    }
+      id: "0",
+    },
   },
   {
     path: "/404",
     component: () => import("@/views/404"),
     hidden: true,
     meta: {
-      id: '1',
-    }
+      id: "1",
+    },
   },
   // 404 page must be placed at the end !!!
   {
@@ -54,16 +54,16 @@ export const constantRoutes = [
     redirect: "/404",
     hidden: true,
     meta: {
-      id: '2',
-    }
+      id: "2",
+    },
   },
   {
     path: "/dashboard",
     component: () => import("@/views/dashboard/index"),
     hidden: true,
     meta: {
-      id: '3',
-    }
+      id: "3",
+    },
   },
   //  {
   //     path: "/home",
@@ -79,8 +79,8 @@ export const constantRoutes = [
     component: Layout,
     redirect: "/main/writepaper",
     meta: {
-      id: '4',
-    }
+      id: "4",
+    },
     // children: [
     //   {
     //     path: "home",
@@ -100,9 +100,9 @@ export const constantRoutes = [
     redirect: "/main/explore",
     name: "main",
     meta: {
-      title: "主页",
+      title: "homePage",
       icon: "el-icon-s-help",
-      id: '5',
+      id: "5",
     },
     children: [
       {
@@ -111,10 +111,11 @@ export const constantRoutes = [
         component: () => import("@/views/writepaper/index"),
         meta: {
           keepAlive: true,
-          title: "写论文",
+          // title: "写论文",
+          title: "writePaper",
           icon: "tree",
-          id: '5-1',
-          parentId: '5',
+          id: "5-1",
+          parentId: "5",
           inDevelopment: false,
         },
       },
@@ -124,10 +125,11 @@ export const constantRoutes = [
         component: () => import("@/views/explore/index"),
         meta: {
           keepAlive: true,
-          title: "搜论文",
+          title: "searchPaper",
+          // title: "搜论文",
           icon: "table",
-          id: '5-2',
-          parentId: '5',
+          id: "5-2",
+          parentId: "5",
           inDevelopment: false,
         },
       },
@@ -138,10 +140,11 @@ export const constantRoutes = [
         component: () => import("@/views/readpaper/index"),
         meta: {
           keepAlive: true,
-          title: "读论文",
+          title: "readPaper",
+          // title: "读论文",
           icon: "tree",
-          id: '5-3',
-          parentId: '5',
+          id: "5-3",
+          parentId: "5",
           inDevelopment: true,
         },
       },
@@ -152,10 +155,11 @@ export const constantRoutes = [
         component: () => import("@/views/amendpaper/index"),
         meta: {
           keepAlive: true,
-          title: "改论文",
+          title: "amendPaper",
+          // title: "改论文",
           icon: "tree",
-          id: '5-4',
-          parentId: '5',
+          id: "5-4",
+          parentId: "5",
           inDevelopment: true,
         },
       },
@@ -166,10 +170,11 @@ export const constantRoutes = [
         component: () => import("@/views/integratedservices/index"),
         meta: {
           keepAlive: true,
-          title: "综合服务",
+          title: "integratedServices",
+          // title: "综合服务",
           icon: "tree",
-          id: '5-5',
-          parentId: '5',
+          id: "5-5",
+          parentId: "5",
           inDevelopment: true,
         },
       },
@@ -180,10 +185,11 @@ export const constantRoutes = [
         component: () => import("@/views/aitools/index"),
         meta: {
           keepAlive: true,
-          title: "精品课程",
+          title: "eliteCourses",
+          // title: "精品课程",
           icon: "tree",
-          id: '5-6',
-          parentId: '5',
+          id: "5-6",
+          parentId: "5",
           inDevelopment: true,
         },
       },
@@ -194,10 +200,11 @@ export const constantRoutes = [
         component: () => import("@/views/aitools/index"),
         meta: {
           keepAlive: true,
-          title: "AI工具",
+          title: "aiTools",
+          // title: "AI工具",
           icon: "tree",
-          id: '5-7',
-          parentId: '5',
+          id: "5-7",
+          parentId: "5",
           inDevelopment: true,
         },
       },
@@ -208,10 +215,11 @@ export const constantRoutes = [
         component: () => import("@/views/reduceRepetition/index.vue"),
         meta: {
           keepAlive: true,
-          title: "降重/降AIGC率",
+          title: "reduceRepetition",
+          // title: "降重/降AIGC率",
           icon: "tree",
-          id: '5-8',
-          parentId: '5',
+          id: "5-8",
+          parentId: "5",
           inDevelopment: false,
         },
       },
@@ -221,7 +229,6 @@ export const constantRoutes = [
     path: "/user",
     component: Layout,
     children: [
-
       {
         path: "promotion",
         name: "promotion",
@@ -237,7 +244,7 @@ export const constantRoutes = [
         component: () => import("@/views/user/userinfo"),
         meta: {
           title: "我的个人主页",
-        }
+        },
       },
     ],
     hidden: true,
@@ -299,10 +306,6 @@ export const constantRoutes = [
     ],
     hidden: true,
   },
-
-
-
-
 ];
 
 const createRouter = () =>

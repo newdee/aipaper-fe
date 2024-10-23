@@ -21,7 +21,7 @@
             :class="['navItem', 'home' == $route.name ? 'active' : '']"
             @click="toView(0, '/home/home')"
           >
-            首页
+            {{ $t("route.homePage") }}
           </div>
           <template v-for="(route, i) in routerList">
             <div
@@ -33,7 +33,7 @@
               ]"
               @click="$jumpUrl('/main/' + route.path)"
             >
-              {{ route.meta.title }}
+              {{ generateTitle(route.meta.title) }}
             </div>
           </template>
         </div>
@@ -114,7 +114,7 @@
               $jumpUrl('/home/home');
             "
           >
-            首页
+            {{ $t("route.homePage") }}
           </div>
         </template>
         <template v-else>
@@ -128,7 +128,7 @@
               $jumpUrl('/home/home');
             "
           >
-            首页
+            {{ $t("route.homePage") }}
           </div>
           <div
             :class="[
@@ -174,7 +174,7 @@
               $jumpUrl('/main/' + route.path);
             "
           >
-            {{ route.meta.title }}
+            {{ generateTitle(route.meta.title) }}
           </div>
         </template>
       </div>
@@ -206,6 +206,7 @@ import Hamburger from "@/components/Hamburger";
 import UserMenu from "./UserMenu.vue";
 import UserOrders from "./UserOrders.vue";
 import UserOutlines from "./UserOutlines.vue";
+import { generateTitle } from "@/utils/i18n";
 
 import { getToken, setToken } from "@/utils/auth"; // get token from cookie
 const _ = require("lodash");
@@ -256,6 +257,7 @@ export default {
     this.routerList = arr.children;
   },
   methods: {
+    generateTitle,
     showOrderList(status) {
       const hasToken = getToken();
       console.log("hasToken", hasToken);
