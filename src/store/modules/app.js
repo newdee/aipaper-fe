@@ -17,6 +17,7 @@ const state = {
   requestForm: {}, // step1 用户输入内容
   step3PdfUrl: "", // 正文链接
   produceLineStatus: false, // 生成大纲状态, true:生成中 false: 未生成
+  activeIndex: 0, // 写论文页面 step 激活index
 };
 
 const mutations = {
@@ -42,12 +43,13 @@ const mutations = {
     state.device = device;
   },
   TOGGLE_PDF: (state, step3PdfUrl) => {
-    console.log("ddd", state, step3PdfUrl);
     state.step3PdfUrl = step3PdfUrl;
   },
   TOGGLE_PROSTATE: (state, produceLineStatus) => {
-    console.log("ddd", state, produceLineStatus);
     state.produceLineStatus = produceLineStatus;
+  },
+  TOGGLE_ACTIVE: (state, activeIndex) => {
+    state.activeIndex = activeIndex;
   },
   TOGGLE_FORM: (state, requestForm) => {
     state.requestForm = requestForm;
@@ -61,6 +63,9 @@ const mutations = {
 };
 
 const actions = {
+  setActiveIndex({ commit }, activeIndex) {
+    commit("TOGGLE_ACTIVE", activeIndex);
+  },
   setLanguage({ commit }, language) {
     commit("SET_LANGUAGE", language);
   },

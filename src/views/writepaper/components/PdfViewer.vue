@@ -4,12 +4,12 @@
       src="https://file.mixpaper.cn/paper/case/4fd240e4-cad3-4e87-a8d4-1eda7a2cbe4d/second/output.pdf"
       frameborder="0"
     ></iframe> -->
-    <!-- <canvas
+    <canvas
       class="canvasClass"
       :id="'canvas' + item"
       v-for="item in pdfHTML"
       :key="item"
-    /> -->
+    />
   </div>
 </template>
 

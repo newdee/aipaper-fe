@@ -157,13 +157,19 @@ export default {
       console.log(this.checkList);
       delOrder(this.checkList).then((res) => {
         console.log(res);
+        this.$message({
+          type: "success",
+          message: "删除成功!",
+        });
+        this.checkList = [];
+        this.handleCurrentChange();
       });
     },
     handleCurrentChange: throttle(function (newPage) {
       console.log("当前页:", newPage);
       // 这里可以添加你的分页逻辑，例如发送请求获取新的数据
       let params = {
-        page_num: newPage,
+        page_num: newPage ? newPage : this.page.page_num,
         page_size: this.page.page_size,
       };
       getOrderList(params).then((res) => {

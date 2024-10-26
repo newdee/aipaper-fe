@@ -12,5 +12,6 @@ const getters = {
   requestForm: (state) => state.app.requestForm,
   step3PdfUrl: (state) => state.app.step3PdfUrl,
   produceLineStatus: (state) => state.app.produceLineStatus,
+  activeIndex: (state) => state.app.activeIndex,
 };
 export default getters;

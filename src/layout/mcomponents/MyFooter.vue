@@ -70,23 +70,37 @@
             <p style="width: 3em">万象AI助手</p>
           </div>
         </el-button>
-        <!-- <el-button v-popover:popover2> -->
-        <el-button @click="$devf">
-          <div class="itemLi">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-ai-service"></use>
-            </svg>
-            <p>联系客服</p>
-          </div>
-        </el-button>
-        <el-button v-popover:popover3>
-          <div class="itemLi">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-jiaruwomen"></use>
-            </svg>
-            <p>商务合作</p>
-          </div>
-        </el-button>
+
+        <div>
+          <el-popover placement="left" width="150" trigger="hover">
+            <div class="qywxBox">
+              <img src="../../assets/images/qywx.png" alt="" />
+            </div>
+            <el-button slot="reference"
+              ><div class="itemLi">
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-ai-service"></use>
+                </svg>
+                <p>联系客服</p>
+              </div></el-button
+            >
+          </el-popover>
+        </div>
+        <div>
+          <el-popover placement="left" width="150" trigger="hover">
+            <div class="qywxBox">
+              <img src="../../assets/images/qywx.png" alt="" />
+            </div>
+            <el-button slot="reference"
+              ><div class="itemLi">
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-jiaruwomen"></use>
+                </svg>
+                <p>商务合作</p>
+              </div></el-button
+            >
+          </el-popover>
+        </div>
       </div>
     </div>
     <el-popover
@@ -348,6 +362,13 @@ export default {
     color: #333;
   }
 }
-
+.qywxBox {
+  width: 120px;
+  height: 120px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
 @import "@/styles/mediaMain.scss";
 </style>

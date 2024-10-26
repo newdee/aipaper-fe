@@ -37,7 +37,7 @@
 
       <span slot="footer" class="dialog-footer">
         <el-button @click="ownPayStatus = false">取消</el-button>
-        <el-button type="primary" @click="ownPayStatus = false">确定</el-button>
+        <el-button type="primary" @click="jumpStep">确定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -119,6 +119,9 @@ export default {
     // 计算属性
   },
   methods: {
+    jumpStep() {
+      this.$store.dispatch("app/setActiveIndex", 0);
+    },
     /**
      * 获取列表数据，支持轮询
      * @param {Object} data 请求参数
