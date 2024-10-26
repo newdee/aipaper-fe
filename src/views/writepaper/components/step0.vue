@@ -50,7 +50,7 @@
 // import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
-// import eventBus from "@/utils/eventBus";
+import eventBus from "@/utils/eventBus";
 import { getOutlineList } from "@/api/user";
 import { throttle } from "lodash";
 import { getToken } from "@/utils/auth"; //
@@ -98,6 +98,14 @@ export default {
           path: "/main/writepaper",
           query: { key1: row.key1, field: row.field },
         });
+        let requestForm = {
+          title: row.title,
+          threeCon: false,
+          language: row.language,
+          type: row.type,
+          field: ["哲学", row.field],
+        };
+        eventBus.emit("setFormData", requestForm); // 发布事件
       }, 1000);
     },
     // 定义方法

@@ -4,17 +4,52 @@
       <p class="oulineTitlePaper"><span>题目: </span>{{ requestForm.title }}</p>
       <p class="outlineTitleDesc">
         <span>科目: </span
-        >{{ requestForm.field ? requestForm.field[1] : "跳转" }}
+        >{{ requestForm.field ? requestForm.field[1] : "暂无" }}
       </p>
     </div>
     <!-- 大纲 -->
     <!-- {{ outlineData }} -->
     <div class="outlineMain">
       <p class="tips">拖拽章节,可实现章节排序</p>
+
       <div class="tipOutline">
-        <!-- <el-tooltip class="item" effect="dark" content="重置所有章节" placement="top">
-          <el-button size="mini" icon="el-icon-search" circle></el-button>
-        </el-tooltip> -->
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="添加一级章节"
+          placement="top"
+        >
+          <!-- <el-button
+            size="mini"
+            type="success"
+            @click="addPageOne"
+            icon="el-icon-circle-plus-outline"
+            circle
+          >
+          </el-button> -->
+          <el-button
+            type="primary"
+            size="mini"
+            icon="el-icon-circle-plus-outline"
+          >
+            添加
+          </el-button>
+        </el-tooltip>
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="保存大纲"
+          placement="top"
+        >
+          <el-button
+            type="primary"
+            @click="saveOutline"
+            size="mini"
+            icon="el-icon-check"
+          >
+            保存
+          </el-button>
+        </el-tooltip>
         <!-- <el-tooltip class="item" effect="dark" content="AI生成" placement="top">
           <el-button
             type="primary"
@@ -23,21 +58,7 @@
             circle
           ></el-button>
         </el-tooltip> -->
-        <el-tooltip
-          class="item"
-          effect="dark"
-          content="添加一级章节"
-          placement="top"
-        >
-          <el-button
-            size="mini"
-            type="success"
-            @click="addPageOne"
-            icon="el-icon-circle-plus-outline"
-            circle
-          >
-          </el-button>
-        </el-tooltip>
+
         <!-- <el-button type="info" icon="el-icon-message" circle></el-button>
         <el-button type="warning" icon="el-icon-star-off" circle></el-button>
         <el-button type="danger" icon="el-icon-delete" circle></el-button> -->
@@ -205,7 +226,7 @@
         </div>
       </el-tree>
     </div>
-    <div @click="textF" class="outlineRepeat g_poin">
+    <div @click="reloadOutline" class="outlineRepeat g_poin">
       <p>
         大纲不满意? 重新生成
         <i class="el-icon-refresh"></i>
@@ -223,8 +244,11 @@
             </svg>
           </div>
           <div class="right">
-            <p>[中文]水稻灰粉病的调查研究</p>
-            <p>本科·2万字<span>含无限改稿</span></p>
+            <p>[中文]{{ requestForm.title }}</p>
+            <p>
+              {{ requestForm.field ? requestForm.field[1] : "暂无" }}
+              <span>含无限改稿</span>
+            </p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-checkmark"></use>
@@ -617,11 +641,12 @@ import mitt from "mitt";
 import { getToken } from "@/utils/auth"; //
 import { mapGetters } from "vuex";
 // 方法
-import { getOrder, orderDetailById } from "@/api/user";
+import { getOrder, editLine } from "@/api/user";
 import polling from "@/utils/get-order-detail.js";
 import orderDialog from "./orderDialog.vue";
+import eventBus from "@/utils/eventBus";
+import { outlineStatus } from "@/api/user";
 
-import { title } from "@/settings";
 export default {
   name: "step2",
   data() {
@@ -1128,6 +1153,45 @@ export default {
     ...mapGetters(["requestForm"]),
   },
   methods: {
+    // 重新生成大纲
+    reloadOutline() {
+      eventBus.emit("reloadOutline", 3);
+    },
+
+    saveOutline() {
+      console.log("this.", this.requestForm);
+      console.log("this.", JSON.stringify(this.outline));
+
+      let data = {
+        title: this.requestForm.title,
+        key1: this.requestForm.key,
+        outline: {
+          outline: this.outline,
+        },
+      };
+      console.log("this.ddddddddd", data);
+
+      editLine(data).then((res) => {
+        console.log("res", res);
+        this.$message({
+          type: "success",
+          message: "保存成功!",
+        });
+        // 刷新大纲
+        this.reloadSave();
+      });
+    },
+    reloadSave() {
+      let data = {
+        key: this.requestForm.key,
+      };
+      outlineStatus(data).then((res) => {
+        this.outline = res.result.outline.outline;
+        this.generateIndexes(this.outline);
+        // 保存大纲输入信息
+        // 填充大纲列表数据
+      });
+    },
     showImgF(item) {
       console.log("item", item);
       this.imgExcelSetStatus = true;
@@ -1281,11 +1345,8 @@ export default {
           status: false,
           content: "",
         },
-        sections: [],
       };
-      if (!data.sections) {
-        this.$set(data, "sections", []);
-      }
+
       data.sections.push(newChild);
       this.updateApiGroup(this.outline);
       this.$refs.numberValidateForm.resetFields();
@@ -1324,12 +1385,7 @@ export default {
           status: false,
           content: "",
         },
-        sections: [],
       };
-      if (!parentNodeData.hasOwnProperty("sections")) {
-        this.$set(parentNodeData, "sections", []);
-      }
-      console.log("1141----parentNode.sections:", parentNodeData.sections);
 
       if (this.numberValidateForm.insertPosition == "after") {
         const targetIndex = parentNodeData.sections.findIndex(
@@ -1549,464 +1605,5 @@ export default {
 <style lang="scss" scoped>
 // 引入scss
 @import "@/styles/variables.scss";
-
-.popperTitle {
-  font-size: 10px;
-}
-
-.outlineRepeat {
-  text-align: center;
-  margin-top: 50px;
-  margin-bottom: 64px;
-
-  p {
-    display: inline-block;
-    padding: 0 18px;
-    line-height: 34px;
-    height: 34px;
-    border-radius: 17px;
-    font-size: 14px;
-    color: #d4a11c;
-    border: 1px solid #d4a11c;
-  }
-}
-
-.spendingBox {
-  max-width: 688px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0px 10px 10px 10px;
-  background: #fff;
-  border: 1px solid #ebeef5;
-  border-radius: 8px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-
-  > p {
-    font-size: 18px;
-    padding: 0 10px;
-  }
-
-  .borderBox {
-    border: 1px solid transparent;
-    border-radius: 5px;
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    padding: 15px 10px;
-    margin: 5px 8px;
-
-    .left {
-      flex: none;
-
-      svg.icon {
-        width: 35px;
-        height: 35px;
-      }
-    }
-
-    .right {
-      flex-grow: 1;
-      position: relative;
-      padding-left: 5px;
-
-      .alignR {
-        text-align: right;
-        position: absolute;
-        right: 0;
-        bottom: -8px;
-
-        svg.icon {
-          width: 14px;
-          height: 14px;
-          color: #018417;
-        }
-      }
-
-      p {
-        margin: 0;
-        line-height: 1.5em;
-      }
-
-      p:first-child {
-        padding: 5px 0;
-      }
-    }
-  }
-
-  .att {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-
-  .maintxt .borderBox {
-    border-color: #d4a11c;
-
-    svg.icon {
-      color: #d4a11c;
-    }
-  }
-
-  .att .borderBox {
-    width: 150px;
-    border-color: #01847f;
-    font-size: 12px;
-
-    .right p {
-      white-space: nowrap;
-    }
-
-    svg.icon {
-      color: #01847f;
-    }
-  }
-
-  .adds {
-    .addService {
-      display: flex;
-      flex-wrap: wrap;
-
-      label.el-checkbox {
-        width: 150px;
-        display: flex;
-        flex-direction: row-reverse;
-        padding: 10px;
-        margin: 5px 8px;
-        background-image: linear-gradient(
-          45deg,
-          rgb(252, 243, 205),
-          transparent
-        );
-        border: 1px solid #d4a11c;
-        border-radius: 5px;
-        align-items: center;
-        height: auto;
-        justify-content: space-between;
-
-        .cusLabel {
-          font-size: 14px;
-
-          p {
-            margin: 0px;
-            line-height: 1.5em;
-            color: #202020;
-          }
-
-          .price span:first-child {
-            color: #ee6562;
-            font-weight: 600;
-          }
-
-          .price span:last-child {
-            font-size: 12px;
-            color: #7e7e7e;
-            text-decoration: line-through;
-          }
-        }
-      }
-    }
-
-    .tips {
-      padding: 0 15px;
-      font-size: 10px;
-      margin: 0px 0px 5px 0;
-      cursor: pointer;
-
-      span {
-        color: #ee6562;
-      }
-    }
-  }
-}
-
-.warningP {
-  max-width: 688px;
-  margin: 0 auto;
-  margin-top: 20px;
-}
-
-.agreeText {
-  white-space: nowrap;
-  /* 防止文字换行 */
-  overflow: hidden;
-  /* 隐藏超出的内容 */
-  text-overflow: ellipsis;
-}
-
-// @import "@/index.scss";
-.warningText {
-  color: #ffa500;
-  font-size: 14px;
-  margin-top: 20px;
-}
-
-.generateSpan {
-  text-align: center;
-  padding-bottom: 60px;
-
-  span {
-    display: inline-block;
-    background: #d4a11c;
-    height: 40px;
-    width: 160px;
-    line-height: 40px;
-    border-radius: 20px;
-    font-size: 15px;
-    font-weight: bold;
-    padding: 0 22px;
-    color: #fff;
-  }
-}
-
-.outlineIntro {
-  padding-top: 50px;
-  max-width: 688px;
-  margin: 0 auto;
-  text-align: center;
-
-  .introTitle {
-    font-size: 16px;
-    font-weight: bold;
-    color: #d4a11c;
-  }
-
-  .introSubtitle {
-    font-size: 14px;
-    line-height: 20px;
-
-    span {
-      color: #d75300;
-    }
-  }
-}
-
-.outlineMain {
-  max-width: 860px;
-  margin: 0 auto;
-  border-radius: 8px;
-  border: 1px solid #ebeef5;
-  background-color: #fff;
-  overflow: hidden;
-  color: #303133;
-  transition: 0.3s;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  margin-top: 32px;
-  padding: 16px;
-}
-
-.tipOutline {
-  text-align: right;
-  margin-bottom: 10px;
-}
-
-.custom-tree-node {
-  width: 100%;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  // background: red;
-  &:hover {
-    .showSpan {
-      width: 80%;
-      border: 1px solid #3355fe;
-    }
-  }
-}
-
-.iconRight {
-  color: $menuActiveText;
-  position: absolute;
-  top: 10px;
-  font-size: 14px;
-  height: 100%;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: space-between;
-  padding: 10px;
-  padding-top: 3px;
-  padding-bottom: 20px;
-
-  & > div {
-    background-color: #fff;
-  }
-}
-
-.oulineTitlePaper {
-  font-size: 20px;
-  color: #000;
-  margin: 20px 0;
-  margin-top: 30px;
-  text-align: center;
-  font-weight: bold;
-}
-
-:deep(.el-tree-node__content) {
-  align-items: flex-start !important;
-}
-
-:deep(.el-tree-node__expand-icon.expanded) {
-  position: relative;
-  top: 8px;
-}
-
-.codeSelectInfo {
-  display: flex;
-
-  :deep(.el-input__inner) {
-    height: 30px;
-  }
-
-  .el-input__inner {
-    height: 30px;
-  }
-
-  ::deep .el-input__inner {
-    height: 30px;
-  }
-}
-
-.outlineTitleDesc {
-  text-align: center;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.editInput {
-  outline: none;
-  border: none;
-  height: 28px;
-  width: 80%;
-  font-weight: bold;
-  font-size: 14px;
-}
-
-.inputBoxMain {
-  // height: 100%;
-  width: 100%;
-}
-
-::v-deep .el-tree-node__content {
-  height: auto !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-}
-
-.showSpan {
-  display: inline-block;
-  max-width: 600px;
-  white-space: nowrap; /* 防止文本换行 */
-  text-overflow: ellipsis; /* 溢出部分用省略号表示 */
-  font-size: 14px;
-  font-weight: bold;
-  color: #333639;
-  height: 28px;
-  line-height: 28px;
-  font-weight: bold;
-  padding-left: 5px;
-  border-radius: 5px;
-}
-
-// 媒体查询
-// @media only screen and (max-width: 939px) {
-// }
-.dialogIcon {
-  color: #d4a11c;
-  font-size: 20px;
-  margin-right: 5px;
-}
-
-.dialogTitle {
-  display: flex;
-  align-items: center;
-  font-weight: bold;
-}
-
-.pageSource {
-  color: #333639;
-  display: inline-block;
-  margin-right: 10px;
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.step2Box {
-  max-width: 1200px;
-  padding-top: 60px;
-  background-color: #fff;
-  margin-top: 16px;
-  border-radius: 12px;
-}
-
-.slotContentBox {
-  font-size: 14px;
-  font-weight: bold;
-  position: relative;
-  width: 100%;
-  color: #333639;
-}
-
-.ownInput {
-  border: none;
-  width: 100%;
-  height: 35px;
-  border-radius: 5px;
-  margin: 5px;
-  margin-top: -5px;
-  max-width: 500px;
-  // padding-top: 10px;
-  padding: 10px;
-
-  // padding-top: 0px;
-  // padding-bottom: 20px;
-  &:hover {
-    border: 1px solid #3355fe;
-  }
-
-  &:focus {
-    border: 1px solid #3355fe;
-  }
-
-  &:active {
-    border: 1px solid #3355fe;
-  }
-
-  &:focus {
-    border-color: #3355fe;
-    box-shadow: 0 0 5px #3355fe;
-    outline: none;
-  }
-}
-
-.fuTitle {
-  font-size: 18xp;
-  font-weight: bold;
-  margin: 32px 0;
-  color: #1f2937;
-}
-
-.rightbottom {
-  color: #3355fe;
-  font-size: 18px;
-}
-
-.labelSpan {
-  font-family: PingFangSC, PingFang SC;
-  margin-left: 16px;
-  font-weight: 400;
-  font-size: 14px;
-  color: #000000;
-  line-height: 20px;
-  text-align: left;
-}
-
-.leftLabel {
-  display: flex;
-  align-items: center;
-  height: 32px;
-}
+@import "./index.scss";
 </style>

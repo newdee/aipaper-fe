@@ -54,7 +54,7 @@
   </div>
 </template>
 <script>
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 
 import swiperOne from "./components/swiperOne.vue";
@@ -74,7 +74,6 @@ export default {
   data() {
     return {
       // 定义变量
-      activeIndex: 0,
       isScrollActive: false,
       outlineData: [],
     };
@@ -107,17 +106,20 @@ export default {
   },
   computed: {
     // 计算属性
+    ...mapGetters(["activeIndex"]),
   },
   methods: {
     // 定义方法
     errorBack() {
       // this.tabsClick(0);
-      this.activeIndex = 0;
+      // this.activeIndex = 0;
+      this.$store.dispatch("app/setActiveIndex", 0);
     },
     // 点击生成大纲
     showIndex() {
       console.log("ddddd", this.activeIndex);
-      this.activeIndex = 1;
+      // this.activeIndex = 1;
+      this.$store.dispatch("app/setActiveIndex", 1);
       this.$nextTick(() => {
         eventBus.emit("beginTime", 500);
         this.$scrollTo("#step1", 500, { offset: -100 });
@@ -127,7 +129,8 @@ export default {
       console.log("showIndex3showIndex3showIndex3showIndex3");
       // let pdfUrl =
       // "https://file.mixpaper.cn/paper/case/4fd240e4-cad3-4e87-a8d4-1eda7a2cbe4d/second/output.pdf";
-      this.activeIndex = 3;
+      // this.activeIndex = 3;
+      this.$store.dispatch("app/setActiveIndex", 3);
 
       this.$nextTick(() => {
         this.$store.dispatch("app/togglePDFUrl", pdfUrl);
@@ -141,7 +144,9 @@ export default {
       this.tabsClick(2);
     },
     tabsClick(val) {
-      this.activeIndex = val;
+      // this.activeIndex = val;
+      this.$store.dispatch("app/setActiveIndex", val);
+
       if (val == 2) {
         this.$nextTick(() => {
           this.$scrollTo("#top", 500, { offset: -100 });
@@ -191,7 +196,9 @@ export default {
           key: to.query.key1,
           type: "本科",
         };
+        // 保存大纲输入信息
         this.$store.dispatch("app/setRequestForm", data);
+        // 填充大纲列表数据
       });
     }
     console.log("Query parameter changed:", to.query);

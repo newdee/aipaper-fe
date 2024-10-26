@@ -7,43 +7,31 @@
           @click="checkoutPaper(1)"
           :class="['outLeftTitle', activeIndex == 1 ? 'activeLT' : '']"
         >
-          降低重复率
+          降低重复率/AIGC率
           <span class="underLeft"></span>
         </p>
-        <p
+        <!-- <p
           @click="checkoutPaper(2)"
           :class="['outLeftTitle', activeIndex == 2 ? 'activeLT' : '']"
         >
           降低AIGC率
           <span class="underLeft"></span>
-        </p>
+        </p> -->
       </div>
     </div>
     <div class="edit flex">
       <div class="edit-1">
         <el-input
           type="textarea"
-          :rows="15"
+          :rows="20"
           :placeholder="placeText[activeIndex - 1]"
           maxlength="1000"
           show-word-limit
           v-model="textareaIn"
           resize="false"
-          :autosize="{ minRows: 7 }"
+          :autosize="{ minRows: 15 }"
         >
         </el-input>
-        <div class="btns">
-          <el-button for="reduceRR" v-if="activeIndex == 1" type="primary" round
-            >开始生成</el-button
-          >
-          <el-button
-            for="reduceAIGC"
-            v-if="activeIndex == 2"
-            type="primary"
-            round
-            >开始生成</el-button
-          >
-        </div>
       </div>
       <!-- <div class="edit-2 flex align-center">
         <el-button type="primary" round>降低重复率
@@ -72,6 +60,19 @@
         </div>
       </div>
     </div>
+    <div class="customization">
+      <el-input
+        type="textarea"
+        :autosize="{ minRows: 4 }"
+        :rows="4"
+        placeholder="请输入您对生成内容的建议,例如: 字数增加,词汇润色,等"
+        v-model="customizationValue"
+      >
+      </el-input>
+    </div>
+    <div class="reduceBtn g_poin">
+      <p>开始生成</p>
+    </div>
   </div>
 </template>
 
@@ -85,6 +86,7 @@ export default {
   },
   data() {
     return {
+      customizationValue: "",
       logo: require("@/assets/images/logo_paper.png"),
       drawer: false,
       direction: "rtl", //抽屉方向
@@ -92,11 +94,11 @@ export default {
       textareaOut: "",
       activeIndex: 1,
       placeText: [
-        "请输入文章段落，待降重均可，每次最多1000字",
+        "请输入文章段落，待降重/降AIGC率均可，每次最多1000字",
         "请输入文章段落，待降AIGC率，每次最多1000字",
       ],
       reduceText: [
-        "请在左侧输入待降重复率的文章段落，点击“开始生成”按钮，稍等片刻，成品会显示在这里",
+        "请在左侧输入待降重复率/降AIGC率的文章段落，点击“开始生成”按钮，稍等片刻，成品会显示在这里",
         "请在左侧输入待降AIGC率的文章段落，点击“开始生成”按钮，稍等片刻，成品会显示在这里",
       ],
     };
@@ -153,7 +155,7 @@ export default {
   > div {
     background: #fff;
     border-radius: 12px;
-    padding: 35px 35px 75px;
+    padding: 15px;
     flex: 1 1 0%;
     height: auto;
     font-size: 14px;
@@ -208,29 +210,19 @@ export default {
     }
   }
 }
-
-// .edit-2 {
-//   justify-content: center;
-// }
-
-// .edit-2 .el-button {
-//   width: 125px;
-//   margin: 0 10px 15px 10px;
-// }
-
-// .edit-2 .el-radio-group {
-//   display: flex;
-//   width: 100%;
-//   justify-content: space-evenly;
-// }
-
-// .edit-2 .el-radio {
-//   margin-right: 0px;
-// }
-// .edTwoIcon {
-//   // font-size: 20px;
-//   color: red;
-// }
+.reduceBtn {
+  width: auto;
+  height: 44px;
+  background: #3355ff;
+  border-radius: 24px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #ffffff;
+  margin-bottom: 50px;
+}
 
 .topSwiper ::v-deep .sliderImgBox img {
   width: 100%;

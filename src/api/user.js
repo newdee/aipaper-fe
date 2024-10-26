@@ -34,6 +34,13 @@ export function getOrder(data) {
     data,
   });
 }
+export function editLine(data) {
+  return request({
+    url: "/api/ai-paper/paper/outline/edit",
+    method: "post",
+    data,
+  });
+}
 export function outlineCreate(data) {
   return request({
     url: "/api/ai-paper/paper/outline/create",

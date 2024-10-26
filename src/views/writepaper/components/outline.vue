@@ -47,6 +47,7 @@
               v-for="item in homeData.category_list"
               :key="item.name"
               :label="item.name"
+              :value="item.name"
             >
               <div class="labelBox">
                 <div class="left">
@@ -65,7 +66,10 @@
                     src="@/assets/images/bank-dark.png"
                     alt=""
                   />
-                  {{ item.name }}({{ item.description }})
+                  {{ item.name }}
+                  <span v-show="item.description"
+                    >({{ item.description }})</span
+                  >
                 </div>
                 <div class="right">
                   <svg
@@ -151,7 +155,7 @@ export default {
         title: "",
         threeCon: false,
         language: "中文",
-        type: "专科/本科",
+        type: "",
         field: ["哲学", "哲学类"],
         key: "",
       },
@@ -195,20 +199,42 @@ export default {
     // 页面初始化
     // 查看用户输入数据是否存在
     let jsonStr = localStorage.getItem("userInput");
+
+    console.log("outline_----", jsonStr);
+
     if (!!jsonStr) {
       this.requestForm = JSON.parse(jsonStr);
       console.log("用户输入有数据", this.requestForm);
       this.$nextTick(() => {
         localStorage.removeItem("userInput");
       });
+    } else {
+      let _this = this;
+      setTimeout(() => {
+        _this.requestForm.type = _this.homeData.category_list[0].name;
+      }, 1000);
     }
   },
-
+  created() {
+    // step2点击重新生成大纲
+    eventBus.on("reloadOutline", this.sendOutlineForm); // 订阅事件
+    eventBus.on("setFormData", this.setFormData); // 订阅事件
+  },
+  beforeDestroy() {
+    eventBus.off("reloadOutline", this.sendOutlineForm); // 移除事件监听
+    eventBus.off("setFormData", this.setFormData); // 移除事件监听
+  },
   computed: {
     // 计算属性
     ...mapGetters(["homeData", "produceLineStatus"]),
   },
   methods: {
+    setFormData(data) {
+      console.log("setFormdata-----------", data);
+      if (data) {
+        this.requestForm = { ...data };
+      }
+    },
     sendOutlineForm() {
       if (this.produceLineStatus) {
         this.$message({
@@ -240,8 +266,7 @@ export default {
           title: this.requestForm.title,
           language: this.requestForm.language,
           field: this.requestForm.field[1],
-          // type: this.requestForm.type,
-          type: "本科",
+          type: this.requestForm.type,
         };
         outlineCreate(data).then((res) => {
           this.$store.dispatch("app/setProStatus", true);
