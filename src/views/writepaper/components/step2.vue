@@ -408,7 +408,7 @@
       </el-checkbox>
     </div>
     <div class="warningP generateSpan">
-      <span class="g_poin" @click="generateForm">生成全文</span>
+      <span class="g_poin" @click="saveOutline('reduce')">生成全文</span>
       <!-- <span class="g_poin" @click="textF">生成全文</span> -->
     </div>
 
@@ -1158,7 +1158,7 @@ export default {
       eventBus.emit("reloadOutline", 3);
     },
 
-    saveOutline() {
+    saveOutline(status) {
       console.log("this.", this.requestForm);
       console.log("this.", JSON.stringify(this.outline));
 
@@ -1175,13 +1175,13 @@ export default {
         console.log("res", res);
         this.$message({
           type: "success",
-          message: "保存成功!",
+          message: "保存大纲成功!",
         });
         // 刷新大纲
-        this.reloadSave();
+        this.reloadSave(status);
       });
     },
-    reloadSave() {
+    reloadSave(status) {
       let data = {
         key: this.requestForm.key,
       };
@@ -1190,6 +1190,9 @@ export default {
         this.generateIndexes(this.outline);
         // 保存大纲输入信息
         // 填充大纲列表数据
+        if (status == "reduce") {
+          this.generateForm();
+        }
       });
     },
     showImgF(item) {
@@ -1283,8 +1286,17 @@ export default {
       this.insertSibling = false;
       this.editStatus = true;
       this.$nextTick(() => {
-        this.$refs.numberValidateForm.resetFields();
+        // this.$refs.numberValidateForm.resetFields();
+        this.resetNumberForm();
       });
+    },
+    resetNumberForm() {
+      let numberValidateForm = {
+        appendValue: "",
+        appendContent: "",
+        insertPosition: "after",
+      };
+      this.numberValidateForm = { ...numberValidateForm };
     },
     appendShowSibling(node, data) {
       console.log("1030---node和data:", node, data);
@@ -1295,7 +1307,8 @@ export default {
       this.$set(this.numberValidateForm, "insertPosition", "after");
       this.insertSibling = true;
       this.$nextTick(() => {
-        this.$refs.numberValidateForm.resetFields();
+        // this.$refs.numberValidateForm.resetFields();
+        this.resetNumberForm();
       });
     },
     submitForm(formName) {
@@ -1349,7 +1362,9 @@ export default {
 
       data.sections.push(newChild);
       this.updateApiGroup(this.outline);
-      this.$refs.numberValidateForm.resetFields();
+      // this.$refs.numberValidateForm.resetFields();
+      this.resetNumberForm();
+
       this.editStatus = false;
     },
     appendSibling(parentNodeData, data) {

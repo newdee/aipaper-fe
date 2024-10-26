@@ -76,6 +76,7 @@
 import { getList } from "@/api/table";
 import { getOutlineList } from "@/api/user";
 import { throttle } from "lodash";
+import eventBus from "@/utils/eventBus";
 
 export default {
   name: "UserOrders",
@@ -129,6 +130,14 @@ export default {
           path: "/main/writepaper",
           query: { key1: row.key1, field: row.field },
         });
+        let requestForm = {
+          title: row.title,
+          threeCon: false,
+          language: row.language,
+          type: row.type,
+          field: ["哲学", row.field],
+        };
+        eventBus.emit("setFormData", requestForm); // 发布事件
       }, 1000);
     },
     refresh() {
