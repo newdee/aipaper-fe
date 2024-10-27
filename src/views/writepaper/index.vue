@@ -91,6 +91,8 @@ export default {
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
     window.addEventListener("scroll", this.handleScroll);
+    // this.$store.dispatch("app/setActiveIndex", 2);
+
     // 获取首页数据
     this.$nextTick(() => {
       getHomeInfo().then((res) => {

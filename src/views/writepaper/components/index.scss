@@ -327,6 +327,7 @@
 .editInput {
   outline: none;
   border: none;
+  padding-left: 5px;
   height: 28px;
   width: 80%;
   font-weight: bold;
@@ -336,6 +337,8 @@
 .inputBoxMain {
   // height: 100%;
   width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 ::v-deep .el-tree-node__content {
