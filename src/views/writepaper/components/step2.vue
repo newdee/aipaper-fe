@@ -13,12 +13,7 @@
       <p class="tips">拖拽章节,可实现章节排序</p>
 
       <div class="tipOutline">
-        <el-tooltip
-          class="item"
-          effect="dark"
-          content="添加一级章节"
-          placement="top"
-        >
+        <el-tooltip class="item" effect="dark" content="AI帮写" placement="top">
           <!-- <el-button
             size="mini"
             type="success"
@@ -30,9 +25,10 @@
           <el-button
             type="primary"
             size="mini"
+            @click="saveOutline('aitype')"
             icon="el-icon-circle-plus-outline"
           >
-            添加
+            AI帮写
           </el-button>
         </el-tooltip>
         <el-tooltip
@@ -50,20 +46,8 @@
             保存
           </el-button>
         </el-tooltip>
-        <!-- <el-tooltip class="item" effect="dark" content="AI生成" placement="top">
-          <el-button
-            type="primary"
-            size="mini"
-            icon="el-icon-edit"
-            circle
-          ></el-button>
-        </el-tooltip> -->
-
-        <!-- <el-button type="info" icon="el-icon-message" circle></el-button>
-        <el-button type="warning" icon="el-icon-star-off" circle></el-button>
-        <el-button type="danger" icon="el-icon-delete" circle></el-button> -->
       </div>
-
+      <!-- draggable // 支持用户拖拽-->
       <el-tree
         :data="outline"
         node-key="id"
@@ -75,7 +59,6 @@
         @node-drag-over="handleDragOver"
         @node-drag-end="handleDragEnd"
         @node-drop="handleDrop"
-        draggable
         :expand-on-click-node="false"
         :allow-drop="allowDrop"
         :allow-drag="allowDrag"
@@ -90,22 +73,15 @@
                 </span>
                 <span v-else> {{ data.index }} </span>
               </div>
-              <template v-if="data.isEdit == 1">
+              <template v-if="data.isEdit == 1 || !data.title">
                 <input
                   ref="input"
                   class="editInput"
+                  placeholder="请输入您对应的标题或点击AI帮写..."
                   size="mini"
                   @blur="() => submitEdit(node, data)"
                   v-model="data.title"
                 />
-
-                <!-- 放弃、提交按钮废弃，改为失去焦点自动提交 -->
-                <!-- <el-button type="text"
-              size="mini"
-              @click="() => cancelEdit(node,data)">C</el-button>
-            <el-button type="text"
-              size="mini"
-              @click="() => submitEdit(node,data)">S</el-button> -->
               </template>
               <!-- 如果不是编辑状态 -->
               <span
@@ -116,9 +92,13 @@
               ></span>
             </div>
 
-            <div v-if="data.level >= maxLevel" class="iconRight">
+            <div class="iconRight">
               <div>
-                <el-tooltip placement="top" content="插入图表配置">
+                <el-tooltip
+                  v-if="data.level >= maxLevel"
+                  placement="top"
+                  content="插入图表配置"
+                >
                   <span @click="showImgF(data)">
                     <i class="el-icon-edit-outline"></i>
                     插入图表
@@ -126,24 +106,29 @@
                 </el-tooltip>
                 <!-- 新增 -->
                 <el-tooltip
-                  :num="data.index.split('-').length"
-                  v-if="data.index.split('-').length < 3"
+                  v-if="data.level == 1"
                   class="item"
                   effect="dark"
-                  content="新增下一级"
+                  content="新增章节"
                   placement="top"
                 >
                   <i
                     @click="() => appendShowSibling(node, data)"
                     class="el-icon-circle-plus-outline g_poin"
                   ></i>
-                  <!-- <i @click="() => appendSections(node, data)" class="el-icon-circle-plus-outline g_poin"></i> -->
                 </el-tooltip>
-                <!-- <el-tooltip :num="data.index.split('-').length" class="item" effect="dark" content="新增同级"
-                  placement="top">
-                  <i @click="() => appendShowSibling(node, data)" class="el-icon-circle-plus-outline g_poin"
-                    style="color:red;"></i>
-                </el-tooltip> -->
+                <el-tooltip
+                  v-else
+                  class="item"
+                  effect="dark"
+                  content="新增小节"
+                  placement="top"
+                >
+                  <i
+                    @click="() => appendShowSibling(node, data)"
+                    class="el-icon-circle-plus-outline g_poin"
+                  ></i>
+                </el-tooltip>
                 <!-- 删除 -->
                 <el-tooltip
                   class="item"
@@ -157,7 +142,7 @@
                   ></i>
                 </el-tooltip>
               </div>
-              <div class="rightbottom">
+              <div v-if="data.level >= maxLevel" class="rightbottom">
                 <!-- 表 -->
                 <el-tooltip
                   class="item"
@@ -213,12 +198,12 @@
               </div>
             </div>
           </div>
-          <div v-if="data.summary" class="contentInput">
+          <div v-if="data.level !== 1" class="contentInput">
             <!-- <textarea type="textarea" v-model="data.content"  /> -->
             <textarea-autosize
               class="ownInput"
               rows="1"
-              placeholder="Type something here..."
+              placeholder="请输入您对应的章节内容,或点击AI帮写..."
               ref="myTextarea"
               v-model="data.summary"
             />
@@ -233,175 +218,7 @@
       </p>
     </div>
     <!-- 付费项选择 -->
-
-    <div class="spendingBox">
-      <p class="fuTitle">您将获得</p>
-      <div class="maintxt">
-        <div class="borderBox">
-          <div class="left">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-wj-zw"></use>
-            </svg>
-          </div>
-          <div class="right">
-            <p>[中文]{{ requestForm.title }}</p>
-            <p>
-              {{ requestForm.field ? requestForm.field[1] : "暂无" }}
-              <span>含无限改稿</span>
-            </p>
-            <p class="alignR">
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-checkmark"></use>
-              </svg>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="att">
-        <div class="borderBox">
-          <div class="left">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-wj-zw"></use>
-            </svg>
-          </div>
-          <div class="right">
-            <p>[文献综述]</p>
-            <p>x1</p>
-            <p class="alignR">
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-checkmark"></use>
-              </svg>
-            </p>
-          </div>
-        </div>
-        <div class="borderBox">
-          <div class="left">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-wj-zw"></use>
-            </svg>
-          </div>
-          <div class="right">
-            <p>[中英文摘要]</p>
-            <p>x1</p>
-            <p class="alignR">
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-checkmark"></use>
-              </svg>
-            </p>
-          </div>
-        </div>
-        <div class="borderBox">
-          <div class="left">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-wj-zw"></use>
-            </svg>
-          </div>
-          <div class="right">
-            <p>[中英文参考文献]</p>
-            <p>x1</p>
-            <p class="alignR">
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-checkmark"></use>
-              </svg>
-            </p>
-          </div>
-        </div>
-        <div class="borderBox">
-          <div class="left">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-wj-zw"></use>
-            </svg>
-          </div>
-          <div class="right">
-            <p>[学术创新]</p>
-            <p>x1</p>
-            <p class="alignR">
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-checkmark"></use>
-              </svg>
-            </p>
-          </div>
-        </div>
-      </div>
-      <p class="fuTitle">附加服务</p>
-      <div class="adds">
-        <!-- <div class="item">
-                    <p></p>
-                </div> -->
-        <el-checkbox-group
-          class="addService"
-          v-model="checkboxGroup1"
-          size="small"
-        >
-          <el-checkbox label="1" border>
-            <div class="cusLabel">
-              <p>开题报告</p>
-              <div class="price">
-                <span>4.9元</span>
-                <span>19.9元</span>
-              </div>
-            </div>
-          </el-checkbox>
-          <el-checkbox label="2" border>
-            <div class="cusLabel">
-              <p>任务书</p>
-              <div class="price">
-                <span>4.9元</span>
-                <span>19.9元</span>
-              </div>
-            </div>
-          </el-checkbox>
-          <el-checkbox label="3" border>
-            <div class="cusLabel">
-              <p>CAD三维设计</p>
-              <div class="price">
-                <span>19.9元</span>
-                <span>39.9元</span>
-              </div>
-            </div>
-          </el-checkbox>
-          <el-checkbox label="4" border>
-            <div class="cusLabel">
-              <p>答辩汇报PPT</p>
-              <div class="price">
-                <span>19.9元</span>
-                <span>49.9元</span>
-              </div>
-            </div>
-          </el-checkbox>
-          <el-checkbox label="5" border>
-            <div class="cusLabel">
-              <p>调查问卷</p>
-              <div class="price">
-                <span>9.9元</span>
-                <span>19.9元</span>
-              </div>
-            </div>
-          </el-checkbox>
-          <el-checkbox label="6" border>
-            <div class="cusLabel">
-              <p>“投喂”AI</p>
-              <div class="price">
-                <span>9.9元</span>
-                <span>29.9元</span>
-              </div>
-            </div>
-          </el-checkbox>
-          <el-checkbox label="7" border>
-            <div class="cusLabel">
-              <p>一键降AIGC率</p>
-              <div class="price">
-                <span>18元</span>
-                <span>180元</span>
-              </div>
-            </div>
-          </el-checkbox>
-        </el-checkbox-group>
-        <p class="tips" @click="reduceAIGC">
-          AIGC率知网超25%<span>包退费</span>
-        </p>
-      </div>
-    </div>
+    <additional></additional>
     <div class="warningP agreeText">
       <el-checkbox v-model="checked">
         我已阅读并同意：平台所生成的全文为范文，仅用作参考，不用作毕业论文、发表刊物等
@@ -458,19 +275,23 @@
           <el-radio label="before">本章之前</el-radio>
         </el-radio-group> -->
         <el-form-item
-          label="请输入章节"
+          :label="appendLevel == 1 ? '请输入章节标题' : '请输入小节名称'"
           prop="appendValue"
           :rules="[{ required: true, message: '章节不能为空' }]"
         >
           <el-input
-            placeholder="请输入章节"
+            placeholder="请输入内容"
             v-model="numberValidateForm.appendValue"
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="请输入章节内容" prop="appendValue">
+        <el-form-item
+          v-if="appendLevel !== 1"
+          label="请输入小节内容"
+          prop="appendValue"
+        >
           <el-input
-            placeholder="请输入章节内容"
+            placeholder="请输入小节内容"
             v-model="numberValidateForm.appendContent"
             autocomplete="off"
           ></el-input>
@@ -644,6 +465,7 @@ import { mapGetters } from "vuex";
 import { getOrder, editLine } from "@/api/user";
 import polling from "@/utils/get-order-detail.js";
 import orderDialog from "./orderDialog.vue";
+import additional from "./step2/additional.vue";
 import eventBus from "@/utils/eventBus";
 import { outlineStatus } from "@/api/user";
 
@@ -1092,7 +914,7 @@ export default {
       editData: {}, // 被选中的节点的数据
       editParentData: {}, // 被选中节点的父节点
       editStatus: false,
-      checkboxGroup1: [],
+      appendLevel: 1, //新增元素的当前章节
       statementDialogVisible: false,
       currentRow: {
         insert_code: {
@@ -1123,6 +945,10 @@ export default {
       insertSibling: false, // true:插入到同级 false:插入到下一级
     };
   },
+  components: {
+    orderDialog,
+    additional,
+  },
   props: {
     outlineData: {
       type: Array,
@@ -1139,9 +965,7 @@ export default {
       },
     },
   },
-  components: {
-    orderDialog,
-  },
+
   created() {
     this.generateIndexes(this.outline);
 
@@ -1170,7 +994,11 @@ export default {
         },
       };
       console.log("this.ddddddddd", data);
-
+      if (status == "aitype") {
+        data.aitype = true;
+      } else {
+        data.aitype = false;
+      }
       editLine(data).then((res) => {
         console.log("res", res);
         this.$message({
@@ -1299,10 +1127,16 @@ export default {
       this.numberValidateForm = { ...numberValidateForm };
     },
     appendShowSibling(node, data) {
-      console.log("1030---node和data:", node, data);
-      this.editData = data;
-      this.editParentData = node.parent.data;
-      console.log("1039---node.parent:", this.editParentData);
+      console.log("1030---node和data:", node, data, data.index);
+
+      this.appendLevel = data.level;
+      if (data.level == 1) {
+        this.editData = data;
+      } else {
+        this.editData = data;
+        this.editParentData = node.parent.data;
+      }
+
       this.editStatus = true;
       this.$set(this.numberValidateForm, "insertPosition", "after");
       this.insertSibling = true;
@@ -1315,10 +1149,10 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // alert('submit!');
-          if (this.insertSibling) {
-            this.appendSibling();
+          if (this.appendLevel == 1) {
+            this.appendOneLevel();
           } else {
-            this.appendSections();
+            this.appendSibling();
           }
         } else {
           console.log("error submit!!");
@@ -1326,45 +1160,42 @@ export default {
         }
       });
     },
-    appendSections(node, data) {
-      data = this.editData;
-      // var pid = data.parentApiGroupId + ':' + data.id
-      var timestamp = new Date().getTime();
-      const newChild = {
-        id: timestamp,
-        isEdit: 0,
-        apiGroupName: "T" + timestamp,
+    appendOneLevel() {
+      let oneLevelData = {
+        chapter_num: "",
         title: this.numberValidateForm.appendValue,
-        summary: this.numberValidateForm.appendContent
-          ? this.numberValidateForm.appendContent
-          : "章节内容",
-        insert_code: {
-          status: false,
-          content: "",
-        },
-        insert_mermaid: {
-          status: false,
-          content: "",
-        },
-        insert_latex_formula: {
-          status: false,
-          content: "",
-        },
-        insert_table: {
-          status: false,
-          content: "",
-        },
-        insert_plot: {
-          status: false,
-          content: "",
-        },
+        sections: [
+          {
+            title: "请修改标题",
+            summary: "请修改章节内容",
+            insert_code: {
+              status: false,
+              content: "",
+            },
+            insert_mermaid: {
+              status: false,
+              content: "",
+            },
+            insert_latex_formula: {
+              status: false,
+              content: "",
+            },
+            insert_table: {
+              status: false,
+              content: "",
+            },
+            insert_plot: {
+              status: false,
+              content: "",
+            },
+          },
+        ],
       };
-
-      data.sections.push(newChild);
+      let appendIndex = this.editData.index;
+      // this.$set(this.outline,)
+      this.outline.splice(appendIndex, 0, oneLevelData);
       this.updateApiGroup(this.outline);
-      // this.$refs.numberValidateForm.resetFields();
-      this.resetNumberForm();
-
+      this.$refs.numberValidateForm.resetFields();
       this.editStatus = false;
     },
     appendSibling(parentNodeData, data) {
@@ -1603,16 +1434,6 @@ export default {
     },
     resetForm() {
       this.appendValue = "";
-    },
-    reduceAIGC() {
-      if (this.checkboxGroup1.indexOf("7") != -1) {
-        console.log("572---", this.checkboxGroup1);
-        let i = this.checkboxGroup1.indexOf("7");
-        this.checkboxGroup1.splice(i, 1);
-      } else {
-        console.log("576---", this.checkboxGroup1);
-        this.checkboxGroup1.push("7");
-      }
     },
   },
 };
