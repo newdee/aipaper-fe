@@ -155,7 +155,7 @@ export default {
         title: "",
         threeCon: false,
         language: "中文",
-        type: "",
+        type: "本科",
         field: ["哲学", "哲学类"],
         key: "",
       },
@@ -209,10 +209,10 @@ export default {
         localStorage.removeItem("userInput");
       });
     } else {
-      let _this = this;
-      setTimeout(() => {
-        _this.requestForm.type = _this.homeData.category_list[0].name;
-      }, 1000);
+      // let _this = this;
+      // setTimeout(() => {
+      //   _this.requestForm.type = _this.homeData.category_list[0].name;
+      // }, 1000);
     }
   },
   created() {
