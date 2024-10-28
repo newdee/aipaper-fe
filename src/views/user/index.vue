@@ -1,5 +1,8 @@
 <template>
   <div class="dashboard-editor-container">
+    <el-button size="mini" type="primary" plain @click="showDialog"
+      >设置域名</el-button
+    >
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
 
     <el-row style="background: #fff; padding: 16px 16px 0; margin-bottom: 32px">
@@ -8,11 +11,11 @@
 
     <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
-        <div class="chart-wrapper">
+        <!-- <div class="chart-wrapper">
           <raddar-chart />
-        </div>
+        </div> -->
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
+      <!-- <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
           <pie-chart />
         </div>
@@ -21,10 +24,10 @@
         <div class="chart-wrapper">
           <bar-chart />
         </div>
-      </el-col>
+      </el-col> -->
     </el-row>
 
-    <el-row :gutter="8">
+    <!-- <el-row :gutter="8">
       <el-col
         :xs="{ span: 24 }"
         :sm="{ span: 24 }"
@@ -55,7 +58,36 @@
       >
         <box-card />
       </el-col>
-    </el-row>
+    </el-row> -->
+
+    <el-dialog
+      title="设置专属域名"
+      :visible.sync="dialogVisible"
+      width="400px"
+      :close-on-click-modal="false"
+      :before-close="handleClose"
+    >
+      <el-form
+        :model="subFrom"
+        ref="subFrom"
+        :rules="rules"
+        label-width="80px"
+        class="demo-ruleForm"
+      >
+        <el-form-item label="域名前缀" prop="subDomain">
+          <el-input
+            v-model.number="subFrom.subDomain"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitForm('subFrom')"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -68,6 +100,7 @@ import BarChart from "./components/BarChart";
 import TransactionTable from "./components/TransactionTable";
 import TodoList from "./components/TodoList";
 import BoxCard from "./components/BoxCard";
+import { userProxy } from "@/api/user";
 
 const lineChartData = {
   newVisitis: {
@@ -100,14 +133,65 @@ export default {
     TodoList,
     BoxCard,
   },
+
   data() {
+    var checkAge = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("域名前缀不能为空"));
+      }
+      var regex = /^[a-z]+$/;
+      setTimeout(() => {
+        console.log("regex.test(value)", regex.test(value), value, "");
+        if (!regex.test(value)) {
+          callback(new Error("域名前缀仅支持小写字母"));
+        } else {
+          callback();
+        }
+      }, 500);
+    };
     return {
       lineChartData: lineChartData.newVisitis,
+      dialogVisible: true,
+      subFrom: {
+        subDomain: "",
+      },
+      rules: {
+        subDomain: [{ validator: checkAge, trigger: "blur" }],
+      },
     };
   },
   methods: {
+    showDialog() {
+      this.dialogVisible = true;
+    },
+    handleClose(done) {
+      this.$confirm("您未设置二级域名,无法统计推广相关信息, 确认关闭？")
+        .then((_) => {
+          done();
+        })
+        .catch((_) => {});
+    },
     handleSetLineChartData(type) {
       this.lineChartData = lineChartData[type];
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          let data = {
+            sub_domain: this.subFrom.subDomain,
+          };
+          userProxy(data).then((res) => {
+            this.$message({
+              type: "success",
+              message: "恭喜您设置域名成功,祝您工作一切顺利!",
+            });
+            this.dialogVisible = false;
+          });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
     },
   },
 };
@@ -131,4 +215,22 @@ export default {
     padding: 8px;
   }
 }
+
+// .allDialog {
+//   position: absolute;
+//   width: 100%;
+//   height: 100%;
+//   background: rgba(0, 0, 0, 0.3);
+//   top: 0;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+//   z-index: 99;
+//   display: flex;
+//   align-items: flex-start;
+//   justify-content: center;
+// }
+// .boxCenter {
+//   margin-top: 200px;
+// }
 </style>

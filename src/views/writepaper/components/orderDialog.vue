@@ -47,7 +47,6 @@
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 import eventBus from "@/utils/eventBus";
-import polling from "@/utils/get-order-detail.js";
 import { getOrder, orderDetailById } from "@/api/user";
 
 export default {

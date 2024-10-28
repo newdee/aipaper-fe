@@ -27,8 +27,12 @@
             <div class="orderText rowBetween handleRow">
               <div class="left">大纲状态：{{ orderObj.status }}</div>
               <div class="right" @click="jumpStep2(orderObj)">
-                <i class="el-icon-view"></i>
-                <span class="handle">查看大纲</span>
+                <el-button
+                  icon="el-icon-view"
+                  :disabled="orderObj.status != '生成成功'"
+                  type="text"
+                  >查看大纲</el-button
+                >
               </div>
             </div>
           </div>

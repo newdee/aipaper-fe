@@ -41,6 +41,13 @@ export function editLine(data) {
     data,
   });
 }
+export function userProxy(data) {
+  return request({
+    url: "/api/ai-paper/user/proxy",
+    method: "post",
+    data,
+  });
+}
 export function outlineCreate(data) {
   return request({
     url: "/api/ai-paper/paper/outline/create",

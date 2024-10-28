@@ -162,10 +162,28 @@ export default {
       rightPhoneNum: true,
       codeRegExrStatus: true,
       sms_code: "",
+      subDomain: "",
     };
   },
   components: { inputCode },
+  mounted() {
+    this.getSubdomain();
+  },
   methods: {
+    getSubdomain() {
+      const hostname = window.location.hostname;
+
+      if (hostname === "mixpaper.cn") {
+        return "www";
+      }
+
+      let subdomain = hostname.replace(".mixpaper.cn", "");
+      console.log("subdomain", subdomain);
+      if (subdomain == "localhost") {
+        subdomain = "www";
+      }
+      this.subDomain = subdomain;
+    },
     // 重新获取验证码
     repeatCode() {
       // 60秒倒计时
@@ -277,6 +295,7 @@ export default {
           let data = {
             phone: this.phoneNum,
             sms_code: this.sms_code,
+            subDomain: this.subDomain,
           };
 
           console.log("189--有输入内容", data);

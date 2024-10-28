@@ -36,7 +36,15 @@
                 <i class="el-icon-tickets"></i>
                 {{ $t("navbar.myOutline") }}
               </div>
-              <div class="menuItem" @click="$jumpUrl('/user/promotion')">
+              <!-- v-if="userInfo.role == 'LEVEL_PROXY'" -->
+              <div
+                v-if="
+                  userInfo.role == 'LEVEL_PROXY' ||
+                  userInfo.phone == '17634636466'
+                "
+                class="menuItem"
+                @click="$jumpUrl('/user/promotion')"
+              >
                 <i class="el-icon-tickets"></i>
                 {{ $t("navbar.myPromotion") }}
               </div>
