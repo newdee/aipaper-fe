@@ -29,7 +29,7 @@
         </div>
       </div> -->
       <div class="inputDesc g_poin" @click="$jumpUrl('/main/writepaper')">
-        <p>全网首家免费在线编辑的AI写作平台</p>
+        <p>让天下没有难做的学术</p>
         <div>
           <p>
             开始智能写作
@@ -101,5 +101,6 @@ export default {
   background: url("../../../assets/images/newspaper.png") no-repeat 0 0;
   background-size: cover;
 }
+
 @import "./index.scss";
 </style>

@@ -9,12 +9,7 @@
       <div class="info">
         <div class="info_left">
           <!-- <span class="userNameIcon">{{ user.name.slice(0,1) }}</span> -->
-          <img
-            class="userNameIcon"
-            v-if="userInfo.photo"
-            :src="userInfo.photo"
-            alt=""
-          />
+          <img class="userNameIcon" v-if="userInfo.photo" :src="userInfo.photo" alt="" />
           <img class="userNameIcon" v-else :src="avatar" alt="" />
         </div>
         <div class="info_right"></div>
@@ -99,15 +94,18 @@ export default {
 * p {
   margin: 0px;
 }
+
 .wrapper .topBar {
   line-height: 3em;
   padding: 0 2em;
   border-bottom: 1px solid #0000001f;
   user-select: none;
 }
+
 .wrapper .topBar i {
   margin-right: 20px;
 }
+
 .userInfoBox {
   min-width: 400px;
   max-width: 600px;
@@ -115,6 +113,7 @@ export default {
   // background: rgb(136, 134, 134);
   padding: 20px 0;
 }
+
 .info {
   display: flex;
   justify-content: space-between;
@@ -122,13 +121,16 @@ export default {
   border-bottom: 1px solid #0000001f;
   padding: 10px;
 }
+
 .info:first-child {
   border-bottom: 0px;
 }
+
 .info:last-child {
   border-bottom: 0px;
   padding: 20px 0;
 }
+
 .info_left .userNameIcon {
   display: block;
   width: 50px;
@@ -140,11 +142,13 @@ export default {
   background: pink;
   color: #fff;
 }
+
 .info_left .infoLabel {
   line-height: 2em;
   font-size: 16px;
   color: #000;
 }
+
 .info_left .InfoValue {
   line-height: 2em;
   font-size: 14px;
