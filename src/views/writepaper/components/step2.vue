@@ -9,23 +9,19 @@
     </div>
     <!-- 大纲 -->
     <!-- {{ outlineData }} -->
-    <div class="outlineMain">
+    <div
+      v-loading="loading"
+      element-loading-text="AI帮写中,请稍等...."
+      class="outlineMain"
+    >
       <p class="tips">拖拽章节,可实现章节排序</p>
 
       <div class="tipOutline">
         <el-tooltip class="item" effect="dark" content="AI帮写" placement="top">
-          <!-- <el-button
-            size="mini"
-            type="success"
-            @click="addPageOne"
-            icon="el-icon-circle-plus-outline"
-            circle
-          >
-          </el-button> -->
           <el-button
             type="primary"
             size="mini"
-            @click="saveOutline('aitype')"
+            @click="saveOutlineTwo()"
             icon="el-icon-circle-plus-outline"
           >
             AI帮写
@@ -463,11 +459,11 @@ import { getToken } from "@/utils/auth"; //
 import { mapGetters } from "vuex";
 // 方法
 import { getOrder, editLine } from "@/api/user";
-import polling from "@/utils/get-order-detail.js";
 import orderDialog from "./orderDialog.vue";
 import additional from "./step2/additional.vue";
 import eventBus from "@/utils/eventBus";
 import { outlineStatus } from "@/api/user";
+import polling from "@/utils/get-order-detail.js";
 
 export default {
   name: "step2",
@@ -476,6 +472,7 @@ export default {
       title: "艺术批评的时间作用及发展历程",
       descri: "1201 艺术学理论类",
       newlabel: "",
+      loading: false,
       checked: false,
       payStatus: false,
       defaultProps: {
@@ -943,6 +940,7 @@ export default {
       maxLevel: 2,
       out_trade_no: "",
       insertSibling: false, // true:插入到同级 false:插入到下一级
+      isPolling: false, // 是否正在进行轮询
     };
   },
   components: {
@@ -981,7 +979,25 @@ export default {
     reloadOutline() {
       eventBus.emit("reloadOutline", 3);
     },
-
+    // 先保存再调用AI更新
+    saveOutlineTwo() {
+      this.loading = true;
+      let data = {
+        title: this.requestForm.title,
+        key1: this.requestForm.key,
+        outline: {
+          outline: this.outline,
+        },
+      };
+      data.aitype = false;
+      editLine(data)
+        .then((res) => {
+          this.saveOutline("aitype");
+        })
+        .catch((err) => {
+          this.loading = false;
+        });
+    },
     saveOutline(status) {
       console.log("this.", this.requestForm);
       console.log("this.", JSON.stringify(this.outline));
@@ -1005,10 +1021,35 @@ export default {
           type: "success",
           message: "保存大纲成功!",
         });
+        // 进入轮询方法,
+        if (status == "aitype") {
+          let _this = this;
+          setTimeout(() => {
+            _this.getList();
+          }, 5000);
+        } else {
+          this.reloadSave(status);
+        }
         // 刷新大纲
-        this.reloadSave(status);
       });
     },
+    getList() {
+      console.log("daaaaaaaaaaaaaaaaaaaddd");
+      polling({ key: this.requestForm.key })
+        .then((res) => {
+          console.log("polling--ddddd", res);
+          this.loading = false;
+        })
+        .catch((error) => {
+          this.loading = false;
+          console.log(error, "eeeeeerrrror");
+          this.$message({
+            type: "error",
+            message: "AI帮写已超时,请稍后再试!",
+          });
+        });
+    },
+
     reloadSave(status) {
       let data = {
         key: this.requestForm.key,
@@ -1016,9 +1057,10 @@ export default {
       outlineStatus(data).then((res) => {
         this.outline = res.result.outline.outline;
         this.generateIndexes(this.outline);
+
         // 保存大纲输入信息
-        // 填充大纲列表数据
         if (status == "reduce") {
+          // 生成全文
           this.generateForm();
         }
       });

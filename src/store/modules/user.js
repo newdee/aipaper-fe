@@ -35,11 +35,13 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    const { phone, sms_code } = userInfo;
+    const { phone, sms_code, subDomain } = userInfo;
     return new Promise((resolve, reject) => {
+      //
       login({
         phone: phone.trim(),
         sms_code: sms_code,
+        subDomain: subDomain,
       })
         .then((response) => {
           const result = response.result;

@@ -8,11 +8,7 @@
           </div>
           <div class="btn" @click="$devf">升级专业版</div>
           <template>
-            <div
-              v-if="!hasLogin"
-              @click="pushLogin"
-              class="login_box hidden-xs-only"
-            >
+            <div v-if="!hasLogin" @click="pushLogin" class="login_box hidden-xs-only">
               <div class="img">登录</div>
             </div>
             <div v-else class="login_box hidden-xs-only">
@@ -29,61 +25,9 @@
       </el-col>
     </el-row>
 
-    <!-- 菜单栏 -->
-    <el-drawer
-      size="40%"
-      :visible.sync="drawer"
-      :direction="direction"
-      :before-close="handleClose"
-      :show-close="false"
-      append-to-body
-    >
-      <template slot="title">
-        <div>我的菜单</div>
-      </template>
-      <div class="flex flex-star">
-        <div
-          class="text-main items-center siderbar-item"
-          @click="jumpDetail('/paper/reduceRepetiton')"
-        >
-          {{ $t("route.reduceRepetition") }}
-        </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="showOrderList"
-        >
-          我的订单
-        </div>
-        <div
-          class="text-main items-center siderbar-item"
-          @click="jumpDetail('/paper/preview')"
-        >
-          范文样例
-        </div>
-        <div
-          v-if="!hasLogin"
-          class="text-main items-center siderbar-item"
-          @click="pushLogin"
-        >
-          登录
-        </div>
-        <div
-          v-else
-          class="text-main items-center siderbar-item"
-          @click="jumpDetail('/user/userInfo')"
-        >
-          我的个人主页
-        </div>
-      </div>
-    </el-drawer>
     <!-- 用户订单 -->
-    <el-drawer
-      :visible.sync="ordersDrawer"
-      :direction="orderDirection"
-      :before-close="handleOrdersClose"
-      append-to-body
-      size="500px"
-    >
+    <el-drawer :visible.sync="ordersDrawer" :direction="orderDirection" :before-close="handleOrdersClose" append-to-body
+      size="500px">
       <template #title>
         <div>我的订单</div>
       </template>
@@ -282,7 +226,7 @@ export default {
   border-radius: 4px;
   height: 100%;
 
-  &:hover > div {
+  &:hover>div {
     cursor: pointer;
   }
 }
@@ -461,7 +405,7 @@ export default {
   height: 100%;
   align-items: center;
 
-  > div {
+  >div {
     margin: 0 10px;
   }
 

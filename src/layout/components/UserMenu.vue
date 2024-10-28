@@ -6,12 +6,7 @@
       </div>
     </div>
     <transition name="fade">
-      <div
-        class="userMenuContainer"
-        id="userMenuContainer"
-        v-if="isPopupVisible"
-        @click.stop="popupFn"
-      >
+      <div class="userMenuContainer" id="userMenuContainer" v-if="isPopupVisible" @click.stop="popupFn">
         <!-- 头像菜单 -->
         <div class="userMenu">
           <div class="menuHeader">
@@ -41,7 +36,15 @@
                 <i class="el-icon-tickets"></i>
                 {{ $t("navbar.myOutline") }}
               </div>
-              <div class="menuItem" @click="$jumpUrl('/user/promotion')">
+              <!-- v-if="userInfo.role == 'LEVEL_PROXY'" -->
+              <div
+                v-if="
+                  userInfo.role == 'LEVEL_PROXY' ||
+                  userInfo.phone == '17634636466'
+                "
+                class="menuItem"
+                @click="$jumpUrl('/user/promotion')"
+              >
                 <i class="el-icon-tickets"></i>
                 {{ $t("navbar.myPromotion") }}
               </div>
@@ -94,13 +97,8 @@
       </div>
     </transition>
     <!-- 用户订单 -->
-    <el-drawer
-      :visible.sync="ordersDrawer"
-      :direction="orderDirection"
-      append-to-body
-      :lock-scroll="false"
-      :size="isPhone ? '30%' : '30%'"
-    >
+    <el-drawer :visible.sync="ordersDrawer" :direction="orderDirection" append-to-body :lock-scroll="false"
+      :size="isPhone ? '30%' : '30%'">
       <template #title>
         <div v-if="orderTabs == 1" class="titleDrawer">我的订单</div>
         <div v-else class="titleDrawer">我的大纲</div>
