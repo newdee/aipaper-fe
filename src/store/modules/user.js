@@ -41,7 +41,7 @@ const actions = {
       login({
         phone: phone.trim(),
         sms_code: sms_code,
-        subDomain: subDomain,
+        sub_domain: subDomain,
       })
         .then((response) => {
           const result = response.result;
