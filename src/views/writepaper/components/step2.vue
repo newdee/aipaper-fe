@@ -221,7 +221,7 @@
       </el-checkbox>
     </div>
     <div class="warningP generateSpan">
-      <span class="g_poin" @click="saveOutline('reduce')">生成全文</span>
+      <span class="g_poin" @click="showSlider">生成全文</span>
       <!-- <span class="g_poin" @click="textF">生成全文</span> -->
     </div>
 
@@ -450,6 +450,34 @@
       :requestKey="requestKey"
       :payStatus="payStatus"
     ></order-dialog>
+    <el-dialog
+      title="论文字数"
+      :visible.sync="sliderStatus"
+      :show-close="false"
+      :close-on-click-modal="false"
+      width="60%"
+    >
+      <div class="sliderBox">
+        <p class="sliderTitle">请选择您的论文字数</p>
+        <el-slider
+          v-model="paper_words"
+          :min="1000"
+          :max="25000"
+          :marks="marks"
+          :step="1000"
+        >
+        </el-slider>
+        <p class="sliderText">
+          温馨提示: 论文不会严格按照您选择的字数生成, 可能会有少量偏差!
+        </p>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="sliderStatus = false">取 消</el-button>
+        <el-button type="primary" @click="saveOutline('reduce')"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -474,10 +502,23 @@ export default {
       newlabel: "",
       loading: false,
       checked: false,
+      paper_words: 800,
       payStatus: false,
       defaultProps: {
         children: "sections",
         label: "title",
+      },
+      marks: {
+        5000: "5000字",
+        8000: "8000字",
+        10000: " 10000字",
+        15000: "15000字",
+        20000: {
+          style: {
+            color: "#1989FA",
+          },
+          label: this.$createElement("strong", "20000字"),
+        },
       },
       numberValidateForm: {
         appendValue: "",
@@ -941,6 +982,7 @@ export default {
       out_trade_no: "",
       insertSibling: false, // true:插入到同级 false:插入到下一级
       isPolling: false, // 是否正在进行轮询
+      sliderStatus: false,
     };
   },
   components: {
@@ -975,6 +1017,11 @@ export default {
     ...mapGetters(["requestForm"]),
   },
   methods: {
+    showSlider() {
+      this.sliderStatus = true;
+      this.paper_words = 1000;
+      // 生成正文
+    },
     // 重新生成大纲
     reloadOutline() {
       eventBus.emit("reloadOutline", 3);
@@ -1001,7 +1048,8 @@ export default {
     saveOutline(status) {
       console.log("this.", this.requestForm);
       console.log("this.", JSON.stringify(this.outline));
-
+      //关不字数选择弹窗
+      this.sliderStatus = false;
       let data = {
         title: this.requestForm.title,
         key1: this.requestForm.key,
@@ -1352,6 +1400,7 @@ export default {
             payment_method: "alipay",
             total_amount: 149.85,
             key: this.requestForm.key,
+            paper_words: this.paper_words,
             // key: "eb3a2422-301c-47ba-be1f-7c334e15c655",
             items: [
               {
