@@ -1086,6 +1086,12 @@ export default {
       polling({ key: this.requestForm.key })
         .then((res) => {
           console.log("polling--ddddd", res);
+          if (res == "生成失败") {
+            this.$message({
+              type: "error",
+              message: "生成失败,请稍后再试!",
+            });
+          }
           this.loading = false;
         })
         .catch((error) => {
