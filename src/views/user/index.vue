@@ -1,6 +1,11 @@
 <template>
   <div class="dashboard-editor-container">
-    <el-button size="mini" type="primary" plain @click="showDialog"
+    <el-button
+      size="mini"
+      type="primary"
+      :disabled="!!userInfo.sub_domain"
+      plain
+      @click="showDialog"
       >设置域名</el-button
     >
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
@@ -101,6 +106,7 @@ import TransactionTable from "./components/TransactionTable";
 import TodoList from "./components/TodoList";
 import BoxCard from "./components/BoxCard";
 import { userProxy } from "@/api/user";
+import { mapGetters } from "vuex";
 
 const lineChartData = {
   newVisitis: {
@@ -133,7 +139,19 @@ export default {
     TodoList,
     BoxCard,
   },
+  computed: {
+    ...mapGetters(["userInfo"]),
+  },
 
+  mounted() {
+    console.log("user", this.userInfo);
+    console.log("user", !this.userInfo.sub_domain);
+    if (!this.userInfo.sub_domain) {
+      this.dialogVisible = true;
+    } else {
+      this.disabled = false;
+    }
+  },
   data() {
     var checkAge = (rule, value, callback) => {
       if (!value) {
@@ -185,6 +203,8 @@ export default {
               type: "success",
               message: "恭喜您设置域名成功,祝您工作一切顺利!",
             });
+
+            this.$store.dispatch("user/getInfo");
             this.dialogVisible = false;
           });
         } else {
