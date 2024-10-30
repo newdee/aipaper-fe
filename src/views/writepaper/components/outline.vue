@@ -24,18 +24,33 @@
     </div>
     <!-- 用户输入页面 -->
     <div :class="['uesrInputBox', index == 2 ? 'tabMainActive' : '']">
-      <div class="selectLang formItem">
-        <p class="formItemLabel">生成语言</p>
-        <div class="formItemCon">
-          <el-select v-model="requestForm.language" placeholder="请选择">
-            <el-option
-              v-for="item in homeData.language_list"
-              :key="item.value"
-              :label="item.language"
-              :value="item.value"
+      <div class="firstItem">
+        <div class="selectLang formItem">
+          <p class="formItemLabel">生成语言</p>
+          <div class="formItemCon">
+            <el-select v-model="requestForm.language" placeholder="请选择">
+              <el-option
+                v-for="item in homeData.language_list"
+                :key="item.value"
+                :label="item.language"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </div>
+        </div>
+        <div class="selectLang formItem firstItem">
+          <p class="formItemLabel">选择论文字数</p>
+          <div class="formItemCon">
+            <el-slider
+              v-model="requestForm.word_count"
+              :min="3000"
+              :max="25000"
+              :marks="marks"
+              :step="1000"
             >
-            </el-option>
-          </el-select>
+            </el-slider>
+          </div>
         </div>
       </div>
       <!-- 论文类型 -->
@@ -158,6 +173,7 @@ export default {
         type: "本科",
         field: ["哲学", "哲学类"],
         key: "",
+        word_count: 5000,
       },
       index: 1,
       carProp: {
@@ -189,6 +205,20 @@ export default {
         },
       ],
       requestKey: "是是是",
+      word_count: 3000,
+      marks: {
+        3000: "3千字",
+        5000: "5千字",
+        8000: "8千字",
+        10000: "1万字",
+        15000: "15000字",
+        20000: {
+          style: {
+            color: "#1989FA",
+          },
+          label: this.$createElement("strong", "两万字"),
+        },
+      },
     };
   },
   components: {
@@ -267,6 +297,7 @@ export default {
           language: this.requestForm.language,
           field: this.requestForm.field[1],
           type: this.requestForm.type,
+          word_count: this.requestForm.word_count,
         };
         outlineCreate(data).then((res) => {
           this.$store.dispatch("app/setProStatus", true);
@@ -556,5 +587,29 @@ export default {
       }
     }
   }
+}
+.firstItem {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  .formItem {
+    margin-top: 0px;
+  }
+  .formItemCon {
+    width: 100% !important;
+    & > div {
+      width: 100%;
+    }
+  }
+  .firstItem {
+    flex-grow: 1;
+    padding-right: 40px;
+  }
+}
+::v-deep .firstItem .el-slider__bar {
+  background-color: #3355ff;
+}
+::v-deep .firstItem .el-slider__button {
+  border-color: #3355ff;
 }
 </style>

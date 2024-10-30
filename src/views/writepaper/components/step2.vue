@@ -221,7 +221,8 @@
       </el-checkbox>
     </div>
     <div class="warningP generateSpan">
-      <span class="g_poin" @click="showSlider">生成全文</span>
+      <!-- <span class="g_poin" @click="showSlider">生成全文</span> -->
+      <span class="g_poin" @click="saveOutline('reduce')">生成全文</span>
       <!-- <span class="g_poin" @click="textF">生成全文</span> -->
     </div>
 
@@ -1406,7 +1407,7 @@ export default {
             payment_method: "alipay",
             total_amount: 149.85,
             key: this.requestForm.key,
-            paper_words: this.paper_words,
+            // paper_words: this.paper_words,
             // key: "eb3a2422-301c-47ba-be1f-7c334e15c655",
             items: [
               {
