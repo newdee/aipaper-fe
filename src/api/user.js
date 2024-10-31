@@ -69,6 +69,12 @@ export function outlineStatus(params) {
     method: "get",
   });
 }
+export function paperPack(params) {
+  return request({
+    url: "/api/ai-paper/paper/pack/" + params.out_trade_no,
+    method: "get",
+  });
+}
 export function getOrderList(params) {
   return request({
     url: "/api/ai-paper/orders/order/list",

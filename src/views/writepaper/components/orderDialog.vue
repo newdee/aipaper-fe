@@ -10,6 +10,7 @@
       :visible.sync="ownPayStatus"
       width="40%"
       class="order-dialog"
+      :before-close="handleClose"
     >
       <div class="dialog-content">
         <p class="dialog-text">
@@ -118,6 +119,14 @@ export default {
     // 计算属性
   },
   methods: {
+    handleClose(done) {
+      this.$confirm("关闭弹窗,不影响论文生成进度")
+        .then((_) => {
+          done();
+          this.$store.dispatch("app/setActiveIndex", 0);
+        })
+        .catch((_) => {});
+    },
     jumpStep() {
       this.$store.dispatch("app/setActiveIndex", 0);
     },

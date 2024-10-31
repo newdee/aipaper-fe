@@ -491,7 +491,8 @@ export default {
 
   .userInputCon {
     margin-left: 16px;
-    max-width: 670px;
+    margin-right: 16px;
+    // max-width: 670px;
     flex: 1;
   }
 }

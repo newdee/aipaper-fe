@@ -6,7 +6,7 @@
       :disabled="!!userInfo.sub_domain"
       plain
       @click="showDialog"
-      >设置域名</el-button
+      >设置域名{{ userInfo.phone }}</el-button
     >
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
 
@@ -144,9 +144,10 @@ export default {
   },
 
   mounted() {
-    console.log("user", this.userInfo);
+    console.log("user111111", this.userInfo);
+    console.log("user", this.userInfo.sub_domain);
     console.log("user", !this.userInfo.sub_domain);
-    if (!this.userInfo.sub_domain) {
+    if (!!this.userInfo.sub_domain) {
       this.dialogVisible = true;
     } else {
       this.disabled = false;

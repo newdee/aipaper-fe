@@ -30,7 +30,20 @@
               </div>
               <div class="orderTitle" :key="'case3' + j">
                 生成状态:
-                {{ item.case.paper_case.stage | orderStatusFormatter }}
+                <el-link
+                  :type="
+                    item.case.paper_case.stage == 1
+                      ? 'primary'
+                      : item.case.paper_case.stage == 2
+                      ? 'success'
+                      : item.case.paper_case.stage === 3
+                      ? 'danger'
+                      : 'warning'
+                  "
+                  >{{
+                    item.case.paper_case.stage | orderStatusFormatter
+                  }}</el-link
+                >
               </div>
               <div class="orderTitle" :key="'title' + j">
                 {{ item.product.name }}
@@ -38,10 +51,22 @@
               <div class="orderText rowBetween handleRow" :key="'case' + j">
                 <div class="left">{{ item.product.name }}</div>
                 <div class="right">
-                  <span class="handle">下载</span>
-                  <svg class="icon svg-icon" aria-hidden="true">
-                    <use xlink:href="#icon-download"></use>
-                  </svg>
+                  <el-button
+                    icon="el-icon-view"
+                    type="text"
+                    :disabled="!item.case.file_urls.pdf"
+                    @click="openPaper(item)"
+                  >
+                    预览
+                  </el-button>
+                  <el-button
+                    icon="el-icon-download"
+                    :disabled="item.case.paper_case.stage != 2"
+                    type="text"
+                    @click="downLoadPaper(orderObj)"
+                  >
+                    下载
+                  </el-button>
                 </div>
               </div>
             </template>
@@ -98,7 +123,7 @@
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 import { getList } from "@/api/table";
-import { getOrderList, delOrder } from "@/api/user";
+import { getOrderList, delOrder, paperPack } from "@/api/user";
 import { throttle } from "lodash";
 
 export default {
@@ -114,6 +139,7 @@ export default {
       // 定义变量
       checkList: [],
       orderList: [],
+      downStatus: false,
       page: {
         page_num: 0,
         page_size: 5,
@@ -141,6 +167,21 @@ export default {
     // 计算属性
   },
   methods: {
+    downLoadPaper(item) {
+      console.log("item", item.order.out_trade_no);
+      this.downStatus = true;
+      paperPack({ out_trade_no: item.order.out_trade_no }).then((res) => {
+        console.log("ad", res.result.zip_url);
+        this.downStatus = false;
+
+        window.open(res.result.zip_url, "_target");
+      });
+      // window.open(item.case.file_urls.pdf, "_target");
+    },
+    openPaper(item) {
+      console.log("item", item);
+      window.open(item.case.file_urls.pdf, "_target");
+    },
     refresh() {
       this.handleCurrentChange(1);
     },
@@ -272,6 +313,7 @@ export default {
 .orderTitle {
   color: #202020;
   font-weight: 600;
+  margin-top: 6px;
 }
 
 .handleRow:not(:last-child) {

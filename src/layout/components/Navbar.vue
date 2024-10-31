@@ -3,7 +3,10 @@
     <div class="navMain">
       <div>
         <div v-if="showContent" class="navItems flex">
-          <div @click="$jumpUrl('/home/home')" class="grid-content nav_left flex items-center">
+          <div
+            @click="$jumpUrl('/home/home')"
+            class="grid-content nav_left flex items-center"
+          >
             <div class="logo-box">
               <div class="logoR">
                 <img :src="logoMax" alt="" title="logo" />
@@ -14,20 +17,31 @@
               </div>
             </div>
           </div>
-          <div :class="['navItem', 'home' == $route.name ? 'active' : '']" @click="toView(0, '/home/home')">
+          <div
+            :class="['navItem', 'home' == $route.name ? 'active' : '']"
+            @click="toView(0, '/home/home')"
+          >
             {{ $t("route.homePage") }}
           </div>
           <template v-for="(route, i) in routerList">
-            <div :key="'route_' + i" :class="[
-              'navItem',
-              route.meta.inDevelopment ? 'gray' : '',
-              route.name == $route.name ? 'active' : '',
-            ]" @click="$jumpUrl('/main/' + route.path)">
+            <div
+              :key="'route_' + i"
+              :class="[
+                'navItem',
+                route.meta.inDevelopment ? 'gray' : '',
+                route.name == $route.name ? 'active' : '',
+              ]"
+              @click="$jumpUrl('/main/' + route.path)"
+            >
               {{ generateTitle(route.meta.title) }}
             </div>
           </template>
         </div>
-        <div v-if="!showContent" class="logo-box phoneLogo" @click="$jumpUrl('/home/home')">
+        <div
+          v-if="!showContent"
+          class="logo-box phoneLogo"
+          @click="$jumpUrl('/home/home')"
+        >
           <div class="logoR phoneRLogo">
             <img :src="logoMax" alt="" title="logo" />
           </div>
@@ -45,7 +59,11 @@
           </div> -->
           <!-- <div class="btn" @click="$devf">升级专业版</div> -->
           <template>
-            <div v-if="!hasLogin" @click="pushLogin" class="login_box hidden-xs-only">
+            <div
+              v-if="!hasLogin"
+              @click="pushLogin"
+              class="login_box hidden-xs-only"
+            >
               <div class="img">登录</div>
             </div>
             <div v-else class="login_box hidden-xs-only">
@@ -64,84 +82,121 @@
     </div>
 
     <!-- 菜单栏 -->
-    <el-drawer size="40%" :visible.sync="drawerStatus" :direction="direction" :before-close="handleClose"
-      :show-close="false" append-to-body>
+    <el-drawer
+      size="40%"
+      :visible.sync="drawerStatus"
+      :direction="direction"
+      :before-close="handleClose"
+      :show-close="false"
+      append-to-body
+    >
       <template slot="title">
         <div>我的菜单</div>
       </template>
       <div class="flex flex-star">
         <template v-if="!hasLogin">
-          <div class="text-main items-center siderbar-item" @click="
-            drawerStatus = false;
-          pushLogin();
-          ">
+          <div
+            class="text-main items-center siderbar-item"
+            @click="
+              drawerStatus = false;
+              pushLogin();
+            "
+          >
             登录
           </div>
-          <div :class="[
-            'text-main items-center siderbar-item',
-            'home' == $route.name ? 'active' : '',
-          ]" @click="
-            drawerStatus = false;
-          $jumpUrl('/home/home');
-          ">
+          <div
+            :class="[
+              'text-main items-center siderbar-item',
+              'home' == $route.name ? 'active' : '',
+            ]"
+            @click="
+              drawerStatus = false;
+              $jumpUrl('/home/home');
+            "
+          >
             {{ $t("route.homePage") }}
           </div>
         </template>
         <template v-else>
-          <div :class="[
-            'text-main items-center siderbar-item',
-            'home' == $route.name ? 'active' : '',
-          ]" @click="
-            drawerStatus = false;
-          $jumpUrl('/home/home');
-          ">
+          <div
+            :class="[
+              'text-main items-center siderbar-item',
+              'home' == $route.name ? 'active' : '',
+            ]"
+            @click="
+              drawerStatus = false;
+              $jumpUrl('/home/home');
+            "
+          >
             {{ $t("route.homePage") }}
           </div>
-          <div :class="[
-            'text-main items-center siderbar-item',
-            'userInfo' == $route.name ? 'active' : '',
-          ]" @click="
-            drawerStatus = false;
-          $jumpUrl('/user/userInfo');
-          ">
+          <div
+            :class="[
+              'text-main items-center siderbar-item',
+              'userInfo' == $route.name ? 'active' : '',
+            ]"
+            @click="
+              drawerStatus = false;
+              $jumpUrl('/user/userInfo');
+            "
+          >
             我的个人主页
           </div>
         </template>
-        <div class="text-main items-center siderbar-item" @click="
-          drawerStatus = false;
-        showOrderList(1);
-        ">
+        <div
+          class="text-main items-center siderbar-item"
+          @click="
+            drawerStatus = false;
+            showOrderList(1);
+          "
+        >
           我的订单
         </div>
-        <div class="text-main items-center siderbar-item" @click="
-          drawerStatus = false;
-        showOrderList(2);
-        ">
+        <div
+          class="text-main items-center siderbar-item"
+          @click="
+            drawerStatus = false;
+            showOrderList(2);
+          "
+        >
           我的大纲
         </div>
         <template v-for="(route, j) in routerList">
-          <div :key="'route_in_right_nav_' + j" :class="[
-            'text-main items-center siderbar-item',
-            route.meta.inDevelopment ? 'gray' : '',
-            route.name == $route.name ? 'active' : '',
-          ]" @click="
-            drawerStatus = false;
-          $jumpUrl('/main/' + route.path);
-          ">
+          <div
+            :key="'route_in_right_nav_' + j"
+            :class="[
+              'text-main items-center siderbar-item',
+              route.meta.inDevelopment ? 'gray' : '',
+              route.name == $route.name ? 'active' : '',
+            ]"
+            @click="
+              drawerStatus = false;
+              $jumpUrl('/main/' + route.path);
+            "
+          >
             {{ generateTitle(route.meta.title) }}
           </div>
         </template>
-        <div v-if="hasLogin" class="text-main items-center siderbar-item" @click="
-          drawerStatus = false;
-        loginOut();
-        ">
+        <div
+          v-if="hasLogin"
+          class="text-main items-center siderbar-item"
+          @click="
+            drawerStatus = false;
+            loginOut();
+          "
+        >
           退出登录
         </div>
       </div>
     </el-drawer>
     <!-- 用户订单 -->
-    <el-drawer :visible.sync="ordersDrawer" :direction="orderDirection" :before-close="handleOrdersClose" append-to-body
-      size="80%">
+    <el-drawer
+      :visible.sync="ordersDrawer"
+      :direction="orderDirection"
+      :before-close="handleOrdersClose"
+      append-to-body
+      size="80%"
+    >
       <template #title>
         <div v-if="orderTabs == 1" class="titleDrawer">我的订单</div>
         <div v-else class="titleDrawer">我的大纲</div>
@@ -480,7 +535,7 @@ export default {
   border-radius: 4px;
   height: 100%;
 
-  &:hover>div {
+  &:hover > div {
     cursor: pointer;
   }
 }
@@ -623,7 +678,7 @@ export default {
 }
 
 .navItems {
-  &>div:hover {
+  & > div:hover {
     cursor: pointer;
   }
 
@@ -681,7 +736,7 @@ export default {
   height: 100%;
   align-items: center;
 
-  >div {
+  > div {
     margin: 0 10px;
   }
 
