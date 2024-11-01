@@ -13,5 +13,6 @@ const getters = {
   step3PdfUrl: (state) => state.app.step3PdfUrl,
   produceLineStatus: (state) => state.app.produceLineStatus,
   activeIndex: (state) => state.app.activeIndex,
+  pollingStatus: (state) => state.paper.pollingStatus,
 };
 export default getters;

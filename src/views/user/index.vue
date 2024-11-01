@@ -10,17 +10,43 @@
     >
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
 
-    <el-row style="background: #fff; padding: 16px 16px 0; margin-bottom: 32px">
-      <line-chart :chart-data="lineChartData" />
-    </el-row>
+    <div>
+      <el-card class="box-card">
+        <div slot="header" class="flexHeader">
+          <span>付费订单/总收益 (每月)</span>
+          <el-date-picker
+            v-model="value2"
+            type="monthrange"
+            align="right"
+            unlink-panels
+            range-separator="至"
+            start-placeholder="开始月份"
+            end-placeholder="结束月份"
+            :picker-options="pickerOptions"
+          >
+          </el-date-picker>
+        </div>
+        <div class="text item">
+          <line-chart :chart-data="lineChartData" />
+        </div>
+      </el-card>
+    </div>
 
+    <el-row class="secondLine" :gutter="32">
+      <el-col :xs="24" :sm="12" :lg="12">
+        <line-chart2 :chart-data="lineChartData" />
+      </el-col>
+      <el-col :xs="24" :sm="12" :lg="12">
+        <line-chart3 :chart-data="lineChartData" />
+      </el-col>
+    </el-row>
     <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
-        <!-- <div class="chart-wrapper">
+        <div class="chart-wrapper">
           <raddar-chart />
-        </div> -->
+        </div>
       </el-col>
-      <!-- <el-col :xs="24" :sm="24" :lg="8">
+      <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
           <pie-chart />
         </div>
@@ -29,7 +55,7 @@
         <div class="chart-wrapper">
           <bar-chart />
         </div>
-      </el-col> -->
+      </el-col>
     </el-row>
 
     <!-- <el-row :gutter="8">
@@ -99,6 +125,8 @@
 <script>
 import PanelGroup from "./components/PanelGroup";
 import LineChart from "./components/LineChart";
+import LineChart2 from "./components/LineChart2";
+import LineChart3 from "./components/LineChart3";
 import RaddarChart from "./components/RaddarChart";
 import PieChart from "./components/PieChart";
 import BarChart from "./components/BarChart";
@@ -107,6 +135,7 @@ import TodoList from "./components/TodoList";
 import BoxCard from "./components/BoxCard";
 import { userProxy } from "@/api/user";
 import { mapGetters } from "vuex";
+import { agentCount } from "@/api/user";
 
 const lineChartData = {
   newVisitis: {
@@ -132,6 +161,8 @@ export default {
   components: {
     PanelGroup,
     LineChart,
+    LineChart2,
+    LineChart3,
     RaddarChart,
     PieChart,
     BarChart,
@@ -143,25 +174,21 @@ export default {
     ...mapGetters(["userInfo"]),
   },
   watch: {
-    "userInfo.sub_domain": function (newPermission, oldPermission) {
-      console.log(
-        "Permission changed from",
-        oldPermission,
-        "to",
-        newPermission
-      );
-      // 在这里你可以执行需要的操作，比如更新界面或触发其他逻辑
-      console.log("user111111", this.userInfo);
-      console.log("user", this.userInfo.sub_domain);
-      console.log("user", !this.userInfo.sub_domain);
-      if (!newPermission) {
-        this.dialogVisible = true;
-      } else {
-        this.dialogVisible = false;
-      }
+    "userInfo.sub_domain": {
+      handler(newPermission, oldPermission) {
+        // 在这里你可以执行需要的操作，比如更新界面或触发其他逻辑
+        console.log("user111111", this.userInfo);
+        if (!newPermission) {
+          this.dialogVisible = true;
+        } else {
+          this.dialogVisible = false;
+        }
+      },
+      deep: true, // 深度监听
+      immediate: true, // 组件创建时立即触发监听器
     },
   },
-  mounted() {},
+
   data() {
     var checkAge = (rule, value, callback) => {
       if (!value) {
@@ -178,6 +205,35 @@ export default {
       }, 500);
     };
     return {
+      value1: "",
+      value2: "",
+      pickerOptions: {
+        shortcuts: [
+          {
+            text: "本月",
+            onClick(picker) {
+              picker.$emit("pick", [new Date(), new Date()]);
+            },
+          },
+          {
+            text: "今年至今",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date(new Date().getFullYear(), 0);
+              picker.$emit("pick", [start, end]);
+            },
+          },
+          {
+            text: "最近六个月",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setMonth(start.getMonth() - 6);
+              picker.$emit("pick", [start, end]);
+            },
+          },
+        ],
+      },
       lineChartData: lineChartData.newVisitis,
       dialogVisible: true,
       subFrom: {
@@ -186,9 +242,35 @@ export default {
       rules: {
         subDomain: [{ validator: checkAge, trigger: "blur" }],
       },
+      chartFrom: {
+        agent_id: "",
+        count_type: "month", // month/ dayily
+        begin_month: "2024-01", // 2024-01
+        end_month: "2024-10", // 2024-01
+        begin_day: "", // 2024-01-31
+        end_day: "", // 2024-01
+        chart_type: "chart1", // chart1/2/3
+      },
     };
   },
+  mounted() {
+    // agentCount()
+    this.chartFrom.agent_id = this.userInfo.agent_id;
+    this.getLine1List();
+  },
   methods: {
+    getList(data) {
+      // chart1
+
+      agentCount(data).then((res) => {});
+    },
+    getLine1List() {
+      let data = {
+        ...this.chartFrom,
+      };
+      data.chart_type = "chart1";
+      this.getList(data);
+    },
     showDialog() {
       this.dialogVisible = true;
     },
@@ -245,7 +327,11 @@ export default {
     padding: 8px;
   }
 }
-
+.flexHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 // .allDialog {
 //   position: absolute;
 //   width: 100%;
@@ -263,4 +349,8 @@ export default {
 // .boxCenter {
 //   margin-top: 200px;
 // }
+.secondLine {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
 </style>

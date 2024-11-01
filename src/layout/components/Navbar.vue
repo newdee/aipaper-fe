@@ -189,23 +189,6 @@
         </div>
       </div>
     </el-drawer>
-    <!-- 用户订单 -->
-    <el-drawer
-      :visible.sync="ordersDrawer"
-      :direction="orderDirection"
-      :before-close="handleOrdersClose"
-      append-to-body
-      size="80%"
-    >
-      <template #title>
-        <div v-if="orderTabs == 1" class="titleDrawer">我的订单</div>
-        <div v-else class="titleDrawer">我的大纲</div>
-      </template>
-      <div class="drawBox">
-        <user-orders v-if="orderTabs == 1" :listId="listId"></user-orders>
-        <user-outlines v-if="orderTabs == 2" :listId="listId"></user-outlines>
-      </div>
-    </el-drawer>
   </div>
 </template>
 
@@ -217,6 +200,7 @@ import UserMenu from "./UserMenu.vue";
 import UserOrders from "./UserOrders.vue";
 import UserOutlines from "./UserOutlines.vue";
 import { generateTitle } from "@/utils/i18n";
+import eventBus from "@/utils/eventBus";
 
 import { getToken, setToken, removeToken } from "@/utils/auth"; // get token from cookie
 const _ = require("lodash");
@@ -256,6 +240,7 @@ export default {
   computed: {
     ...mapGetters(["sidebar", "userInfo", "name", "avatar"]),
   },
+
   mounted() {
     console.log("tokend", getToken());
     this.hasLogin = getToken();
@@ -272,11 +257,14 @@ export default {
       const hasToken = getToken();
       console.log("hasToken", hasToken);
       if (hasToken) {
-        this.orderTabs = status;
+        // 打开大纲/订单
+        eventBus.emit("showEmitList", status);
 
-        this.listId = new Date().getTime();
-        console.log("this.", this.listId);
-        this.ordersDrawer = true;
+        // this.orderTabs = status;
+
+        // this.listId = new Date().getTime();
+        // console.log("this.", this.listId);
+        // this.ordersDrawer = true;
       } else {
         this.$confirm("查看订单需要登录, 是否跳转到登录页?", "提示", {
           confirmButtonText: "确定",

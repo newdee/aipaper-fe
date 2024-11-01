@@ -63,6 +63,13 @@ export function getInfo(params) {
     params,
   });
 }
+export function agentCount(data) {
+  return request({
+    url: "/api/ai-paper/agent/count",
+    method: "post",
+    data,
+  });
+}
 export function outlineStatus(params) {
   return request({
     url: "/api/ai-paper/paper/outline/status/" + params.key,
@@ -93,7 +100,6 @@ export function delOrder(data) {
     url: "/api/ai-paper/orders/batch_delete",
     method: "post",
     data,
-
   });
 }
 // 查询单个订单状态

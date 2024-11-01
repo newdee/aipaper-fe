@@ -447,10 +447,10 @@
       </span>
     </el-dialog>
     <!--  -->
-    <order-dialog
+    <!-- <order-dialog
       :requestKey="requestKey"
       :payStatus="payStatus"
-    ></order-dialog>
+    ></order-dialog> -->
     <el-dialog
       title="论文字数"
       :visible.sync="sliderStatus"
@@ -488,7 +488,6 @@ import { getToken } from "@/utils/auth"; //
 import { mapGetters } from "vuex";
 // 方法
 import { getOrder, editLine } from "@/api/user";
-import orderDialog from "./orderDialog.vue";
 import additional from "./step2/additional.vue";
 import eventBus from "@/utils/eventBus";
 import { outlineStatus } from "@/api/user";
@@ -504,7 +503,6 @@ export default {
       loading: false,
       checked: false,
       paper_words: 800,
-      payStatus: false,
       defaultProps: {
         children: "sections",
         label: "title",
@@ -946,7 +944,6 @@ export default {
         },
       ],
       timestamp: null,
-      requestKey: "",
       paperPercentage: 0,
       imgExcelSetStatus: false,
 
@@ -987,7 +984,6 @@ export default {
     };
   },
   components: {
-    orderDialog,
     additional,
   },
   props: {
@@ -1399,21 +1395,24 @@ export default {
       if (!this.checked) {
         this.statementDialogVisible = true;
       } else {
-        this.payStatus = false;
+        eventBus.emit("showEmitPaperDialog", {
+          requestKey: "",
+          payStatus: false,
+        });
         const hasToken = getToken();
         if (hasToken) {
           let data = {
-            user_id: 1,
-            payment_method: "alipay",
-            total_amount: 149.85,
-            key: this.requestForm.key,
+            user_id: 1, // 固定传一
+            payment_method: "alipay", // 支付方式
+            total_amount: 149.85, // 总价
+            key: this.requestForm.key, // 大纲的key
             // paper_words: this.paper_words,
             // key: "eb3a2422-301c-47ba-be1f-7c334e15c655",
             items: [
               {
-                product_id: "1",
-                quantity: 1,
-                price: 149.85,
+                product_id: "1", //正文id
+                quantity: 1, // 数量
+                price: 149.85, //价格
               },
             ],
           };
@@ -1422,10 +1421,13 @@ export default {
             .then((res) => {
               console.log("res", res);
               console.log("res", res);
-              this.payStatus = true;
               let payUrl = res.result.pay_link;
               console.log("payUrl", payUrl);
-              this.requestKey = res.result.out_trade_no;
+              eventBus.emit("showEmitPaperDialog", {
+                requestKey: res.result.out_trade_no,
+                payStatus: true,
+              });
+
               // this.requestKey = "5e0c2e41-e865-4269-a02d-fb0b919cd822";
               // this.requestKey = "15b41aa3-ec35-45e9-ac6b-bfe3b7ba3d8d";
               if (payUrl) {
