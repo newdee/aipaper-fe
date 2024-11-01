@@ -33,11 +33,11 @@
                 <i class="el-icon-house"></i>
                 {{ $t("navbar.dashboard") }}
               </div>
-              <div class="menuItem" @click="showOrderList(1)">
+              <div class="menuItem" @click="showPcOrderList(1)">
                 <i class="el-icon-goods"></i>
                 {{ $t("navbar.orderManagement") }}
               </div>
-              <div class="menuItem" @click="showOrderList(2)">
+              <div class="menuItem" @click="showPcOrderList(2)">
                 <i class="el-icon-tickets"></i>
                 {{ $t("navbar.myOutline") }}
               </div>
@@ -129,6 +129,7 @@ import { mapGetters } from "vuex";
 import UserOrders from "./UserOrders.vue";
 import UserOutlines from "./UserOutlines.vue";
 import LangSelect from "@/components/LangSelect";
+import eventBus from "@/utils/eventBus";
 
 export default {
   name: "UserMenu",
@@ -151,12 +152,24 @@ export default {
   mounted() {
     // 页面初始化
   },
-
+  created() {
+    // step2点击重新生成大纲
+    eventBus.on("showEmitList", this.showPhoneOrderList); // 订阅事件
+    eventBus.on("orderDialogChange", this.closeDialog); // 订阅事件
+  },
+  beforeDestroy() {
+    eventBus.off("showEmitList", this.showPhoneOrderList); // 移除事件监听
+    eventBus.off("orderDialogChange", this.closeDialog); // 移除事件监听
+  },
   computed: {
     // 计算属性
     ...mapGetters(["avatar", "userInfo"]),
   },
   methods: {
+    closeDialog() {
+      this.ordersDrawer = false;
+      console.log("dddddddddddddddddd", this.ordersDrawer);
+    },
     loginOut() {
       removeToken();
       // this.$router.push("/");
@@ -188,6 +201,14 @@ export default {
     },
     jumpDetail(path) {
       this.$router.push(path);
+    },
+    showPhoneOrderList(status) {
+      this.isPhone = true;
+      this.showOrderList(status);
+    },
+    showPcOrderList(status) {
+      this.isPhone = false;
+      this.showOrderList(status);
     },
     showOrderList(status) {
       this.orderTabs = status;

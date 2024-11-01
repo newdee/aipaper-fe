@@ -8,7 +8,11 @@
           </div>
           <div class="btn" @click="$devf">升级专业版</div>
           <template>
-            <div v-if="!hasLogin" @click="pushLogin" class="login_box hidden-xs-only">
+            <div
+              v-if="!hasLogin"
+              @click="pushLogin"
+              class="login_box hidden-xs-only"
+            >
               <div class="img">登录</div>
             </div>
             <div v-else class="login_box hidden-xs-only">
@@ -26,15 +30,7 @@
     </el-row>
 
     <!-- 用户订单 -->
-    <el-drawer :visible.sync="ordersDrawer" :direction="orderDirection" :before-close="handleOrdersClose" append-to-body
-      size="500px">
-      <template #title>
-        <div>我的订单</div>
-      </template>
-      <div class="drawBox">
-        <!-- <user-orders :listId="listId"></user-orders> -->
-      </div>
-    </el-drawer>
+    <el-drawer> </el-drawer>
   </div>
 </template>
 
@@ -226,7 +222,7 @@ export default {
   border-radius: 4px;
   height: 100%;
 
-  &:hover>div {
+  &:hover > div {
     cursor: pointer;
   }
 }
@@ -405,7 +401,7 @@ export default {
   height: 100%;
   align-items: center;
 
-  >div {
+  > div {
     margin: 0 10px;
   }
 

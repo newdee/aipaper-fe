@@ -49,8 +49,16 @@
                 {{ item.product.name }}
               </div>
               <div class="orderText rowBetween handleRow" :key="'case' + j">
-                <div class="left">{{ item.product.name }}</div>
+                <div class="left"></div>
                 <div class="right">
+                  <el-button
+                    icon="el-icon-view"
+                    type="text"
+                    :disabled="item.case.paper_case.stage !== 1"
+                    @click="pushStep3(orderObj)"
+                  >
+                    查看论文进度
+                  </el-button>
                   <el-button
                     icon="el-icon-view"
                     type="text"
@@ -125,6 +133,7 @@
 import { getList } from "@/api/table";
 import { getOrderList, delOrder, paperPack } from "@/api/user";
 import { throttle } from "lodash";
+import eventBus from "@/utils/eventBus";
 
 export default {
   name: "UserOrders",
@@ -167,6 +176,23 @@ export default {
     // 计算属性
   },
   methods: {
+    pushStep3(row) {
+      console.log("statsrow", row);
+      // 跳转到写论文页面
+      this.$router.push({
+        path: "/main/writepaper",
+        // query: { key1: row.key1, field: row.field },
+      });
+      eventBus.emit("orderDialogChange", false);
+      // 关闭弹窗
+      this.$nextTick(() => {
+        eventBus.emit("showEmitPaperDialog", {
+          requestKey: row.order.out_trade_no,
+          payStatus: true,
+          paperPercent: 40,
+        });
+      });
+    },
     downLoadPaper(item) {
       console.log("item", item.order.out_trade_no);
       this.downStatus = true;
