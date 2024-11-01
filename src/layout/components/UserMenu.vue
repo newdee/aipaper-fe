@@ -44,8 +44,8 @@
               <!-- v-if="userInfo.role == 'LEVEL_PROXY'" -->
               <div
                 v-if="
-                  userInfo.role == 'LEVEL_PROXY' ||
-                  userInfo.phone == '17634636466'
+                  userInfo.permission == 'AGENT' ||
+                  userInfo.permission == 'SUPER_ADMIN'
                 "
                 class="menuItem"
                 @click="$jumpUrl('/user/promotion')"
