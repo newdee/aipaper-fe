@@ -11,33 +11,17 @@
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
 
     <div>
-      <el-card class="box-card">
-        <div slot="header" class="flexHeader">
-          <span>付费订单/总收益 (每月)</span>
-          <el-date-picker
-            v-model="value2"
-            type="monthrange"
-            align="right"
-            unlink-panels
-            range-separator="至"
-            start-placeholder="开始月份"
-            end-placeholder="结束月份"
-            :picker-options="pickerOptions"
-          >
-          </el-date-picker>
-        </div>
-        <div class="text item">
-          <line-chart :chart-data="lineChartData" />
-        </div>
-      </el-card>
+      <line-chart />
     </div>
 
     <el-row class="secondLine" :gutter="32">
       <el-col :xs="24" :sm="12" :lg="12">
-        <line-chart2 :chart-data="lineChartData" />
+        <!-- 图表2: 新增注册用户/新订单数/月付费转化率 (每日) -->
+        <line-chart2 />
       </el-col>
       <el-col :xs="24" :sm="12" :lg="12">
-        <line-chart3 :chart-data="lineChartData" />
+        <!-- 图表3: 生成大纲/生成正文 (每日) -->
+        <line-chart3 />
       </el-col>
     </el-row>
     <el-row :gutter="32">
@@ -137,24 +121,24 @@ import { userProxy } from "@/api/user";
 import { mapGetters } from "vuex";
 import { agentCount } from "@/api/user";
 
-const lineChartData = {
-  newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145],
-  },
-  messages: {
-    expectedData: [200, 192, 120, 144, 160, 130, 140],
-    actualData: [180, 160, 151, 106, 145, 150, 130],
-  },
-  purchases: {
-    expectedData: [80, 100, 121, 104, 105, 90, 100],
-    actualData: [120, 90, 100, 138, 142, 130, 130],
-  },
-  shoppings: {
-    expectedData: [130, 140, 141, 142, 145, 150, 160],
-    actualData: [120, 82, 91, 154, 162, 140, 130],
-  },
-};
+// const lineChartData = {
+//   newVisitis: {
+//     expectedData: [100, 120, 161, 134, 105, 160, 165],
+//     actualData: [120, 82, 91, 154, 162, 140, 145],
+//   },
+//   messages: {
+//     expectedData: [200, 192, 120, 144, 160, 130, 140],
+//     actualData: [180, 160, 151, 106, 145, 150, 130],
+//   },
+//   purchases: {
+//     expectedData: [80, 100, 121, 104, 105, 90, 100],
+//     actualData: [120, 90, 100, 138, 142, 130, 130],
+//   },
+//   shoppings: {
+//     expectedData: [130, 140, 141, 142, 145, 150, 160],
+//     actualData: [120, 82, 91, 154, 162, 140, 130],
+//   },
+// };
 
 export default {
   name: "DashboardAdmin",
@@ -206,35 +190,7 @@ export default {
     };
     return {
       value1: "",
-      value2: "",
-      pickerOptions: {
-        shortcuts: [
-          {
-            text: "本月",
-            onClick(picker) {
-              picker.$emit("pick", [new Date(), new Date()]);
-            },
-          },
-          {
-            text: "今年至今",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date(new Date().getFullYear(), 0);
-              picker.$emit("pick", [start, end]);
-            },
-          },
-          {
-            text: "最近六个月",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setMonth(start.getMonth() - 6);
-              picker.$emit("pick", [start, end]);
-            },
-          },
-        ],
-      },
-      lineChartData: lineChartData.newVisitis,
+      // lineChartData: lineChartData.newVisitis,
       dialogVisible: true,
       subFrom: {
         subDomain: "",
@@ -251,17 +207,16 @@ export default {
         end_day: "", // 2024-01
         chart_type: "chart1", // chart1/2/3
       },
+      chartData: {},
     };
   },
   mounted() {
     // agentCount()
     this.chartFrom.agent_id = this.userInfo.agent_id;
-    this.getLine1List();
+    this.getList(this.chartFrom);
   },
   methods: {
     getList(data) {
-      // chart1
-
       agentCount(data).then((res) => {});
     },
     getLine1List() {
@@ -327,11 +282,13 @@ export default {
     padding: 8px;
   }
 }
+
 .flexHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 // .allDialog {
 //   position: absolute;
 //   width: 100%;

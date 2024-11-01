@@ -5,6 +5,7 @@
         <span>生成大纲/生成正文 (每日)</span>
         <el-date-picker
           v-model="value2"
+          value-format="yyyy-MM"
           type="monthrange"
           align="right"
           unlink-panels
@@ -12,13 +13,14 @@
           start-placeholder="开始月份"
           end-placeholder="结束月份"
           :picker-options="pickerOptions"
+          @change="setParams"
         >
         </el-date-picker>
       </div>
       <div class="text item">
         <div
-          class="lineChart2"
-          ref="lineChart2"
+          class="lineChart3"
+          ref="lineChart3"
           style="height: 350px; width: 100%"
         />
       </div>
@@ -30,6 +32,8 @@
 import echarts from "echarts";
 require("echarts/theme/macarons"); // echarts theme
 import resize from "./mixins/resize";
+import { mapGetters } from "vuex";
+import { agentCount } from "@/api/user";
 
 export default {
   mixins: [resize],
@@ -50,28 +54,64 @@ export default {
       type: Boolean,
       default: true,
     },
-    chartData: {
-      type: Object,
-      required: true,
-    },
+  },
+  computed: {
+    ...mapGetters(["userInfo"]),
   },
   data() {
     return {
       chart: null,
+      value2: "",
+      chartFrom: {
+        agent_id: "",
+        count_type: "month", // month/ dayily
+        begin_month: "2024-01", // 2024-01
+        end_month: "2024-10", // 2024-01
+        begin_day: "", // 2024-01-31
+        end_day: "", // 2024-01
+        chart_type: "chart3", // chart1/2/3
+      },
+      chartData: {},
+      pickerOptions: {
+        shortcuts: [
+          {
+            text: "本月",
+            onClick(picker) {
+              picker.$emit("pick", [new Date(), new Date()]);
+            },
+          },
+          {
+            text: "今年至今",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date(new Date().getFullYear(), 0);
+              picker.$emit("pick", [start, end]);
+            },
+          },
+          {
+            text: "最近六个月",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setMonth(start.getMonth() - 6);
+              picker.$emit("pick", [start, end]);
+            },
+          },
+        ],
+      },
     };
   },
-  watch: {
-    chartData: {
-      deep: true,
-      handler(val) {
-        this.setOptions(val);
-      },
-    },
-  },
+  // watch: {
+  //   chartData: {
+  //     deep: true,
+  //     handler(val) {
+  //       this.setOptions(val);
+  //     },
+  //   },
+  // },
   mounted() {
-    this.$nextTick(() => {
-      this.initChart();
-    });
+    this.chartFrom.agent_id = this.userInfo.agent_id;
+    this.getList(this.chartFrom);
   },
   beforeDestroy() {
     if (!this.chart) {
@@ -82,13 +122,13 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(this.$refs.lineChart2, "lineChart2");
+      this.chart = echarts.init(this.$refs.lineChart3, "lineChart3");
       this.setOptions(this.chartData);
     },
-    setOptions({ expectedData, actualData } = {}) {
+    setOptions() {
       this.chart.setOption({
         xAxis: {
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          data: this.chartData.date,
           boundaryGap: false,
           axisTick: {
             show: false,
@@ -114,11 +154,11 @@ export default {
           },
         },
         legend: {
-          data: ["新增注册用户", "新增付费用户"],
+          data: ["生成大纲", "生成正文"],
         },
         series: [
           {
-            name: "新增注册用户",
+            name: "生成大纲",
             itemStyle: {
               normal: {
                 color: "#FF005A",
@@ -130,12 +170,12 @@ export default {
             },
             smooth: true,
             type: "line",
-            data: expectedData,
+            data: this.chartData.date_data.outline_nums,
             animationDuration: 2800,
             animationEasing: "cubicInOut",
           },
           {
-            name: "新增付费用户",
+            name: "生成正文",
             smooth: true,
             type: "line",
             itemStyle: {
@@ -150,12 +190,27 @@ export default {
                 },
               },
             },
-            data: actualData,
+            data: this.chartData.date_data.paper_nums,
             animationDuration: 2800,
             animationEasing: "quadraticOut",
           },
         ],
       });
+    },
+    getList(data) {
+      agentCount(data).then((res) => {
+        console.log("999---", res);
+        let data = res.result;
+        if (Object.keys(data).length > 0) {
+          this.chartData = data;
+          this.initChart();
+        }
+      });
+    },
+    setParams(date) {
+      this.chartFrom.begin_month = date[0];
+      this.chartFrom.end_month = date[1];
+      this.getList(this.chartFrom);
     },
   },
 };
