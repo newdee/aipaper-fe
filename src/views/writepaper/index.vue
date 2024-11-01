@@ -51,6 +51,13 @@
         :class="[isScrollActive ? 'fixed' : '']"
       ></step3>
     </div>
+
+    <!-- 论文查询生辰弹窗 -->
+    <order-dialog
+      :requestKey="requestKey"
+      :payStatus="payStatus"
+      :paperPercent="paperPercent"
+    ></order-dialog>
   </div>
 </template>
 <script>
@@ -68,6 +75,7 @@ import { getHomeInfo } from "@/api/user";
 import eventBus from "@/utils/eventBus";
 import emitter from "@/utils/eventBus";
 import { outlineStatus } from "@/api/user";
+import orderDialog from "./components/orderDialog.vue";
 
 export default {
   name: "writepaper",
@@ -76,6 +84,9 @@ export default {
       // 定义变量
       isScrollActive: false,
       outlineData: [],
+      requestKey: "", //out_trade_no
+      payStatus: false,
+      paperPercent: 0,
     };
   },
   components: {
@@ -86,6 +97,7 @@ export default {
     step2,
     step1,
     step0,
+    orderDialog,
   },
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
@@ -102,15 +114,34 @@ export default {
     });
   },
   created() {
+    eventBus.on("showEmitPaperDialog", this.showPaperDialog); // 订阅事件
+
     eventBus.on("emitOulineClick", this.showIndex); // 订阅事件
     eventBus.on("successOutline", this.showOutLine); // 订阅事件
     eventBus.on("pdfSuccessClick", this.showIndex3); // 订阅事件
+  },
+  beforeDestroy() {
+    eventBus.off("showEmitPaperDialog", this.showPaperDialog); // 订阅事件
+
+    eventBus.off("emitOulineClick", this.showIndex); // 移除事件监听
+    eventBus.off("successOutline", this.showOutLine); // 移除事件监听
+    eventBus.off("pdfSuccessClick", this.showIndex3); // 订阅事件
+
+    window.removeEventListener("scroll", this.handleScroll);
   },
   computed: {
     // 计算属性
     ...mapGetters(["activeIndex"]),
   },
   methods: {
+    // 展示论文加载弹窗
+    showPaperDialog(data) {
+      this.requestKey = data.requestKey;
+      this.payStatus = data.payStatus;
+      if (data.paperPercent && data.paperPercent > 0) {
+        this.paperPercent = data.paperPercent;
+      }
+    },
     // 定义方法
     errorBack() {
       // this.tabsClick(0);
@@ -171,13 +202,7 @@ export default {
       }
     },
   },
-  beforeDestroy() {
-    eventBus.off("emitOulineClick", this.showIndex); // 移除事件监听
-    eventBus.off("successOutline", this.showOutLine); // 移除事件监听
-    eventBus.off("pdfSuccessClick", this.showIndex3); // 订阅事件
 
-    window.removeEventListener("scroll", this.handleScroll);
-  },
   beforeRouteUpdate(to, from, next) {
     // 当路由的查询参数发生变化时，这个方法会被调用
     // this.activeIndex = to.query.activeIndex || 0;

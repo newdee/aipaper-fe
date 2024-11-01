@@ -37,18 +37,17 @@
       </div>
 
       <span slot="footer" class="dialog-footer">
-        <el-button @click="ownPayStatus = false">取消</el-button>
         <el-button type="primary" @click="jumpStep">确定</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 <script>
-// import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 import eventBus from "@/utils/eventBus";
 import { getOrder, orderDetailById } from "@/api/user";
+import { mapGetters } from "vuex";
 
 export default {
   name: "myFooter",
@@ -67,7 +66,6 @@ export default {
       },
       listData: [], // 存储请求返回的数据
       pollingInterval: 2000, // 轮询间隔时间，单位毫秒
-      isPolling: false, // 是否正在进行轮询
       successIndex: 0,
     };
   },
@@ -83,6 +81,11 @@ export default {
       type: String,
       require: false,
     },
+    paperPercent: {
+      type: Number,
+      require: false,
+      default: 0,
+    },
   },
   watch: {
     payStatus: {
@@ -90,6 +93,15 @@ export default {
         console.log("支付状态发生变化", "新值:", newVal, "旧值:", oldVal);
         // 在这里执行你需要的操作
         this.ownPayStatus = newVal;
+        this.$store.dispatch("paper/setPollingStatus", newVal);
+      },
+      immediate: true, // 立即触发一次监听器
+    },
+    paperPercent: {
+      handler(newVal, oldVal) {
+        console.log("进度条百分比", "新值:", newVal, "旧值:", oldVal);
+        // 在这里执行你需要的操作
+        this.currentNumber = newVal;
       },
       immediate: true, // 立即触发一次监听器
     },
@@ -117,18 +129,28 @@ export default {
   },
   computed: {
     // 计算属性
+    ...mapGetters(["pollingStatus"]),
   },
+
   methods: {
     handleClose(done) {
       this.$confirm("关闭弹窗,不影响论文生成进度")
         .then((_) => {
           done();
           this.$store.dispatch("app/setActiveIndex", 0);
+          this.$store.dispatch("paper/setPollingStatus", false);
         })
         .catch((_) => {});
     },
     jumpStep() {
-      this.$store.dispatch("app/setActiveIndex", 0);
+      this.$confirm("关闭弹窗,不影响论文生成进度")
+        .then((_) => {
+          // done();
+          this.ownPayStatus = false;
+          this.$store.dispatch("paper/setPollingStatus", false);
+          this.$store.dispatch("app/setActiveIndex", 0);
+        })
+        .catch((_) => {});
     },
     /**
      * 获取列表数据，支持轮询
@@ -144,11 +166,12 @@ export default {
       currentRetry = 0
     ) {
       console.log("执行一次");
-      if (this.isPolling) {
-        console.warn("轮询正在进行中...");
-      }
 
-      this.isPolling = true;
+      if (this.pollingStatus) {
+        console.warn("轮询正在进行中...");
+      } else {
+        return false;
+      }
 
       orderDetailById(data)
         .then((res) => {
@@ -196,7 +219,8 @@ export default {
 
             // 满足停止轮询的条件，更新数据并结束轮询
             this.listData = order_item_response; // 假设这里是你想更新的数据
-            this.isPolling = false;
+            this.$store.dispatch("paper/setPollingStatus", false);
+
             eventBus.emit("pdfSuccessClick", realUrl); // 发布事件
             // this.$nextTick(() => {
             //   this.$store.dispatch("app/togglePDFUrl", realUrl);
@@ -213,7 +237,8 @@ export default {
             }, delay);
           } else {
             // 如果已经达到最大重试次数，则停止轮询
-            this.isPolling = false;
+            this.$store.dispatch("paper/setPollingStatus", false);
+
             console.error("达到最大重试次数，停止轮询");
           }
         });
@@ -230,14 +255,18 @@ export default {
       }
     },
     addE(index) {
-      console.log("dddd", index);
+      console.log("dddd", index, this.paperPercent);
       clearInterval(this.intervalId); // 达到目标数字时清除定时器
-      this.currentNumber = 0;
+
       this.countUpToHundred(index);
     },
     // 定义方法
     countUpToHundred(totalSeconds) {
-      this.currentNumber = 0.0; // 同样初始化时确保它是一个带有两位小数的数字
+      if (this.paperPercent > 0) {
+        this.currentNumber = this.paperPercent;
+      } else {
+        this.currentNumber = 0.0; // 同样初始化时确保它是一个带有两位小数的数字
+      }
       const targetNumber = 99.99; // 目标数字是 100%
       const stepSize = targetNumber / totalSeconds; // 每秒增加的步长
 
