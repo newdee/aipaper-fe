@@ -186,17 +186,22 @@ export default {
       this.handleCurrentChange(1);
     },
     handleCheckAllChange(val) {
-      if (val.length > 1) {
-        this.$message({
-          type: "warning",
-          message: "只能同时选择一条数据!",
-        });
-        this.checkList.pop();
-      }
+      console.log("val", val);
+      this.checkList = val;
+      // if (val.length > 1) {
+      //   this.$message({
+      //     type: "warning",
+      //     message: "只能同时选择一条数据!",
+      //   });
+      //   this.checkList.pop();
+      // }
     },
     delList() {
       console.log(this.checkList);
-      delOrder(this.checkList).then((res) => {
+      let data = {
+        trade_no_list: this.checkList,
+      };
+      delOrder(data).then((res) => {
         console.log(res);
         this.$message({
           type: "success",

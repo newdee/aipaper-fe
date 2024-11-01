@@ -82,10 +82,18 @@ export function getOrderList(params) {
     params,
   });
 }
-export function delOrder(params) {
+// export function delOrder(params) {
+//   return request({
+//     url: "/api/ai-paper/orders/order/" + params.join(","),
+//     method: "delete",
+//   });
+// }
+export function delOrder(data) {
   return request({
-    url: "/api/ai-paper/orders/order/" + params.join(","),
-    method: "delete",
+    url: "/api/ai-paper/orders/batch_delete",
+    method: "post",
+    data,
+
   });
 }
 // 查询单个订单状态

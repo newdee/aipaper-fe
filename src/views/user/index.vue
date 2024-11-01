@@ -6,7 +6,7 @@
       :disabled="!!userInfo.sub_domain"
       plain
       @click="showDialog"
-      >设置域名{{ userInfo.phone }}</el-button
+      >设置域名</el-button
     >
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
 
@@ -142,17 +142,26 @@ export default {
   computed: {
     ...mapGetters(["userInfo"]),
   },
-
-  mounted() {
-    console.log("user111111", this.userInfo);
-    console.log("user", this.userInfo.sub_domain);
-    console.log("user", !this.userInfo.sub_domain);
-    if (!!this.userInfo.sub_domain) {
-      this.dialogVisible = true;
-    } else {
-      this.disabled = false;
-    }
+  watch: {
+    "userInfo.sub_domain": function (newPermission, oldPermission) {
+      console.log(
+        "Permission changed from",
+        oldPermission,
+        "to",
+        newPermission
+      );
+      // 在这里你可以执行需要的操作，比如更新界面或触发其他逻辑
+      console.log("user111111", this.userInfo);
+      console.log("user", this.userInfo.sub_domain);
+      console.log("user", !this.userInfo.sub_domain);
+      if (!newPermission) {
+        this.dialogVisible = true;
+      } else {
+        this.dialogVisible = false;
+      }
+    },
   },
+  mounted() {},
   data() {
     var checkAge = (rule, value, callback) => {
       if (!value) {
