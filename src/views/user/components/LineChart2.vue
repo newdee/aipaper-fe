@@ -1,19 +1,31 @@
 <template>
   <div>
     <el-card class="box-card">
-      <div slot="header" class="flexHeader">
-        <span>生成大纲/生成正文 (每日)</span>
-        <el-date-picker
-          v-model="value2"
-          type="monthrange"
-          align="right"
-          unlink-panels
-          range-separator="至"
-          start-placeholder="开始月份"
-          end-placeholder="结束月份"
-          :picker-options="pickerOptions"
-        >
-        </el-date-picker>
+      <div slot="header" class="">
+        <span>新增注册用户/新订单数/月付费转化率 (每日)</span>
+        <div class="flexHeader line2Top">
+          <el-switch
+            style="display: block"
+            v-model="dayStatus"
+            active-color="#13ce66"
+            inactive-color="#E6A23C"
+            active-text="查询每日"
+            inactive-text="查询每月"
+          >
+          </el-switch>
+          <el-date-picker
+            size="mini"
+            v-model="value2"
+            :type="dayStatus ? 'daterange' : 'monthrange'"
+            align="right"
+            unlink-panels
+            range-separator="至"
+            start-placeholder="开始月份"
+            end-placeholder="结束月份"
+            :picker-options="pickerOptions"
+          >
+          </el-date-picker>
+        </div>
       </div>
       <div class="text item">
         <div
@@ -58,6 +70,8 @@ export default {
   data() {
     return {
       chart: null,
+      dayStatus: "",
+      value2: "",
     };
   },
   watch: {
@@ -165,5 +179,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+.line2Top {
+  margin-top: 10px;
 }
 </style>
