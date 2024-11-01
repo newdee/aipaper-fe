@@ -70,7 +70,7 @@ export default {
   data() {
     return {
       chart: null,
-      dayStatus: "",
+      dayStatus: false,
       value2: "",
     };
   },
