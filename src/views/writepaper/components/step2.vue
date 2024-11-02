@@ -1426,6 +1426,7 @@ export default {
               eventBus.emit("showEmitPaperDialog", {
                 requestKey: res.result.out_trade_no,
                 payStatus: true,
+                paperPercent: 0,
               });
 
               // this.requestKey = "5e0c2e41-e865-4269-a02d-fb0b919cd822";

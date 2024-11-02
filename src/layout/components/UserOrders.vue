@@ -185,11 +185,15 @@ export default {
       });
       eventBus.emit("orderDialogChange", false);
       // 关闭弹窗
+      // 生成一个 0 到 10 之间的随机数，然后加上 30
+      const randomNum = Math.random() * 10 + 30;
+      // 使用 toFixed(2) 保留两位小数，并将结果转换为浮点数
+
       this.$nextTick(() => {
         eventBus.emit("showEmitPaperDialog", {
           requestKey: row.order.out_trade_no,
           payStatus: true,
-          paperPercent: 40,
+          paperPercent: parseFloat(randomNum.toFixed(2)),
         });
       });
     },
