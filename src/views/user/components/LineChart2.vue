@@ -16,13 +16,14 @@
           <el-date-picker
             size="mini"
             v-model="value2"
+            :value-format="dayStatus ? 'yyyy-MM-dd' : 'yyyy-MM'"
             :type="dayStatus ? 'daterange' : 'monthrange'"
             align="right"
             unlink-panels
             range-separator="至"
-            start-placeholder="开始月份"
-            end-placeholder="结束月份"
-            :picker-options="pickerOptions"
+            :start-placeholder="dayStatus ? '开始日期' : '开始月份'"
+            :end-placeholder="dayStatus ? '结束日期' : '结束月份'"
+            @change="setParams"
           >
           </el-date-picker>
         </div>
@@ -42,6 +43,8 @@
 import echarts from "echarts";
 require("echarts/theme/macarons"); // echarts theme
 import resize from "./mixins/resize";
+import { mapGetters } from "vuex";
+import { agentCount } from "@/api/user";
 
 export default {
   mixins: [resize],
@@ -62,30 +65,38 @@ export default {
       type: Boolean,
       default: true,
     },
-    chartData: {
-      type: Object,
-      required: true,
-    },
+  },
+  computed: {
+    ...mapGetters(["userInfo"]),
   },
   data() {
     return {
       chart: null,
       dayStatus: false,
       value2: "",
+      chartFrom: {
+        agent_id: "",
+        count_type: "month", // month/ dayily
+        begin_month: "2024-01", // 2024-01
+        end_month: "2024-10", // 2024-01
+        begin_day: "", // 2024-01-31
+        end_day: "", // 2024-01
+        chart_type: "chart2", // chart1/2/3
+      },
+      chartData: {},
     };
   },
-  watch: {
-    chartData: {
-      deep: true,
-      handler(val) {
-        this.setOptions(val);
-      },
-    },
-  },
+  // watch: {
+  //   chartData: {
+  //     deep: true,
+  //     handler(val) {
+  //       this.setOptions(val);
+  //     },
+  //   },
+  // },
   mounted() {
-    this.$nextTick(() => {
-      this.initChart();
-    });
+    this.chartFrom.agent_id = this.userInfo.agent_id;
+    this.getList(this.chartFrom);
   },
   beforeDestroy() {
     if (!this.chart) {
@@ -99,10 +110,10 @@ export default {
       this.chart = echarts.init(this.$refs.lineChart2, "lineChart2");
       this.setOptions(this.chartData);
     },
-    setOptions({ expectedData, actualData } = {}) {
+    setOptions() {
       this.chart.setOption({
         xAxis: {
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          data: this.chartData.date,
           boundaryGap: false,
           axisTick: {
             show: false,
@@ -128,7 +139,7 @@ export default {
           },
         },
         legend: {
-          data: ["新增注册用户", "新增付费用户"],
+          data: ["新增注册用户", "新订单数", "月付费转化率"],
         },
         series: [
           {
@@ -144,12 +155,12 @@ export default {
             },
             smooth: true,
             type: "line",
-            data: expectedData,
+            data: this.chartData.date_data.new_users_num,
             animationDuration: 2800,
             animationEasing: "cubicInOut",
           },
           {
-            name: "新增付费用户",
+            name: "新订单数",
             smooth: true,
             type: "line",
             itemStyle: {
@@ -164,12 +175,56 @@ export default {
                 },
               },
             },
-            data: actualData,
+            data: this.chartData.date_data.new_orders_num,
+            animationDuration: 2800,
+            animationEasing: "quadraticOut",
+          },
+          {
+            name: "月付费转化率",
+            smooth: true,
+            type: "line",
+            itemStyle: {
+              normal: {
+                color: "#fa7838",
+                lineStyle: {
+                  color: "#fa7838",
+                  width: 2,
+                },
+                areaStyle: {
+                  color: "#f3f8ff",
+                },
+              },
+            },
+            data: this.chartData.date_data.pay_rates,
             animationDuration: 2800,
             animationEasing: "quadraticOut",
           },
         ],
       });
+    },
+    getList(data) {
+      agentCount(data).then((res) => {
+        console.log("97---", res);
+        let data = res.result;
+        if (Object.keys(data).length > 0) {
+          this.chartData = data;
+          this.initChart();
+        }
+      });
+    },
+    setParams(date) {
+      if (this.dayStatus) {
+        this.chartFrom.begin_day = date[0];
+        this.chartFrom.end_day = date[1];
+        this.chartFrom.begin_month = "";
+        this.chartFrom.end_month = "";
+      } else {
+        this.chartFrom.begin_month = date[0];
+        this.chartFrom.end_month = date[1];
+        this.chartFrom.begin_day = "";
+        this.chartFrom.end_day = "";
+      }
+      this.getList(this.chartFrom);
     },
   },
 };
@@ -180,6 +235,7 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
+
 .line2Top {
   margin-top: 10px;
 }

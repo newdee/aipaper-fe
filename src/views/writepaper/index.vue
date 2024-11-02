@@ -137,7 +137,7 @@ export default {
     // 展示论文加载弹窗
     showPaperDialog(data) {
       this.requestKey = data.requestKey;
-      this.payStatus = data.payStatus;
+      this.payStatus = Date.now();
       if (data.paperPercent && data.paperPercent > 0) {
         this.paperPercent = data.paperPercent;
       }

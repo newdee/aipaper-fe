@@ -71,7 +71,7 @@ export default {
   },
   props: {
     payStatus: {
-      type: Boolean,
+      type: Number,
       require: true,
       default: () => {
         return false;
@@ -92,10 +92,9 @@ export default {
       handler(newVal, oldVal) {
         console.log("支付状态发生变化", "新值:", newVal, "旧值:", oldVal);
         // 在这里执行你需要的操作
-        this.ownPayStatus = newVal;
-        this.$store.dispatch("paper/setPollingStatus", newVal);
+        this.ownPayStatus = true;
+        this.$store.dispatch("paper/setPollingStatus", true);
       },
-      immediate: true, // 立即触发一次监听器
     },
     paperPercent: {
       handler(newVal, oldVal) {
