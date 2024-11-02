@@ -10,8 +10,9 @@
           万象专业版
           <span class="underLeft"></span>
         </p>
+        <!-- checkoutPaper(2) -->
         <p
-          @click="checkoutPaper(2)"
+          @click="$devf"
           :class="['outLeftTitle', 'paperClass', index == 2 ? 'activeLT' : '']"
         >
           万象学术版
@@ -24,85 +25,6 @@
     </div>
     <!-- 用户输入页面 -->
     <div :class="['uesrInputBox', index == 2 ? 'tabMainActive' : '']">
-      <div class="firstItem">
-        <div class="selectLang formItem">
-          <p class="formItemLabel">生成语言</p>
-          <div class="formItemCon">
-            <el-select v-model="requestForm.language" placeholder="请选择">
-              <el-option
-                v-for="item in homeData.language_list"
-                :key="item.value"
-                :label="item.language"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
-          </div>
-        </div>
-        <div class="selectLang formItem firstItem">
-          <p class="formItemLabel">选择论文字数</p>
-          <div class="formItemCon">
-            <el-slider
-              v-model="requestForm.word_count"
-              :min="3000"
-              :max="25000"
-              :marks="marks"
-              :step="1000"
-            >
-            </el-slider>
-          </div>
-        </div>
-      </div>
-      <!-- 论文类型 -->
-      <div class="selectLang formItem">
-        <p class="formItemLabel">论文类型</p>
-        <div class="formItemCon">
-          <el-radio-group v-model="requestForm.type">
-            <el-radio
-              v-for="item in homeData.category_list"
-              :key="item.name"
-              :label="item.name"
-              :value="item.name"
-            >
-              <div class="labelBox">
-                <div class="left">
-                  <!-- <svg class="icon svg-icon" aria-hidden="true">
-                    <use xlink:href="#icon-tubiaozoushitu"></use>
-                  </svg> -->
-                  <img
-                    v-if="requestForm.type == item.name"
-                    class="home-icon"
-                    src="@/assets/images/bank-white.png"
-                    alt=""
-                  />
-                  <img
-                    v-else
-                    class="home-icon"
-                    src="@/assets/images/bank-dark.png"
-                    alt=""
-                  />
-                  {{ item.name }}
-                  <span v-show="item.description"
-                    >({{ item.description }})</span
-                  >
-                </div>
-                <div class="right">
-                  <svg
-                    v-if="requestForm.type == item.name"
-                    class="icon svg-icon"
-                    aria-hidden="true"
-                  >
-                    <use xlink:href="#icon-duigou-cu"></use>
-                  </svg>
-                  <svg v-else class="icon svg-icon" aria-hidden="true">
-                    <use xlink:href="#icon-fangkuang"></use>
-                  </svg>
-                </div>
-              </div>
-            </el-radio>
-          </el-radio-group>
-        </div>
-      </div>
       <!-- 科目与题目 -->
       <div class="selectLang formItem">
         <p class="formItemLabel">科目与题目</p>
@@ -125,6 +47,139 @@
           </div>
         </div>
       </div>
+      <div class="firstItem secondItem">
+        <div class="selectLang formItem">
+          <p class="formItemLabel">生成语言</p>
+          <div class="formItemCon">
+            <el-select v-model="requestForm.language" placeholder="请选择">
+              <el-option
+                v-for="item in homeData.language_list"
+                :key="item.value"
+                :label="item.language"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </div>
+        </div>
+        <!-- 论文类型 -->
+
+        <div class="selectLang formItem leftType">
+          <p class="formItemLabel">论文类型</p>
+          <div class="formItemCon">
+            <el-radio-group v-model="requestForm.type">
+              <el-radio
+                v-for="item in homeData.category_list"
+                :key="item.name"
+                :label="item.name"
+                :value="item.name"
+              >
+                <div class="labelBox">
+                  <div class="left">
+                    <!-- <svg class="icon svg-icon" aria-hidden="true">
+                    <use xlink:href="#icon-tubiaozoushitu"></use>
+                  </svg> -->
+                    <img
+                      v-if="requestForm.type == item.name"
+                      class="home-icon"
+                      src="@/assets/images/bank-white.png"
+                      alt=""
+                    />
+                    <img
+                      v-else
+                      class="home-icon"
+                      src="@/assets/images/bank-dark.png"
+                      alt=""
+                    />
+                    {{ item.name }}
+                    <span v-show="item.description"
+                      >({{ item.description }})</span
+                    >
+                  </div>
+                  <div class="right">
+                    <svg
+                      v-if="requestForm.type == item.name"
+                      class="icon svg-icon"
+                      aria-hidden="true"
+                    >
+                      <use xlink:href="#icon-duigou-cu"></use>
+                    </svg>
+                    <svg v-else class="icon svg-icon" aria-hidden="true">
+                      <use xlink:href="#icon-fangkuang"></use>
+                    </svg>
+                  </div>
+                </div>
+              </el-radio>
+            </el-radio-group>
+          </div>
+        </div>
+      </div>
+      <div class="firstItem secondItem">
+        <!-- 论文水平 -->
+        <div class="selectLang formItem">
+          <p class="formItemLabel">论文水平选择</p>
+          <div class="formItemCon">
+            <el-radio-group v-model="requestForm.type2">
+              <el-radio
+                v-for="item in type2List"
+                :key="item.name"
+                :label="item.name"
+                :value="item.name"
+              >
+                <div class="labelBox">
+                  <div class="left">
+                    <!-- <svg class="icon svg-icon" aria-hidden="true">
+                    <use xlink:href="#icon-tubiaozoushitu"></use>
+                  </svg> -->
+                    <img
+                      v-if="requestForm.type2 == item.name"
+                      class="home-icon"
+                      src="@/assets/images/bank-white.png"
+                      alt=""
+                    />
+                    <img
+                      v-else
+                      class="home-icon"
+                      src="@/assets/images/bank-dark.png"
+                      alt=""
+                    />
+                    {{ item.name }}
+                    <span v-show="item.description"
+                      >({{ item.description }})</span
+                    >
+                  </div>
+                  <div class="right">
+                    <svg
+                      v-if="requestForm.type2 == item.name"
+                      class="icon svg-icon"
+                      aria-hidden="true"
+                    >
+                      <use xlink:href="#icon-duigou-cu"></use>
+                    </svg>
+                    <svg v-else class="icon svg-icon" aria-hidden="true">
+                      <use xlink:href="#icon-fangkuang"></use>
+                    </svg>
+                  </div>
+                </div>
+              </el-radio>
+            </el-radio-group>
+          </div>
+        </div>
+        <div class="selectLang formItem firstItem">
+          <p class="formItemLabel">选择论文字数</p>
+          <div class="formItemCon">
+            <el-slider
+              v-model="requestForm.word_count"
+              :min="3000"
+              :max="25000"
+              :marks="marks"
+              :step="1000"
+            >
+            </el-slider>
+          </div>
+        </div>
+      </div>
+
       <!-- 三级大纲 -->
       <!-- <div class="selectLang formItem">
         <p class="formItemLabel">
@@ -171,6 +226,7 @@ export default {
         threeCon: false,
         language: "中文",
         type: "本科",
+        type2: "学民版",
         field: ["哲学", "哲学类"],
         key: "",
         word_count: 5000,
@@ -202,6 +258,16 @@ export default {
         {
           value: "西班牙语",
           label: "西班牙语",
+        },
+      ],
+      type2List: [
+        {
+          name: "学民版",
+          description: "",
+        },
+        {
+          name: "学霸版",
+          description: "",
         },
       ],
       requestKey: "是是是",
@@ -265,7 +331,7 @@ export default {
         this.requestForm = { ...data };
       }
     },
-    sendOutlineForm() {
+    sendOutlineForm: _.debounce(function () {
       if (this.produceLineStatus) {
         this.$message({
           type: "warning",
@@ -346,7 +412,7 @@ export default {
             });
           });
       }
-    },
+    }, 300),
     saveInput() {
       // 获取用户数据
       console.log("ssss", this.requestForm);
@@ -538,11 +604,11 @@ export default {
 
 ::v-deep label.el-radio {
   width: auto;
-  height: 48px;
+  height: 40px;
   background: #ffffff;
   border-radius: 24px;
   border: 1px solid #cccccc;
-  line-height: 46px;
+  line-height: 40px;
   padding-left: 14px;
   padding-right: 16px;
   margin-bottom: 22px;
@@ -589,6 +655,12 @@ export default {
     }
   }
 }
+.secondItem {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-top: 30px;
+}
 .firstItem {
   display: flex;
   align-items: flex-start;
@@ -612,5 +684,8 @@ export default {
 }
 ::v-deep .firstItem .el-slider__button {
   border-color: #3355ff;
+}
+.leftType {
+  margin-left: 60px;
 }
 </style>

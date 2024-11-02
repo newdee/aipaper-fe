@@ -14,7 +14,7 @@
     >
       <div class="dialog-content">
         <p class="dialog-text">
-          正在查询订单:
+          当前订单状态:
           <span class="dialog_pay_text">{{
             payStatusObject[payTitleStatus]
           }}</span>

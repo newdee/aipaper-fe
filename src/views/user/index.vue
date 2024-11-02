@@ -1,13 +1,53 @@
 <template>
   <div class="dashboard-editor-container">
-    <el-button
+    <!-- <el-button
       size="mini"
       type="primary"
       :disabled="!!userInfo.sub_domain"
       plain
       @click="showDialog"
       >设置域名</el-button
-    >
+    > -->
+    <el-descriptions class="margin-top" title="您的信息" :column="2" border>
+      <template slot="extra">
+        <el-button type="primary" size="small">刷新</el-button>
+      </template>
+      <el-descriptions-item>
+        <template slot="label">
+          <i class="el-icon-user"></i>
+          名称
+        </template>
+        kooriookami
+      </el-descriptions-item>
+      <el-descriptions-item>
+        <template slot="label">
+          <i class="el-icon-mobile-phone"></i>
+          编号
+        </template>
+        80000001
+      </el-descriptions-item>
+      <el-descriptions-item>
+        <template slot="label">
+          <i class="el-icon-location-outline"></i>
+          二级域名
+        </template>
+        jiangpeng
+      </el-descriptions-item>
+      <el-descriptions-item>
+        <template slot="label">
+          <i class="el-icon-tickets"></i>
+          加入时间
+        </template>
+        <el-tag size="small">2024/10/01 10:32:04</el-tag>
+      </el-descriptions-item>
+      <el-descriptions-item>
+        <template slot="label">
+          <i class="el-icon-office-building"></i>
+          等级
+        </template>
+        LV1
+      </el-descriptions-item>
+    </el-descriptions>
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
 
     <div>
@@ -24,6 +64,11 @@
         <line-chart3 />
       </el-col>
     </el-row>
+    <el-row class="secondLine" :gutter="32">
+      <!-- 图表3: 生成大纲/生成正文 (每日) -->
+      <line-chart4 />
+    </el-row>
+
     <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
@@ -111,6 +156,7 @@ import PanelGroup from "./components/PanelGroup";
 import LineChart from "./components/LineChart";
 import LineChart2 from "./components/LineChart2";
 import LineChart3 from "./components/LineChart3";
+import LineChart4 from "./components/LineChart4";
 import RaddarChart from "./components/RaddarChart";
 import PieChart from "./components/PieChart";
 import BarChart from "./components/BarChart";
@@ -119,7 +165,6 @@ import TodoList from "./components/TodoList";
 import BoxCard from "./components/BoxCard";
 import { userProxy } from "@/api/user";
 import { mapGetters } from "vuex";
-import { agentCount } from "@/api/user";
 
 // const lineChartData = {
 //   newVisitis: {
@@ -147,6 +192,7 @@ export default {
     LineChart,
     LineChart2,
     LineChart3,
+    LineChart4,
     RaddarChart,
     PieChart,
     BarChart,
@@ -200,7 +246,7 @@ export default {
       },
       chartFrom: {
         agent_id: "",
-        count_type: "month", // month/ dayily
+        count_type: "month", // month/ daily
         begin_month: "2024-01", // 2024-01
         end_month: "2024-10", // 2024-01
         begin_day: "", // 2024-01-31
@@ -210,15 +256,8 @@ export default {
       chartData: {},
     };
   },
-  mounted() {
-    // agentCount()
-    this.chartFrom.agent_id = this.userInfo.agent_id;
-    this.getList(this.chartFrom);
-  },
+  mounted() {},
   methods: {
-    getList(data) {
-      agentCount(data).then((res) => {});
-    },
     getLine1List() {
       let data = {
         ...this.chartFrom,
