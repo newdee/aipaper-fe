@@ -98,75 +98,27 @@
         <el-checkbox-group
           class="addService"
           v-model="checkboxGroup1"
+          @change="fuChange"
           size="small"
         >
-          <el-checkbox label="1" border>
+          <el-checkbox
+            v-for="(item, index) in supportedProducts"
+            :label="item"
+            :key="index + 'fu'"
+            border
+          >
             <div class="cusLabel">
-              <p>开题报告</p>
+              <p>{{ item.name }}</p>
               <div class="price">
                 <span>4.9元</span>
                 <span>19.9元</span>
-              </div>
-            </div>
-          </el-checkbox>
-          <el-checkbox label="2" border>
-            <div class="cusLabel">
-              <p>任务书</p>
-              <div class="price">
-                <span>4.9元</span>
-                <span>19.9元</span>
-              </div>
-            </div>
-          </el-checkbox>
-          <el-checkbox label="3" border>
-            <div class="cusLabel">
-              <p>CAD三维设计</p>
-              <div class="price">
-                <span>19.9元</span>
-                <span>39.9元</span>
-              </div>
-            </div>
-          </el-checkbox>
-          <el-checkbox label="4" border>
-            <div class="cusLabel">
-              <p>答辩汇报PPT</p>
-              <div class="price">
-                <span>19.9元</span>
-                <span>49.9元</span>
-              </div>
-            </div>
-          </el-checkbox>
-          <el-checkbox label="5" border>
-            <div class="cusLabel">
-              <p>调查问卷</p>
-              <div class="price">
-                <span>9.9元</span>
-                <span>19.9元</span>
-              </div>
-            </div>
-          </el-checkbox>
-          <el-checkbox label="6" border>
-            <div class="cusLabel">
-              <p>“投喂”AI</p>
-              <div class="price">
-                <span>9.9元</span>
-                <span>29.9元</span>
-              </div>
-            </div>
-          </el-checkbox>
-          <el-checkbox label="7" border>
-            <div class="cusLabel">
-              <p>一键降AIGC率</p>
-              <div class="price">
-                <span>18元</span>
-                <span>180元</span>
               </div>
             </div>
           </el-checkbox>
         </el-checkbox-group>
-        <p class="tips" @click="reduceAIGC">
+        <!-- <p class="tips" @click="reduceAIGC">
           AIGC率知网超25%<span>包退费</span>
-        </p>
+        </p> -->
       </div>
     </div>
   </div>
@@ -200,13 +152,27 @@ export default {
   },
   computed: {
     // 计算属性
-    ...mapGetters(["requestForm"]),
+    supportedProducts() {
+      // 过滤出 is_supported 为 true 的产品
+      return this.homeData.product_list.filter(
+        (product) =>
+          product.is_supported &&
+          (product.name == "开题报告" ||
+            product.name == "任务书" ||
+            product.name == "调查问卷")
+      );
+    },
+    ...mapGetters(["requestForm", "homeData"]),
   },
   methods: {
+    // this.$store.dispatch("paper/setAdditionList", []);
+    fuChange(val) {
+      // let fuList =
+      this.$store.dispatch("paper/setAdditionList", val);
+    },
     // 定义方法
     reduceAIGC() {
       if (this.checkboxGroup1.indexOf("7") != -1) {
-        console.log("572---", this.checkboxGroup1);
         let i = this.checkboxGroup1.indexOf("7");
         this.checkboxGroup1.splice(i, 1);
       } else {

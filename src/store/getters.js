@@ -14,5 +14,6 @@ const getters = {
   produceLineStatus: (state) => state.app.produceLineStatus,
   activeIndex: (state) => state.app.activeIndex,
   pollingStatus: (state) => state.paper.pollingStatus,
+  additionalList: (state) => state.paper.additionalList,
 };
 export default getters;

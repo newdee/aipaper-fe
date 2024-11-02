@@ -2,16 +2,16 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="flexHeader">
-        <span>生成大纲/生成正文 (每日)</span>
+        <span>总用户数 (每日)</span>
         <el-date-picker
           v-model="value2"
-          value-format="yyyy-MM"
-          type="monthrange"
+          value-format="yyyy-MM-dd"
+          type="daterange"
           align="right"
           unlink-panels
           range-separator="至"
-          start-placeholder="开始月份"
-          end-placeholder="结束月份"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
           :picker-options="pickerOptions"
           @change="setParams"
         >
@@ -64,36 +64,40 @@ export default {
       value2: "",
       chartFrom: {
         agent_id: "",
-        count_type: "month", // month/ daily
-        begin_month: "2024-01", // 2024-01
-        end_month: "2024-10", // 2024-01
+        count_type: "daily", // month/ daily
+        begin_month: "", // 2024-01
+        end_month: "", // 2024-01
         begin_day: "", // 2024-01-31
         end_day: "", // 2024-01
-        chart_type: "chart3", // chart1/2/3
+        chart_type: "chart4", // chart1/2/3
       },
       chartData: {},
       pickerOptions: {
         shortcuts: [
           {
-            text: "本月",
-            onClick(picker) {
-              picker.$emit("pick", [new Date(), new Date()]);
-            },
-          },
-          {
-            text: "今年至今",
+            text: "最近一周",
             onClick(picker) {
               const end = new Date();
-              const start = new Date(new Date().getFullYear(), 0);
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
               picker.$emit("pick", [start, end]);
             },
           },
           {
-            text: "最近六个月",
+            text: "最近一个月",
             onClick(picker) {
               const end = new Date();
               const start = new Date();
-              start.setMonth(start.getMonth() - 6);
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit("pick", [start, end]);
+            },
+          },
+          {
+            text: "最近三个月",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
               picker.$emit("pick", [start, end]);
             },
           },
@@ -154,28 +158,11 @@ export default {
           },
         },
         legend: {
-          data: ["生成大纲", "生成正文"],
+          data: ["总用户数"],
         },
         series: [
           {
-            name: "生成大纲",
-            itemStyle: {
-              normal: {
-                color: "#FF005A",
-                lineStyle: {
-                  color: "#FF005A",
-                  width: 2,
-                },
-              },
-            },
-            smooth: true,
-            type: "line",
-            data: this.chartData.date_data.outline_nums,
-            animationDuration: 2800,
-            animationEasing: "cubicInOut",
-          },
-          {
-            name: "生成正文",
+            name: "总用户数",
             smooth: true,
             type: "line",
             itemStyle: {
@@ -190,7 +177,7 @@ export default {
                 },
               },
             },
-            data: this.chartData.date_data.paper_nums,
+            data: this.chartData.date_data.daily_total_nums,
             animationDuration: 2800,
             animationEasing: "quadraticOut",
           },
@@ -208,10 +195,10 @@ export default {
       });
     },
     setParams(date) {
-      this.chartFrom.begin_month = date[0];
+      this.chartFrom.begin_day = date[0];
       this.chartFrom.agent_id = this.userInfo.agent_id;
 
-      this.chartFrom.end_month = date[1];
+      this.chartFrom.end_day = date[1];
       this.getList(this.chartFrom);
     },
   },

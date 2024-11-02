@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 const state = {
   activeIndex: 0, //
   pollingStatus: false, // paper弹窗 是否继续循环
+  additionalList: [], // paper弹窗 是否继续循环
 };
 
 const mutations = {
@@ -12,6 +13,9 @@ const mutations = {
   TOGGLE_POLLING: (state, pollingStatus) => {
     state.pollingStatus = pollingStatus;
   },
+  TOGGLE_ADDITION: (state, additionalList) => {
+    state.additionalList = additionalList;
+  },
 };
 
 const actions = {
@@ -20,6 +24,9 @@ const actions = {
   },
   setPollingStatus({ commit }, pollingStatus) {
     commit("TOGGLE_POLLING", pollingStatus);
+  },
+  setAdditionList({ commit }, additionalList) {
+    commit("TOGGLE_ADDITION", additionalList);
   },
 };
 

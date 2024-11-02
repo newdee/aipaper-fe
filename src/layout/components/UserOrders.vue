@@ -192,7 +192,7 @@ export default {
       this.$nextTick(() => {
         eventBus.emit("showEmitPaperDialog", {
           requestKey: row.order.out_trade_no,
-          payStatus: true,
+          payStatus: 4,
           paperPercent: parseFloat(randomNum.toFixed(2)),
         });
       });

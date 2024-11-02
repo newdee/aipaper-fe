@@ -1011,7 +1011,7 @@ export default {
 
   computed: {
     // 计算属性
-    ...mapGetters(["requestForm"]),
+    ...mapGetters(["requestForm", "additionalList"]),
   },
   methods: {
     showSlider() {
@@ -1043,8 +1043,8 @@ export default {
         });
     },
     saveOutline(status) {
-      console.log("this.", this.requestForm);
-      console.log("this.", JSON.stringify(this.outline));
+      // console.log("this.", this.requestForm);
+      // console.log("this.", JSON.stringify(this.outline));
       //关不字数选择弹窗
       this.sliderStatus = false;
       let data = {
@@ -1054,7 +1054,7 @@ export default {
           outline: this.outline,
         },
       };
-      console.log("this.ddddddddd", data);
+      // console.log("this.ddddddddd", data);
       if (status == "aitype") {
         data.aitype = true;
       } else {
@@ -1220,7 +1220,7 @@ export default {
       this.numberValidateForm = { ...numberValidateForm };
     },
     appendShowSibling(node, data) {
-      console.log("1030---node和data:", node, data, data.index);
+      // console.log("1030---node和data:", node, data, data.index);
 
       this.appendLevel = data.level;
       if (data.level == 1) {
@@ -1248,7 +1248,6 @@ export default {
             this.appendSibling();
           }
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -1294,7 +1293,6 @@ export default {
     appendSibling(parentNodeData, data) {
       data = this.editData;
       parentNodeData = this.editParentData;
-      console.log("1103---插入同级,parentNode:", parentNodeData);
       var timestamp = new Date().getTime();
       const newChild = {
         id: timestamp,
@@ -1355,23 +1353,14 @@ export default {
       this.updateApiGroup(this.outline);
     },
     edit(node, data) {
-      console.log(
-        "before:",
-        data.id,
-        // data.parentApiGroupId,
-        data.label,
-        data.isEdit
-      );
       this.$set(data, "isEdit", 1);
       this.newlabel = data.label;
       this.$nextTick(() => {
         this.$refs.input.focus();
       });
-      console.log("after:", data.id, data.label, data.isEdit);
     },
 
     submitEdit(node, data) {
-      // console.log('点击了保存按钮')
       console.log(node, data, "-----------------");
       if (data.label == this.newlabel) {
         console.log("没有修改");
@@ -1381,8 +1370,6 @@ export default {
         this.$set(data, "label", this.newlabel);
         this.newlabel = "";
         this.$set(data, "isEdit", 0);
-        // console.log('after:', data.id, data.label)
-        // console.log(this.outline)
         this.updateApiGroup(this.outline);
       }
     },
@@ -1397,7 +1384,7 @@ export default {
       } else {
         eventBus.emit("showEmitPaperDialog", {
           requestKey: "",
-          payStatus: false,
+          payStatus: 1,
         });
         const hasToken = getToken();
         if (hasToken) {
@@ -1414,8 +1401,17 @@ export default {
                 quantity: 1, // 数量
                 price: 149.85, //价格
               },
+              ...this.additionalList,
             ],
           };
+          data.items.forEach((product) => {
+            // Add a new property 'quantity' with a value of 1
+            product.quantity = 1;
+
+            // Remove the 'is_supported' property
+            delete product.is_supported;
+          });
+          console.log("generateForm-data", data);
           // this.getDetail(34);
           getOrder(data)
             .then((res) => {
@@ -1425,7 +1421,7 @@ export default {
               console.log("payUrl", payUrl);
               eventBus.emit("showEmitPaperDialog", {
                 requestKey: res.result.out_trade_no,
-                payStatus: true,
+                payStatus: 2,
                 paperPercent: 0,
               });
 

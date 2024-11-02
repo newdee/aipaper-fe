@@ -76,7 +76,7 @@ export default {
       value2: "",
       chartFrom: {
         agent_id: "",
-        count_type: "month", // month/ dayily
+        count_type: "month", // month/ daily
         begin_month: "2024-01", // 2024-01
         end_month: "2024-10", // 2024-01
         begin_day: "", // 2024-01-31
@@ -86,17 +86,19 @@ export default {
       chartData: {},
     };
   },
-  // watch: {
-  //   chartData: {
-  //     deep: true,
-  //     handler(val) {
-  //       this.setOptions(val);
-  //     },
-  //   },
-  // },
+  watch: {
+    "userInfo.agent_id": {
+      immediate: true,
+      handler(val) {
+        this.chartFrom.agent_id = val;
+
+        this.getList(this.chartFrom);
+      },
+    },
+  },
   mounted() {
-    this.chartFrom.agent_id = this.userInfo.agent_id;
-    this.getList(this.chartFrom);
+    // this.chartFrom.agent_id = this.userInfo.agent_id;
+    // this.getList(this.chartFrom);
   },
   beforeDestroy() {
     if (!this.chart) {
@@ -104,6 +106,9 @@ export default {
     }
     this.chart.dispose();
     this.chart = null;
+  },
+  computed: {
+    ...mapGetters(["userInfo"]),
   },
   methods: {
     initChart() {
@@ -214,16 +219,20 @@ export default {
     },
     setParams(date) {
       if (this.dayStatus) {
+        this.chartFrom.count_type = "daily";
         this.chartFrom.begin_day = date[0];
         this.chartFrom.end_day = date[1];
         this.chartFrom.begin_month = "";
         this.chartFrom.end_month = "";
       } else {
+        this.chartFrom.count_type = "month";
         this.chartFrom.begin_month = date[0];
         this.chartFrom.end_month = date[1];
         this.chartFrom.begin_day = "";
         this.chartFrom.end_day = "";
       }
+      this.chartFrom.agent_id = this.userInfo.agent_id;
+      alert("this.userInfo.agent_id", this.userInfo.agent_id);
       this.getList(this.chartFrom);
     },
   },

@@ -85,7 +85,7 @@ export default {
       isScrollActive: false,
       outlineData: [],
       requestKey: "", //out_trade_no
-      payStatus: false,
+      payStatus: 0,
       paperPercent: 0,
     };
   },
