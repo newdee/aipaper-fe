@@ -1407,10 +1407,20 @@ export default {
           data.items.forEach((product) => {
             // Add a new property 'quantity' with a value of 1
             product.quantity = 1;
+            if (!product.product_id) {
+              product.product_id = product.id;
+            }
 
             // Remove the 'is_supported' property
             delete product.is_supported;
           });
+
+          const totalPrice = data.items.reduce(
+            (sum, item) => sum + item.price,
+            0
+          );
+          data.total_amount = totalPrice;
+          console.log("generateForm-data", JSON.stringify(data));
           console.log("generateForm-data", data);
           // this.getDetail(34);
           getOrder(data)

@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 import "@/styles/index.scss"; // global css
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
+import "element-ui/lib/theme-chalk/display.css";
 
 import App from "./App";
 import store from "./store";
