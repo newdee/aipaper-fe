@@ -5,12 +5,20 @@
     <section class="sec sec1">
       <p class="title-1">选择范文题目：</p>
       <el-radio-group v-model="sampleTitle">
-        <el-radio v-for="(titleType, i) in sampleTiles" :label="titleType" :key="'title' + i">{{ titleMap[titleType]
-          }}</el-radio>
+        <el-radio
+          v-for="(titleType, i) in sampleTiles"
+          :label="titleType"
+          :key="'title' + i"
+          >{{ titleMap[titleType] }}</el-radio
+        >
       </el-radio-group>
       <p class="title-1">选择范文材料：</p>
       <el-radio-group v-model="sampleMaterial">
-        <el-radio v-for="(material, j) in sampleMaterials" :label="material" :key="'material' + j">
+        <el-radio
+          v-for="(material, j) in sampleMaterials"
+          :label="material"
+          :key="'material' + j"
+        >
           <div v-html="JSON.parse(materialMap[material])"></div>
         </el-radio>
       </el-radio-group>
@@ -19,7 +27,7 @@
       <img src="@/assets/images/aigc.png" />
     </section> -->
     <section class="sec sec3">
-      <PdfViewer :pdfUrl="pdfUrl" ref="pdfViewer" />
+      <PdfViewer :key="pdfUrl" :pdfUrl="pdfUrl" ref="pdfViewer" />
     </section>
   </div>
 </template>
@@ -34,22 +42,33 @@ export default {
   data() {
     return {
       // 定义变量
-      pdfUrl: require("@/assets/third_output.pdf"),
+      pdfUrl: require("@/assets/samples/1.pdf"),
       sampleTitle: 1,
       sampleMaterial: 1,
       sampleTiles: [1, 2, 3],
       titleMap: {
-        1: "【计算机类】基于Golang和Vue.js的个人博客系统设计与实现",
-        2: "【医药学类】热炎宁颗粒工艺提升对于药效的提升",
-        3: "【金融学类】基于机器学习的银行信贷评分模型研究",
+        1: "【材料科学与工程类】碳纤维ABS复合材料的耐热性能研究",
+        2: "【计算机类】生成式AI对短视频的生态赋能与价值迭代",
+        3: "【医学与公共卫生学类】人工智能在卫生领域伦理治理中的多模态大模型应用研究",
       },
-      sampleMaterials: [1, 2, 3, 4, 5],
+      sampleMaterials: [1, 2, 3, 4],
       materialMap: {
         1: '"正文(含<span style=\\"color:#d75300\\">数据</span>、<span style=\\"color:#d75300\\">图</span>、<span style=\\"color:#d75300\\">表</span>、<span style=\\"color:#d75300\\">代码</span>)"',
         2: '"开题报告"',
         3: '"任务书"',
         4: '"调查问卷"',
-        5: '"答辩汇报PPT"',
+        // 5: '"答辩汇报PPT"',
+      },
+      titleSamplesMap: {
+        1: require("@/assets/samples/1.pdf"),
+        2: require("@/assets/samples/2.pdf"),
+        3: require("@/assets/samples/3.pdf"),
+      },
+      materialsSamplesMap: {
+        1: require("@/assets/samples/1.pdf"),
+        2: require("@/assets/samples/4.pdf"),
+        3: require("@/assets/samples/5.pdf"),
+        4: require("@/assets/samples/6.pdf"),
       },
       list: [
         {
@@ -249,12 +268,28 @@ export default {
   components: {
     PdfViewer,
   },
-  mounted() {
-    // 页面初始化
+  watch: {
+    sampleTitle(newVal, oldVal) {
+      // this.pdfUrl = require("@/assets/samples/2.pdf");
+      console.log(`272---count changed from ${oldVal} to ${newVal}`);
+      // 在这里执行其他操作
+      this.pdfUrl = this.titleSamplesMap[newVal];
+    },
+    sampleMaterial(newVal, oldVal) {
+      console.log(`277---count changed from ${oldVal} to ${newVal}`);
+      // 在这里执行其他操作
+      if (newVal == 1) {
+        this.pdfUrl = require("@/assets/samples/1.pdf");
+      } else {
+        this.pdfUrl = this.materialsSamplesMap[newVal];
+      }
+    },
   },
-
   computed: {
     // 计算属性
+  },
+  mounted() {
+    // 页面初始化
   },
   methods: {
     // 定义方法
@@ -304,7 +339,7 @@ export default {
   vertical-align: top;
 }
 
-.sec1 ::v-deep .el-radio__input.is-checked+.el-radio__label {
+.sec1 ::v-deep .el-radio__input.is-checked + .el-radio__label {
   color: #606266 !important;
 }
 
@@ -349,4 +384,5 @@ export default {
 }
 
 // .el-radio__input {
-// }</style>
+// }
+</style>

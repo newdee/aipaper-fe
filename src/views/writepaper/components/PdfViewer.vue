@@ -34,6 +34,15 @@ export default {
       pdfHTML: 0, // pdfjs 生成的对象
     };
   },
+  mounted() {
+    //解决字体问题
+    const CMAP_URL = "https://cdn.jsdelivr.net/npm/pdfjs-dist@2.0.943/cmaps/";
+    let obj = {};
+    obj.url = this.pdfUrl; //pdf文件地址，根据情景自行修改
+    obj.cMapUrl = CMAP_URL;
+    obj.cMapPacked = true;
+    this.init(obj);
+  },
   methods: {
     init(fileUrl) {
       let _this = this;
@@ -72,15 +81,6 @@ export default {
         });
       }
     },
-  },
-  mounted() {
-    //解决字体问题
-    const CMAP_URL = "https://cdn.jsdelivr.net/npm/pdfjs-dist@2.0.943/cmaps/";
-    let obj = {};
-    obj.url = this.pdfUrl; //pdf文件地址，根据情景自行修改
-    obj.cMapUrl = CMAP_URL;
-    obj.cMapPacked = true;
-    this.init(obj);
   },
 };
 </script>
