@@ -67,7 +67,10 @@
         <div class="selectLang formItem leftType">
           <p class="formItemLabel">论文类型</p>
           <div class="formItemCon">
-            <el-radio-group v-model="requestForm.type">
+            <el-radio-group
+              @change="paperTypeChange"
+              v-model="requestForm.type"
+            >
               <el-radio
                 v-for="item in homeData.category_list"
                 :key="item.name"
@@ -325,6 +328,21 @@ export default {
     ...mapGetters(["homeData", "produceLineStatus"]),
   },
   methods: {
+    paperTypeChange(val) {
+      console.log("论文类型", val);
+      if (val == "专科") {
+        this.requestForm.word_count = 8000;
+      }
+      if (val == "本科") {
+        this.requestForm.word_count = 12000;
+      }
+      if (val == "研究生") {
+        this.requestForm.word_count = 20000;
+      }
+      if (val == "结课论文") {
+        this.requestForm.word_count = 3000;
+      }
+    },
     setFormData(data) {
       console.log("setFormdata-----------", data);
       if (data) {
