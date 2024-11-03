@@ -14,7 +14,7 @@
             <p>[中文]{{ requestForm.title }}</p>
             <p>
               {{ requestForm.field ? requestForm.field[1] : "暂无" }}
-              <span>含无限改稿</span>
+              <span>含在线编辑</span>
             </p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
@@ -73,6 +73,7 @@
             </p>
           </div>
         </div>
+        <!-- 学术创新 -->
         <div class="borderBox">
           <div class="left">
             <svg class="icon svg-icon" aria-hidden="true">
@@ -89,6 +90,58 @@
             </p>
           </div>
         </div>
+        <!-- 论文正文(WORD版本) -->
+        <div class="borderBox">
+          <div class="left">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-wj-zw"></use>
+            </svg>
+          </div>
+          <div class="right">
+            <p>论文正文(Word版本)</p>
+            <p>x1</p>
+            <p class="alignR">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-checkmark"></use>
+              </svg>
+            </p>
+          </div>
+        </div>
+        <!-- 论文正文(PDF版本) -->
+        <div class="borderBox">
+          <div class="left">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-wj-zw"></use>
+            </svg>
+          </div>
+          <div class="right">
+            <p>论文正文(PDF版本)</p>
+            <p>x1</p>
+            <p class="alignR">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-checkmark"></use>
+              </svg>
+            </p>
+          </div>
+        </div>
+        <!-- 论文正文(LEXTEX版本) -->
+        <div class="borderBox">
+          <div class="left">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-wj-zw"></use>
+            </svg>
+          </div>
+          <div class="right">
+            <p>论文正文(Latex版本)</p>
+            <p>x1</p>
+            <p class="alignR">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-checkmark"></use>
+              </svg>
+            </p>
+          </div>
+        </div>
+        <div style="width: 175px"></div>
       </div>
       <p class="fuTitle">附加服务</p>
       <div class="adds">
@@ -110,8 +163,8 @@
             <div class="cusLabel">
               <p>{{ item.name }}</p>
               <div class="price">
-                <span>4.9元</span>
-                <span>19.9元</span>
+                <span>0.0元</span>
+                <span>{{ item.price }}元</span>
               </div>
             </div>
           </el-checkbox>
@@ -154,13 +207,16 @@ export default {
     // 计算属性
     supportedProducts() {
       // 过滤出 is_supported 为 true 的产品
-      return this.homeData.product_list.filter(
+      let listData = [];
+      listData = this.homeData.product_list.filter(
         (product) =>
           product.is_supported &&
           (product.name == "开题报告" ||
             product.name == "任务书" ||
             product.name == "调查问卷")
       );
+      this.checkboxGroup1 = listData;
+      return listData;
     },
     ...mapGetters(["requestForm", "homeData"]),
   },
