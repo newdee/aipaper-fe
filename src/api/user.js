@@ -63,9 +63,22 @@ export function getInfo(params) {
     params,
   });
 }
+export function agentInfo() {
+  return request({
+    url: "/api/ai-paper/agent/info",
+    method: "get",
+  });
+}
 export function agentCount(data) {
   return request({
     url: "/api/ai-paper/agent/count",
+    method: "post",
+    data,
+  });
+}
+export function editReduce(data) {
+  return request({
+    url: "/api/ai-paper/paper/edit/reduce",
     method: "post",
     data,
   });

@@ -46,7 +46,8 @@
                 >
               </div>
               <div class="orderTitle" :key="'title' + j">
-                {{ item.product.name }}
+                <!-- {{ item.product.name }} -->
+                论文类型:{{ orderObj.outline.type }}
               </div>
               <div class="orderText rowBetween handleRow" :key="'case' + j">
                 <div class="left"></div>
@@ -63,7 +64,7 @@
                     icon="el-icon-view"
                     type="text"
                     :disabled="!item.case.file_urls.pdf"
-                    @click="openPaper(item)"
+                    @click="openPaper(orderObj)"
                   >
                     预览
                   </el-button>
@@ -78,6 +79,16 @@
                 </div>
               </div>
             </template>
+          </div>
+          <div v-else>
+            <div class="orderTitle">
+              <!-- 论文题目: {{ orderObj.outline.title }} -->
+              论文题目: {{ orderObj.outline.title }}
+            </div>
+            <div class="orderTitle">
+              <!-- {{ item.product.name }} -->
+              论文类型:{{ orderObj.outline.type }}
+            </div>
           </div>
           <!-- <div class="orderOutline rowBetween handleRow">
             <div class="left">[本科·约2万字]</div>
@@ -103,6 +114,7 @@
               <span class="price">￥{{ orderObj.order.total_price }}</span>
               <span
                 class="handle"
+                @click="sendPay(orderObj)"
                 v-if="orderObj.order.payment_status == 'WAIT_BUYER_PAY'"
                 style="color: crimson"
                 >去支付</span
@@ -176,6 +188,7 @@ export default {
     // 计算属性
   },
   methods: {
+    sendPay(row) {},
     pushStep3: _.debounce(function (row) {
       console.log("statsrow", row);
       // 跳转到写论文页面
@@ -198,17 +211,40 @@ export default {
       });
     }, 300),
     downLoadPaper: _.debounce(function (item) {
-      console.log("item", item.order.out_trade_no);
+      console.log("item", item);
       this.downStatus = true;
       paperPack({ out_trade_no: item.order.out_trade_no }).then((res) => {
         console.log("ad", res.result.zip_url);
         this.downStatus = false;
-        window.open(res.result.zip_url, "_blank");
+        // window.open(res.result.zip_url, "_blank");
+        // Create a temporary link element
+        const link = document.createElement("a");
+        link.href = res.result.zip_url;
+
+        // Set the download attribute to suggest a filename
+        link.download =
+          item.order_item_response[0].case.paper_case.title + ".zip"; // Change 'filename.zip' to the desired file name
+
+        // Append the link to the body
+        document.body.appendChild(link);
+
+        // Programmatically click the link to trigger the download
+        link.click();
+
+        // Remove the link from the document
+        document.body.removeChild(link);
       });
     }, 300),
     openPaper: _.debounce(function (item) {
       console.log("item", item);
-      window.open(item.case.file_urls.pdf, "_blank");
+      // window.open(item.case.file_urls.pdf, "_blank");
+      // 关闭弹窗
+      eventBus.emit("orderDialogChange", false);
+      // 保存订单ID
+      this.$store.dispatch("app/toggleCurrentOrder", item.order);
+
+      let realUrl = item.order_item_response[0].case.file_urls.pdf;
+      eventBus.emit("pdfSuccessClick", realUrl); // 发布事件
     }, 300),
     refresh() {
       this.handleCurrentChange(1);
