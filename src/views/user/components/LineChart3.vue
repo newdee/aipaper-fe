@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="flexHeader">
-        <span>生成大纲/生成正文 (每日)</span>
+        <span>生成大纲/生成正文 (每月)</span>
         <el-date-picker
           v-model="value2"
           value-format="yyyy-MM"
@@ -65,8 +65,8 @@ export default {
       chartFrom: {
         agent_id: "",
         count_type: "month", // month/ daily
-        begin_month: "2024-01", // 2024-01
-        end_month: "2024-10", // 2024-01
+        begin_month: "", // 2024-01
+        end_month: "", // 2024-01
         begin_day: "", // 2024-01-31
         end_day: "", // 2024-01
         chart_type: "chart3", // chart1/2/3

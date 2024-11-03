@@ -219,7 +219,7 @@ export default {
             // 满足停止轮询的条件，更新数据并结束轮询
             this.listData = order_item_response; // 假设这里是你想更新的数据
             this.$store.dispatch("paper/setPollingStatus", false);
-
+            this.ownPayStatus = false;
             eventBus.emit("pdfSuccessClick", realUrl); // 发布事件
             // this.$nextTick(() => {
             //   this.$store.dispatch("app/togglePDFUrl", realUrl);
