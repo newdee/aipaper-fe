@@ -211,9 +211,9 @@ export default {
           } else {
             // 请求成功, 激活tab3
 
-            let pdfUrl = "https://file.mixpaper.cn/pdf/third_output.pdf";
+            // let pdfUrl = "https://file.mixpaper.cn/pdf/third_output.pdf";
             let pdfUrl2 = order_item_response[0].case.file_urls.pdf;
-            let realUrl = pdfUrl2 ? pdfUrl2 : pdfUrl;
+            let realUrl = pdfUrl2 ? pdfUrl2 : "";
             console.log("realUrl", realUrl);
 
             // 满足停止轮询的条件，更新数据并结束轮询

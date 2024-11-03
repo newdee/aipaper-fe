@@ -27,7 +27,7 @@
           :placeholder="placeText[activeIndex - 1]"
           maxlength="1000"
           show-word-limit
-          v-model="textareaIn"
+          v-model="original_paragraph"
           resize="false"
           :autosize="{ minRows: 15 }"
         >
@@ -50,27 +50,46 @@
         </el-button>
       </div> -->
       <div class="edit-3">
-        <textarea
+        <el-input
+          type="textarea"
+          :rows="20"
           readonly
-          v-model="textareaOut"
           :placeholder="reduceText[activeIndex - 1]"
-        ></textarea>
+          maxlength="1000"
+          show-word-limit
+          v-model="textareaOut"
+          resize="false"
+          :autosize="{ minRows: 15 }"
+        >
+        </el-input>
         <div class="btns">
-          <el-button for="copyRes" type="primary" round>复制结果</el-button>
+          <el-button
+            type="primary"
+            v-clipboard:copy="textareaOut"
+            v-clipboard:success="onCopy"
+            v-clipboard:error="onError"
+            round
+            size="mini"
+          >
+            复制结果
+          </el-button>
         </div>
       </div>
     </div>
     <div class="customization">
+      <p class="contentTitle">
+        请输入您对生成内容的建议：例如：扩写，缩写，降重，降AIGC率等
+      </p>
       <el-input
         type="textarea"
         :autosize="{ minRows: 4 }"
         :rows="4"
-        placeholder="请输入您对生成内容的建议,例如: 字数增加,词汇润色,等"
-        v-model="customizationValue"
+        placeholder="请输入您对生成内容的建议：例如：扩写，缩写，降重，降AIGC率等"
+        v-model="user_content"
       >
       </el-input>
     </div>
-    <div class="reduceBtn g_poin">
+    <div v-loading="sendStatus" @click="reduceSend" class="reduceBtn g_poin">
       <p>开始生成</p>
     </div>
   </div>
@@ -78,6 +97,7 @@
 
 <script>
 import swiperOne from "@/views/writepaper/components/swiperOne.vue";
+import { editReduce } from "@/api/user";
 
 export default {
   name: "reduceRepetition",
@@ -86,12 +106,11 @@ export default {
   },
   data() {
     return {
-      customizationValue: "",
       logo: require("@/assets/images/logo_paper.png"),
       drawer: false,
       direction: "rtl", //抽屉方向
-      textareaIn: "",
       textareaOut: "",
+      sendStatus: false,
       activeIndex: 1,
       placeText: [
         "请输入文章段落，待降重/降AIGC率均可，每次最多1000字",
@@ -101,10 +120,35 @@ export default {
         "请在左侧输入待降重复率/降AIGC率的文章段落，点击“开始生成”按钮，稍等片刻，成品会显示在这里",
         "请在左侧输入待降AIGC率的文章段落，点击“开始生成”按钮，稍等片刻，成品会显示在这里",
       ],
+      original_paragraph: "",
+      user_content: "",
     };
   },
   computed: {},
   methods: {
+    onCopy() {
+      this.$message({
+        type: "success",
+        message: "复制成功！",
+      });
+    },
+    onError() {
+      this.$message({
+        type: "error",
+        message: "复制失败！",
+      });
+    },
+    reduceSend() {
+      let data = {
+        original_paragraph: this.original_paragraph,
+        user_content: this.user_content,
+      };
+      this.sendStatus = true;
+      editReduce(data).then((res) => {
+        this.sendStatus = false;
+        this.textareaOut = res.result;
+      });
+    },
     checkoutPaper(val) {
       this.activeIndex = val;
     },
@@ -198,15 +242,8 @@ export default {
       text-align: right;
       padding-top: 10px;
       position: absolute;
-      bottom: 30px;
+      bottom: 10px;
       right: 30px;
-
-      button {
-        width: 116px;
-        height: 40px;
-        background: #3355ff;
-        border-radius: 20px;
-      }
     }
   }
 }
@@ -286,5 +323,11 @@ export default {
       background: #3355ff;
     }
   }
+}
+.contentTitle {
+  margin-bottom: 10px;
+}
+.edit-1 {
+  font-size: bold;
 }
 </style>

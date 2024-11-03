@@ -11,6 +11,7 @@ const getters = {
   lineTitle: (state) => state.app.lineTitle,
   requestForm: (state) => state.app.requestForm,
   step3PdfUrl: (state) => state.app.step3PdfUrl,
+  currentOrder: (state) => state.app.currentOrder,
   produceLineStatus: (state) => state.app.produceLineStatus,
   activeIndex: (state) => state.app.activeIndex,
   pollingStatus: (state) => state.paper.pollingStatus,

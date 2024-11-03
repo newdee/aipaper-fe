@@ -13,12 +13,16 @@
               <i class="el-icon-edit"></i>
               <span>编辑Latex版论文</span>
             </div>
-            <div class="pdfNavItem">
+            <div @click="$jumpUrl('/main/reduceRepetition')" class="pdfNavItem">
               <i class="el-icon-film"></i>
               <span>{{ $t("route.reduceRepetition") }}</span>
             </div>
           </div>
-          <div class="pdfNavRight g_poin">
+          <div
+            @click="downLoadPaper"
+            v-loading="downStatus"
+            class="pdfNavRight g_poin"
+          >
             <i class="el-icon-download"></i>
             <p>下载论文</p>
           </div>
@@ -41,6 +45,7 @@ import { mapGetters } from "vuex";
 // import webinfo from "@/components/webinfo.vue";
 // import eventBus from "@/utils/eventBus";
 import PdfViewer from "./PdfViewer.vue";
+import { paperPack } from "@/api/user";
 
 export default {
   name: "step3",
@@ -49,8 +54,9 @@ export default {
       // 定义变量
       data: "",
       // pdfUrl: require("@/assets/third_output.pdf"),
-      pdfUrl:
-        "https://file.mixpaper.cn/paper/case/4fd240e4-cad3-4e87-a8d4-1eda7a2cbe4d/second/output.pdf",
+      pdfUrl: "",
+      downStatus: false,
+      out_trade_no: "",
     };
   },
   components: {
@@ -58,7 +64,7 @@ export default {
   },
   computed: {
     // 计算属性
-    ...mapGetters(["step3PdfUrl"]),
+    ...mapGetters(["step3PdfUrl", "currentOrder"]),
   },
 
   watch: {
@@ -81,6 +87,39 @@ export default {
   },
 
   methods: {
+    downLoadPaper: _.debounce(function (item) {
+      this.downStatus = true;
+      paperPack({ out_trade_no: this.currentOrder.out_trade_no }).then(
+        (res) => {
+          console.log("ad", res.result.zip_url);
+          this.downStatus = false;
+          // window.open(res.result.zip_url, "_blank");
+          // Create a temporary link element
+          const link = document.createElement("a");
+          link.href = res.result.zip_url;
+          const regex = /\/([^\/]+)\.zip$/;
+          const match = res.result.zip_url.match(regex);
+          // Set the download attribute to suggest a filename
+
+          match + ".zip"; // Change 'filename.zip' to the desired file name
+          if (match && match[1]) {
+            console.log(match[1]); // 输出: 民主制度下的少数群体权利保障
+            link.download = match[1] + ".zip";
+          } else {
+            console.log("未找到匹配项");
+            link.download = "论文" + ".zip";
+          }
+          // Append the link to the body
+          document.body.appendChild(link);
+
+          // Programmatically click the link to trigger the download
+          link.click();
+
+          // Remove the link from the document
+          document.body.removeChild(link);
+        }
+      );
+    }, 1000),
     // 定义方法
     onViewFile(item) {
       if (item.fileName.split(".").pop() === "pdf") {
