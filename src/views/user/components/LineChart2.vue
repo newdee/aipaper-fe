@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="">
-        <span>新增注册用户/新订单数/月付费转化率 (每日)</span>
+        <span>新增注册用户/新订单数/月付费转化率</span>
         <div class="flexHeader line2Top">
           <el-switch
             style="display: block"
@@ -77,8 +77,8 @@ export default {
       chartFrom: {
         agent_id: "",
         count_type: "month", // month/ daily
-        begin_month: "2024-01", // 2024-01
-        end_month: "2024-10", // 2024-01
+        begin_month: "", // 2024-01
+        end_month: "", // 2024-01
         begin_day: "", // 2024-01-31
         end_day: "", // 2024-01
         chart_type: "chart2", // chart1/2/3
@@ -232,7 +232,6 @@ export default {
         this.chartFrom.end_day = "";
       }
       this.chartFrom.agent_id = this.userInfo.agent_id;
-      alert("this.userInfo.agent_id", this.userInfo.agent_id);
       this.getList(this.chartFrom);
     },
   },

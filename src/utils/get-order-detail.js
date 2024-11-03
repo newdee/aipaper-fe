@@ -29,11 +29,11 @@ export default function polling(
         if (currentTimestamp < givenTimestamp) {
           resolve(polling(data, delay, maxRetries, currentRetry));
         } else {
-          if (res.result.status === "生成中") {
+          if (res.result.status === "AI帮写中") {
             // 比较两个时间戳，判断是否超时
             if (givenTimeEnd > currentTimestamp) {
               console.log("给定的时间还未到达，未超时。");
-              // 如果状态是生成中，则等待一段时间后再次调用自身
+              // 如果状态是"AI帮写中，则等待一段时间后再次调用自身
               setTimeout(() => {
                 resolve(polling(data, delay, maxRetries, currentRetry));
               }, delay);
@@ -45,7 +45,7 @@ export default function polling(
           } else if (res.result.status == "生成失败") {
             resolve(res.result.status);
           } else {
-            // 如果不是生成中状态，则解析结果
+            // 如果不是"AI帮写中状态，则解析结果
             resolve(res.result.outline.outline);
           }
         }

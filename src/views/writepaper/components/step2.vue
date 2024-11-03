@@ -1088,7 +1088,11 @@ export default {
               type: "error",
               message: "生成失败,请稍后再试!",
             });
+          } else {
+            this.outline = res;
+            this.generateIndexes(this.outline);
           }
+
           this.loading = false;
         })
         .catch((error) => {
