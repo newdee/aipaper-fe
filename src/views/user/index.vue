@@ -10,42 +10,43 @@
     > -->
     <el-descriptions class="margin-top" title="您的信息" :column="2" border>
       <template slot="extra">
-        <el-button type="primary" size="small">刷新</el-button>
+        <el-button type="primary" size="small" @click="getList">刷新</el-button>
       </template>
       <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-user"></i>
           名称
         </template>
-        kooriookami
+        {{ agentData.agent_name }}
       </el-descriptions-item>
       <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-mobile-phone"></i>
           编号
         </template>
-        80000001
+        {{ agentData.agent_number }}
       </el-descriptions-item>
       <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-location-outline"></i>
           二级域名
         </template>
-        jiangpeng
+        {{ agentData.sub_domain }}
       </el-descriptions-item>
       <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-tickets"></i>
           加入时间
         </template>
-        <el-tag size="small">2024/10/01 10:32:04</el-tag>
+        <el-tag size="small"> {{ agentData.active_time }} </el-tag>
       </el-descriptions-item>
       <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-office-building"></i>
           等级
         </template>
-        LV1
+
+        <el-tag>{{ agentData.agent_level }}</el-tag>
       </el-descriptions-item>
     </el-descriptions>
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
@@ -163,8 +164,9 @@ import BarChart from "./components/BarChart";
 import TransactionTable from "./components/TransactionTable";
 import TodoList from "./components/TodoList";
 import BoxCard from "./components/BoxCard";
-import { userProxy } from "@/api/user";
+import { userProxy, agentInfo } from "@/api/user";
 import { mapGetters } from "vuex";
+import { getList } from "@/api/table";
 
 // const lineChartData = {
 //   newVisitis: {
@@ -254,16 +256,21 @@ export default {
         chart_type: "chart1", // chart1/2/3
       },
       chartData: {},
+      agentData: {},
     };
   },
-  mounted() {},
+  mounted() {
+    this.getList();
+  },
   methods: {
-    getLine1List() {
+    getList() {
       let data = {
         ...this.chartFrom,
       };
-      data.chart_type = "chart1";
-      this.getList(data);
+      agentInfo().then((res) => {
+        console.log("res", res);
+        this.agentData = res.result;
+      });
     },
     showDialog() {
       this.dialogVisible = true;

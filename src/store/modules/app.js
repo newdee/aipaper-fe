@@ -16,6 +16,7 @@ const state = {
   lineTitle: "论文标题", //
   requestForm: {}, // step1 用户输入内容
   step3PdfUrl: "", // 正文链接
+  currentOrder: {},
   produceLineStatus: false, // 生成大纲状态, true:生成中 false: 未生成
   activeIndex: 0, // 写论文页面 step 激活index
 };
@@ -44,6 +45,9 @@ const mutations = {
   },
   TOGGLE_PDF: (state, step3PdfUrl) => {
     state.step3PdfUrl = step3PdfUrl;
+  },
+  TOGGLE_NO: (state, currentOrder) => {
+    state.currentOrder = currentOrder;
   },
   TOGGLE_PROSTATE: (state, produceLineStatus) => {
     state.produceLineStatus = produceLineStatus;
@@ -77,6 +81,9 @@ const actions = {
   },
   toggleDevice({ commit }, device) {
     commit("TOGGLE_DEVICE", device);
+  },
+  toggleCurrentOrder({ commit }, currentOrder) {
+    commit("TOGGLE_NO", currentOrder);
   },
   togglePDFUrl({ commit }, str) {
     commit("TOGGLE_PDF", str);

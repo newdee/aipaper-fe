@@ -20,6 +20,7 @@ import "@/permission"; // permission control
 import "@/utils/rem";
 import "@/assets/js/iconfont";
 import i18n from "./lang"; // internationalization
+import VueClipboard from "vue-clipboard2";
 
 import * as filters from "./filters"; // global filters
 Object.keys(filters).forEach((key) => {
@@ -53,6 +54,8 @@ Vue.use(VueAwesomeSwiper /* { default options with global component } */);
 
 import GlobalMethodsPlugin from "@/utils/globalMethods";
 Vue.use(GlobalMethodsPlugin);
+VueClipboard.config.autoSetContainer = true;
+Vue.use(VueClipboard);
 
 Vue.config.productionTip = false;
 
