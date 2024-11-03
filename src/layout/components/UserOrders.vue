@@ -69,7 +69,7 @@
                   </el-button>
                   <el-button
                     icon="el-icon-download"
-                    :disabled="item.case.paper_case.stage != 2"
+                    :disabled="item.case.paper_case.stage != 2 || downStatus"
                     type="text"
                     @click="downLoadPaper(orderObj)"
                   >
@@ -176,7 +176,7 @@ export default {
     // 计算属性
   },
   methods: {
-    pushStep3(row) {
+    pushStep3: _.debounce(function (row) {
       console.log("statsrow", row);
       // 跳转到写论文页面
       this.$router.push({
@@ -196,22 +196,20 @@ export default {
           paperPercent: parseFloat(randomNum.toFixed(2)),
         });
       });
-    },
-    downLoadPaper(item) {
+    }, 300),
+    downLoadPaper: _.debounce(function (item) {
       console.log("item", item.order.out_trade_no);
       this.downStatus = true;
       paperPack({ out_trade_no: item.order.out_trade_no }).then((res) => {
         console.log("ad", res.result.zip_url);
         this.downStatus = false;
-
-        window.open(res.result.zip_url, "_target");
+        window.open(res.result.zip_url, "_blank");
       });
-      // window.open(item.case.file_urls.pdf, "_target");
-    },
-    openPaper(item) {
+    }, 300),
+    openPaper: _.debounce(function (item) {
       console.log("item", item);
-      window.open(item.case.file_urls.pdf, "_target");
-    },
+      window.open(item.case.file_urls.pdf, "_blank");
+    }, 300),
     refresh() {
       this.handleCurrentChange(1);
     },

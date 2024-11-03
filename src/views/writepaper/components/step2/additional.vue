@@ -145,10 +145,41 @@
       </div>
       <p class="fuTitle">附加服务</p>
       <div class="adds">
+        <div
+          v-for="(item, index) in supportedProducts"
+          :label="item"
+          :key="index + 'fu'"
+          class="labelBox floorBox"
+        >
+          <div class="left">
+            <img
+              v-if="true"
+              class="home-icon"
+              src="@/assets/images/bank-white.png"
+              alt=""
+            />
+            <img
+              v-else
+              class="home-icon"
+              src="@/assets/images/bank-dark.png"
+              alt=""
+            />
+            {{ item.name }}
+            <span v-show="item.description">({{ item.description }})</span>
+          </div>
+          <div class="right">
+            <svg v-if="true" class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-duigou-cu"></use>
+            </svg>
+            <svg v-else class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-fangkuang"></use>
+            </svg>
+          </div>
+        </div>
         <!-- <div class="item">
                     <p></p>
                 </div> -->
-        <el-checkbox-group
+        <!-- <el-checkbox-group
           class="addService"
           v-model="checkboxGroup1"
           @change="fuChange"
@@ -168,7 +199,8 @@
               </div>
             </div>
           </el-checkbox>
-        </el-checkbox-group>
+        </el-checkbox-group> -->
+
         <!-- <p class="tips" @click="reduceAIGC">
           AIGC率知网超25%<span>包退费</span>
         </p> -->
@@ -215,7 +247,9 @@ export default {
             product.name == "任务书" ||
             product.name == "调查问卷")
       );
-      this.checkboxGroup1 = listData;
+      // this.checkboxGroup1 = listData;
+      this.$store.dispatch("paper/setAdditionList", listData);
+
       return listData;
     },
     ...mapGetters(["requestForm", "homeData"]),
@@ -251,4 +285,76 @@ export default {
 // }
 // @media only screen and (max-width: 768px) {
 // }
+
+.floorBox {
+  font-size: 16px;
+  width: 150px;
+  height: 40px;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #cccccc;
+  line-height: 40px;
+  padding-left: 14px;
+  padding-right: 16px;
+  margin-bottom: 22px;
+  background: #3355ff;
+  color: #fff;
+  border-color: #3355ff;
+  > div {
+    display: inline-block;
+
+    &.right {
+      padding-left: 5px;
+    }
+
+    .home-icon {
+      width: 18px;
+      height: 18px;
+      transform: translateY(3px);
+    }
+  }
+  .left {
+    flex: none;
+
+    svg.icon {
+      width: 35px;
+      height: 35px;
+    }
+  }
+
+  .right {
+    flex-grow: 1;
+    position: relative;
+    padding-left: 5px;
+
+    .alignR {
+      text-align: right;
+      position: absolute;
+      right: 0;
+      bottom: -8px;
+
+      svg.icon {
+        width: 14px;
+        height: 14px;
+        color: #018417;
+      }
+    }
+
+    p {
+      margin: 0;
+      line-height: 1.5em;
+    }
+
+    p:first-child {
+      padding: 5px 0;
+    }
+  }
+}
+.adds {
+  display: flex;
+  padding-left: 10px;
+  .floorBox {
+    margin-right: 20px;
+  }
+}
 </style>
