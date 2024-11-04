@@ -22,6 +22,10 @@ import "@/assets/js/iconfont";
 import i18n from "./lang"; // internationalization
 import VueClipboard from "vue-clipboard2";
 
+const VConsole = require("vconsole");
+const vConsole = new VConsole();
+console.log("VConsole is enabled");
+
 import * as filters from "./filters"; // global filters
 Object.keys(filters).forEach((key) => {
   Vue.filter(key, filters[key]);
