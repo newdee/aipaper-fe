@@ -119,6 +119,21 @@ export const constantRoutes = [
           inDevelopment: false,
         },
       },
+      // 降重/降aigc率
+      {
+        path: "reduceRepetition",
+        name: "reduceRepetition",
+        component: () => import("@/views/reduceRepetition/index.vue"),
+        meta: {
+          keepAlive: true,
+          title: "reduceRepetition",
+          // title: "降重/降AIGC率",
+          icon: "tree",
+          id: "5-8",
+          parentId: "5",
+          inDevelopment: false,
+        },
+      },
       {
         path: "explore",
         name: "explore",
@@ -206,21 +221,6 @@ export const constantRoutes = [
           id: "5-7",
           parentId: "5",
           inDevelopment: true,
-        },
-      },
-      // 降重/降aigc率
-      {
-        path: "reduceRepetition",
-        name: "reduceRepetition",
-        component: () => import("@/views/reduceRepetition/index.vue"),
-        meta: {
-          keepAlive: true,
-          title: "reduceRepetition",
-          // title: "降重/降AIGC率",
-          icon: "tree",
-          id: "5-8",
-          parentId: "5",
-          inDevelopment: false,
         },
       },
     ],

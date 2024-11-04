@@ -142,6 +142,22 @@
           >
             我的个人主页
           </div>
+          <div
+            v-if="
+              userInfo.permission == 'AGENT' ||
+              userInfo.permission == 'SUPER_ADMIN'
+            "
+            :class="[
+              'text-main items-center siderbar-item',
+              'userInfo' == $route.name ? 'active' : '',
+            ]"
+            @click="
+              drawerStatus = false;
+              $jumpUrl('/user/promotion');
+            "
+          >
+            {{ $t("navbar.myPromotion") }}
+          </div>
         </template>
         <div
           class="text-main items-center siderbar-item"
@@ -161,6 +177,7 @@
         >
           我的大纲
         </div>
+        <div></div>
         <template v-for="(route, j) in routerList">
           <div
             :key="'route_in_right_nav_' + j"

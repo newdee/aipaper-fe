@@ -207,6 +207,8 @@ export default {
   components: { inputCode },
   mounted() {
     this.getSubdomain();
+    console.log("location", window.location);
+    console.log("hostname", window.location.hostname);
   },
   methods: {
     getSubdomain() {
