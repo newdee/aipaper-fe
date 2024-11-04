@@ -234,6 +234,7 @@
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   margin-top: 32px;
   padding: 16px;
+  margin-right: 220px;
 }
 
 .tipOutline {
@@ -261,7 +262,7 @@
   color: $menuActiveText;
   position: absolute;
   top: 10px;
-  font-size: 14px;
+  font-size: 16px;
   height: 100%;
   right: 0;
   display: flex;
@@ -274,6 +275,21 @@
 
   & > div {
     background-color: #fff;
+  }
+  .addL1Item {
+    font-size: 18px;
+    position: absolute;
+    top: -19px;
+    right: 30px;
+    color: #303133;
+    margin-right: 10px;
+  }
+  .itemL2Item {
+    margin-right: 10px;
+  }
+  .insetImgSpan {
+    font-size: 14px;
+    margin-right: 10px;
   }
 }
 
@@ -384,6 +400,7 @@
   background-color: #fff;
   margin-top: 16px;
   border-radius: 12px;
+  position: relative;
 }
 
 .slotContentBox {
@@ -462,4 +479,22 @@
   margin-bottom: 20px;
   font-size: 15px;
   color: #606266;
+}
+.tipsCon {
+  margin-bottom: 30px;
+  line-height: 20px;
+  margin-top: -20px;
+  font-size: 12px;
+  p {
+    display: flex;
+    align-items: center;
+  }
+  .tipsCro {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #202020;
+    margin-right: 5px;
+  }
 }
