@@ -27,7 +27,14 @@
     <div :class="['uesrInputBox', index == 2 ? 'tabMainActive' : '']">
       <!-- 科目与题目 -->
       <div class="selectLang formItem">
-        <p class="formItemLabel">科目与题目</p>
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="不支持无意义题目, 题目控制在60字以内"
+          placement="top"
+        >
+          <p class="formItemLabel">科目与题目</p>
+        </el-tooltip>
         <div class="formItemCon phoneFlex">
           <el-cascader
             placeholder="请选择科目"
@@ -40,7 +47,7 @@
           <div class="userInputCon">
             <el-input
               v-model="requestForm.title"
-              maxlength="50"
+              maxlength="60"
               show-word-limit
               placeholder="请输入完整题目，题目越完整大纲越准确"
             ></el-input>
@@ -49,7 +56,7 @@
       </div>
       <div class="firstItem secondItem">
         <div class="selectLang formItem">
-          <p class="formItemLabel">生成语言</p>
+          <p class="formItemLabel">论文语言</p>
           <div class="formItemCon">
             <el-select v-model="requestForm.language" placeholder="请选择">
               <el-option
@@ -77,41 +84,48 @@
                 :label="item.name"
                 :value="item.name"
               >
-                <div class="labelBox">
-                  <div class="left">
-                    <!-- <svg class="icon svg-icon" aria-hidden="true">
+                <el-tooltip class="item" effect="dark" placement="top">
+                  <template slot="content">
+                    <p style="width: 200px; line-height: 20px">
+                      {{ typeTips[item.name] }}
+                    </p>
+                  </template>
+                  <div class="labelBox">
+                    <div class="left">
+                      <!-- <svg class="icon svg-icon" aria-hidden="true">
                     <use xlink:href="#icon-tubiaozoushitu"></use>
                   </svg> -->
-                    <img
-                      v-if="requestForm.type == item.name"
-                      class="home-icon"
-                      src="@/assets/images/bank-white.png"
-                      alt=""
-                    />
-                    <img
-                      v-else
-                      class="home-icon"
-                      src="@/assets/images/bank-dark.png"
-                      alt=""
-                    />
-                    {{ item.name }}
-                    <span v-show="item.description"
-                      >({{ item.description }})</span
-                    >
+                      <img
+                        v-if="requestForm.type == item.name"
+                        class="home-icon"
+                        src="@/assets/images/bank-white.png"
+                        alt=""
+                      />
+                      <img
+                        v-else
+                        class="home-icon"
+                        src="@/assets/images/bank-dark.png"
+                        alt=""
+                      />
+                      {{ item.name }}
+                      <span v-show="item.description"
+                        >({{ item.description }})</span
+                      >
+                    </div>
+                    <div class="right">
+                      <svg
+                        v-if="requestForm.type == item.name"
+                        class="icon svg-icon"
+                        aria-hidden="true"
+                      >
+                        <use xlink:href="#icon-duigou-cu"></use>
+                      </svg>
+                      <svg v-else class="icon svg-icon" aria-hidden="true">
+                        <use xlink:href="#icon-fangkuang"></use>
+                      </svg>
+                    </div>
                   </div>
-                  <div class="right">
-                    <svg
-                      v-if="requestForm.type == item.name"
-                      class="icon svg-icon"
-                      aria-hidden="true"
-                    >
-                      <use xlink:href="#icon-duigou-cu"></use>
-                    </svg>
-                    <svg v-else class="icon svg-icon" aria-hidden="true">
-                      <use xlink:href="#icon-fangkuang"></use>
-                    </svg>
-                  </div>
-                </div>
+                </el-tooltip>
               </el-radio>
             </el-radio-group>
           </div>
@@ -120,7 +134,7 @@
       <div class="firstItem secondItem">
         <!-- 论文水平 -->
         <div class="selectLang formItem">
-          <p class="formItemLabel">论文水平选择</p>
+          <p class="formItemLabel">论文水平</p>
           <div class="formItemCon">
             <el-radio-group v-model="requestForm.type2">
               <el-radio
@@ -129,52 +143,61 @@
                 :label="item.name"
                 :value="item.name"
               >
-                <div class="labelBox">
-                  <div class="left">
-                    <!-- <svg class="icon svg-icon" aria-hidden="true">
+                <el-tooltip
+                  class="item custom-tooltip"
+                  effect="dark"
+                  placement="top"
+                >
+                  <template slot="content">
+                    <p style="width: 200px; line-height: 20px">
+                      {{ item.description }}
+                    </p>
+                  </template>
+                  <div class="labelBox">
+                    <div class="left">
+                      <!-- <svg class="icon svg-icon" aria-hidden="true">
                     <use xlink:href="#icon-tubiaozoushitu"></use>
                   </svg> -->
-                    <img
-                      v-if="requestForm.type2 == item.name"
-                      class="home-icon"
-                      src="@/assets/images/bank-white.png"
-                      alt=""
-                    />
-                    <img
-                      v-else
-                      class="home-icon"
-                      src="@/assets/images/bank-dark.png"
-                      alt=""
-                    />
-                    {{ item.name }}
-                    <span v-show="item.description"
-                      >({{ item.description }})</span
-                    >
+                      <img
+                        v-if="requestForm.type2 == item.name"
+                        class="home-icon"
+                        src="@/assets/images/bank-white.png"
+                        alt=""
+                      />
+                      <img
+                        v-else
+                        class="home-icon"
+                        src="@/assets/images/bank-dark.png"
+                        alt=""
+                      />
+                      {{ item.name }}
+                      <!-- <span v-show="item.description"></span> -->
+                    </div>
+                    <div class="right">
+                      <svg
+                        v-if="requestForm.type2 == item.name"
+                        class="icon svg-icon"
+                        aria-hidden="true"
+                      >
+                        <use xlink:href="#icon-duigou-cu"></use>
+                      </svg>
+                      <svg v-else class="icon svg-icon" aria-hidden="true">
+                        <use xlink:href="#icon-fangkuang"></use>
+                      </svg>
+                    </div>
                   </div>
-                  <div class="right">
-                    <svg
-                      v-if="requestForm.type2 == item.name"
-                      class="icon svg-icon"
-                      aria-hidden="true"
-                    >
-                      <use xlink:href="#icon-duigou-cu"></use>
-                    </svg>
-                    <svg v-else class="icon svg-icon" aria-hidden="true">
-                      <use xlink:href="#icon-fangkuang"></use>
-                    </svg>
-                  </div>
-                </div>
+                </el-tooltip>
               </el-radio>
             </el-radio-group>
           </div>
         </div>
-        <div class="selectLang formItem firstItem">
-          <p class="formItemLabel">选择论文字数</p>
+        <div class="selectLang formItem wordItem firstItem">
+          <p class="formItemLabel">论文字数</p>
           <div class="formItemCon">
             <el-slider
               v-model="requestForm.word_count"
               :min="3000"
-              :max="25000"
+              :max="30000"
               :marks="marks"
               :step="1000"
             >
@@ -241,6 +264,13 @@ export default {
         children: "subcategories",
         expandTrigger: "hover",
       },
+      typeTips: {
+        专科: "产出的论文学术深度一般，可通过论文水平进一步控制论文深度",
+        本科: "产出的论文学术深度中等，可通过论文水平进一步控制论文深度",
+        研究生: "产出的论文学术深度较高，可通过论文水平进一步控制论文深度",
+        结课论文: "专科、本科课论文水准，可通过论文水平进一步控制论文深度",
+      },
+
       options: [
         {
           value: "中文",
@@ -265,12 +295,14 @@ export default {
       ],
       type2List: [
         {
-          name: "学民版",
-          description: "",
+          name: "初级",
+          description:
+            "选定学历等级会限定论文初始等级，在此基础上选择【初级】生成的论文相对通俗易懂，使用的方法不超过本科水平，论文写作深度和水平容易理解。",
         },
         {
-          name: "学霸版",
-          description: "",
+          name: "高级",
+          description:
+            "选定学历等级会限定论文初始等级，在此基础上选择【高级】生成的论文会有相对专业的方法以及结论，论文写作深度高一些。",
         },
       ],
       requestKey: "是是是",
@@ -286,6 +318,12 @@ export default {
             color: "#1989FA",
           },
           label: this.$createElement("strong", "两万字"),
+        },
+        30000: {
+          style: {
+            color: "#E6A23C",
+          },
+          label: this.$createElement("strong", "30000"),
         },
       },
     };
@@ -705,5 +743,8 @@ export default {
 }
 .leftType {
   margin-left: 60px;
+}
+.wordItem {
+  margin-left: 32px;
 }
 </style>
