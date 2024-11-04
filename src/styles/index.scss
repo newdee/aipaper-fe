@@ -274,3 +274,8 @@ li {
   cursor: not-allowed !important;
   color: #777777d5 !important;
 }
+::v-deep .el-tooltip__popper {
+  max-width: 150px; /* 设置最大宽度为150像素，您可以根据需要调整 */
+  white-space: normal; /* 允许文本换行 */
+  word-wrap: break-word; /* 在必要时打断单词以换行 */
+}

@@ -1,5 +1,8 @@
 <template>
   <div class="step2Box">
+    <div>
+      <tips></tips>
+    </div>
     <div id="top" class="outLineTitle">
       <p class="oulineTitlePaper"><span>题目: </span>{{ requestForm.title }}</p>
       <p class="outlineTitleDesc">
@@ -14,10 +17,15 @@
       element-loading-text="AI帮写中,请稍等...."
       class="outlineMain"
     >
-      <p class="tips">拖拽章节,可实现章节排序</p>
+      <!-- <p class="tips">拖拽章节,可实现章节排序</p> -->
 
       <div class="tipOutline">
-        <el-tooltip class="item" effect="dark" content="AI帮写" placement="top">
+        <el-tooltip class="item" effect="dark" placement="top">
+          <template slot="content">
+            <p style="width: 200px; line-height: 20px">
+              当新增章节但是没有描述插入内容，或者当选择开启图表、代码、Latex公式等但没有提供详细说明，可以点击AI帮写，AI会帮你补充细节
+            </p>
+          </template>
           <el-button
             type="primary"
             size="mini"
@@ -95,17 +103,17 @@
                   placement="top"
                   content="插入图表配置"
                 >
-                  <span @click="showImgF(data)">
-                    <i class="el-icon-edit-outline"></i>
-                    插入图表
+                  <span class="insetImgSpan" @click="showImgF(data)">
+                    <i style="color: #909399" class="el-icon-edit-outline"></i>
+                    <span style="color: #67c23a">插入图表</span>
                   </span>
                 </el-tooltip>
                 <!-- 新增 -->
                 <el-tooltip
                   v-if="data.level == 1"
-                  class="item"
+                  class="item addL1Item"
                   effect="dark"
-                  content="新增章节"
+                  content="在当前一章后新增一章"
                   placement="top"
                 >
                   <i
@@ -115,9 +123,9 @@
                 </el-tooltip>
                 <el-tooltip
                   v-else
-                  class="item"
+                  class="item itemL2Item"
                   effect="dark"
-                  content="新增小节"
+                  content="在当前小节后新增一个小节"
                   placement="top"
                 >
                   <i
@@ -129,7 +137,7 @@
                 <el-tooltip
                   class="item"
                   effect="dark"
-                  content="删除"
+                  content="删除本章/本小节"
                   placement="top"
                 >
                   <i
@@ -308,9 +316,19 @@
       :lock-scroll="false"
       title="插入图表"
       :visible.sync="imgExcelSetStatus"
-      width="80%"
+      width="40%"
       label-width="130px"
     >
+      <div class="tipsCon">
+        <p>
+          <span class="tipsCro"></span
+          >可以点击左边的开关，开启代表想在本小节添加对应的内容，关闭代表不添加；
+        </p>
+        <p>
+          <span class="tipsCro"></span
+          >右侧的内容说明如果不想写可以留空，等最后点击【AI帮写】，AI会自动补充合适的内容。
+        </p>
+      </div>
       <el-form
         :model="numberValidateForm"
         ref="numberValidateForm"
@@ -463,7 +481,7 @@
         <el-slider
           v-model="paper_words"
           :min="1000"
-          :max="25000"
+          :max="30000"
           :marks="marks"
           :step="1000"
         >
@@ -492,7 +510,7 @@ import additional from "./step2/additional.vue";
 import eventBus from "@/utils/eventBus";
 import { outlineStatus } from "@/api/user";
 import polling from "@/utils/get-order-detail.js";
-
+import tips from "./step2/tips";
 export default {
   name: "step2",
   data() {
@@ -517,6 +535,12 @@ export default {
             color: "#1989FA",
           },
           label: this.$createElement("strong", "20000字"),
+        },
+        30000: {
+          style: {
+            color: "#E6A23C",
+          },
+          label: this.$createElement("strong", "三万字"),
         },
       },
       numberValidateForm: {
@@ -985,6 +1009,7 @@ export default {
   },
   components: {
     additional,
+    tips,
   },
   props: {
     outlineData: {
