@@ -136,9 +136,9 @@
         <div class="selectLang formItem">
           <p class="formItemLabel">论文水平</p>
           <div class="formItemCon">
-            <el-radio-group v-model="requestForm.type2">
+            <el-radio-group v-model="requestForm.paper_level">
               <el-radio
-                v-for="item in type2List"
+                v-for="item in paper_levelList"
                 :key="item.name"
                 :label="item.name"
                 :value="item.name"
@@ -159,7 +159,7 @@
                     <use xlink:href="#icon-tubiaozoushitu"></use>
                   </svg> -->
                       <img
-                        v-if="requestForm.type2 == item.name"
+                        v-if="requestForm.paper_level == item.name"
                         class="home-icon"
                         src="@/assets/images/bank-white.png"
                         alt=""
@@ -175,7 +175,7 @@
                     </div>
                     <div class="right">
                       <svg
-                        v-if="requestForm.type2 == item.name"
+                        v-if="requestForm.paper_level == item.name"
                         class="icon svg-icon"
                         aria-hidden="true"
                       >
@@ -252,7 +252,7 @@ export default {
         threeCon: false,
         language: "中文",
         type: "本科",
-        type2: "学民版",
+        paper_level: "初级",
         field: ["哲学", "哲学类"],
         key: "",
         word_count: 5000,
@@ -293,7 +293,7 @@ export default {
           label: "西班牙语",
         },
       ],
-      type2List: [
+      paper_levelList: [
         {
           name: "初级",
           description:
@@ -419,6 +419,7 @@ export default {
           language: this.requestForm.language,
           field: this.requestForm.field[1],
           type: this.requestForm.type,
+          paper_level: this.requestForm.paper_level,
           word_count: this.requestForm.word_count,
         };
         outlineCreate(data).then((res) => {
