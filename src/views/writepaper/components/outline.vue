@@ -419,7 +419,7 @@ export default {
           language: this.requestForm.language,
           field: this.requestForm.field[1],
           type: this.requestForm.type,
-          paper_level: this.requestForm.paper_level,
+          paper_level: this.requestForm.paper_level == "初级" ? 0 : 3,
           word_count: this.requestForm.word_count,
         };
         outlineCreate(data).then((res) => {
