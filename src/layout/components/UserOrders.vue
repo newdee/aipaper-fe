@@ -196,49 +196,76 @@ export default {
         payment_method: row.order.payment_method, // 支付方式，必传
       };
       ordersRepay(data).then((res) => {
-        console.log("dddd");
-        let payUrl = res.result.pay_link;
-
-        if (payUrl) {
-          window.open(payUrl, "_blank");
+        const targetPath = "/main/writepaper";
+        const currentPath = this.$route.path;
+        // 检查当前路径是否与目标路径相同
+        if (currentPath !== targetPath) {
+          this.$router
+            .push({
+              path: "/main/writepaper",
+              // query: { key1: row.key1, field: row.field },
+            })
+            .then(() => {
+              this.$nextTick(() => {
+                this.sendPayFinish(res);
+              });
+            });
+        } else {
+          this.sendPayFinish(res);
         }
-        this.$router.push({
-          path: "/main/writepaper",
-          // query: { key1: row.key1, field: row.field },
-        });
-        // 关闭弹窗
-        eventBus.emit("orderDialogChange", false);
-        this.$nextTick(() => {
-          eventBus.emit("showEmitPaperDialog", {
-            requestKey: res.result.out_trade_no,
-            payStatus: 5,
-            paperPercent: 0,
-          });
-        });
+      });
+    },
+    sendPayFinish(res) {
+      let payUrl = res.result.pay_link;
+      if (payUrl) {
+        window.open(payUrl, "_blank");
+      }
+      // 关闭弹窗
+      eventBus.emit("orderDialogChange", false);
+      eventBus.emit("showEmitPaperDialog", {
+        requestKey: res.result.out_trade_no,
+        payStatus: 5,
+        paperPercent: 0,
       });
     },
     pushStep3: _.debounce(function (row) {
+      const targetPath = "/main/writepaper";
+      const currentPath = this.$route.path;
+      // 检查当前路径是否与目标路径相同
+      if (currentPath !== targetPath) {
+        this.$router
+          .push({
+            path: "/main/writepaper",
+            // query: { key1: row.key1, field: row.field },
+          })
+          .then(() => {
+            this.$nextTick(() => {
+              this.pushFinish(row);
+            });
+          });
+      } else {
+        this.pushFinish(row);
+      }
+    }, 300),
+    pushFinish(row) {
       console.log("statsrow", row);
       // 跳转到写论文页面
-      this.$router.push({
-        path: "/main/writepaper",
-        // query: { key1: row.key1, field: row.field },
-      });
+
       eventBus.emit("orderDialogChange", false);
 
       // 关闭弹窗
       // 生成一个 0 到 10 之间的随机数，然后加上 30
-      // const randomNum = Math.random() * 10 + 30;
-      // // 使用 toFixed(2) 保留两位小数，并将结果转换为浮点数
+      const randomNum = Math.random() * 10 + 30;
+      // 使用 toFixed(2) 保留两位小数，并将结果转换为浮点数
 
-      // this.$nextTick(() => {
-      //   eventBus.emit("showEmitPaperDialog", {
-      //     requestKey: row.order.out_trade_no,
-      //     payStatus: 4,
-      //     paperPercent: parseFloat(randomNum.toFixed(2)),
-      //   });
-      // });
-    }, 300),
+      this.$nextTick(() => {
+        eventBus.emit("showEmitPaperDialog", {
+          requestKey: row.order.out_trade_no,
+          payStatus: 4,
+          paperPercent: parseFloat(randomNum.toFixed(2)),
+        });
+      });
+    },
     downLoadPaper: _.debounce(function (item) {
       console.log("item", item);
       this.downStatus = true;
@@ -265,15 +292,32 @@ export default {
       });
     }, 300),
     openPaper: _.debounce(function (item) {
-      console.log("item", item);
-      // window.open(item.case.file_urls.pdf, "_blank");
-      // 关闭弹窗
-      eventBus.emit("orderDialogChange", false);
-      // 保存订单ID
-      this.$store.dispatch("app/toggleCurrentOrder", item.order);
-
-      let realUrl = item.order_item_response[0].case.file_urls.pdf;
-      eventBus.emit("pdfSuccessClick", realUrl); // 发布事件
+      const targetPath = "/main/writepaper";
+      const currentPath = this.$route.path;
+      // 检查当前路径是否与目标路径相同
+      if (currentPath !== targetPath) {
+        this.$router.push({ path: targetPath }).then(() => {
+          // 确保 DOM 更新完成后再执行后续代码
+          this.$nextTick(() => {
+            console.log("item", item);
+            // 关闭弹窗
+            eventBus.emit("orderDialogChange", false);
+            // 保存订单ID
+            this.$store.dispatch("app/toggleCurrentOrder", item.order);
+            let realUrl = item.order_item_response[0].case.file_urls.pdf;
+            eventBus.emit("pdfSuccessClick", realUrl); // 发布事件
+          });
+        });
+      } else {
+        // 如果已经在目标路径，直接执行后续逻辑
+        this.$nextTick(() => {
+          console.log("item", item);
+          eventBus.emit("orderDialogChange", false);
+          this.$store.dispatch("app/toggleCurrentOrder", item.order);
+          let realUrl = item.order_item_response[0].case.file_urls.pdf;
+          eventBus.emit("pdfSuccessClick", realUrl);
+        });
+      }
     }, 300),
     refresh() {
       this.handleCurrentChange(1);

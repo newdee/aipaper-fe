@@ -91,26 +91,24 @@ export default {
   },
   methods: {
     jumpStep2(row) {
-      this.$router.push({
-        path: "/main/writepaper",
-      });
-      console.log("row-------------", row);
-      // row.key1
-      let _this = this;
-      setTimeout(() => {
-        _this.$router.push({
+      this.$router
+        .push({
           path: "/main/writepaper",
           query: { key1: row.key1, field: row.field },
+        })
+        .then(() => {
+          this.$nextTick(() => {
+            let requestForm = {
+              title: row.title,
+              threeCon: false,
+              language: row.language,
+              type: row.type,
+              field: ["哲学", row.field],
+            };
+            eventBus.emit("setFormData", requestForm); // 发布事件
+            eventBus.emit("orderDialogChange", false);
+          });
         });
-        let requestForm = {
-          title: row.title,
-          threeCon: false,
-          language: row.language,
-          type: row.type,
-          field: ["哲学", row.field],
-        };
-        eventBus.emit("setFormData", requestForm); // 发布事件
-      }, 1000);
     },
     // 定义方法
     handleCurrentChange: throttle(function () {
