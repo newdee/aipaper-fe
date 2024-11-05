@@ -48,6 +48,13 @@ export function userProxy(data) {
     data,
   });
 }
+export function ordersRepay(data) {
+  return request({
+    url: "/api/ai-paper/orders/repay",
+    method: "post",
+    data,
+  });
+}
 export function outlineCreate(data) {
   return request({
     url: "/api/ai-paper/paper/outline/create",

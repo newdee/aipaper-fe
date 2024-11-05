@@ -117,8 +117,9 @@
                 @click="sendPay(orderObj)"
                 v-if="orderObj.order.payment_status == 'WAIT_BUYER_PAY'"
                 style="color: crimson"
-                >去支付</span
               >
+                去支付
+              </span>
             </div>
           </div>
         </div>
@@ -143,7 +144,7 @@
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 import { getList } from "@/api/table";
-import { getOrderList, delOrder, paperPack } from "@/api/user";
+import { getOrderList, delOrder, paperPack, ordersRepay } from "@/api/user";
 import { throttle } from "lodash";
 import eventBus from "@/utils/eventBus";
 
@@ -188,7 +189,34 @@ export default {
     // 计算属性
   },
   methods: {
-    sendPay(row) {},
+    sendPay(row) {
+      console.log("row", row);
+      let data = {
+        out_trade_no: row.order.out_trade_no, // 订单编号，必传
+        payment_method: row.order.payment_method, // 支付方式，必传
+      };
+      ordersRepay(data).then((res) => {
+        console.log("dddd");
+        let payUrl = res.result.pay_link;
+
+        if (payUrl) {
+          window.open(payUrl, "_blank");
+        }
+        this.$router.push({
+          path: "/main/writepaper",
+          // query: { key1: row.key1, field: row.field },
+        });
+        // 关闭弹窗
+        eventBus.emit("orderDialogChange", false);
+        this.$nextTick(() => {
+          eventBus.emit("showEmitPaperDialog", {
+            requestKey: res.result.out_trade_no,
+            payStatus: 5,
+            paperPercent: 0,
+          });
+        });
+      });
+    },
     pushStep3: _.debounce(function (row) {
       console.log("statsrow", row);
       // 跳转到写论文页面
@@ -197,18 +225,19 @@ export default {
         // query: { key1: row.key1, field: row.field },
       });
       eventBus.emit("orderDialogChange", false);
+
       // 关闭弹窗
       // 生成一个 0 到 10 之间的随机数，然后加上 30
-      const randomNum = Math.random() * 10 + 30;
-      // 使用 toFixed(2) 保留两位小数，并将结果转换为浮点数
+      // const randomNum = Math.random() * 10 + 30;
+      // // 使用 toFixed(2) 保留两位小数，并将结果转换为浮点数
 
-      this.$nextTick(() => {
-        eventBus.emit("showEmitPaperDialog", {
-          requestKey: row.order.out_trade_no,
-          payStatus: 4,
-          paperPercent: parseFloat(randomNum.toFixed(2)),
-        });
-      });
+      // this.$nextTick(() => {
+      //   eventBus.emit("showEmitPaperDialog", {
+      //     requestKey: row.order.out_trade_no,
+      //     payStatus: 4,
+      //     paperPercent: parseFloat(randomNum.toFixed(2)),
+      //   });
+      // });
     }, 300),
     downLoadPaper: _.debounce(function (item) {
       console.log("item", item);

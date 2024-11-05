@@ -8,7 +8,7 @@
       :close-on-click-modal="false"
       title="订单查询"
       :visible.sync="ownPayStatus"
-      width="40%"
+      :width="device == 'mobile' ? '90%' : '40%'"
       class="order-dialog"
       :before-close="handleClose"
     >
@@ -128,7 +128,8 @@ export default {
   },
   computed: {
     // 计算属性
-    ...mapGetters(["pollingStatus"]),
+
+    ...mapGetters(["pollingStatus", "device"]),
   },
 
   methods: {
