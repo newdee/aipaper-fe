@@ -4,6 +4,7 @@
       <i class="el-icon-arrow-left" @click="goBack"></i>
       账号设置
     </div>
+
     <div class="userInfoBox">
       <!-- 页面名称 -->
       <div class="info">
@@ -47,16 +48,120 @@
           <el-button @click="$devf">编辑</el-button>
         </div>
       </div>
+      <div
+        v-if="
+          userInfo.permission == 'AGENT' || userInfo.permission == 'SUPER_ADMIN'
+        "
+        class="userUploadBox"
+      >
+        <!-- 公众号二维码 -->
+        <div class="uploadLi">
+          <el-upload
+            class="imgUploader"
+            action="https://api.mixpaper.cn/api/ai-paper/user/edit"
+            :data="{ image: 2 }"
+            :show-file-list="false"
+            :on-success="handleSuccess"
+            :on-error="handleError"
+            :before-upload="beforeAvatarUpload"
+            :http-request="handleHttpRequest"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <i v-else class="el-icon-plus liImgLi"></i>
+          </el-upload>
+          <p>公众号二维码</p>
+        </div>
+        <div class="uploadLi">
+          <el-upload
+            class="imgUploader"
+            action="https://api.mixpaper.cn/api/ai-paper/user/edit"
+            :data="{ image: 2 }"
+            :show-file-list="false"
+            :on-success="handleSuccess"
+            :on-error="handleError"
+            :before-upload="beforeAvatarUpload"
+            :http-request="handleHttpRequest"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <i v-else class="el-icon-plus liImgLi"></i>
+          </el-upload>
+          <p>公众号二维码</p>
+        </div>
+        <!-- 小红书 -->
+        <div class="uploadLi">
+          <el-upload
+            class="imgUploader"
+            action="https://api.mixpaper.cn/api/ai-paper/user/edit"
+            :data="{ image: 2 }"
+            :show-file-list="false"
+            :on-success="handleSuccess"
+            :on-error="handleError"
+            :before-upload="beforeAvatarUpload"
+            :http-request="handleHttpRequest"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <i v-else class="el-icon-plus liImgLi"></i>
+          </el-upload>
+          <p>小红书</p>
+        </div>
+        <!-- B站 -->
+        <div class="uploadLi">
+          <el-upload
+            class="imgUploader"
+            action="https://api.mixpaper.cn/api/ai-paper/user/edit"
+            :data="{ image: 2 }"
+            :show-file-list="false"
+            :on-success="handleSuccess"
+            :on-error="handleError"
+            :before-upload="beforeAvatarUpload"
+            :http-request="handleHttpRequest"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <i v-else class="el-icon-plus liImgLi"></i>
+          </el-upload>
+          <p>B站</p>
+        </div>
+        <!-- 联系客服 -->
+
+        <div class="uploadLi">
+          <el-upload
+            class="imgUploader"
+            action="https://api.mixpaper.cn/api/ai-paper/user/edit"
+            :data="{ image: 2 }"
+            :show-file-list="false"
+            :on-success="handleSuccess"
+            :on-error="handleError"
+            :before-upload="beforeAvatarUpload"
+            :http-request="handleHttpRequest"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <i v-else class="el-icon-plus liImgLi"></i>
+          </el-upload>
+          <p>联系客服</p>
+        </div>
+        <!-- 商务合作 -->
+        <div class="uploadLi">
+          <el-upload
+            class="imgUploader"
+            action="https://api.mixpaper.cn/api/ai-paper/user/edit"
+            :data="{ image: 2 }"
+            :show-file-list="false"
+            :on-success="handleSuccess"
+            :on-error="handleError"
+            :before-upload="beforeAvatarUpload"
+            :http-request="handleHttpRequest"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <i v-else class="el-icon-plus liImgLi"></i>
+          </el-upload>
+          <p>商务合作</p>
+        </div>
+      </div>
       <div class="info">
         <el-button @click="loginOut">退出登录</el-button>
       </div>
     </div>
-    <el-dialog
-      title="编辑头像"
-      :visible.sync="dialogVisible"
-      width="500px"
-      :before-close="uploadImg"
-    >
+    <el-dialog title="编辑头像" :visible.sync="dialogVisible" width="500px">
       <div class="imgEditBox">
         <div class="upload">
           <el-upload
@@ -118,6 +223,9 @@ export default {
     ...mapGetters(["avatar", "name", "userInfo"]),
   },
   methods: {
+    openModal() {
+      this.$refs.globalModal.open();
+    },
     handleHttpRequest({ file, data, onSuccess, onError }) {
       const formData = new FormData();
       formData.append("file", file);
@@ -269,8 +377,7 @@ export default {
 .upload {
   flex: none;
 }
-.imgbox {
-}
+
 .avatar-uploader {
   display: inline-block;
   width: 300px;
@@ -291,6 +398,41 @@ export default {
   height: 298px;
   line-height: 298px;
   text-align: center;
+}
+.userUploadBox {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.uploadLi {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 15px;
+  p {
+    margin-top: 10px;
+    color: #606266;
+  }
+  .imgUploader {
+    width: 100px;
+    height: 100px;
+    border-radius: 6px;
+    border: 1px dashed #d9d9d9;
+  }
+  .liImgLi {
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+  }
+}
+.imgUploader {
+  width: 100px;
+  height: 100px;
+  background: #fff;
 }
 .avatar {
   width: 298px;

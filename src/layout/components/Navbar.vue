@@ -363,7 +363,7 @@ export default {
 .navMain {
   display: flex;
   padding: 0 10px;
-  max-width: 1100px;
+  // max-width: 1100px;
   align-items: center;
   height: 100%;
   margin: 0 auto;
@@ -397,7 +397,7 @@ export default {
       border-radius: 50%;
       width: 35px;
       height: 35px;
-      background: #ff8cb0;
+      background: #909399;
       text-align: center;
       line-height: 35px;
       font-size: 20px;

@@ -4,7 +4,7 @@
     <!-- <div style="padding: 0 10px">
       <swiper-one class="topSwiper"></swiper-one>
     </div> -->
-
+    <global-modal ref="globalModal"> </global-modal>
     <!-- tabs{{ $t("route.writePaper") }}  -->
     <div class="tabsListWrapper" ref="tasListWrapper">
       <div class="tabsList">
@@ -100,7 +100,6 @@ export default {
     orderDialog,
   },
   mounted() {
-    // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
     window.addEventListener("scroll", this.handleScroll);
     // this.$store.dispatch("app/setActiveIndex", 2);
@@ -129,9 +128,20 @@ export default {
 
     window.removeEventListener("scroll", this.handleScroll);
   },
+  watch: {
+    device: {
+      deep: true,
+      immediate: true,
+      handler(val) {
+        if (val == "mobile") {
+          eventBus.emit("open-modal", true); // 发布事件
+        }
+      },
+    },
+  },
   computed: {
     // 计算属性
-    ...mapGetters(["activeIndex"]),
+    ...mapGetters(["activeIndex", "device"]),
   },
   methods: {
     // 展示论文加载弹窗

@@ -1,8 +1,5 @@
 <template>
   <div class="step2Box">
-    <div>
-      <tips></tips>
-    </div>
     <div id="top" class="outLineTitle">
       <p class="oulineTitlePaper"><span>题目: </span>{{ requestForm.title }}</p>
       <p class="outlineTitleDesc">
@@ -17,6 +14,9 @@
       element-loading-text="AI帮写中,请稍等...."
       class="outlineMain"
     >
+      <div>
+        <tips></tips>
+      </div>
       <!-- <p class="tips">拖拽章节,可实现章节排序</p> -->
 
       <div class="tipOutline">

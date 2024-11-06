@@ -236,7 +236,9 @@ export default {
         this.$router
           .push({
             path: "/main/writepaper",
-            // query: { key1: row.key1, field: row.field },
+            query: {
+              timeData: new Date().getTime(),
+            },
           })
           .then(() => {
             this.$nextTick(() => {
@@ -249,7 +251,6 @@ export default {
     }, 300),
     pushFinish(row) {
       console.log("statsrow", row);
-      // 跳转到写论文页面
 
       eventBus.emit("orderDialogChange", false);
 
@@ -296,18 +297,25 @@ export default {
       const currentPath = this.$route.path;
       // 检查当前路径是否与目标路径相同
       if (currentPath !== targetPath) {
-        this.$router.push({ path: targetPath }).then(() => {
-          // 确保 DOM 更新完成后再执行后续代码
-          this.$nextTick(() => {
-            console.log("item", item);
-            // 关闭弹窗
-            eventBus.emit("orderDialogChange", false);
-            // 保存订单ID
-            this.$store.dispatch("app/toggleCurrentOrder", item.order);
-            let realUrl = item.order_item_response[0].case.file_urls.pdf;
-            eventBus.emit("pdfSuccessClick", realUrl); // 发布事件
+        this.$router
+          .push({
+            path: targetPath,
+            query: {
+              timeData: new Date().getTime(),
+            },
+          })
+          .then(() => {
+            // 确保 DOM 更新完成后再执行后续代码
+            this.$nextTick(() => {
+              console.log("item", item);
+              // 关闭弹窗
+              eventBus.emit("orderDialogChange", false);
+              // 保存订单ID
+              this.$store.dispatch("app/toggleCurrentOrder", item.order);
+              let realUrl = item.order_item_response[0].case.file_urls.pdf;
+              eventBus.emit("pdfSuccessClick", realUrl); // 发布事件
+            });
           });
-        });
       } else {
         // 如果已经在目标路径，直接执行后续逻辑
         this.$nextTick(() => {

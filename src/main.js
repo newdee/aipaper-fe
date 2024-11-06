@@ -21,7 +21,11 @@ import "@/utils/rem";
 import "@/assets/js/iconfont";
 import i18n from "./lang"; // internationalization
 import VueClipboard from "vue-clipboard2";
+// import globalModal from "./components/GlobalModal.vue";
+import globalDialog from "./components/globalDialog.vue";
 
+Vue.component("global-modal", globalDialog);
+Vue.prototype.$bus = new Vue();
 // const VConsole = require("vconsole");
 // const vConsole = new VConsole();
 // console.log("VConsole is enabled");

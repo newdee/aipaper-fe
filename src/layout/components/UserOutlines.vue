@@ -127,7 +127,11 @@ export default {
       this.$router
         .push({
           path: "/main/writepaper",
-          query: { key1: row.key1, field: row.field },
+          query: {
+            key1: row.key1,
+            field: row.field,
+            timeData: new Date().getTime(),
+          },
         })
         .then(() => {
           this.$nextTick(() => {

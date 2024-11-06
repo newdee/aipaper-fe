@@ -81,6 +81,10 @@ export default {
       type: String,
       require: false,
     },
+    timeData: {
+      type: String,
+      require: false,
+    },
     paperPercent: {
       type: Number,
       require: false,
@@ -94,6 +98,7 @@ export default {
         // 在这里执行你需要的操作
         this.ownPayStatus = true;
         this.$store.dispatch("paper/setPollingStatus", true);
+        this.getDetail();
       },
     },
     paperPercent: {
@@ -103,14 +108,6 @@ export default {
         this.currentNumber = newVal;
       },
       immediate: true, // 立即触发一次监听器
-    },
-    requestKey: {
-      handler(newVal, oldVal) {
-        console.log("订单编号", "新值:", newVal, "旧值:", oldVal);
-        // 在这里执行你需要的操作
-        this.getDetail(newVal);
-      },
-      immediate: false, // 立即触发一次监听器
     },
   },
   components: {
@@ -133,13 +130,17 @@ export default {
 
   methods: {
     handleClose(done) {
-      this.$confirm("关闭弹窗,不影响论文生成进度")
-        .then((_) => {
-          done();
-          this.$store.dispatch("app/setActiveIndex", 0);
-          this.$store.dispatch("paper/setPollingStatus", false);
-        })
-        .catch((_) => {});
+      if (this.payTitleStatus == "TRADE_SUCCESS") {
+        this.$confirm("关闭弹窗,不影响论文生成进度")
+          .then((_) => {
+            done();
+            this.$store.dispatch("app/setActiveIndex", 0);
+            this.$store.dispatch("paper/setPollingStatus", false);
+          })
+          .catch((_) => {});
+      } else {
+        done();
+      }
     },
     jumpStep() {
       this.$confirm("关闭弹窗,不影响论文生成进度")
@@ -242,7 +243,7 @@ export default {
           }
         });
     },
-    getDetail(index) {
+    getDetail() {
       console.log("d1111", this.requestKey);
       if (this.requestKey) {
         this.getList({ key: this.requestKey }, 10000);
