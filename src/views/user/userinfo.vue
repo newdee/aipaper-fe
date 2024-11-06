@@ -67,6 +67,7 @@
             :on-success="handleSuccess"
             :on-error="handleError"
             :before-upload="beforeAvatarUpload"
+            :http-request="handleHttpRequest"
           >
             <img v-if="true" :src="avatar" class="avatar" />
             <!-- <img v-if="imageUrl" :src="imageUrl" class="avatar" /> -->
@@ -95,6 +96,7 @@ import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 import { getToken, removeToken } from "@/utils/auth"; // get token from cookie
+import { userEdit } from "@/api/user"; // get token from cookie
 
 export default {
   name: "UserInfo",
@@ -116,6 +118,19 @@ export default {
     ...mapGetters(["avatar", "name", "userInfo"]),
   },
   methods: {
+    handleHttpRequest({ file, data, onSuccess, onError }) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("image", 1);
+
+      userEdit(formData)
+        .then((response) => {
+          onSuccess(response.data);
+        })
+        .catch((error) => {
+          onError(error);
+        });
+    },
     // 定义方法
     goBack() {
       // 使用 history.back() 方法返回上一页
