@@ -61,7 +61,8 @@
         <div class="upload">
           <el-upload
             class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="https://api.mixpaper.cn/api/ai-paper/user/edit"
+            :data="{ image: 1 }"
             :show-file-list="false"
             :on-success="handleSuccess"
             :on-error="handleError"
@@ -71,7 +72,7 @@
             <!-- <img v-if="imageUrl" :src="imageUrl" class="avatar" /> -->
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
-          <p>支持jpg、jpeg、png格式的图片，大小不超过2M</p>
+          <p>支持jpg、jpeg、png格式的图片，大小不超过3M</p>
         </div>
         <div class="preView">
           <div class="imgPre">
@@ -139,13 +140,13 @@ export default {
       const isImage = ["image/jpeg", "image/jpg", "image/png"].includes(
         file.type
       );
-      const isLt2M = file.size / 1024 / 1024 < 2;
+      const isLt2M = file.size / 1024 / 1024 < 3;
 
       if (!isImage) {
         this.$message.error("上传头像图片只能是 JPG、JPEG 或 PNG 格式!");
       }
       if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
+        this.$message.error("上传头像图片大小不能超过 3MB!");
       }
       return isImage && isLt2M;
     },
