@@ -1,6 +1,6 @@
 <template>
-  <div class="reduceRepetiton">
-    <swiper-one class="topSwiper"></swiper-one>
+  <div class="mainContentSec reduceRepetiton">
+    <!-- <swiper-one class="topSwiper"></swiper-one> -->
     <div class="outlineTab">
       <div class="outLeft">
         <p
@@ -243,7 +243,7 @@ export default {
       padding-top: 10px;
       position: absolute;
       bottom: 10px;
-      right: 30px;
+      right: 80px;
     }
   }
 }

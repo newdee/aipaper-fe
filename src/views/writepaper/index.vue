@@ -1,9 +1,9 @@
 <template>
   <div class="mainContentSec" ref="mainSec">
     <!-- 页面名称 -->
-    <div style="padding: 0 10px">
+    <!-- <div style="padding: 0 10px">
       <swiper-one class="topSwiper"></swiper-one>
-    </div>
+    </div> -->
 
     <!-- tabs{{ $t("route.writePaper") }}  -->
     <div class="tabsListWrapper" ref="tasListWrapper">
