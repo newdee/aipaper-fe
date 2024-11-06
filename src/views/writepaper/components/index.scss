@@ -228,14 +228,14 @@
   border-radius: 8px;
   border: 1px solid #ebeef5;
   background-color: #fff;
-  overflow: hidden;
   color: #303133;
   transition: 0.3s;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   margin-top: 32px;
   padding: 16px;
+  position: relative;
   margin-right: 220px;
-  margin-left: 15px;
+  margin-left: 25px;
 }
 
 .tipOutline {

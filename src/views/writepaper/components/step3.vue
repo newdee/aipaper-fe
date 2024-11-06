@@ -5,6 +5,17 @@
       <div class="stickyBox">
         <div class="pdfNavbar">
           <div class="pdfNavLeft">
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="返回第一步,继续创作"
+              placement="top"
+            >
+              <div @click="returnStep" class="pdfLeftBtn g_poin">
+                <i class="el-icon-back"></i>
+                <p>返回第一步</p>
+              </div>
+            </el-tooltip>
             <div class="pdfNavItem">
               <i class="el-icon-edit"></i>
               <span>编辑Word版论文</span>
@@ -18,6 +29,7 @@
               <span>{{ $t("route.reduceRepetition") }}</span>
             </div>
           </div>
+
           <div
             @click="downLoadPaper"
             v-loading="downStatus"
@@ -87,6 +99,9 @@ export default {
   },
 
   methods: {
+    returnStep() {
+      this.$store.dispatch("app/setActiveIndex", 0);
+    },
     downLoadPaper: _.debounce(function (item) {
       this.downStatus = true;
       paperPack({ out_trade_no: this.currentOrder.out_trade_no }).then(
@@ -190,7 +205,6 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 0 10px;
-  padding-left: 23px;
 
   .pdfNavItem {
     margin-right: 40px;
@@ -213,10 +227,12 @@ export default {
 
   .pdfNavLeft {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .pdfNavRight {
-    width: 148px;
+    width: 140px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -231,9 +247,36 @@ export default {
     text-align: left;
     font-style: normal;
   }
+  .pdfLeftBtn {
+    width: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    background: #3355ff;
+    border-radius: 20px;
+    font-family: PingFangSC, PingFang SC;
+    font-weight: 600;
+    font-size: 16px;
+    color: #ffffff;
+    line-height: 22px;
+    text-align: left;
+    font-style: normal;
+    margin-right: 10px;
+  }
 }
 
 .stickyBox {
   position: relative;
+}
+.backStep {
+  font-size: 30px;
+  background: #3355ff;
+  color: #fff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
 }
 </style>

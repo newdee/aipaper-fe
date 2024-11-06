@@ -502,6 +502,7 @@ export default {
   }
 }
 .outlineMain {
+  position: relative;
   max-width: 688px;
   margin: 0 auto;
   border-radius: 8px;

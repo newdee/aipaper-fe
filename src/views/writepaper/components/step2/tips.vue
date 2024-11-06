@@ -85,8 +85,8 @@ export default {
 // }
 .tipContain {
   position: absolute;
-  right: 20px;
-  top: 250px;
+  right: -200px;
+  top: 20px;
 }
 .tipBox {
   width: 189px;
