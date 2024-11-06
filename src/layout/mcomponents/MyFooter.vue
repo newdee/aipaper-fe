@@ -33,9 +33,13 @@
             <!-- 企业介绍 -->
             <el-tooltip class="item" effect="light" placement="left">
               <template #content>
-                <div class="tooltipContent" style="width: 400px;font-size: 14px;">
+                <div
+                  class="tooltipContent"
+                  style="width: 400px; font-size: 14px"
+                >
                   <p>
-                    浅思科技 成立于2023年，一家专注于人工智能领域的高科技公司，一家基于大数据产品的创新型公司。我们自主开发了数据服务产品：豌豆API<br />
+                    浅思科技
+                    成立于2023年，一家专注于人工智能领域的高科技公司，一家基于大数据产品的创新型公司。我们自主开发了数据服务产品：豌豆API<br />
                     我们与合作伙伴共同开发的大模型集合搜索产品：chat all<br />
                     我们与北京某高校研究室合作共同开发产品：万象学术平台<br />
                     未来... ...
@@ -66,8 +70,10 @@
     <!-- 底部栏 -->
     <div class="footerP">
       <p style="text-align: center; color: #2e2e2e">
-        <span>© 2024 石家庄浅思科技有限公司 关于我们</span>
-        <a href="https://beian.miit.gov.cn" target="_blank">冀ICP备2024060058号-2</a>
+        <span>© 2024 石家庄浅思科技有限公司</span>
+        <a href="https://beian.miit.gov.cn" target="_blank"
+          >冀ICP备2024060058号-2</a
+        >
       </p>
     </div>
     <!-- 悬浮菜单 --><!-- 显示条件怎么设置? -->
@@ -89,7 +95,7 @@
             <div class="qywxBox">
               <img src="../../assets/images/qywx.png" alt="" />
             </div>
-            <p>扫描二维码，<br>联系售前/售后客服</p>
+            <p>扫描二维码，<br />联系售前/售后客服</p>
             <el-button slot="reference">
               <div class="itemLi">
                 <svg class="icon svg-icon" aria-hidden="true">
@@ -105,7 +111,7 @@
             <div class="qywxBox">
               <img src="../../assets/images/swhz.png" alt="" />
             </div>
-            <p>扫描二维码，<br>联系商务客服</p>
+            <p>扫描二维码，<br />联系商务客服</p>
             <el-button slot="reference">
               <div class="itemLi">
                 <svg class="icon svg-icon" aria-hidden="true">
@@ -118,13 +124,28 @@
         </div>
       </div>
     </div>
-    <el-popover ref="popover1" placement="left-start" width="125" trigger="click">
+    <el-popover
+      ref="popover1"
+      placement="left-start"
+      width="125"
+      trigger="click"
+    >
       AI写作
     </el-popover>
-    <el-popover ref="popover2" placement="left-start" width="125" trigger="click">
+    <el-popover
+      ref="popover2"
+      placement="left-start"
+      width="125"
+      trigger="click"
+    >
       在线客服
     </el-popover>
-    <el-popover ref="popover3" placement="left-start" width="125" trigger="click">
+    <el-popover
+      ref="popover3"
+      placement="left-start"
+      width="125"
+      trigger="click"
+    >
       <div class="qrBox" title="团队二维码">
         <img class="qrcode" src="@/assets/images/wx.jpg" alt="" />
       </div>
@@ -190,7 +211,8 @@ export default {
   }
 }
 
-.infoBottom {}
+.infoBottom {
+}
 
 .siteInfo {
   display: grid;
@@ -216,7 +238,7 @@ export default {
   }
 
   .col_1 {
-    >img {
+    > img {
       height: 20px;
       width: auto;
     }
@@ -384,8 +406,8 @@ export default {
     height: 100%;
   }
 
-  &+p {
-    text-align: center
+  & + p {
+    text-align: center;
   }
 }
 
