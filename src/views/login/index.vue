@@ -611,7 +611,11 @@ export default {
   width: 400px;
   min-height: 500px;
 }
-
+@media only screen and (max-width: 440px) {
+  .home .mainContent {
+    width: auto;
+  }
+}
 .blue {
   display: none;
 }

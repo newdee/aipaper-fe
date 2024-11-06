@@ -54,7 +54,14 @@
           </div>
         </div>
       </div>
-      <div class="firstItem secondItem">
+      <div
+        :class="[
+          'firstItem',
+          'secondItem',
+          device == 'mobile' ? 'mobilebox' : '',
+        ]"
+      >
+        <!-- 论文语言 -->
         <div class="selectLang formItem">
           <p class="formItemLabel">论文语言</p>
           <div class="formItemCon">
@@ -70,7 +77,6 @@
           </div>
         </div>
         <!-- 论文类型 -->
-
         <div class="selectLang formItem leftType">
           <p class="formItemLabel">论文类型</p>
           <div class="formItemCon">
@@ -131,7 +137,13 @@
           </div>
         </div>
       </div>
-      <div class="firstItem secondItem">
+      <div
+        :class="[
+          'firstItem',
+          'secondItem',
+          device == 'mobile' ? 'mobilebox' : '',
+        ]"
+      >
         <!-- 论文水平 -->
         <div class="selectLang formItem">
           <p class="formItemLabel">论文水平</p>
@@ -204,6 +216,7 @@
             </el-radio-group>
           </div>
         </div>
+        <!-- 论文字数 -->
         <div class="selectLang formItem wordItem firstItem">
           <p class="formItemLabel">论文字数</p>
           <div class="formItemCon">
@@ -376,7 +389,7 @@ export default {
   },
   computed: {
     // 计算属性
-    ...mapGetters(["homeData", "produceLineStatus"]),
+    ...mapGetters(["homeData", "produceLineStatus", "device"]),
   },
   methods: {
     paperTypeChange(val) {
@@ -747,6 +760,21 @@ export default {
   .firstItem {
     flex-grow: 1;
     padding-right: 40px;
+  }
+}
+.mobilebox {
+  flex-direction: column;
+  align-items: flex-start;
+  .formItem {
+    margin-left: 0px;
+  }
+  .wordItem {
+    width: 100%;
+    padding-bottom: 10px;
+    padding-right: 50px;
+    ::v-deep .el-slider__marks-text {
+      transform: rotate(45deg);
+    }
   }
 }
 ::v-deep .firstItem .el-slider__bar {

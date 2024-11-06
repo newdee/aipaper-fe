@@ -128,7 +128,6 @@ export default {
   },
   computed: {
     // 计算属性
-
     ...mapGetters(["pollingStatus", "device"]),
   },
 
