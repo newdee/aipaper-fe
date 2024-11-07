@@ -9,6 +9,7 @@ const getDefaultState = () => {
     name: "",
     avatar: "",
     userInfo: {},
+    agent_image: {}
   };
 };
 
@@ -26,6 +27,9 @@ const mutations = {
   },
   SET_USER: (state, userInfo) => {
     state.userInfo = userInfo;
+  },
+  SET_AGENT: (state, agent_image) => {
+    state.agent_image = agent_image;
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar;
@@ -64,6 +68,7 @@ const actions = {
       getInfo(state.token)
         .then((response) => {
           const data = response.result.user;
+          let agent_image = response.result.agent_image;
           console.log(response);
           // if (!data) {
           //   return reject('Verification failed, please Login again.')
@@ -75,10 +80,11 @@ const actions = {
           // } = data
           commit("SET_NAME", data.name ? data.name : "用户名");
           commit("SET_USER", data);
+          commit("SET_AGENT", agent_image);
           // commit('SET_AVATAR', avatar)
           commit(
             "SET_AVATAR",
-            "https://gw.alicdn.com/imgextra/i1/O1CN01vmyavS1TH64dFg6YZ_!!6000000002356-0-tps-1024-1024.jpg"
+            data.photo
           );
 
           resolve(data);

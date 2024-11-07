@@ -4,7 +4,6 @@
       <i class="el-icon-arrow-left" @click="goBack"></i>
       账号设置
     </div>
-
     <div class="userInfoBox">
       <!-- 页面名称 -->
       <div class="info">
@@ -24,10 +23,10 @@
       <div class="info">
         <div class="info_left">
           <p class="infoLabel">用户名</p>
-          <p class="InfoValue">{{ name }}</p>
+          <p class="InfoValue">{{ userInfo.user_name }}</p>
         </div>
         <div class="info_right">
-          <el-button @click="$devf">编辑</el-button>
+          <el-button @click="openUserSet">编辑</el-button>
         </div>
       </div>
       <div class="info">
@@ -66,40 +65,33 @@
             :before-upload="beforeAvatarUpload"
             :http-request="handleHttpRequest"
           >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <img
+              v-if="agent_image.wx_qrcode"
+              :src="agent_image.wx_qrcode"
+              class="avatar"
+            />
             <i v-else class="el-icon-plus liImgLi"></i>
           </el-upload>
           <p>公众号二维码</p>
         </div>
-        <div class="uploadLi">
-          <el-upload
-            class="imgUploader"
-            action="https://api.mixpaper.cn/api/ai-paper/user/edit"
-            :data="{ image: 2 }"
-            :show-file-list="false"
-            :on-success="handleSuccess"
-            :on-error="handleError"
-            :before-upload="beforeAvatarUpload"
-            :http-request="handleHttpRequest"
-          >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-            <i v-else class="el-icon-plus liImgLi"></i>
-          </el-upload>
-          <p>公众号二维码</p>
-        </div>
+
         <!-- 小红书 -->
         <div class="uploadLi">
           <el-upload
             class="imgUploader"
             action="https://api.mixpaper.cn/api/ai-paper/user/edit"
-            :data="{ image: 2 }"
+            :data="{ image: 3 }"
             :show-file-list="false"
             :on-success="handleSuccess"
             :on-error="handleError"
             :before-upload="beforeAvatarUpload"
             :http-request="handleHttpRequest"
           >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <img
+              v-if="agent_image.xhs_qrcode"
+              :src="agent_image.xhs_qrcode"
+              class="avatar"
+            />
             <i v-else class="el-icon-plus liImgLi"></i>
           </el-upload>
           <p>小红书</p>
@@ -109,14 +101,18 @@
           <el-upload
             class="imgUploader"
             action="https://api.mixpaper.cn/api/ai-paper/user/edit"
-            :data="{ image: 2 }"
+            :data="{ image: 4 }"
             :show-file-list="false"
             :on-success="handleSuccess"
             :on-error="handleError"
             :before-upload="beforeAvatarUpload"
             :http-request="handleHttpRequest"
           >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <img
+              v-if="agent_image.bili_qrcode"
+              :src="agent_image.bili_qrcode"
+              class="avatar"
+            />
             <i v-else class="el-icon-plus liImgLi"></i>
           </el-upload>
           <p>B站</p>
@@ -127,14 +123,18 @@
           <el-upload
             class="imgUploader"
             action="https://api.mixpaper.cn/api/ai-paper/user/edit"
-            :data="{ image: 2 }"
+            :data="{ image: 5 }"
             :show-file-list="false"
             :on-success="handleSuccess"
             :on-error="handleError"
             :before-upload="beforeAvatarUpload"
             :http-request="handleHttpRequest"
           >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <img
+              v-if="agent_image.service_qrcode"
+              :src="agent_image.service_qrcode"
+              class="avatar"
+            />
             <i v-else class="el-icon-plus liImgLi"></i>
           </el-upload>
           <p>联系客服</p>
@@ -144,14 +144,18 @@
           <el-upload
             class="imgUploader"
             action="https://api.mixpaper.cn/api/ai-paper/user/edit"
-            :data="{ image: 2 }"
+            :data="{ image: 6 }"
             :show-file-list="false"
             :on-success="handleSuccess"
             :on-error="handleError"
             :before-upload="beforeAvatarUpload"
             :http-request="handleHttpRequest"
           >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <img
+              v-if="agent_image.business_qrcode"
+              :src="agent_image.business_qrcode"
+              class="avatar"
+            />
             <i v-else class="el-icon-plus liImgLi"></i>
           </el-upload>
           <p>商务合作</p>
@@ -174,7 +178,7 @@
             :before-upload="beforeAvatarUpload"
             :http-request="handleHttpRequest"
           >
-            <img v-if="true" :src="avatar" class="avatar" />
+            <img v-if="true" :src="avatar" class="avatarUser" />
             <!-- <img v-if="imageUrl" :src="imageUrl" class="avatar" /> -->
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
@@ -182,7 +186,7 @@
         </div>
         <div class="preView">
           <div class="imgPre">
-            <img v-if="true" :src="avatar" class="avatar" />
+            <img :src="avatar" class="avatarUser2" />
           </div>
           <p>头像预览</p>
         </div>
@@ -194,13 +198,28 @@
         >
       </span>
     </el-dialog>
+
+    <el-dialog
+      title="编辑用户名"
+      :visible.sync="userEditDialogStatus"
+      :width="device == 'mobile' ? '80%' : '30%'"
+    >
+      <p style="margin-bottom: 10px">请输入用户名</p>
+      <el-input placeholder="请输入用户名" v-model="username" clearable>
+      </el-input>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="userEditDialogStatus = false">取 消</el-button>
+        <el-button type="primary" @click="setFormData"> 确 定 </el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
-import { getToken, removeToken } from "@/utils/auth"; // get token from cookie
+import { removeToken } from "@/utils/auth"; // get token from cookie
 import { userEdit } from "@/api/user"; // get token from cookie
 
 export default {
@@ -210,6 +229,8 @@ export default {
       // 定义变量
       dialogVisible: false,
       imageUrl: "",
+      userEditDialogStatus: false,
+      username: "",
     };
   },
   components: {
@@ -220,16 +241,35 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["avatar", "name", "userInfo"]),
+    ...mapGetters(["avatar", "name", "userInfo", "agent_image", "device"]),
   },
   methods: {
+    setFormData() {
+      const formData = new FormData();
+      formData.append("user_name", this.username);
+
+      userEdit(formData)
+        .then((response) => {
+          this.$message({
+            type: "success",
+            message: "用户名已修改!",
+          });
+          this.$store.dispatch("user/getInfo");
+          this.userEditDialogStatus = false;
+        })
+        .catch((error) => {});
+    },
+    openUserSet() {
+      this.userEditDialogStatus = true;
+      this.username = "";
+    },
     openModal() {
       this.$refs.globalModal.open();
     },
     handleHttpRequest({ file, data, onSuccess, onError }) {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("image", 1);
+      formData.append("image", data.image);
 
       userEdit(formData)
         .then((response) => {
@@ -254,7 +294,8 @@ export default {
     },
     handleSuccess(res, file) {
       this.$message.success("上传成功!");
-      this.imageUrl = URL.createObjectURL(file.raw);
+      // this.imageUrl = URL.createObjectURL(file.raw);
+      this.$store.dispatch("user/getInfo");
     },
     handleError(err, file, fileList) {
       this.$message.error("上传失败!");
@@ -435,8 +476,18 @@ export default {
   background: #fff;
 }
 .avatar {
+  width: 98px;
+  height: 98px;
+  display: block;
+}
+.avatarUser {
   width: 298px;
   height: 298px;
+  display: block;
+}
+.avatarUser2 {
+  width: 70px;
+  height: 70px;
   display: block;
 }
 .preView {
