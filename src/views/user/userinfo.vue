@@ -4,7 +4,6 @@
       <i class="el-icon-arrow-left" @click="goBack"></i>
       账号设置
     </div>
-
     <div class="userInfoBox">
       <!-- 页面名称 -->
       <div class="info">
@@ -66,40 +65,33 @@
             :before-upload="beforeAvatarUpload"
             :http-request="handleHttpRequest"
           >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <img
+              v-if="agent_image.wx_qrcode"
+              :src="agent_image.wx_qrcode"
+              class="avatar"
+            />
             <i v-else class="el-icon-plus liImgLi"></i>
           </el-upload>
           <p>公众号二维码</p>
         </div>
-        <div class="uploadLi">
-          <el-upload
-            class="imgUploader"
-            action="https://api.mixpaper.cn/api/ai-paper/user/edit"
-            :data="{ image: 2 }"
-            :show-file-list="false"
-            :on-success="handleSuccess"
-            :on-error="handleError"
-            :before-upload="beforeAvatarUpload"
-            :http-request="handleHttpRequest"
-          >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-            <i v-else class="el-icon-plus liImgLi"></i>
-          </el-upload>
-          <p>公众号二维码</p>
-        </div>
+
         <!-- 小红书 -->
         <div class="uploadLi">
           <el-upload
             class="imgUploader"
             action="https://api.mixpaper.cn/api/ai-paper/user/edit"
-            :data="{ image: 2 }"
+            :data="{ image: 3 }"
             :show-file-list="false"
             :on-success="handleSuccess"
             :on-error="handleError"
             :before-upload="beforeAvatarUpload"
             :http-request="handleHttpRequest"
           >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <img
+              v-if="agent_image.xhs_qrcode"
+              :src="agent_image.xhs_qrcode"
+              class="avatar"
+            />
             <i v-else class="el-icon-plus liImgLi"></i>
           </el-upload>
           <p>小红书</p>
@@ -109,14 +101,18 @@
           <el-upload
             class="imgUploader"
             action="https://api.mixpaper.cn/api/ai-paper/user/edit"
-            :data="{ image: 2 }"
+            :data="{ image: 4 }"
             :show-file-list="false"
             :on-success="handleSuccess"
             :on-error="handleError"
             :before-upload="beforeAvatarUpload"
             :http-request="handleHttpRequest"
           >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <img
+              v-if="agent_image.bili_qrcode"
+              :src="agent_image.bili_qrcode"
+              class="avatar"
+            />
             <i v-else class="el-icon-plus liImgLi"></i>
           </el-upload>
           <p>B站</p>
@@ -127,14 +123,18 @@
           <el-upload
             class="imgUploader"
             action="https://api.mixpaper.cn/api/ai-paper/user/edit"
-            :data="{ image: 2 }"
+            :data="{ image: 5 }"
             :show-file-list="false"
             :on-success="handleSuccess"
             :on-error="handleError"
             :before-upload="beforeAvatarUpload"
             :http-request="handleHttpRequest"
           >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <img
+              v-if="agent_image.service_qrcode"
+              :src="agent_image.service_qrcode"
+              class="avatar"
+            />
             <i v-else class="el-icon-plus liImgLi"></i>
           </el-upload>
           <p>联系客服</p>
@@ -144,14 +144,18 @@
           <el-upload
             class="imgUploader"
             action="https://api.mixpaper.cn/api/ai-paper/user/edit"
-            :data="{ image: 2 }"
+            :data="{ image: 6 }"
             :show-file-list="false"
             :on-success="handleSuccess"
             :on-error="handleError"
             :before-upload="beforeAvatarUpload"
             :http-request="handleHttpRequest"
           >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <img
+              v-if="agent_image.business_qrcode"
+              :src="agent_image.business_qrcode"
+              class="avatar"
+            />
             <i v-else class="el-icon-plus liImgLi"></i>
           </el-upload>
           <p>商务合作</p>
@@ -174,7 +178,7 @@
             :before-upload="beforeAvatarUpload"
             :http-request="handleHttpRequest"
           >
-            <img v-if="true" :src="avatar" class="avatar" />
+            <img v-if="true" :src="avatar" class="avatarUser" />
             <!-- <img v-if="imageUrl" :src="imageUrl" class="avatar" /> -->
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
@@ -182,7 +186,7 @@
         </div>
         <div class="preView">
           <div class="imgPre">
-            <img v-if="true" :src="avatar" class="avatar" />
+            <img v-if="true" :src="avatar" class="avatarUser" />
           </div>
           <p>头像预览</p>
         </div>
@@ -220,7 +224,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["avatar", "name", "userInfo"]),
+    ...mapGetters(["avatar", "name", "userInfo", "agent_image"]),
   },
   methods: {
     openModal() {
@@ -229,7 +233,7 @@ export default {
     handleHttpRequest({ file, data, onSuccess, onError }) {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("image", 1);
+      formData.append("image", data.image);
 
       userEdit(formData)
         .then((response) => {
@@ -254,7 +258,8 @@ export default {
     },
     handleSuccess(res, file) {
       this.$message.success("上传成功!");
-      this.imageUrl = URL.createObjectURL(file.raw);
+      // this.imageUrl = URL.createObjectURL(file.raw);
+      this.$store.dispatch("user/getInfo");
     },
     handleError(err, file, fileList) {
       this.$message.error("上传失败!");
@@ -435,6 +440,11 @@ export default {
   background: #fff;
 }
 .avatar {
+  width: 98px;
+  height: 98px;
+  display: block;
+}
+.avatarUser {
   width: 298px;
   height: 298px;
   display: block;
