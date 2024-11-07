@@ -7,19 +7,19 @@
         <div class="linkListBox">
           <div class="linkbox">
             <div class="linkImg">
-              <img src="@/assets/images/gongzhonghao.png" alt="" />
+              <img :src="agent_image.wx_qrcode" alt="" />
             </div>
             <p class="linktext">公众号</p>
           </div>
           <div class="linkbox">
             <div class="linkImg">
-              <img src="@/assets/images/xhs.png" alt="" />
+              <img :src="agent_image.xhs_qrcode" alt="" />
             </div>
             <p class="linktext">小红书</p>
           </div>
           <div class="linkbox">
             <div class="linkImg">
-              <img src="@/assets/images/bilibili.png" alt="" />
+              <img :src="agent_image.bili_qrcode" alt="" />
             </div>
             <p class="linktext">B站</p>
           </div>
@@ -93,7 +93,7 @@
         <div>
           <el-popover placement="left" width="150" trigger="hover">
             <div class="qywxBox">
-              <img src="../../assets/images/qywx.png" alt="" />
+              <img :src="agent_image.service_qrcode" alt="" />
             </div>
             <p>扫描二维码，<br />联系售前/售后客服</p>
             <el-button slot="reference">
@@ -109,7 +109,7 @@
         <div>
           <el-popover placement="left" width="150" trigger="hover">
             <div class="qywxBox">
-              <img src="../../assets/images/swhz.png" alt="" />
+              <img :src="agent_image.business_qrcode" alt="" />
             </div>
             <p>扫描二维码，<br />联系商务客服</p>
             <el-button slot="reference">
@@ -153,7 +153,7 @@
   </div>
 </template>
 <script>
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 
@@ -181,7 +181,7 @@ export default {
   },
 
   computed: {
-    // 计算属性
+    ...mapGetters(["agent_image"]),
   },
   methods: {
     // 定义方法

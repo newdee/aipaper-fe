@@ -67,7 +67,7 @@
             </div>
             <div
               v-if="orderObj.order_item_response.length > 0"
-              class="orderText rowBetween handleRow"
+              class="orderText rowBetween handleRow orderTextImport"
               :key="'case3' + index"
             >
               <div class="left">
@@ -379,5 +379,8 @@ export default {
   font-size: 16px;
   margin-top: 10px;
   color: #303133;
+}
+.orderTextImport {
+  margin-bottom: 0px !important;
 }
 </style>

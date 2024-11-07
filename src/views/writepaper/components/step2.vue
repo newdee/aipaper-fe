@@ -3,8 +3,10 @@
     <div id="top" class="outLineTitle">
       <p class="oulineTitlePaper"><span>题目: </span>{{ requestForm.title }}</p>
       <p class="outlineTitleDesc">
-        <span>科目: </span
-        >{{ requestForm.field ? requestForm.field[1] : "暂无" }}
+        <span>科目: </span>
+        {{ requestForm.field ? requestForm.field[1] : "暂无" }}
+        <span style="margin-left: 50px">类型: </span>
+        {{ requestForm.type ? requestForm.type : "暂无" }}
       </p>
     </div>
     <!-- 大纲 -->
@@ -1036,7 +1038,7 @@ export default {
 
   computed: {
     // 计算属性
-    ...mapGetters(["requestForm", "additionalList"]),
+    ...mapGetters(["requestForm", "additionalList", "device"]),
   },
   methods: {
     showSlider() {
@@ -1070,6 +1072,7 @@ export default {
     saveOutline(status) {
       // console.log("this.", this.requestForm);
       // console.log("this.", JSON.stringify(this.outline));
+
       //关不字数选择弹窗
       this.sliderStatus = false;
       let data = {
@@ -1141,6 +1144,13 @@ export default {
         // 保存大纲输入信息
         if (status == "reduce") {
           // 生成全文
+          if (this.device === "mobile") {
+            this.$message({
+              type: "error",
+              message: "手机端暂不支持生成正文!",
+            });
+          }
+          return false;
           this.generateForm();
         }
       });
