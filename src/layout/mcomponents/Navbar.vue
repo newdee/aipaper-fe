@@ -156,7 +156,7 @@ export default {
       border-radius: 50%;
       width: 35px;
       height: 35px;
-      background: #ff8cb0;
+      background: #fff;
       text-align: center;
       line-height: 35px;
       font-size: 20px;
