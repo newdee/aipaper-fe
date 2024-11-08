@@ -313,6 +313,8 @@ export default {
   }
   .order {
     background: #f2f2f2;
+    // background: rgba(51, 85, 255, 0.1);
+
     padding: 10px;
     margin-top: 10px;
     border-radius: 10px;

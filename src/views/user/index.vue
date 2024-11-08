@@ -49,9 +49,9 @@
         <el-tag>{{ agentData.agent_level }}</el-tag>
       </el-descriptions-item>
     </el-descriptions>
-    <panel-group @handleSetLineChartData="handleSetLineChartData" />
+    <!-- <panel-group @handleSetLineChartData="handleSetLineChartData" /> -->
 
-    <div>
+    <div class="mgt">
       <line-chart />
     </div>
 
@@ -353,7 +353,7 @@ export default {
 //   margin-top: 200px;
 // }
 .secondLine {
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 </style>
