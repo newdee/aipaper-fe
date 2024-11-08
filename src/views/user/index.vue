@@ -49,9 +49,9 @@
         <el-tag>{{ agentData.agent_level }}</el-tag>
       </el-descriptions-item>
     </el-descriptions>
-    <panel-group @handleSetLineChartData="handleSetLineChartData" />
+    <!-- <panel-group @handleSetLineChartData="handleSetLineChartData" /> -->
 
-    <div>
+    <div class="mgt">
       <line-chart />
     </div>
 
@@ -135,9 +135,9 @@
         label-width="80px"
         class="demo-ruleForm"
       >
-        <el-form-item label="域名前缀" prop="subDomain">
+        <el-form-item label="域名前缀" prop="sub_domain">
           <el-input
-            v-model.number="subFrom.subDomain"
+            v-model.number="subFrom.sub_domain"
             autocomplete="off"
           ></el-input>
         </el-form-item>
@@ -241,10 +241,10 @@ export default {
       // lineChartData: lineChartData.newVisitis,
       dialogVisible: true,
       subFrom: {
-        subDomain: "",
+        sub_domain: "",
       },
       rules: {
-        subDomain: [{ validator: checkAge, trigger: "blur" }],
+        sub_domain: [{ validator: checkAge, trigger: "blur" }],
       },
       chartFrom: {
         agent_id: "",
@@ -289,7 +289,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           let data = {
-            sub_domain: this.subFrom.subDomain,
+            sub_domain: this.subFrom.sub_domain,
           };
           userProxy(data).then((res) => {
             this.$message({
@@ -353,7 +353,7 @@ export default {
 //   margin-top: 200px;
 // }
 .secondLine {
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 </style>

@@ -1,21 +1,24 @@
 <template>
   <div>
     <el-card class="box-card">
-      <div slot="header" class="flexHeader">
-        <span>生成大纲/生成正文 (每月)</span>
-        <el-date-picker
-          v-model="value2"
-          value-format="yyyy-MM"
-          type="monthrange"
-          align="right"
-          unlink-panels
-          range-separator="至"
-          start-placeholder="开始月份"
-          end-placeholder="结束月份"
-          :picker-options="pickerOptions"
-          @change="setParams"
-        >
-        </el-date-picker>
+      <div slot="header">
+        <p>生成大纲/生成正文 (每月)</p>
+        <div class="flexHeader">
+          <div></div>
+          <el-date-picker
+            v-model="value2"
+            value-format="yyyy-MM"
+            type="monthrange"
+            align="right"
+            unlink-panels
+            range-separator="至"
+            start-placeholder="开始月份"
+            end-placeholder="结束月份"
+            :picker-options="pickerOptions"
+            @change="setParams"
+          >
+          </el-date-picker>
+        </div>
       </div>
       <div class="text item">
         <div

@@ -211,6 +211,7 @@
               rows="1"
               placeholder="请输入您对应的章节内容,或点击AI帮写..."
               ref="myTextarea"
+              @blur.native="saveSummary"
               v-model="data.summary"
             />
           </div>
@@ -1229,14 +1230,8 @@ export default {
     },
     updateApiGroup(data) {
       console.log("1014---当前大纲对象:", data);
+      this.saveOutline();
       this.generateIndexes(this.outline);
-      // updateApiGroup(1, data)
-      //   .then((response) => {
-      //     console.log(response);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
     },
     appendShow(node, data) {
       this.editData = data;
@@ -1393,7 +1388,7 @@ export default {
     },
     edit(node, data) {
       this.$set(data, "isEdit", 1);
-      this.newlabel = data.label;
+      this.newlabel = data.title;
       this.$nextTick(() => {
         this.$refs.input.focus();
       });
@@ -1401,7 +1396,9 @@ export default {
 
     submitEdit(node, data) {
       console.log(node, data, "-----------------");
-      if (data.label == this.newlabel) {
+      console.log(data.title, this.newlabel, "-----------------");
+
+      if (data.title == this.newlabel) {
         console.log("没有修改");
         this.newlabel = "";
         this.$set(data, "isEdit", 0);
@@ -1415,6 +1412,9 @@ export default {
     textF() {
       this.statementDialogVisible = true;
     },
+    saveSummary: _.debounce(function () {
+      this.saveOutline();
+    }, 4000),
 
     // 生成全文
     generateForm() {

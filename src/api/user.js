@@ -7,11 +7,11 @@ export function login(data) {
     data,
   });
 }
-export function getHomeInfo(data) {
+export function getHomeInfo(params) {
   return request({
     url: "/api/ai-paper/home/info",
     method: "get",
-    data,
+    params,
   });
 }
 export function getUserInfo() {
