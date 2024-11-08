@@ -1149,7 +1149,7 @@ export default {
               type: "error",
               message: "手机端暂不支持生成正文!",
             });
-            return false;
+            // return false;
           }
           this.generateForm();
         }
