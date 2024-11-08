@@ -377,7 +377,7 @@ export default {
   text-align: center;
   line-height: 50px;
   font-size: 20px;
-  background: pink;
+  background: #fff;
   color: #fff;
 }
 

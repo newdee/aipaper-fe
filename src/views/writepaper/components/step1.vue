@@ -15,7 +15,10 @@
     <p class="oulineTitlePaper"><span>题目: </span>{{ requestForm.title }}</p>
     <p class="outlineTitleDesc">
       <span>科目: </span>{{ requestForm.field[1] }}
+      <span style="margin-left: 50px">类型: </span>
+      {{ requestForm.type ? requestForm.type : "暂无" }}
     </p>
+
     <!-- 页面名称 -->
     <div v-if="errLineStatus" class="progressBox">
       <div class="pgBoxEl">
@@ -32,7 +35,12 @@
       </div>
     </div>
     <div v-else class="errText outlineTitleDesc">
-      <p>大纲生成失败, 请重试...</p>
+      <el-link
+        @click="reloadOutline"
+        style="font-size: 16px"
+        icon="el-icon-refresh"
+        >大纲生成失败, 请点击重试...</el-link
+      >
     </div>
     <!-- 滚动标签 -->
     <div id="step1"></div>
@@ -84,6 +92,9 @@ export default {
     },
   },
   methods: {
+    reloadOutline() {
+      eventBus.emit("reloadOutline", 3);
+    },
     errLine() {
       clearInterval(this.intervalId); // 达到目标数字时清除定时器
       this.errLineStatus = false;

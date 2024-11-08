@@ -20,6 +20,7 @@
         <tips></tips>
       </div>
       <!-- <p class="tips">拖拽章节,可实现章节排序</p> -->
+      <p class="tips">当您编辑大纲时,会自动保存</p>
 
       <div class="tipOutline">
         <el-tooltip class="item" effect="dark" placement="top">
@@ -343,7 +344,6 @@
             <el-switch
               v-model="currentRow.insert_table.status"
               active-color="#13ce66"
-              inactive-color="#ff4949"
             >
             </el-switch>
             <span class="labelSpan">插入数据表</span>
@@ -362,7 +362,6 @@
             <el-switch
               v-model="currentRow.insert_plot.status"
               active-color="#13ce66"
-              inactive-color="#ff4949"
             >
             </el-switch>
             <span class="labelSpan">插入图形</span>
@@ -380,7 +379,6 @@
             <el-switch
               v-model="currentRow.insert_mermaid.status"
               active-color="#13ce66"
-              inactive-color="#ff4949"
             >
             </el-switch>
             <span class="labelSpan">插入Mermaid图形</span>
@@ -398,7 +396,6 @@
             <el-switch
               v-model="currentRow.insert_latex_formula.status"
               active-color="#13ce66"
-              inactive-color="#ff4949"
             >
             </el-switch>
             <span class="labelSpan">请用自然语言描述 插入公式</span>
@@ -416,7 +413,6 @@
             <el-switch
               v-model="currentRow.insert_code.status"
               active-color="#13ce66"
-              inactive-color="#ff4949"
             >
             </el-switch>
             <span class="labelSpan">插入代码段</span>
@@ -1091,10 +1087,10 @@ export default {
       }
       editLine(data).then((res) => {
         console.log("res", res);
-        this.$message({
-          type: "success",
-          message: "保存大纲成功!",
-        });
+        // this.$message({
+        //   type: "success",
+        //   message: "保存大纲成功!",
+        // });
         // 进入轮询方法,
         if (status == "aitype") {
           let _this = this;
@@ -1406,16 +1402,29 @@ export default {
         this.$set(data, "label", this.newlabel);
         this.newlabel = "";
         this.$set(data, "isEdit", 0);
-        this.updateApiGroup(this.outline);
+        this.onlySave();
       }
     },
     textF() {
       this.statementDialogVisible = true;
     },
     saveSummary: _.debounce(function () {
-      this.saveOutline();
+      this.onlySave();
     }, 4000),
-
+    onlySave() {
+      let data = {
+        title: this.requestForm.title,
+        key1: this.requestForm.key,
+        outline: {
+          outline: this.outline,
+        },
+      };
+      editLine(data)
+        .then((res) => {})
+        .catch((err) => {
+          this.loading = false;
+        });
+    },
     // 生成全文
     generateForm() {
       if (!this.checked) {
@@ -1576,6 +1585,7 @@ export default {
       this.editStatus = false;
     },
     closeFDialog() {
+      this.onlySave();
       this.imgExcelSetStatus = false;
     },
     resetForm() {
