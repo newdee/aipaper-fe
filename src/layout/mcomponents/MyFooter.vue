@@ -156,6 +156,8 @@
 import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
+import { getHomeInfo } from "@/api/user";
+import { getDomain } from "@/utils/index.js";
 
 export default {
   name: "myFooter",
@@ -177,7 +179,17 @@ export default {
     },
   },
   mounted() {
-    // 页面初始化
+    // 获取首页数据
+    this.$nextTick(() => {
+      let data = {
+        sub_domain: getDomain(),
+      };
+      getHomeInfo(data).then((res) => {
+        console.log(res.result, "res");
+        this.$store.dispatch("app/setHomeData", res.result);
+        this.$store.dispatch("user/setAgentImage", res.result.agent_image);
+      });
+    });
   },
 
   computed: {

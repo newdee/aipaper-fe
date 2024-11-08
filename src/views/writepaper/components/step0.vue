@@ -2,7 +2,7 @@
   <div>
     <!-- 最近创建的大纲 最近生成的论文 -->
     <div :class="[device == 'desktop' ? 'recentListBox' : '']">
-      <div class="outlineListClass">
+      <div class="outlineListClass" v-if="outlinesList.length > 0">
         <div class="lineNav">
           <p>最近创建的大纲</p>
         </div>
@@ -52,7 +52,7 @@
           </div>
         </div>
       </div>
-      <div class="outlineListClass">
+      <div class="outlineListClass" v-if="orderList.length > 0">
         <div class="lineNav">
           <p>最近生成的论文</p>
         </div>
