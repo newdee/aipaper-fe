@@ -37,7 +37,7 @@
             AI帮写
           </el-button>
         </el-tooltip>
-        <el-tooltip
+        <!-- <el-tooltip
           class="item"
           effect="dark"
           content="保存大纲"
@@ -51,7 +51,7 @@
           >
             保存
           </el-button>
-        </el-tooltip>
+        </el-tooltip> -->
       </div>
       <!-- draggable // 支持用户拖拽-->
       <el-tree
