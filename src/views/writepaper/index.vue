@@ -71,12 +71,10 @@ import step1 from "./components/step1.vue";
 import step2 from "./components/step2.vue";
 import outline from "./components/outline.vue";
 import step3 from "./components/step3.vue";
-import { getHomeInfo } from "@/api/user";
 import eventBus from "@/utils/eventBus";
 import emitter from "@/utils/eventBus";
 import { outlineStatus } from "@/api/user";
 import orderDialog from "./components/orderDialog.vue";
-import { getDomain } from "@/utils/index.js";
 
 export default {
   name: "writepaper",
@@ -104,18 +102,6 @@ export default {
     // 页面初始化
     window.addEventListener("scroll", this.handleScroll);
     // this.$store.dispatch("app/setActiveIndex", 2);
-
-    // 获取首页数据
-    this.$nextTick(() => {
-      let data = {
-        sub_domain: getDomain(),
-      };
-      getHomeInfo(data).then((res) => {
-        console.log(res.result, "res");
-        this.$store.dispatch("app/setHomeData", res.result);
-        this.$store.dispatch("user/setAgentImage", res.result.agent_image);
-      });
-    });
   },
   created() {
     eventBus.on("showEmitPaperDialog", this.showPaperDialog); // 订阅事件

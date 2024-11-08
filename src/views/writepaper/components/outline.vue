@@ -262,7 +262,6 @@ import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 // import eventBus from "@/utils/eventBus";
-import { getHomeInfo } from "@/api/user";
 import eventBus from "@/utils/eventBus";
 import { getToken } from "@/utils/auth"; //
 import { outlineCreate } from "@/api/user";
