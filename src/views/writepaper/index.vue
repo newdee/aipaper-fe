@@ -76,6 +76,7 @@ import eventBus from "@/utils/eventBus";
 import emitter from "@/utils/eventBus";
 import { outlineStatus } from "@/api/user";
 import orderDialog from "./components/orderDialog.vue";
+import { getDomain } from "@/utils/index.js";
 
 export default {
   name: "writepaper",
@@ -106,9 +107,13 @@ export default {
 
     // 获取首页数据
     this.$nextTick(() => {
-      getHomeInfo().then((res) => {
+      let data = {
+        sub_domain: getDomain(),
+      };
+      getHomeInfo(data).then((res) => {
         console.log(res.result, "res");
         this.$store.dispatch("app/setHomeData", res.result);
+        this.$store.dispatch("user/setAgentImage", res.result.agent_image);
       });
     });
   },

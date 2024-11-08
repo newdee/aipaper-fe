@@ -183,6 +183,7 @@ import inputCode from "./components/inputCode.vue";
 
 import { sms } from "@/api/login";
 import { throttle } from "lodash";
+import { getDomain } from "@/utils/index.js";
 
 export default {
   data() {
@@ -201,30 +202,17 @@ export default {
       rightPhoneNum: true,
       codeRegExrStatus: true,
       sms_code: "",
-      subDomain: "",
     };
   },
   components: { inputCode },
   mounted() {
-    this.getSubdomain();
+    // this.getSubdomain();
+
+    console.log("getDomain", getDomain());
     console.log("location", window.location);
     console.log("hostname", window.location.hostname);
   },
   methods: {
-    getSubdomain() {
-      const hostname = window.location.hostname;
-
-      if (hostname === "mixpaper.cn") {
-        return "www";
-      }
-
-      let subdomain = hostname.replace(".mixpaper.cn", "");
-      console.log("subdomain", subdomain);
-      if (subdomain == "localhost") {
-        subdomain = "www";
-      }
-      this.subDomain = subdomain;
-    },
     // 重新获取验证码
     repeatCode() {
       // 60秒倒计时
@@ -336,12 +324,10 @@ export default {
           let data = {
             phone: this.phoneNum,
             sms_code: this.sms_code,
-            subDomain: this.subDomain,
+            sub_domain: getDomain(),
           };
-          if (data.subDomain == "") {
-            data.subDomain = "www";
-          }
-          console.log("189--有输入内容", data);
+
+          console.log("login输入内容", data);
 
           this.$store.dispatch("user/login", data).then(() => {
             this.$message({

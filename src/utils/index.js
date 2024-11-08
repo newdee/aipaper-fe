@@ -151,3 +151,21 @@ export function param2Obj(url) {
   });
   return obj;
 }
+
+export function getDomain(func, wait, immediate) {
+  const hostname = window.location.hostname;
+  if (hostname === "mixpaper.cn") {
+    sub_domain = "www";
+  }
+
+  let sub_domain = hostname.replace(".mixpaper.cn", "");
+  console.log("sub_domain", sub_domain);
+  if (sub_domain == "localhost") {
+    sub_domain = "www";
+  }
+
+  if (sub_domain == "") {
+    sub_domain = "www";
+  }
+  return sub_domain;
+}

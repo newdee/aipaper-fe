@@ -7,9 +7,10 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     name: "",
+    sub_domain: "",
     avatar: "",
     userInfo: {},
-    agent_image: {}
+    agent_image: {},
   };
 };
 
@@ -31,6 +32,9 @@ const mutations = {
   SET_AGENT: (state, agent_image) => {
     state.agent_image = agent_image;
   },
+  SET_DOMAIN: (state, sub_domain) => {
+    state.sub_domain = sub_domain;
+  },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar;
   },
@@ -39,13 +43,13 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    const { phone, sms_code, subDomain } = userInfo;
+    const { phone, sms_code, sub_domain } = userInfo;
     return new Promise((resolve, reject) => {
       //
       login({
         phone: phone.trim(),
         sms_code: sms_code,
-        sub_domain: subDomain,
+        sub_domain: sub_domain,
       })
         .then((response) => {
           const result = response.result;
@@ -82,10 +86,7 @@ const actions = {
           commit("SET_USER", data);
           commit("SET_AGENT", agent_image);
           // commit('SET_AVATAR', avatar)
-          commit(
-            "SET_AVATAR",
-            data.photo
-          );
+          commit("SET_AVATAR", data.photo);
 
           resolve(data);
         })
@@ -110,7 +111,9 @@ const actions = {
         });
     });
   },
-
+  setAgentImage({ commit }, agent_image) {
+    commit("SET_AGENT", agent_image);
+  },
   // remove token
   resetToken({ commit }) {
     return new Promise((resolve) => {
