@@ -175,7 +175,6 @@ export default {
   watch: {
     // 当listId发生变化时执行此回调
     listId(newVal, oldVal) {
-      console.log("listId changed from " + oldVal + " to " + newVal);
       // 在这里处理listId变化后需要做的事情
       this.handleCurrentChange(1);
     },
@@ -190,7 +189,6 @@ export default {
   },
   methods: {
     sendPay(row) {
-      console.log("row", row);
       let data = {
         out_trade_no: row.order.out_trade_no, // 订单编号，必传
         payment_method: row.order.payment_method, // 支付方式，必传
@@ -250,8 +248,6 @@ export default {
       }
     }, 300),
     pushFinish(row) {
-      console.log("statsrow", row);
-
       eventBus.emit("orderDialogChange", false);
 
       // 关闭弹窗
@@ -268,10 +264,8 @@ export default {
       });
     },
     downLoadPaper: _.debounce(function (item) {
-      console.log("item", item);
       this.downStatus = true;
       paperPack({ out_trade_no: item.order.out_trade_no }).then((res) => {
-        console.log("ad", res.result.zip_url);
         this.downStatus = false;
         // window.open(res.result.zip_url, "_blank");
         // Create a temporary link element
@@ -307,7 +301,6 @@ export default {
           .then(() => {
             // 确保 DOM 更新完成后再执行后续代码
             this.$nextTick(() => {
-              console.log("item", item);
               // 关闭弹窗
               eventBus.emit("orderDialogChange", false);
               // 保存订单ID
@@ -319,7 +312,6 @@ export default {
       } else {
         // 如果已经在目标路径，直接执行后续逻辑
         this.$nextTick(() => {
-          console.log("item", item);
           eventBus.emit("orderDialogChange", false);
           this.$store.dispatch("app/toggleCurrentOrder", item.order);
           let realUrl = item.order_item_response[0].case.file_urls.pdf;
@@ -331,7 +323,6 @@ export default {
       this.handleCurrentChange(1);
     },
     handleCheckAllChange(val) {
-      console.log("val", val);
       this.checkList = val;
       // if (val.length > 1) {
       //   this.$message({
@@ -342,12 +333,11 @@ export default {
       // }
     },
     delList() {
-      console.log(this.checkList);
+      this.$log(this.checkList);
       let data = {
         trade_no_list: this.checkList,
       };
       delOrder(data).then((res) => {
-        console.log(res);
         this.$message({
           type: "success",
           message: "删除成功!",
@@ -357,7 +347,6 @@ export default {
       });
     },
     handleCurrentChange: throttle(function (newPage) {
-      console.log("当前页:", newPage);
       // 这里可以添加你的分页逻辑，例如发送请求获取新的数据
       let params = {
         page_num: newPage ? newPage : this.page.page_num,

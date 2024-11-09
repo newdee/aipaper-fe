@@ -38,7 +38,6 @@ const whiteList = [
 router.beforeEach(async (to, from, next) => {
   // start progress bar
   NProgress.start();
-  console.log("40---", to);
 
   if (to.meta.inDevelopment) {
     // 弹出提示并阻止导航
@@ -67,7 +66,6 @@ router.beforeEach(async (to, from, next) => {
         try {
           // get user info
           store.dispatch("user/getInfo");
-          console.log("11");
 
           next();
         } catch (error) {
@@ -80,7 +78,6 @@ router.beforeEach(async (to, from, next) => {
     }
   } else {
     /* has no token*/
-    console.log("to", to, to.path);
 
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly

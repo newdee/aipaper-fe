@@ -25,7 +25,6 @@ service.interceptors.request.use(
   },
   (error) => {
     // do something with request error
-    console.log(error); // for debug
     return Promise.reject(error);
   }
 );
@@ -77,7 +76,6 @@ service.interceptors.response.use(
   },
   (error) => {
     // 请求已发出，但是不在2xx的范围
-    console.log(error.response.data);
     Message({
       message: error.response.data.message
         ? error.response.data.message

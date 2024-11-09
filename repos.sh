@@ -119,3 +119,4 @@ git push $REMOTE_GITHUB $TAG_NAME || { echo "推送标签失败"; exit 1; }
 # 切换到开发分支
 git checkout dev || { echo "切换到开发分支失败"; exit 1; }
 echo "部署完成！"
+read -p "按任意键继续..."

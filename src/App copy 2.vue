@@ -18,7 +18,7 @@
   </div>
 </template>
 
-  <script>
+<script>
 import splitPane from "vue-splitpane";
 export default {
   name: "App",
@@ -39,7 +39,7 @@ export default {
 };
 </script>
 
-  <style lang="scss" scoped>
+<style lang="scss" scoped>
 .wrap {
   height: 100%;
   .paneL {

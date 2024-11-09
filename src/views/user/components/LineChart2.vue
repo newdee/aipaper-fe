@@ -209,7 +209,6 @@ export default {
     },
     getList(data) {
       agentCount(data).then((res) => {
-        console.log("97---", res);
         let data = res.result;
         if (Object.keys(data).length > 0) {
           this.chartData = data;

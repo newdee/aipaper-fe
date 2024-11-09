@@ -168,7 +168,6 @@ export default {
   methods: {
     closeDialog() {
       this.ordersDrawer = false;
-      console.log("dddddddddddddddddd", this.ordersDrawer);
     },
     loginOut() {
       removeToken();
@@ -197,7 +196,7 @@ export default {
       document.removeEventListener("click", this.handleOutsideClick);
     },
     popupFn() {
-      console.log("129--弹窗点击事件");
+      this.$log("129--弹窗点击事件");
     },
     jumpDetail(path) {
       this.$router.push(path);
@@ -214,7 +213,6 @@ export default {
       this.orderTabs = status;
       // 本菜单仅在用户已登录状态可见,所以这里在查看订单前不再校验用户是否已登录
       this.listId = new Date().getTime();
-      console.log("this.", this.listId);
       this.hidePopup();
       this.ordersDrawer = true;
     },

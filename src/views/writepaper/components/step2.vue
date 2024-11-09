@@ -1067,8 +1067,8 @@ export default {
         });
     },
     saveOutline(status) {
-      // console.log("this.", this.requestForm);
-      // console.log("this.", JSON.stringify(this.outline));
+      //  console.log("this.", this.requestForm);
+      //  console.log("this.", JSON.stringify(this.outline));
 
       //关不字数选择弹窗
       this.sliderStatus = false;
@@ -1079,7 +1079,7 @@ export default {
           outline: this.outline,
         },
       };
-      // console.log("this.ddddddddd", data);
+      //  console.log("this.ddddddddd", data);
       if (status == "aitype") {
         data.aitype = true;
       } else {
@@ -1250,7 +1250,7 @@ export default {
       this.numberValidateForm = { ...numberValidateForm };
     },
     appendShowSibling(node, data) {
-      // console.log("1030---node和data:", node, data, data.index);
+      //  console.log("1030---node和data:", node, data, data.index);
 
       this.appendLevel = data.level;
       if (data.level == 1) {

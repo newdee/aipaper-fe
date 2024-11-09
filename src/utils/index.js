@@ -153,14 +153,12 @@ export function param2Obj(url) {
 }
 
 export function getDomain(func, wait, immediate) {
-  console.log("");
   const hostname = window.location.hostname;
   if (hostname === "mixpaper.cn") {
     sub_domain = "www";
   }
 
   let sub_domain = hostname.replace(".mixpaper.cn", "");
-  console.log("sub_domain", sub_domain);
   if (sub_domain == "localhost" || sub_domain == "mixpaper.cn") {
     sub_domain = "www";
   }

@@ -94,7 +94,7 @@ export default {
   watch: {
     payStatus: {
       handler(newVal, oldVal) {
-        console.log("支付状态发生变化", "新值:", newVal, "旧值:", oldVal);
+        this.$log("支付状态发生变化", "新值:", newVal, "旧值:", oldVal);
         // 在这里执行你需要的操作
         this.ownPayStatus = true;
         this.$store.dispatch("paper/setPollingStatus", true);
@@ -103,7 +103,7 @@ export default {
     },
     paperPercent: {
       handler(newVal, oldVal) {
-        console.log("进度条百分比", "新值:", newVal, "旧值:", oldVal);
+        this.$log("进度条百分比", "新值:", newVal, "旧值:", oldVal);
         // 在这里执行你需要的操作
         this.currentNumber = newVal;
       },
@@ -165,7 +165,7 @@ export default {
       maxRetries = 5,
       currentRetry = 0
     ) {
-      console.log("执行一次");
+      this.$log("执行一次");
 
       if (this.pollingStatus) {
         console.warn("轮询正在进行中...");
@@ -175,7 +175,7 @@ export default {
 
       orderDetailById(data)
         .then((res) => {
-          console.log("res", res.result);
+          this.$log("res", res.result);
           let result = res.result;
           let orderData = res.result.order;
           // 判断支付状态
@@ -193,8 +193,8 @@ export default {
           const { order_item_response } = res.result;
           let caseStatus = true;
           if (order_item_response.length > 0) {
-            console.log("case", order_item_response[0].case.paper_case.stage);
-            console.log(
+            this.$log("case", order_item_response[0].case.paper_case.stage);
+            this.$log(
               "case",
               order_item_response[0].case.paper_case.stage == 2
             );
@@ -215,7 +215,7 @@ export default {
             // let pdfUrl = "https://file.mixpaper.cn/pdf/third_output.pdf";
             let pdfUrl2 = order_item_response[0].case.file_urls.pdf;
             let realUrl = pdfUrl2 ? pdfUrl2 : "";
-            console.log("realUrl", realUrl);
+            this.$log("realUrl", realUrl);
 
             // 满足停止轮询的条件，更新数据并结束轮询
             this.listData = order_item_response; // 假设这里是你想更新的数据
@@ -244,7 +244,7 @@ export default {
         });
     },
     getDetail() {
-      console.log("d1111", this.requestKey);
+      this.$log("d1111", this.requestKey);
       if (this.requestKey) {
         this.getList({ key: this.requestKey }, 10000);
       } else {
@@ -255,7 +255,7 @@ export default {
       }
     },
     addE(index) {
-      console.log("dddd", index, this.paperPercent);
+      this.$log("dddd", index, this.paperPercent);
       clearInterval(this.intervalId); // 达到目标数字时清除定时器
 
       this.countUpToHundred(index);

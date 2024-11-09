@@ -185,7 +185,6 @@ export default {
         sub_domain: getDomain(),
       };
       getHomeInfo(data).then((res) => {
-        console.log(res.result, "res");
         this.$store.dispatch("app/setHomeData", res.result);
         this.$store.dispatch("user/setAgentImage", res.result.agent_image);
       });
