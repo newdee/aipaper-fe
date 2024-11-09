@@ -47,6 +47,15 @@
           <el-button @click="$devf">编辑</el-button>
         </div>
       </div>
+
+      <p
+        v-if="
+          userInfo.permission == 'AGENT' || userInfo.permission == 'SUPER_ADMIN'
+        "
+        class="imguploadTtile"
+      >
+        上传网站所需物料:
+      </p>
       <div
         v-if="
           userInfo.permission == 'AGENT' || userInfo.permission == 'SUPER_ADMIN'
@@ -506,5 +515,10 @@ export default {
   border-radius: 35px;
   overflow: hidden;
   margin: 10px 0;
+}
+.imguploadTtile {
+  font-size: 18px;
+  margin-top: 40px;
+  font-weight: bold;
 }
 </style>
