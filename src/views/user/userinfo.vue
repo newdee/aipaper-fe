@@ -35,10 +35,10 @@
           <p class="InfoValue">{{ userInfo.phone }}</p>
         </div>
         <div class="info_right">
-          <el-button @click="$devf">编辑</el-button>
+          <!-- <el-button @click="$devf">编辑</el-button> -->
         </div>
       </div>
-      <div class="info">
+      <!-- <div class="info">
         <div class="info_left">
           <p class="infoLabel">密码</p>
           <p class="InfoValue">******</p>
@@ -47,7 +47,7 @@
           <el-button @click="$devf">编辑</el-button>
         </div>
       </div>
-
+      </div> -->
       <p
         v-if="
           userInfo.permission == 'AGENT' || userInfo.permission == 'SUPER_ADMIN'
@@ -295,7 +295,7 @@ export default {
     },
     loginOut() {
       removeToken();
-      this.$router.push("/home");
+      this.$router.push("/home/home");
       // location.reload();
     },
     uploadImg() {
@@ -351,6 +351,7 @@ export default {
 .userInfoBox {
   min-width: 400px;
   max-width: 600px;
+  min-height: 600px;
   margin: 0 auto;
   // background: rgb(136, 134, 134);
   padding: 20px 0;

@@ -19,7 +19,7 @@
               <img :src="avatar" alt="" />
             </div>
             <div class="info">
-              <p class="name">{{ $t("login.username") }}</p>
+              <p class="name">{{ userInfo.user_name }}</p>
               <p class="tel">{{ userInfo.phone }}</p>
               <div class="tel">
                 <span class="tel">{{ $t("login.lastLogin") }}：</span>
