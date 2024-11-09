@@ -53,7 +53,6 @@ const actions = {
       })
         .then((response) => {
           const result = response.result;
-          this.$log("ddd", result);
 
           commit("SET_TOKEN", result.token);
           setToken(result.token);
@@ -73,7 +72,6 @@ const actions = {
         .then((response) => {
           const data = response.result.user;
           let agent_image = response.result.agent_image;
-          this.$log(response);
           // if (!data) {
           //   return reject('Verification failed, please Login again.')
           // }
