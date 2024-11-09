@@ -1,7 +1,7 @@
 <template>
   <div class="ordersList">
     <div class="btns">
-      <el-button type="primary" round @click="delList">删除大纲</el-button>
+      <!-- <el-button type="primary" round @click="delList">删除大纲</el-button> -->
       <el-button type="primary" round @click="refresh">刷新大纲</el-button>
     </div>
     <!-- 大纲列表 -->
@@ -11,7 +11,7 @@
         v-for="(orderObj, index) in orderList"
         :key="index + 'outline'"
       >
-        <el-checkbox :label="orderObj.id" :value="orderObj.id"></el-checkbox>
+        <!-- <el-checkbox :label="orderObj.id" :value="orderObj.id"></el-checkbox> -->
         <div class="order">
           <div class="orderNum rowBetween">
             <!-- <div class="left">大纲号：{{ orderObj.order.out_trade_no }}</div> -->
