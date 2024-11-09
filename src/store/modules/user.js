@@ -53,7 +53,6 @@ const actions = {
       })
         .then((response) => {
           const result = response.result;
-          this.$log("ddd", result);
 
           commit("SET_TOKEN", result.token);
           setToken(result.token);
