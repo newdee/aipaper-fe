@@ -70,7 +70,7 @@
       <line-chart4 />
     </el-row>
 
-    <el-row :gutter="32">
+    <!-- <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
           <raddar-chart />
@@ -86,7 +86,7 @@
           <bar-chart />
         </div>
       </el-col>
-    </el-row>
+    </el-row> -->
 
     <!-- <el-row :gutter="8">
       <el-col
