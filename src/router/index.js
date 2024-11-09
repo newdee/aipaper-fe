@@ -195,8 +195,8 @@ export const constantRoutes = [
       },
       // 精品课程
       {
-        path: "aitools",
-        name: "aitools",
+        path: "eliteCourses",
+        name: "eliteCourses",
         component: () => import("@/views/aitools/index"),
         meta: {
           keepAlive: true,

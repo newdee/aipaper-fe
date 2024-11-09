@@ -108,7 +108,6 @@ export default {
   watch: {
     // 当listId发生变化时执行此回调
     listId(newVal, oldVal) {
-      console.log("listId changed from " + oldVal + " to " + newVal);
       // 在这里处理listId变化后需要做的事情
       this.handleCurrentChange(1);
     },
@@ -160,13 +159,10 @@ export default {
       }
     },
     delList() {
-      console.log(this.checkList);
       // delOrder(this.checkList).then((res) => {
-      //   console.log(res);
       // });
     },
     handleCurrentChange: throttle(function (newPage) {
-      console.log("当前页:", newPage);
       // 这里可以添加你的分页逻辑，例如发送请求获取新的数据
       let params = {
         page_num: newPage,

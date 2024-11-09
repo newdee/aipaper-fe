@@ -362,11 +362,11 @@ export default {
     // 查看用户输入数据是否存在
     let jsonStr = localStorage.getItem("userInput");
 
-    console.log("outline_----", jsonStr);
+    this.$log("outline_----", jsonStr);
 
     if (!!jsonStr) {
       this.requestForm = JSON.parse(jsonStr);
-      console.log("用户输入有数据", this.requestForm);
+      this.$log("用户输入有数据", this.requestForm);
       this.$nextTick(() => {
         localStorage.removeItem("userInput");
       });
@@ -392,7 +392,7 @@ export default {
   },
   methods: {
     paperTypeChange(val) {
-      console.log("论文类型", val);
+      this.$log("论文类型", val);
       if (val == "专科") {
         this.requestForm.word_count = 8000;
       }
@@ -407,7 +407,7 @@ export default {
       }
     },
     setFormData(data) {
-      console.log("setFormdata-----------", data);
+      this.$log("setFormdata-----------", data);
       if (data) {
         this.requestForm = { ...data };
       }
@@ -450,16 +450,16 @@ export default {
         outlineCreate(data).then((res) => {
           this.$store.dispatch("app/setProStatus", true);
 
-          console.log("outlineCreateres", res);
+          this.$log("outlineCreateres", res);
           eventBus.emit("emitOulineClick", 3); // 发布事件
-          console.log("lunwen", this.requestForm);
+          this.$log("lunwen", this.requestForm);
           this.requestForm.key = res.result.key;
           this.$store.dispatch("app/setRequestForm", this.requestForm);
           this.requestKey = res.result.key;
           // this.requestKey = "eb3a2422-301c-47ba-be1f-7c334e15c655";
           polling({ key: this.requestKey }, 5000)
             .then((res) => {
-              console.log("ddddd", res);
+              this.$log("ddddd", res);
               if (res == "生成失败") {
                 eventBus.emit("errorOutline", res); // 发布事件
               } else {
@@ -467,7 +467,7 @@ export default {
               }
             })
             .catch((error) => {
-              console.log(error, "eeeeeerrrror");
+              this.$log(error, "eeeeeerrrror");
               this.$message({
                 type: "error",
                 message: "大纲生成失败, 请稍后重试",
@@ -497,18 +497,18 @@ export default {
     }, 300),
     saveInput() {
       // 获取用户数据
-      console.log("ssss", this.requestForm);
+      this.$log("ssss", this.requestForm);
       localStorage.setItem("userInput", JSON.stringify(this.requestForm));
       this.$router.push("/login");
     },
     addE() {},
     // 定义方法
     handleChange(value) {
-      console.log(value);
+      this.$log(value);
     },
     checkoutPaper(val) {
       this.index = val;
-      console.log("homeData", this.homeData);
+      this.$log("homeData", this.homeData);
     },
   },
 };

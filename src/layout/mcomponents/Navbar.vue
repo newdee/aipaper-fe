@@ -65,16 +65,13 @@ export default {
     ...mapGetters(["userInfo", "name", "avatar"]),
   },
   mounted() {
-    console.log("tokend", getToken());
     this.hasLogin = getToken();
   },
   methods: {
     showOrderList() {
       const hasToken = getToken();
-      console.log("hasToken", hasToken);
       if (hasToken) {
         this.listId = new Date().getTime();
-        console.log("this.", this.listId);
         this.ordersDrawer = true;
       } else {
         this.$confirm("查看订单需要登录, 是否跳转到登录页?", "提示", {

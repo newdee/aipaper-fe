@@ -316,14 +316,13 @@ export default {
       // return draggingNode.data.apiGroupName.indexOf('三级 3-2-2') === -1
     },
     updateApiGroup(data) {
-      console.log(data);
       this.generateIndexes(this.data);
       // updateApiGroup(1, data)
       //   .then((response) => {
-      //     console.log(response);
+      //     this.$log(response);
       //   })
       //   .catch((err) => {
-      //     console.log(err);
+      //     this.$log(err);
       //   });
     },
     appendShow(node, data) {
@@ -339,7 +338,6 @@ export default {
           // alert('submit!');
           this.append();
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -372,7 +370,7 @@ export default {
       this.updateApiGroup(this.data);
     },
     edit(node, data) {
-      console.log(
+      this.$log(
         "before:",
         data.id,
         // data.parentApiGroupId,
@@ -384,43 +382,43 @@ export default {
       this.$nextTick(() => {
         this.$refs.input.focus();
       });
-      console.log("after:", data.id, data.label, data.isEdit);
+      this.$log("after:", data.id, data.label, data.isEdit);
     },
 
     submitEdit(node, data) {
-      // console.log('点击了保存按钮')
-      console.log(node, data, "-----------------");
+      this.$log("点击了保存按钮");
+      this.$log(node, data, "-----------------");
       if (data.label == this.newlabel) {
-        console.log("没有修改");
+        this.$log("没有修改");
         this.newlabel = "";
         this.$set(data, "isEdit", 0);
       } else {
         this.$set(data, "label", this.newlabel);
         this.newlabel = "";
         this.$set(data, "isEdit", 0);
-        // console.log('after:', data.id, data.label)
-        // console.log(this.data)
+        this.$log("after:", data.id, data.label);
+        this.$log(this.data);
         this.updateApiGroup(this.data);
       }
     },
     handleDragStart(node, ev) {
-      console.log("drag start", node);
+      this.$log("drag start", node);
     },
     handleDragEnter(draggingNode, dropNode, ev) {
-      console.log("tree drag enter: ", dropNode.label);
+      this.$log("tree drag enter: ", dropNode.label);
     },
     handleDragLeave(draggingNode, dropNode, ev) {
-      console.log("tree drag leave: ", dropNode.label);
+      this.$log("tree drag leave: ", dropNode.label);
     },
     handleDragOver(draggingNode, dropNode, ev) {
-      console.log("tree drag over: ", dropNode.label);
+      this.$log("tree drag over: ", dropNode.label);
     },
     handleDragEnd(draggingNode, dropNode, dropType, ev) {
-      console.log("tree drag end: ", dropNode && dropNode.label, dropType);
+      this.$log("tree drag end: ", dropNode && dropNode.label, dropType);
       this.generateIndexes(this.data);
     },
     handleDrop(draggingNode, dropNode, dropType, ev) {
-      console.log("tree drop: ", dropNode.label, dropType);
+      this.$log("tree drop: ", dropNode.label, dropType);
     },
     allowDrop(draggingNode, dropNode, type) {
       if (dropNode.data.label === "二级 3-1") {

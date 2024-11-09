@@ -271,12 +271,10 @@ export default {
   watch: {
     sampleTitle(newVal, oldVal) {
       // this.pdfUrl = require("@/assets/samples/2.pdf");
-      console.log(`272---count changed from ${oldVal} to ${newVal}`);
       // 在这里执行其他操作
       this.pdfUrl = this.titleSamplesMap[newVal];
     },
     sampleMaterial(newVal, oldVal) {
-      console.log(`277---count changed from ${oldVal} to ${newVal}`);
       // 在这里执行其他操作
       if (newVal == 1) {
         this.pdfUrl = require("@/assets/samples/1.pdf");

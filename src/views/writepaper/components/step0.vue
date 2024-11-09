@@ -79,6 +79,16 @@
               </div>
               <div class="right">
                 <el-button
+                  icon="el-icon-view"
+                  type="text"
+                  :disabled="
+                    !orderObj.order_item_response[0].case.file_urls.pdf
+                  "
+                  @click="openPaper(orderObj)"
+                >
+                  预览
+                </el-button>
+                <el-button
                   v-if="orderObj.order_item_response[0].case.paper_case.stage"
                   icon="el-icon-download"
                   :disabled="
@@ -150,7 +160,7 @@ export default {
     if (hasToken) {
       this.handleCurrentChange();
     } else {
-      console.log("用户未登录,大纲不加载 step0!");
+      this.$log("用户未登录,大纲不加载 step0!");
     }
     // 页面初始化
   },
@@ -165,6 +175,41 @@ export default {
     ...mapGetters(["device"]),
   },
   methods: {
+    openPaper: _.debounce(function (item) {
+      const targetPath = "/main/writepaper";
+      const currentPath = this.$route.path;
+      // 检查当前路径是否与目标路径相同
+      if (currentPath !== targetPath) {
+        this.$router
+          .push({
+            path: targetPath,
+            query: {
+              timeData: new Date().getTime(),
+            },
+          })
+          .then(() => {
+            // 确保 DOM 更新完成后再执行后续代码
+            this.$nextTick(() => {
+              this.$log("item", item);
+              // 关闭弹窗
+              eventBus.emit("orderDialogChange", false);
+              // 保存订单ID
+              this.$store.dispatch("app/toggleCurrentOrder", item.order);
+              let realUrl = item.order_item_response[0].case.file_urls.pdf;
+              eventBus.emit("pdfSuccessClick", realUrl); // 发布事件
+            });
+          });
+      } else {
+        // 如果已经在目标路径，直接执行后续逻辑
+        this.$nextTick(() => {
+          this.$log("item", item);
+          eventBus.emit("orderDialogChange", false);
+          this.$store.dispatch("app/toggleCurrentOrder", item.order);
+          let realUrl = item.order_item_response[0].case.file_urls.pdf;
+          eventBus.emit("pdfSuccessClick", realUrl);
+        });
+      }
+    }, 300),
     jumpStep2(row) {
       this.$router
         .push({
@@ -201,7 +246,7 @@ export default {
         let data = res.result;
         if (Object.keys(data).length > 0) {
           this.outlinesList = data.outline_list || [];
-          console.log("180---outlines", this.outlinesList);
+          this.$log("180---outlines", this.outlinesList);
           // this.page.page_num = data.page_num - 0;
           // this.page.total = data.total;
         }
@@ -211,16 +256,16 @@ export default {
         let data = res.result;
         if (Object.keys(data).length > 0) {
           this.orderList = data.order_resp_list || [];
-          console.log("196---orderList", this.orderList);
+          this.$log("196---orderList", this.orderList);
         }
       });
     }, 300), // 300毫秒内最多执行一次
 
     downLoadPaper: _.debounce(function (item) {
-      console.log("item", item);
+      this.$log("item", item);
       this.downStatus = true;
       paperPack({ out_trade_no: item.order.out_trade_no }).then((res) => {
-        console.log("ad", res.result.zip_url);
+        this.$log("ad", res.result.zip_url);
         this.downStatus = false;
         // window.open(res.result.zip_url, "_blank");
         // Create a temporary link element

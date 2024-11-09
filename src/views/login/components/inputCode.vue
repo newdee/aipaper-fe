@@ -83,7 +83,7 @@ export default {
   //   input: {
   //     handler(newVal, oldVal) {
   //       alert("asd");
-  //       console.log("Person object has changed:", newVal, oldVal);
+  //        console.log("Person object has changed:", newVal, oldVal);
   //     },
   //     deep: true, // 启用深度监听
   //   },
@@ -94,9 +94,7 @@ export default {
       var index = e.target.dataset.index * 1;
       var el = e.target;
       this.$set(this.input, index, el.value.slice(0, 1));
-      console.log("this.", this.input);
       let inputStatus = this.checkArray(this.input);
-      console.log("this", inputStatus);
       if (inputStatus) {
         this.sendCode();
       }
@@ -119,7 +117,7 @@ export default {
           _this.$emit("codeChange", "success");
           // try {
           // // get user info
-          //   console.log('11', )
+          //    console.log('11', )
 
           //   next()
           // } catch (error) {
@@ -135,7 +133,7 @@ export default {
         });
       // login(data)
       //   .then((res) => {
-      //     console.log("res", res);
+      //      console.log("res", res);
 
       //   })
       //   .catch((error) => {

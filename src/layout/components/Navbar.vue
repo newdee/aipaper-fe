@@ -259,9 +259,9 @@ export default {
   },
 
   mounted() {
-    console.log("tokend", getToken());
+    this.$log("tokend", getToken());
     this.hasLogin = getToken();
-    console.log("routes:", this.$router.options.routes);
+    this.$log("routes:", this.$router.options.routes);
     let arr = _.find(
       this.$router.options.routes,
       (obj) => obj.name == "main" && obj.meta.id == "5"
@@ -272,7 +272,7 @@ export default {
     generateTitle,
     showOrderList(status) {
       const hasToken = getToken();
-      console.log("hasToken", hasToken);
+      this.$log("hasToken", hasToken);
       if (hasToken) {
         // 打开大纲/订单
         eventBus.emit("showEmitList", status);
@@ -280,7 +280,7 @@ export default {
         // this.orderTabs = status;
 
         // this.listId = new Date().getTime();
-        // console.log("this.", this.listId);
+        //  this.$log("this.", this.listId);
         // this.ordersDrawer = true;
       } else {
         this.$confirm("查看订单需要登录, 是否跳转到登录页?", "提示", {

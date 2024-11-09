@@ -14,7 +14,7 @@ import "element-ui/lib/theme-chalk/display.css";
 import App from "./App";
 import store from "./store";
 import router from "./router";
-
+import logger from "@/utils/logger";
 import "@/icons"; // icon
 import "@/permission"; // permission control
 import "@/utils/rem";
@@ -28,7 +28,7 @@ Vue.component("global-modal", globalDialog);
 Vue.prototype.$bus = new Vue();
 // const VConsole = require("vconsole");
 // const vConsole = new VConsole();
-// console.log("VConsole is enabled");
+//  console.log("VConsole is enabled");
 
 import * as filters from "./filters"; // global filters
 Object.keys(filters).forEach((key) => {
@@ -68,7 +68,9 @@ Vue.use(VueClipboard);
 Vue.config.productionTip = false;
 
 Vue.prototype.$minWidth = 500;
-
+Vue.prototype.$log = logger.log;
+Vue.prototype.$warn = logger.warn;
+Vue.prototype.$error = logger.error;
 // eventBus.js
 import VueScrollTo from "vue-scrollto";
 

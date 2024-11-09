@@ -207,7 +207,6 @@ export default {
   components: { inputCode },
   mounted() {
     // this.getSubdomain();
-
     console.log("getDomain", getDomain());
     console.log("location", window.location);
     console.log("hostname", window.location.hostname);
@@ -347,16 +346,15 @@ export default {
         //   phone: this.phoneNum,
         //   // phone: "13164661907",
         // };
-        // console.log("this.data", data);
+        //  console.log("this.data", data);
         // sms(data).then((res) => {
-        //   console.log("res", res);
+        //    console.log("res", res);
         this.repeatCode();
         // });
       }
     },
     checkPhoneNum(phoneNum) {
       let phoneRegex = /^1[3-9]\d{9}$/;
-      console.log("199---", phoneRegex.test(phoneNum));
 
       return phoneRegex.test(phoneNum);
     },

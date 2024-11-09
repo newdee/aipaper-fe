@@ -151,7 +151,6 @@ export default {
     },
     // 点击生成大纲
     showIndex() {
-      console.log("ddddd", this.activeIndex);
       // this.activeIndex = 1;
       this.$store.dispatch("app/setActiveIndex", 1);
       this.$nextTick(() => {
@@ -160,7 +159,6 @@ export default {
       });
     },
     showIndex3(pdfUrl) {
-      console.log("showIndex3showIndex3showIndex3showIndex3");
       // let pdfUrl =
       // "https://file.mixpaper.cn/paper/case/4fd240e4-cad3-4e87-a8d4-1eda7a2cbe4d/second/output.pdf";
       // this.activeIndex = 3;
@@ -171,7 +169,6 @@ export default {
       });
     },
     showOutLine(data) {
-      console.log("indexOutline", data);
       this.outlineData = {};
 
       this.outlineData = data;
@@ -207,7 +204,7 @@ export default {
   beforeRouteUpdate(to, from, next) {
     // 当路由的查询参数发生变化时，这个方法会被调用
     // this.activeIndex = to.query.activeIndex || 0;
-    // console.log("dddddddddddddddddddd---------", to, from,);
+    //  console.log("dddddddddddddddddddd---------", to, from,);
 
     if (to.query.key1) {
       let data = {
@@ -229,7 +226,6 @@ export default {
         // 填充大纲列表数据
       });
     }
-    console.log("Query parameter changed:", to.query);
     next();
   },
 };
