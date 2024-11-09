@@ -60,17 +60,25 @@ done
 # 获取当前分支名称
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-# 暂存当前更改
-echo "暂存当前更改..."
-git stash || { echo "暂存更改失败"; exit 1; }
+# 检查是否有未提交的更改
+if ! git diff-index --quiet HEAD --; then
+  # 暂存当前更改
+  echo "暂存当前更改..."
+  git stash || { echo "暂存更改失败"; exit 1; }
+  STASHED=true
+else
+  STASHED=false
+fi
 
 # 拉取最新的代码
 echo "从 $REMOTE_ORIGIN/$CURRENT_BRANCH 拉取最新代码..."
 git pull $REMOTE_ORIGIN $CURRENT_BRANCH || { echo "拉取代码失败"; exit 1; }
 
-# 恢复暂存的更改
-echo "恢复暂存的更改..."
-git stash pop || { echo "恢复暂存的更改失败"; exit 1; }
+# 如果有暂存的更改，恢复它们
+if $STASHED; then
+  echo "恢复暂存的更改..."
+  git stash pop || { echo "恢复暂存的更改失败"; exit 1; }
+fi
 
 # 添加所有更改
 echo "添加所有更改..."
@@ -119,4 +127,5 @@ git push $REMOTE_GITHUB $TAG_NAME || { echo "推送标签失败"; exit 1; }
 # 切换到开发分支
 git checkout dev || { echo "切换到开发分支失败"; exit 1; }
 echo "部署完成！"
+
 read -p "按任意键继续..."

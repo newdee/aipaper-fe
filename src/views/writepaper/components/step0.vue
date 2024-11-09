@@ -246,7 +246,6 @@ export default {
         let data = res.result;
         if (Object.keys(data).length > 0) {
           this.outlinesList = data.outline_list || [];
-          this.$log("180---outlines", this.outlinesList);
           // this.page.page_num = data.page_num - 0;
           // this.page.total = data.total;
         }
@@ -256,16 +255,13 @@ export default {
         let data = res.result;
         if (Object.keys(data).length > 0) {
           this.orderList = data.order_resp_list || [];
-          this.$log("196---orderList", this.orderList);
         }
       });
     }, 300), // 300毫秒内最多执行一次
 
     downLoadPaper: _.debounce(function (item) {
-      this.$log("item", item);
       this.downStatus = true;
       paperPack({ out_trade_no: item.order.out_trade_no }).then((res) => {
-        this.$log("ad", res.result.zip_url);
         this.downStatus = false;
         // window.open(res.result.zip_url, "_blank");
         // Create a temporary link element
