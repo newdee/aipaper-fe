@@ -150,6 +150,7 @@
           :label="item"
           :key="index + 'fu'"
           class="labelBox floorBox"
+          v-show="item.name == '开题报告' || item.name == '任务书'"
         >
           <div class="left">
             <img
@@ -168,7 +169,44 @@
             <span v-show="item.description">({{ item.description }})</span>
           </div>
           <div class="right">
-            <svg v-if="true" class="icon svg-icon" aria-hidden="true">
+            <svg
+              v-if="model || index !== 3"
+              class="icon svg-icon"
+              aria-hidden="true"
+            >
+              <use xlink:href="#icon-duigou-cu"></use>
+            </svg>
+            <svg v-else class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-fangkuang"></use>
+            </svg>
+          </div>
+        </div>
+        <div
+          v-for="(item, index) in supportedProducts"
+          :label="item"
+          :key="index + 'fu11'"
+          :class="{ labelBox: true, floorBox: true, activeClass: !model }"
+          v-show="item.name == '调查问卷'"
+          @click="juanChange"
+        >
+          <div class="left">
+            <img
+              v-if="model"
+              class="home-icon"
+              src="@/assets/images/bank-white.png"
+              alt=""
+            />
+            <img
+              v-else
+              class="home-icon"
+              src="@/assets/images/bank-dark.png"
+              alt=""
+            />
+            {{ item.name }}
+            <span v-show="item.description">({{ item.description }})</span>
+          </div>
+          <div class="right">
+            <svg v-if="model" class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-duigou-cu"></use>
             </svg>
             <svg v-else class="icon svg-icon" aria-hidden="true">
@@ -220,6 +258,31 @@ export default {
     return {
       // 定义变量
       checkboxGroup1: [],
+      supportedProducts: [
+        { id: "6", is_supported: true, name: "开题报告", price: 4.9 },
+        {
+          id: "7",
+          is_supported: true,
+          name: "任务书",
+          price: 4.9,
+        },
+        {
+          id: "9",
+          is_supported: true,
+          name: "调查问卷",
+          price: 4.9,
+        },
+      ],
+      supportedProducts2: [
+        { id: "6", is_supported: true, name: "开题报告", price: 4.9 },
+        {
+          id: "7",
+          is_supported: true,
+          name: "任务书",
+          price: 4.9,
+        },
+      ],
+      model: false,
     };
   },
   components: {
@@ -228,6 +291,7 @@ export default {
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
+    this.$store.dispatch("paper/setAdditionList", this.supportedProducts2);
   },
   created() {
     // eventBus.on("sendOutline", this.addE); // 订阅事件
@@ -237,24 +301,32 @@ export default {
   },
   computed: {
     // 计算属性
-    supportedProducts() {
-      // 过滤出 is_supported 为 true 的产品
-      let listData = [];
-      listData = this.homeData.product_list.filter(
-        (product) =>
-          product.is_supported &&
-          (product.name == "开题报告" ||
-            product.name == "任务书" ||
-            product.name == "调查问卷")
-      );
-      // this.checkboxGroup1 = listData;
-      this.$store.dispatch("paper/setAdditionList", listData);
+    // supportedProducts() {
+    //   // 过滤出 is_supported 为 true 的产品
+    //   let listData = [];
+    //   listData = this.homeData.product_list.filter(
+    //     (product) =>
+    //       product.is_supported &&
+    //       (product.name == "开题报告" ||
+    //         product.name == "任务书" ||
+    //         product.name == "调查问卷")
+    //   );
+    //   // this.checkboxGroup1 = listData;
 
-      return listData;
-    },
+    //   return listData;
+    // },
     ...mapGetters(["requestForm", "homeData"]),
   },
   methods: {
+    juanChange(index) {
+      this.model = !this.model;
+      this.$log(this.model, "model");
+      if (this.model) {
+        this.$store.dispatch("paper/setAdditionList", this.supportedProducts);
+      } else {
+        this.$store.dispatch("paper/setAdditionList", this.supportedProducts2);
+      }
+    },
     // this.$store.dispatch("paper/setAdditionList", []);
     fuChange(val) {
       // let fuList =
@@ -355,6 +427,15 @@ export default {
   padding-left: 10px;
   .floorBox {
     margin-right: 20px;
+  }
+}
+.activeClass {
+  background: #fff !important;
+  color: #606266 !important;
+}
+.floorBox {
+  &:hover {
+    cursor: pointer;
   }
 }
 </style>

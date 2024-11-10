@@ -143,14 +143,20 @@ export default {
       }
     },
     jumpStep() {
-      this.$confirm("关闭弹窗,不影响论文生成进度")
-        .then((_) => {
-          // done();
-          this.ownPayStatus = false;
-          this.$store.dispatch("paper/setPollingStatus", false);
-          this.$store.dispatch("app/setActiveIndex", 0);
-        })
-        .catch((_) => {});
+      if (this.payTitleStatus == "TRADE_SUCCESS") {
+        this.$confirm("关闭弹窗,不影响论文生成进度")
+          .then((_) => {
+            // done();
+            this.ownPayStatus = false;
+            this.$store.dispatch("paper/setPollingStatus", false);
+            this.$store.dispatch("app/setActiveIndex", 0);
+          })
+          .catch((_) => {});
+      } else {
+        this.ownPayStatus = false;
+        this.$store.dispatch("paper/setPollingStatus", false);
+        this.$store.dispatch("app/setActiveIndex", 0);
+      }
     },
     /**
      * 获取列表数据，支持轮询

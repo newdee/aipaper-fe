@@ -1430,10 +1430,6 @@ export default {
       if (!this.checked) {
         this.statementDialogVisible = true;
       } else {
-        eventBus.emit("showEmitPaperDialog", {
-          requestKey: "",
-          payStatus: 1,
-        });
         const hasToken = getToken();
         if (hasToken) {
           let data = {
@@ -1463,11 +1459,36 @@ export default {
             delete product.is_supported;
           });
 
-          const totalPrice = data.items.reduce(
-            (sum, item) => sum + item.price,
-            0
+          // const totalPrice = data.items.reduce(
+          //   (sum, item) => sum + item.price,
+          //   0
+          // );
+          // data.total_amount = totalPrice;
+
+          let priceList = [
+            {
+              type: "专科",
+              price: 189,
+            },
+            {
+              type: "本科",
+              price: 189,
+            },
+            {
+              type: "研究生",
+              price: 249,
+            },
+            {
+              type: "结课论文",
+              price: 49,
+            },
+          ];
+          let result = priceList.find(
+            (item) => item.type === this.requestForm.type
           );
-          data.total_amount = totalPrice;
+          this.$log(result, result.price);
+          data.total_amount = result.price;
+          console.log("requestForm", this.requestForm);
           console.log("generateForm-data", JSON.stringify(data));
           console.log("generateForm-data", data);
           // this.getDetail(34);
@@ -1492,7 +1513,7 @@ export default {
             .catch(() => {
               this.$message({
                 type: "info",
-                message: "已取消生成",
+                message: "订单生成失败, 请联系客服重试!",
               });
             });
         }

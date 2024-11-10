@@ -123,16 +123,16 @@ export default {
   methods: {
     jumpStep2(row) {
       // row.key1
-      this.$router
-        .push({
+      this.$router.push(
+        {
           path: "/main/writepaper",
           query: {
             key1: row.key1,
             field: row.field,
             timeData: new Date().getTime(),
           },
-        })
-        .then(() => {
+        },
+        () => {
           this.$nextTick(() => {
             let requestForm = {
               title: row.title,
@@ -140,11 +140,15 @@ export default {
               language: row.language,
               type: row.type,
               field: ["哲学", row.field],
+              key: row.key1,
             };
+            this.$store.dispatch("app/setRequestForm", requestForm);
+
             eventBus.emit("setFormData", requestForm); // 发布事件
             eventBus.emit("orderDialogChange", false);
           });
-        });
+        }
+      );
     },
     refresh() {
       this.handleCurrentChange(1);

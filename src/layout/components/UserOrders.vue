@@ -198,16 +198,17 @@ export default {
         const currentPath = this.$route.path;
         // 检查当前路径是否与目标路径相同
         if (currentPath !== targetPath) {
-          this.$router
-            .push({
+          this.$router.push(
+            {
               path: "/main/writepaper",
               // query: { key1: row.key1, field: row.field },
-            })
-            .then(() => {
+            },
+            () => {
               this.$nextTick(() => {
                 this.sendPayFinish(res);
               });
-            });
+            }
+          );
         } else {
           this.sendPayFinish(res);
         }
@@ -231,18 +232,19 @@ export default {
       const currentPath = this.$route.path;
       // 检查当前路径是否与目标路径相同
       if (currentPath !== targetPath) {
-        this.$router
-          .push({
+        this.$router.push(
+          {
             path: "/main/writepaper",
             query: {
               timeData: new Date().getTime(),
             },
-          })
-          .then(() => {
+          },
+          () => {
             this.$nextTick(() => {
               this.pushFinish(row);
             });
-          });
+          }
+        );
       } else {
         this.pushFinish(row);
       }
@@ -291,14 +293,14 @@ export default {
       const currentPath = this.$route.path;
       // 检查当前路径是否与目标路径相同
       if (currentPath !== targetPath) {
-        this.$router
-          .push({
+        this.$router.push(
+          {
             path: targetPath,
             query: {
               timeData: new Date().getTime(),
             },
-          })
-          .then(() => {
+          },
+          () => {
             // 确保 DOM 更新完成后再执行后续代码
             this.$nextTick(() => {
               // 关闭弹窗
@@ -308,7 +310,8 @@ export default {
               let realUrl = item.order_item_response[0].case.file_urls.pdf;
               eventBus.emit("pdfSuccessClick", realUrl); // 发布事件
             });
-          });
+          }
+        );
       } else {
         // 如果已经在目标路径，直接执行后续逻辑
         this.$nextTick(() => {
