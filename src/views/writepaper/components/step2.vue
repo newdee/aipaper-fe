@@ -1499,6 +1499,11 @@ export default {
               console.log("res", res);
               let payUrl = res.result.pay_link;
               console.log("payUrl", payUrl);
+              //  保存订单信息 用于下载展示
+              let order = {
+                out_trade_no: res.result.out_trade_no,
+              };
+              this.$store.dispatch("app/toggleCurrentOrder", order);
               eventBus.emit("showEmitPaperDialog", {
                 requestKey: res.result.out_trade_no,
                 payStatus: 2,

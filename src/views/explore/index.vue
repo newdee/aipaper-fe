@@ -37,8 +37,8 @@
       v-loading="loading"
       v-if="moved"
     >
-      <h6>结果分析</h6>
-      <div v-if="mdStatus" class="mdContent markdown-body">
+      <!-- <h6>结果分析</h6> -->
+      <div v-if="mdStatus" class="markdown-body">
         <!-- <swiper3></swiper3> -->
         <vue-markdown>
           {{ markdownContent }}
@@ -189,10 +189,6 @@ export default {
 .sliderImgBox {
   height: 195px;
   background: skyblue;
-}
-
-.mdContent {
-  margin-top: 23px;
 }
 
 .mdBox {
