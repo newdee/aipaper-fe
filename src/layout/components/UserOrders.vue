@@ -291,6 +291,7 @@ export default {
     openPaper: _.debounce(function (item) {
       const targetPath = "/main/writepaper";
       const currentPath = this.$route.path;
+      this.$log("item", item);
       // 检查当前路径是否与目标路径相同
       if (currentPath !== targetPath) {
         this.$router.push(

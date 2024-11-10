@@ -1,7 +1,7 @@
 export default {
   route: {
     writePaper: "写论文",
-    searchPaper: "AI 搜",
+    searchPaper: "AI 搜索",
     readPaper: "读论文",
     amendPaper: "改论文",
     integratedServices: "综合服务",

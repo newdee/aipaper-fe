@@ -2,6 +2,7 @@ import axios from "axios";
 import { MessageBox, Message } from "element-ui";
 import store from "@/store";
 import { getToken } from "@/utils/auth";
+import router from "../router/index";
 
 // create an axios instance
 const service = axios.create({
@@ -75,14 +76,26 @@ service.interceptors.response.use(
     }
   },
   (error) => {
-    // 请求已发出，但是不在2xx的范围
-    Message({
-      message: error.response.data.message
-        ? error.response.data.message
-        : error.response.data.msg,
-      type: "error",
-      duration: 5 * 1000,
-    });
+    if (error.response.status == "401") {
+      Message({
+        message: "登录已过期,请重新登录!",
+        type: "error",
+        duration: 5 * 1000,
+      });
+      store.dispatch("user/resetToken").then(() => {
+        router.push("/login");
+      });
+    } else {
+      // 请求已发出，但是不在2xx的范围
+      Message({
+        message: error.response.data.message
+          ? error.response.data.message
+          : error.response.data.msg,
+        type: "error",
+        duration: 5 * 1000,
+      });
+    }
+
     return Promise.reject(error);
   }
 );
