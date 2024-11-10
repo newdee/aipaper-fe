@@ -31,13 +31,12 @@
     <!-- 中间行的轮播图 -->
     <div
       class="mdBox"
-      element-loading-text="内容搜索中..."
+      element-loading-text="论文搜索中..."
       element-loading-spinner="el-icon-loading"
-      v-loading="loading"
-      v-if="moved"
+      element-loading-background="rgba(0, 0, 0, 0.8)"
     >
       <h6>结果分析</h6>
-      <div v-if="mdStatus" class="mdContent markdown-body">
+      <div class="mdContent markdown-body">
         <!-- <swiper3></swiper3> -->
         <vue-markdown>
           {{ markdownContent }}
@@ -64,7 +63,6 @@ export default {
   data() {
     return {
       loading: false,
-      mdStatus: false,
       // 定义变量
       markdownContent: "",
       options: [
@@ -92,7 +90,7 @@ export default {
           el: ".swiper-pagination",
         },
       },
-      moved: false, // New state to track input position
+      moved: true, // New state to track input position
     };
   },
 
@@ -122,20 +120,15 @@ export default {
         });
         return false;
       }
-      this.mdStatus = false; // Trigger the animation and display
-      this.moved = true;
       this.loading = true;
+      this.moved = true; // Trigger the animation and display
 
       let data = {
         title: this.title,
       };
-      // this.markdownContent =
-      // '\n# 对对对\n## 相关信息\n"对对对"是近年来在中国社交媒体上流行的网络用语,具有以下几种主要使用场景:\n1. 敷衍应对\n- 当不想深入交谈或结束对话时使用\n- 通常连续重复"对"字三次\n- 语气平淡,表示不想继续谈话\n2. 认同附和\n- 表示完全同意对方观点\n- 用于加强肯定的语气\n- 常见于日常对话交流\n3. 网络梗衍生\n- 来源于2020年抖音平台的流行语\n- 常配合"噢噢噢"一起使用\n- 衍生出相关表情包和短视频\n4. 使用环境\n- 主要在非正式场合使用\n- 多见于年轻人之间的网络交流\n- 常用于微信、QQ等即时通讯软件\n5. 变体形式\n- "对对对对对"(重复更多次)\n- "对滴对滴对滴"\n- "对哦对哦对哦"\n此表达已成为中文互联网交流中的常用语,体现了网络用语的简洁性和趣味性特点。';
       gpt_search(data)
         .then((res) => {
-          this.mdStatus = true; // Trigger the animation and display
-
-          console.log("请求成功", this.markdownContent);
+          console.log("请求成功", res.result);
           this.markdownContent = res.result;
           this.loading = false;
         })

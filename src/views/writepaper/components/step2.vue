@@ -1437,6 +1437,7 @@ export default {
             payment_method: "alipay", // 支付方式
             total_amount: 149.85, // 总价
             key: this.requestForm.key, // 大纲的key
+            // paper_type: this.requestForm.type,
             // paper_words: this.paper_words,
             // key: "eb3a2422-301c-47ba-be1f-7c334e15c655",
             items: [
