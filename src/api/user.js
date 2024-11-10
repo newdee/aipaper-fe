@@ -14,6 +14,13 @@ export function getHomeInfo(params) {
     params,
   });
 }
+export function gpt_search(params) {
+  return request({
+    url: "/api/ai-paper/paper/gpt_search?",
+    method: "get",
+    params,
+  });
+}
 export function getUserInfo() {
   return request({
     url: "/api/ai-paper/user/info",

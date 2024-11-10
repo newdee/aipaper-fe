@@ -30,6 +30,9 @@ Vue.prototype.$bus = new Vue();
 // const vConsole = new VConsole();
 //  console.log("VConsole is enabled");
 
+import VueMarkdown from "vue-markdown";
+Vue.component("vue-markdown", VueMarkdown);
+
 import * as filters from "./filters"; // global filters
 Object.keys(filters).forEach((key) => {
   Vue.filter(key, filters[key]);
