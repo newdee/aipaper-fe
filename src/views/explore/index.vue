@@ -20,6 +20,7 @@
           v-model="title"
           placeholder="输入你想查找的论文信息"
           type="text"
+          @keyup.enter="searchGpt"
         />
       </div>
       <div @click="searchGpt" class="searchIconBox">
@@ -170,7 +171,7 @@ export default {
 // 搜索框
 .mainInput {
   margin: 0px;
-  width: 90%;
+  width: 89%;
   max-width: none;
   height: 56px;
   border-radius: 32px;
