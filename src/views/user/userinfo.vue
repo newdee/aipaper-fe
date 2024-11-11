@@ -167,7 +167,7 @@
             />
             <i v-else class="el-icon-plus liImgLi"></i>
           </el-upload>
-          <p>商务合作</p>
+          <p>代理加盟</p>
         </div>
       </div>
       <div class="info">

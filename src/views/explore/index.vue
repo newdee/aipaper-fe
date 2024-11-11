@@ -1,5 +1,5 @@
 <template>
-  <div class="exploreWrapper">
+  <div class="exploreWrapper mainContentSec">
     <!-- AI论文快查 -->
     <div :class="['mainInput', { moved: moved }]" ref="mainInput">
       <p class="inputName">AI搜</p>
