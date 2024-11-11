@@ -86,7 +86,7 @@
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-a-ziyuan4"></use>
             </svg>
-            <p style="width: 3em">万象AI助手</p>
+            <p style="width: 3em">AI助手</p>
           </div>
         </el-button>
 
@@ -111,13 +111,13 @@
             <div class="qywxBox">
               <img :src="agent_image.business_qrcode" alt="" />
             </div>
-            <p>扫描二维码，<br />联系商务客服</p>
+            <p>扫描二维码，<br />联系加盟客服</p>
             <el-button slot="reference">
               <div class="itemLi">
                 <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-jiaruwomen"></use>
                 </svg>
-                <p>商务合作</p>
+                <p>代理加盟</p>
               </div>
             </el-button>
           </el-popover>
