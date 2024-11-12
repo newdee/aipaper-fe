@@ -456,35 +456,39 @@ export default {
           paper_level: this.requestForm.paper_level == "初级" ? 0 : 3,
           word_count: this.requestForm.word_count,
         };
-        outlineCreate(data).then((res) => {
-          this.$store.dispatch("app/setProStatus", true);
+        outlineCreate(data)
+          .then((res) => {
+            this.$store.dispatch("app/setProStatus", true);
 
-          this.$log("outlineCreateres", res);
-          eventBus.emit("emitOulineClick", 3); // 发布事件
-          this.$log("lunwen", this.requestForm);
-          this.requestForm.key = res.result.key;
-          this.$store.dispatch("app/setRequestForm", this.requestForm);
-          this.requestKey = res.result.key;
-          // this.requestKey = "eb3a2422-301c-47ba-be1f-7c334e15c655";
-          polling({ key: this.requestKey }, 5000)
-            .then((res) => {
-              this.$log("ddddd", res);
-              if (res == "生成失败") {
-                eventBus.emit("errorOutline", res); // 发布事件
-              } else {
-                eventBus.emit("successOutline", res); // 发布事件
-              }
-            })
-            .catch((error) => {
-              this.$log(error, "eeeeeerrrror");
-              this.$message({
-                type: "error",
-                message: "大纲生成失败, 请稍后重试",
+            this.$log("outlineCreateres", res);
+            eventBus.emit("emitOulineClick", 3); // 发布事件
+            this.$log("lunwen", this.requestForm);
+            this.requestForm.key = res.result.key;
+            this.$store.dispatch("app/setRequestForm", this.requestForm);
+            this.requestKey = res.result.key;
+            // this.requestKey = "eb3a2422-301c-47ba-be1f-7c334e15c655";
+            polling({ key: this.requestKey }, 5000)
+              .then((res) => {
+                this.$log("ddddd", res);
+                if (res == "生成失败") {
+                  eventBus.emit("errorOutline", res); // 发布事件
+                } else {
+                  eventBus.emit("successOutline", res); // 发布事件
+                }
+              })
+              .catch((error) => {
+                this.$log(error, "eeeeeerrrror");
+                this.$message({
+                  type: "error",
+                  message: "大纲生成失败, 请稍后重试",
+                });
+                eventBus.emit("errorOutline"); // 发布事件
+                this.$emit("errorBack", "关闭index");
               });
-              eventBus.emit("errorOutline"); // 发布事件
-              this.$emit("errorBack", "关闭index");
-            });
-        });
+          })
+          .catch(() => {
+            this.$store.dispatch("app/setProStatus", false);
+          });
       } else {
         this.$store.dispatch("app/setProStatus", false);
         this.$confirm("生成大纲需要登录, 是否跳转到登录页?", "提示", {
