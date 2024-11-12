@@ -45,11 +45,10 @@ export default {
       pdfUrl: require("@/assets/samples/1.pdf"),
       sampleTitle: 1,
       sampleMaterial: 1,
-      sampleTiles: [1, 2, 3],
+      sampleTiles: [1, 2],
       titleMap: {
-        1: "【材料科学与工程类】碳纤维ABS复合材料的耐热性能研究",
-        2: "【计算机类】生成式AI对短视频的生态赋能与价值迭代",
-        3: "【医学与公共卫生学类】人工智能在卫生领域伦理治理中的多模态大模型应用研究",
+        1: "【计算机类】生成式AI对短视频的生态赋能与价值迭代",
+        2: "【医学与公共卫生学类】人工智能在卫生领域伦理治理中的多模态大模型应用研究",
       },
       sampleMaterials: [1, 2, 3, 4],
       materialMap: {
@@ -62,13 +61,12 @@ export default {
       titleSamplesMap: {
         1: require("@/assets/samples/1.pdf"),
         2: require("@/assets/samples/2.pdf"),
-        3: require("@/assets/samples/3.pdf"),
       },
       materialsSamplesMap: {
         1: require("@/assets/samples/1.pdf"),
-        2: require("@/assets/samples/4.pdf"),
-        3: require("@/assets/samples/5.pdf"),
-        4: require("@/assets/samples/6.pdf"),
+        2: require("@/assets/samples/3.pdf"),
+        3: require("@/assets/samples/4.pdf"),
+        4: require("@/assets/samples/5.pdf"),
       },
       list: [
         {
@@ -272,9 +270,13 @@ export default {
     sampleTitle(newVal, oldVal) {
       // this.pdfUrl = require("@/assets/samples/2.pdf");
       // 在这里执行其他操作
+      console.log("273----", newVal, this.titleSamplesMap[newVal]);
+
       this.pdfUrl = this.titleSamplesMap[newVal];
     },
     sampleMaterial(newVal, oldVal) {
+      console.log("278---", newVal, this.materialsSamplesMap[newVal]);
+
       // 在这里执行其他操作
       if (newVal == 1) {
         this.pdfUrl = require("@/assets/samples/1.pdf");

@@ -148,7 +148,7 @@
           </el-upload>
           <p>联系客服</p>
         </div>
-        <!-- 商务合作 -->
+        <!-- 代理加盟 -->
         <div class="uploadLi">
           <el-upload
             class="imgUploader"
