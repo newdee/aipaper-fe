@@ -416,7 +416,7 @@ export default {
     //   this.produceLineStatus = true;
     //   this.sendOutlineForm();
     // },
-    sendOutlineForm: _.debounce(function () {
+    sendOutlineForm: function () {
       if (this.produceLineStatus) {
         this.$message({
           type: "warning",
@@ -434,6 +434,7 @@ export default {
             type: "warning",
             message: "请输入论文题目!",
           });
+          this.$store.dispatch("app/setProStatus", false);
           return false;
         }
         if (this.requestForm.title.length < 5) {
@@ -441,6 +442,8 @@ export default {
             type: "warning",
             message: "标题请至少输入5个字!",
           });
+          this.$store.dispatch("app/setProStatus", false);
+
           return false;
         }
 
@@ -483,6 +486,7 @@ export default {
             });
         });
       } else {
+        this.$store.dispatch("app/setProStatus", false);
         this.$confirm("生成大纲需要登录, 是否跳转到登录页?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
@@ -491,6 +495,7 @@ export default {
         })
           .then(() => {
             // 存储用户数据并跳转
+
             this.saveInput();
           })
           .catch(() => {
@@ -500,7 +505,7 @@ export default {
             });
           });
       }
-    }, 300),
+    },
     saveInput() {
       // 获取用户数据
       this.$log("ssss", this.requestForm);

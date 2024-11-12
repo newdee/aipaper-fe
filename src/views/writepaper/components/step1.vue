@@ -5,9 +5,8 @@
       <p class="introTitle">编辑大纲，生成全文</p>
       <p class="introSubtitle">
         🔔
-        大纲可直接<span>点击编辑</span>，点击小节右侧按钮，为小节增加<span>参考资料、数据(表)、图、公式、代码段</span>，对该小节进行<span
-          >增加、删减</span
-        >
+        大纲可直接<span>点击编辑</span>，点击<span>AI帮写</span>可智能为项目查漏补缺。点击小节右侧<span>插入图表</span>，为小节增加<span>数据(表)、图、公式、代码段</span>，支持对章节,
+        小节进行<span>增加、删减</span>
       </p>
     </div>
     <!-- 论文标题

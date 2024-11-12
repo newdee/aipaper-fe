@@ -18,7 +18,11 @@
         <div class="order">
           <div class="orderNum rowBetween">
             <!-- <div class="left">订单号：{{ orderObj.order.out_trade_no }}</div> -->
-            <div class="left"></div>
+            <div class="left">
+              <p class="overHidden">
+                订单号: {{ orderObj.order.out_trade_no }}
+              </p>
+            </div>
             <div class="right">
               时间：{{ orderObj.order.created_at | dateFormatter }}
             </div>
@@ -109,9 +113,11 @@
             </div>
           </div> -->
           <div class="orderText rowBetween handleRow">
-            <div class="left">订单价格:</div>
-            <div class="right">
+            <div class="left">
+              订单价格:
               <span class="price">￥{{ orderObj.order.total_price }}</span>
+            </div>
+            <div class="right">
               <span
                 class="handle"
                 @click="sendPay(orderObj)"
@@ -442,8 +448,15 @@ export default {
 
 .rowBetween .left {
   color: #666;
+  width: 50%;
 }
 
+.overHidden {
+  width: 100%; /* 根据需要调整宽度 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .rowBetween .right {
   color: #409eff;
 }
@@ -473,5 +486,9 @@ export default {
 .handle {
   cursor: pointer;
   margin-left: 5px;
+}
+.price {
+  color: #409eff;
+  font-weight: bold;
 }
 </style>
