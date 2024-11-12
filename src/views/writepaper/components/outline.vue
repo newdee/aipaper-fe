@@ -412,6 +412,10 @@ export default {
         this.requestForm = { ...data };
       }
     },
+    // loadingBtn() {
+    //   this.produceLineStatus = true;
+    //   this.sendOutlineForm();
+    // },
     sendOutlineForm: _.debounce(function () {
       if (this.produceLineStatus) {
         this.$message({
@@ -420,6 +424,8 @@ export default {
         });
         return false;
       }
+      this.$store.dispatch("app/setProStatus", true);
+
       // 判断是否登录,否则跳转到登录页面
       const hasToken = getToken();
       if (hasToken) {
