@@ -1331,7 +1331,7 @@ export default {
         title: this.numberValidateForm.appendValue,
         summary: this.numberValidateForm.appendContent
           ? this.numberValidateForm.appendContent
-          : "章节内容",
+          : "",
         insert_code: {
           status: false,
           content: "",

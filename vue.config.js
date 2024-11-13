@@ -55,6 +55,18 @@ module.exports = {
           "^/dev-api": "",
         },
       },
+      "/chat-api": {
+        //  target: `http://localhost:8090/`,
+        // target: `http://175.178.88.172:8090/`,
+        // target: `http://43.143.210.214:8090/`,
+        // target: `http://124.222.112.40:3000/`,
+        target: `http://43.134.129.99:30003/`,
+        // target: `https://web-proxy.apifox.cn:3000/`,
+        changeOrigin: true,
+        pathRewrite: {
+          "^/chat-api": "",
+        },
+      },
     },
     // before: require('./mock/mock-server.js')
     disableHostCheck: true,

@@ -42,7 +42,10 @@
         >
           <div class="mSliderItem">
             <div class="left">
-              <span class="imgIcon"></span>
+              <!-- <span class="imgIcon"></span> -->
+              <span class="imgIconBg">
+                <i :class="route.meta.icon"></i>
+              </span>
               {{ generateTitle(route.meta.title) }}
             </div>
             <span class="right imgIcon"></span>
@@ -192,7 +195,15 @@ export default {
         background-image: url("../../../assets//images/conical-flask-darrk.png");
         background-size: 100% 100%;
       }
-
+      .imgIconBg {
+        display: inline-block;
+        margin-right: 10px;
+        --size: 20px;
+        font-size: 20px;
+        width: var(--size);
+        height: var(--size);
+        background-size: 100% 100%;
+      }
       .right.imgIcon {
         background-image: url("../../../assets//images/caret-left-white.png");
         display: none;
