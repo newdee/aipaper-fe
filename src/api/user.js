@@ -41,6 +41,13 @@ export function getOrder(data) {
     data,
   });
 }
+export function chatApi(data) {
+  return request({
+    url: "/chat-api/chat",
+    method: "post",
+    data,
+  });
+}
 export function editLine(data) {
   return request({
     url: "/api/ai-paper/paper/outline/edit",
