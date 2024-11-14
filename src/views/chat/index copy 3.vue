@@ -6,38 +6,23 @@
         :key="index"
         :class="['message', msg.type]"
       >
-        <div
-          c
-          :class="[
-            'infoList',
-            msg.type == 'user' ? 'userTitle' : 'answerTitle',
-          ]"
-        >
-          <template v-if="msg.type == 'user'">
-            <span class="userInfo">
-              <i class="el-icon-s-custom"></i>
-            </span>
-          </template>
-          <div v-html="renderMarkdown(msg.text)"></div>
-        </div>
+        <p>{{ msg.text }}</p>
       </div>
     </div>
     <div class="chat-input">
       <input
         v-model="message"
-        placeholder="请输入您的问题"
+        placeholder="Enter your message"
         @keyup.enter="sendMessage"
       />
-      <button @click="sendMessage">
-        <i class="el-icon-search"></i>
-      </button>
+      <button @click="sendMessage">Send</button>
     </div>
   </div>
 </template>
+
 <script>
 import axios from "axios";
-import { getToken } from "@/utils/auth";
-import { marked } from "marked";
+import { getToken } from "@/utils/auth"; // Assume getToken fetches a fresh token if needed
 
 export default {
   data() {
@@ -51,9 +36,6 @@ export default {
   },
   mounted() {
     this.establishConnection();
-  },
-  updated() {
-    this.scrollToBottom();
   },
   methods: {
     establishConnection() {
@@ -120,24 +102,14 @@ export default {
         })
         .catch((error) => {
           console.error("Error sending message:", error);
-          this.$message({
-            type: "error",
-            message: "请求失败,请重试!",
-          });
+          // Check if the error is token-related and refresh the token if needed
           if (error.response && error.response.status === 401) {
-            this.token = getToken();
-            this.sendMessage();
+            this.token = getToken(); // Refresh token
+            this.sendMessage(); // Retry sending the message
           }
         });
 
       this.message = "";
-    },
-    scrollToBottom() {
-      const container = this.$el.querySelector(".chat-messages");
-      container.scrollTop = container.scrollHeight;
-    },
-    renderMarkdown(text) {
-      return marked.parse(text);
     },
   },
   beforeDestroy() {
@@ -152,16 +124,16 @@ export default {
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 180px);
-  background-color: #fff; /* Dark background */
-  color: #e0e0e0; /* Light text color */
+  height: calc(100vh - 200px);
   position: relative;
 }
 
 .chat-messages {
   flex: 1;
-  padding: 20px;
+  padding: 10px;
   overflow-y: auto;
+  background-color: #f0f0f0;
+  margin: 0px;
 }
 
 .message {
@@ -172,89 +144,31 @@ export default {
 }
 
 .message.user {
-  background-color: #d1e7dd; /* Slightly lighter for user messages */
+  background-color: #d1e7dd;
   align-self: flex-start;
-  color: #000;
 }
 
 .message.response {
-  background-color: #fff3cd; /* Slightly darker for responses */
-  color: #000;
+  background-color: #fff3cd;
   align-self: flex-end;
 }
 
-.userInfo {
-  width: 25px;
-  height: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  background: #3e3f4b;
-  color: #fff;
-  margin-right: 10px;
-}
-.infoList {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  font-size: 14px;
-  line-height: 22px;
-}
-.userTitle {
-  font-size: 16px;
-}
 .chat-input {
   display: flex;
-  align-items: center;
   padding: 10px;
-  background-color: #f5f5f5; /* Light background color */
-  margin: 10px;
-  height: 56px;
-  align-items: center;
-  background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 12px 24px -16px rgba(54, 54, 73, 0.04),
-    0 12px 40px 0 rgba(51, 51, 71, 0.08), 0 0 1px 0 rgba(44, 44, 54, 0.02);
-  box-sizing: border-box;
-  max-width: 896px;
-  min-width: 320px;
-  position: relative;
-  border: 1px solid #fff;
+  background-color: #fff;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 
 .chat-input input {
   flex: 1;
-  padding: 10px 15px;
-  border-radius: 30px;
-  border: none;
-  background-color: #fff; /* White background */
-  color: #333; /* Dark text color */
-  outline: none;
+  padding: 5px;
   margin-right: 10px;
-  font-size: 14px;
-  border: 1px solid #fff;
-}
-.chat-input:hover {
-  border-color: #35f;
-}
-.chat-input button {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background-color: #d8d8d8; /* Light gray button background */
-  color: #666; /* Icon color */
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  transition: background-color 0.3s;
 }
 
-.chat-input button:hover {
-  background-color: #35f; /* Darker gray on hover */
-  color: #fff;
+.chat-input button {
+  padding: 5px 10px;
 }
 </style>
