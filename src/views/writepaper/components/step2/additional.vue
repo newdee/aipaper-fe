@@ -11,10 +11,18 @@
             </svg>
           </div>
           <div class="right">
-            <p>[中文]{{ requestForm.title }}</p>
             <p>
+              [中文]{{ requestForm.title }}
+              <span class="add">x1</span>
+              <span class="wordage">本科|2万字</span>
+            </p>
+            <!-- <p>
               {{ requestForm.field ? requestForm.field[1] : "暂无" }}
               <span>含在线编辑</span>
+            </p> -->
+            <p class="alertTxt">可根据导师要求，无限改稿</p>
+            <p class="include">
+              封面 | 摘要 | 大纲目录 | 正文 | 致谢 | 参考文献
             </p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
@@ -32,8 +40,11 @@
             </svg>
           </div>
           <div class="right">
-            <p>[文献综述]</p>
-            <p>x1</p>
+            <p>
+              [文献综述]
+              <span class="add">x1</span>
+            </p>
+            <p class="include">提供背景 | 展示现状</p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-checkmark"></use>
@@ -48,8 +59,11 @@
             </svg>
           </div>
           <div class="right">
-            <p>[中英文摘要]</p>
-            <p>x1</p>
+            <p>
+              [中英文摘要]
+              <span class="add">x1</span>
+            </p>
+            <p class="include">中英文翻译 | 简洁扼要</p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-checkmark"></use>
@@ -64,8 +78,11 @@
             </svg>
           </div>
           <div class="right">
-            <p>[中英文参考文献]</p>
-            <p>x1</p>
+            <p>
+              [中英文参考文献]
+              <span class="add">x1</span>
+            </p>
+            <p class="include">提供依据 | 支撑论证</p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-checkmark"></use>
@@ -81,8 +98,11 @@
             </svg>
           </div>
           <div class="right">
-            <p>[学术创新]</p>
-            <p>x1</p>
+            <p>
+              [学术创新]
+              <span class="add">x1</span>
+            </p>
+            <p class="include">提出新观点 | 贡献新知识</p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-checkmark"></use>
@@ -98,8 +118,10 @@
             </svg>
           </div>
           <div class="right">
-            <p>论文正文(Word版本)</p>
-            <p>x1</p>
+            <p>
+              论文正文(Word版本)
+              <span class="add">x1</span>
+            </p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-checkmark"></use>
@@ -115,8 +137,10 @@
             </svg>
           </div>
           <div class="right">
-            <p>论文正文(PDF版本)</p>
-            <p>x1</p>
+            <p>
+              论文正文(PDF版本)
+              <span class="add">x1</span>
+            </p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-checkmark"></use>
@@ -132,8 +156,10 @@
             </svg>
           </div>
           <div class="right">
-            <p>论文正文(Latex版本)</p>
-            <p>x1</p>
+            <p>
+              论文正文(Latex版本)
+              <span class="add">x1</span>
+            </p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-checkmark"></use>
