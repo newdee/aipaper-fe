@@ -45,7 +45,7 @@ export default {
         window.close();
       } else {
         // 如果无法关闭窗口，提示用户手动关闭
-        alert("请手动关闭当前标签页或窗口。");
+        // alert("请手动关闭当前标签页或窗口。");
       }
     },
   },

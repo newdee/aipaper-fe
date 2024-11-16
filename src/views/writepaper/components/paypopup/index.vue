@@ -6,39 +6,66 @@
       :append-to-body="true"
       :lock-scroll="false"
       :close-on-click-modal="false"
-      title="订单查询"
-      :visible.sync="ownPayStatus"
-      :width="device == 'mobile' ? '90%' : '40%'"
+      title="支付订单"
+      :visible.sync="popupStatus"
+      :width="device == 'mobile' ? '90%' : '50%'"
       class="order-dialog"
       :before-close="handleClose"
     >
       <div class="dialog-content">
-        <p class="dialog-text">
-          订单状态:
+        <!-- <p class="dialog-text">
+          当前订单状态:
           <span class="dialog_pay_text">{{
             payStatusObject[payTitleStatus]
           }}</span>
-        </p>
-        <!-- 订单支付成功展示页面 -->
-        <div v-if="payTitleStatus == 'TRADE_SUCCESS'">
-          <div class="paperProgress">
-            <el-progress
-              type="circle"
-              :percentage="currentNumber"
-            ></el-progress>
+        </p> -->
+        <p class="payCodeTitle">支付宝支付</p>
+        <div class="payCodeBox">
+          <div class="payLeftCode">
+            <!-- left code -->
+            <iframe
+              v-if="pollingStatus"
+              :src="currentOrder.pay_link"
+              height="205"
+              width="205"
+              frameborder="0"
+            ></iframe>
+            <p class="codeIntro">支持使用“花呗”支付</p>
           </div>
-          <p class="dialog-text">正文生成中, 预计时间30分钟, 请稍等</p>
-          <p class="dialog-text">
-            如您关闭此弹窗,请在
-            <span class="dialog_pay_text">我的订单</span>
-            页面, 查看您生成的正文
-          </p>
+          <div class="payRightPrice">
+            <!-- left code -->
+            <p class="payTitle">
+              支付金额:
+              <span>
+                <b>{{ currentOrder.pay_amount }}</b>
+                元</span
+              >
+            </p>
+            <p class="popupSpan">
+              您选择了 <span>{{ additionalList.length }}</span>
+              项增值服务(仅限单次生成)
+            </p>
+            <div class="fujia">
+              <div
+                class="liFu"
+                v-for="(item, index) in additionalList"
+                :key="index + 'pop'"
+              >
+                <!-- <p class="introSpan">
+                  {{ item.intro }}
+                </p> -->
+                <p class="topIntro" v-show="item.intro">{{ item.intro }}</p>
+
+                <p>{{ item.name }}</p>
+                <p class="liFuRight">
+                  <span>0.0元</span>
+                  <span>{{ item.price }}元</span>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="jumpStep">确定</el-button>
-      </span>
     </el-dialog>
   </div>
 </template>
@@ -54,12 +81,11 @@ export default {
   data() {
     return {
       // 定义变量
-      ownPayStatus: false,
-      currentNumber: 0,
+      popupStatus: false,
       intervalId: "",
       payTitleStatus: "PRE_CREATE",
       payStatusObject: {
-        TRADE_SUCCESS: "您已成功支付订单, 论文生成中",
+        TRADE_SUCCESS: "交易支付成功",
         WAIT_BUYER_PAY: "未付款交易超时关闭，或支付完成后全额退款",
         PRE_CREATE: "交易创建，等待买家付款",
         TRADE_FINISHED: "交易结束!",
@@ -85,29 +111,16 @@ export default {
       type: String,
       require: false,
     },
-    paperPercent: {
-      type: Number,
-      require: false,
-      default: 0,
-    },
   },
   watch: {
     payStatus: {
       handler(newVal, oldVal) {
         this.$log("支付状态发生变化", "新值:", newVal, "旧值:", oldVal);
         // 在这里执行你需要的操作
-        this.ownPayStatus = true;
+        this.popupStatus = true;
         this.$store.dispatch("paper/setPollingStatus", true);
         this.getDetail();
       },
-    },
-    paperPercent: {
-      handler(newVal, oldVal) {
-        this.$log("进度条百分比", "新值:", newVal, "旧值:", oldVal);
-        // 在这里执行你需要的操作
-        this.currentNumber = newVal;
-      },
-      immediate: true, // 立即触发一次监听器
     },
   },
   components: {
@@ -125,35 +138,42 @@ export default {
   },
   computed: {
     // 计算属性
-    ...mapGetters(["pollingStatus", "device"]),
+    ...mapGetters([
+      "pollingStatus",
+      "device",
+      "currentOrder",
+      "requestForm",
+      "additionalList",
+    ]),
   },
 
   methods: {
     handleClose(done) {
-      if (this.payTitleStatus == "TRADE_SUCCESS") {
-        this.$confirm("关闭弹窗,不影响论文生成进度")
-          .then((_) => {
-            done();
-            this.$store.dispatch("app/setActiveIndex", 0);
-            this.$store.dispatch("paper/setPollingStatus", false);
-          })
-          .catch((_) => {});
-      } else {
-        done();
-      }
+      this.$store.dispatch("app/setActiveIndex", 0);
+      this.$store.dispatch("paper/setPollingStatus", false);
+      done();
+      // if (this.payTitleStatus == "TRADE_SUCCESS") {
+      //   this.$confirm("关闭弹窗,不影响论文生成进度")
+      //     .then((_) => {
+      //       done();
+      //       this.$store.dispatch("app/setActiveIndex", 0);
+      //       this.$store.dispatch("paper/setPollingStatus", false);
+      //     })
+      //     .catch((_) => {});
+      // }
     },
     jumpStep() {
       if (this.payTitleStatus == "TRADE_SUCCESS") {
         this.$confirm("关闭弹窗,不影响论文生成进度")
           .then((_) => {
             // done();
-            this.ownPayStatus = false;
+            this.popupStatus = false;
             this.$store.dispatch("paper/setPollingStatus", false);
             this.$store.dispatch("app/setActiveIndex", 0);
           })
           .catch((_) => {});
       } else {
-        this.ownPayStatus = false;
+        this.popupStatus = false;
         this.$store.dispatch("paper/setPollingStatus", false);
         this.$store.dispatch("app/setActiveIndex", 0);
       }
@@ -187,53 +207,19 @@ export default {
           // 判断支付状态
           if (orderData.payment_status) {
             this.payTitleStatus = orderData.payment_status;
-            if (
-              this.payTitleStatus == "TRADE_SUCCESS" &&
-              this.successIndex <= 0
-            ) {
-              this.addE(1500);
-              this.successIndex += 1;
+            if (this.payTitleStatus == "TRADE_SUCCESS") {
+              eventBus.emit("showEmitPaperDialog", {
+                requestKey: this.currentOrder.out_trade_no,
+                payStatus: 2,
+                paperPercent: 0,
+              });
+              this.popupStatus = false;
+            } else {
+              let _this = this;
+              setTimeout(() => {
+                _this.getList(data, delay, maxRetries, currentRetry);
+              }, delay);
             }
-          }
-          // 判断论文生成状态
-          const { order_item_response, order } = res.result;
-          let caseStatus = true;
-          if (order_item_response.length > 0) {
-            this.$log("case", order_item_response[0].case.paper_case.stage);
-            this.$log(
-              "case",
-              order_item_response[0].case.paper_case.stage == 2
-            );
-            if (order_item_response[0].case.paper_case.stage == 2) {
-              caseStatus = false;
-            }
-          }
-
-          if (caseStatus) {
-            // 如果满足继续轮询的条件，则设置延时后再次调用此方法
-            let _this = this;
-            setTimeout(() => {
-              _this.getList(data, delay, maxRetries, currentRetry);
-            }, delay);
-          } else {
-            // 请求成功, 激活tab3
-
-            // let pdfUrl = "https://file.mixpaper.cn/pdf/third_output.pdf";
-            let pdfUrl2 = order_item_response[0].case.file_urls.pdf;
-            let realUrl = pdfUrl2 ? pdfUrl2 : "";
-            this.$log("realUrl", realUrl);
-
-            // 满足停止轮询的条件，更新数据并结束轮询
-            this.listData = order_item_response; // 假设这里是你想更新的数据
-            this.$store.dispatch("paper/setPollingStatus", false);
-            // 保存数据， 用于step3下载
-            this.$store.dispatch("app/toggleCurrentOrder", order);
-            this.ownPayStatus = false;
-            eventBus.emit("pdfSuccessClick", realUrl); // 发布事件
-
-            // this.$nextTick(() => {
-            //   this.$store.dispatch("app/togglePDFUrl", realUrl);
-            // });
           }
         })
         .catch((error) => {
@@ -262,32 +248,6 @@ export default {
           message: "订单号未返回!",
         });
       }
-    },
-    addE(index) {
-      this.$log("dddd", index, this.paperPercent);
-      clearInterval(this.intervalId); // 达到目标数字时清除定时器
-
-      this.countUpToHundred(index);
-    },
-    // 定义方法
-    countUpToHundred(totalSeconds) {
-      if (this.paperPercent > 0) {
-        this.currentNumber = this.paperPercent;
-      } else {
-        this.currentNumber = 0.0; // 同样初始化时确保它是一个带有两位小数的数字
-      }
-      const targetNumber = 99.99; // 目标数字是 100%
-      const stepSize = targetNumber / totalSeconds; // 每秒增加的步长
-
-      this.intervalId = setInterval(() => {
-        this.currentNumber += stepSize; // 增加数值
-        this.currentNumber = parseFloat(this.currentNumber.toFixed(2)); // 保留两位小数
-
-        if (this.currentNumber >= targetNumber) {
-          clearInterval(this.intervalId); // 达到目标数字时清除定时器
-          this.currentNumber = targetNumber; // 确保最终值与目标值完全相同
-        }
-      }, 1000); // 每秒执行一次
     },
   },
 };
@@ -383,5 +343,97 @@ export default {
 }
 .dialog_pay_text {
   color: #409eff;
+}
+.payCodeBox {
+  display: flex;
+  justify-content: space-between;
+  min-height: 300px;
+  width: 100%;
+  padding-bottom: 30px;
+}
+.payLeftCode {
+  width: 230px;
+  height: 230px;
+  padding-top: 13px;
+  padding-left: 13px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  position: relative;
+  .codeIntro {
+    position: absolute;
+    bottom: -25px;
+    text-align: center;
+    width: 100%;
+  }
+}
+.payRightPrice {
+  padding-left: 20px;
+  flex: 1;
+  .payTitle {
+    display: flex;
+    align-items: center;
+    color: #000;
+    span {
+      color: rgb(252, 106, 0);
+      margin-left: 5px;
+    }
+    b {
+      font-size: 24px;
+    }
+  }
+  .popupSpan {
+    margin-top: 20px;
+    color: #000;
+    span {
+      color: rgb(252, 106, 0);
+    }
+  }
+  .fujia {
+    display: flex;
+    flex-wrap: wrap;
+    .liFu {
+      position: relative;
+      width: auto;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      border: 1px solid rgb(252, 117, 19);
+      border-radius: 5px;
+      padding: 5px;
+      margin-top: 20px;
+      color: #000;
+      margin-right: 10px;
+      .topIntro {
+        position: absolute;
+        top: -10px;
+        height: 20px;
+        right: 0;
+        background: rgb(246, 153, 0);
+        font-size: 10px;
+        border-radius: 3px;
+        color: #fff;
+        line-height: 20px;
+        padding: 0 5px;
+      }
+    }
+
+    .liFuRight {
+      margin-left: 20px;
+      span:first-child {
+        color: rgb(252, 106, 0);
+      }
+      span:last-child {
+        margin-left: 5px;
+        color: #999;
+        text-decoration-line: line-through;
+      }
+    }
+  }
+}
+.payCodeTitle {
+  text-align: left;
+  margin-top: 30px;
+  width: 100%;
+  margin-bottom: 10px;
 }
 </style>
