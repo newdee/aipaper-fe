@@ -18,6 +18,7 @@
               <i class="el-icon-s-custom"></i>
             </span>
           </template>
+          <!-- <div v-html="renderMarkdown(msg.text)"></div> -->
           <div v-html="renderMarkdown(msg.text)"></div>
         </div>
       </div>
@@ -38,6 +39,10 @@
 import axios from "axios";
 import { getToken } from "@/utils/auth";
 import { marked } from "marked";
+import hljs from "highlight.js";
+// import "highlight.js/styles/magula.css";
+
+import "highlight.js/styles/atom-one-dark.css"; // 确保路径和样式名称正确
 
 export default {
   data() {
@@ -56,6 +61,16 @@ export default {
     this.scrollToBottom();
   },
   methods: {
+    renderMarkdown(text) {
+      marked.setOptions({
+        highlight: function (code, lang) {
+          // 确保语言是有效的，如果不是则默认为 'plaintext'
+          const validLanguage = hljs.getLanguage(lang) ? lang : "plaintext";
+          return hljs.highlight(validLanguage, code).value;
+        },
+      });
+      return marked.parse(text);
+    },
     establishConnection() {
       const url = `/chat-api/createSse?token=${encodeURIComponent(this.token)}`;
 
@@ -136,9 +151,6 @@ export default {
       const container = this.$el.querySelector(".chat-messages");
       container.scrollTop = container.scrollHeight;
     },
-    renderMarkdown(text) {
-      return marked.parse(text);
-    },
   },
   beforeDestroy() {
     if (this.sseSource) {
@@ -168,7 +180,7 @@ export default {
   margin: 10px;
   padding: 10px;
   border-radius: 10px;
-  max-width: 70%;
+  max-width: 1000px;
 }
 
 .message.user {
@@ -178,7 +190,12 @@ export default {
 }
 
 .message.response {
-  background-color: #fff3cd; /* Slightly darker for responses */
+  background-color: rgba(
+    255,
+    243,
+    205,
+    0.5
+  ); /* Slightly darker for responses */
   color: #000;
   align-self: flex-end;
 }
@@ -207,6 +224,8 @@ export default {
 .chat-input {
   display: flex;
   align-items: center;
+  width: 100%;
+  max-width: 1100px;
   padding: 10px;
   background-color: #f5f5f5; /* Light background color */
   margin: 10px;
@@ -217,8 +236,6 @@ export default {
   box-shadow: 0 12px 24px -16px rgba(54, 54, 73, 0.04),
     0 12px 40px 0 rgba(51, 51, 71, 0.08), 0 0 1px 0 rgba(44, 44, 54, 0.02);
   box-sizing: border-box;
-  max-width: 896px;
-  min-width: 320px;
   position: relative;
   border: 1px solid #fff;
 }
@@ -253,8 +270,23 @@ export default {
   transition: background-color 0.3s;
 }
 
-.chat-input button:hover {
+.chat-input:hover button {
   background-color: #35f; /* Darker gray on hover */
   color: #fff;
+}
+
+/deep/ pre {
+  background-color: #2d2d2d !important;
+  color: #cccccc !important;
+  padding: 10px !important;
+  border-radius: 5px !important;
+  overflow-x: auto !important;
+}
+pre {
+  background-color: #2d2d2d !important;
+  color: #cccccc !important;
+  padding: 10px !important;
+  border-radius: 5px !important;
+  overflow-x: auto !important;
 }
 </style>
