@@ -151,7 +151,8 @@ export default {
     },
 
     establishConnection() {
-      const url = `/chat-api/createSse?token=${encodeURIComponent(this.token)}`;
+      // const url = `/chat-api/createSse?token=${encodeURIComponent(this.token)}`;
+      const url = `/createSse?token=${encodeURIComponent(this.token)}`;
 
       this.sseSource = new EventSource(url);
 
@@ -210,7 +211,8 @@ export default {
 
       this.chatMessages.push({ text: this.message, type: "user" });
 
-      const url = `/chat-api/chat?token=${encodeURIComponent(this.token)}`;
+      // const url = `/chat-api/chat?token=${encodeURIComponent(this.token)}`;
+      const url = `/chat?token=${encodeURIComponent(this.token)}`;
 
       axios
         .post(url, { msg: this.message })
@@ -283,7 +285,8 @@ export default {
     },
     regenerateResponse(index) {
       const message = this.chatMessages[index].text;
-      const url = `/chat-api/chat?token=${encodeURIComponent(this.token)}`;
+      // const url = `/chat-api/chat?token=${encodeURIComponent(this.token)}`;
+      const url = `/chat?token=${encodeURIComponent(this.token)}`;
 
       axios
         .post(
