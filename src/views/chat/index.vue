@@ -350,7 +350,7 @@ export default {
   color: #fff;
 }
 
-pre {
+::v-deep .code-block {
   margin: 0;
   padding: 10px;
   background-color: #2d2d2d !important;
