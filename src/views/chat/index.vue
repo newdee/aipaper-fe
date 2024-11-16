@@ -96,7 +96,13 @@ export default {
       editMessageIndex: null,
       editMessageText: "",
       logoMax: require("@/assets/images/logoMax.png"),
+      chatBaseApi: "",
     };
+  },
+  created() {
+    this.chatBaseApi = process.env.VUE_APP_CHAT_BASE_API;
+
+    console.log("Chat API Base URL:", process.env.VUE_APP_CHAT_BASE_API);
   },
   mounted() {
     this.establishConnection();
@@ -151,8 +157,9 @@ export default {
     },
 
     establishConnection() {
-      // const url = `/chat-api/createSse?token=${encodeURIComponent(this.token)}`;
-      const url = `/createSse?token=${encodeURIComponent(this.token)}`;
+      const url = `${this.chatBaseApi}/createSse?token=${encodeURIComponent(
+        this.token
+      )}`;
 
       this.sseSource = new EventSource(url);
 
@@ -211,8 +218,9 @@ export default {
 
       this.chatMessages.push({ text: this.message, type: "user" });
 
-      // const url = `/chat-api/chat?token=${encodeURIComponent(this.token)}`;
-      const url = `/chat?token=${encodeURIComponent(this.token)}`;
+      const url = `${this.chatBaseApi}/chat?token=${encodeURIComponent(
+        this.token
+      )}`;
 
       axios
         .post(url, { msg: this.message })
@@ -285,8 +293,9 @@ export default {
     },
     regenerateResponse(index) {
       const message = this.chatMessages[index].text;
-      // const url = `/chat-api/chat?token=${encodeURIComponent(this.token)}`;
-      const url = `/chat?token=${encodeURIComponent(this.token)}`;
+      const url = `${this.chatBaseApi}/chat?token=${encodeURIComponent(
+        this.token
+      )}`;
 
       axios
         .post(
