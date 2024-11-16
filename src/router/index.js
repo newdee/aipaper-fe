@@ -120,20 +120,20 @@ export const constantRoutes = [
         },
       },
       // ChatGpt
-      // {
-      //   path: "chat",
-      //   name: "chat",
-      //   component: () => import("@/views/chat/index.vue"),
-      //   meta: {
-      //     keepAlive: true,
-      //     title: "chat",
-      //     // title: "降重/降AIGC率",
-      //     icon: "el-icon-chat-dot-round",
-      //     id: "5-8",
-      //     parentId: "5",
-      //     inDevelopment: false,
-      //   },
-      // },
+      {
+        path: "chat",
+        name: "chat",
+        component: () => import("@/views/chat/index.vue"),
+        meta: {
+          keepAlive: true,
+          title: "chat",
+          // title: "降重/降AIGC率",
+          icon: "el-icon-chat-dot-round",
+          id: "5-8",
+          parentId: "5",
+          inDevelopment: false,
+        },
+      },
       // 降重/降aigc率
       {
         path: "reduceRepetition",

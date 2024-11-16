@@ -161,40 +161,27 @@ export default {
         if (event.data === "[DONE]") {
           currentMessage = "";
         } else {
-          // 添加一个基本的 JSON 检查
-          if (
-            event.data.trim().startsWith("{") &&
-            event.data.trim().endsWith("}")
-          ) {
-            try {
-              const parsedData = JSON.parse(event.data);
-              if (parsedData.content) {
-                currentMessage += parsedData.content;
+          try {
+            const parsedData = JSON.parse(event.data);
+            if (parsedData.content) {
+              currentMessage += parsedData.content;
 
-                if (
-                  this.chatMessages.length &&
-                  this.chatMessages[this.chatMessages.length - 1].type ===
-                    "response"
-                ) {
-                  this.chatMessages[this.chatMessages.length - 1].text =
-                    currentMessage;
-                } else {
-                  this.chatMessages.push({
-                    text: currentMessage,
-                    type: "response",
-                  });
-                }
+              if (
+                this.chatMessages.length &&
+                this.chatMessages[this.chatMessages.length - 1].type ===
+                  "response"
+              ) {
+                this.chatMessages[this.chatMessages.length - 1].text =
+                  currentMessage;
+              } else {
+                this.chatMessages.push({
+                  text: currentMessage,
+                  type: "response",
+                });
               }
-            } catch (error) {
-              console.error(
-                "Error parsing SSE data:",
-                error,
-                "Data:",
-                event.data
-              );
             }
-          } else {
-            console.warn("Received non-JSON data:", event.data);
+          } catch (error) {
+            console.error("Error parsing SSE data:", error);
           }
         }
       };
@@ -216,12 +203,12 @@ export default {
         .post(url, { msg: this.message })
         .then((response) => {
           console.log("Message sent successfully:", response.data);
-          // if (response.data.code !== 200) {
-          //   this.$message({
-          //     type: "error",
-          //     message: response.data.message,
-          //   });
-          // }
+          if (response.data.code !== 200) {
+            this.$message({
+              type: "error",
+              message: response.data.message,
+            });
+          }
         })
         .catch((error) => {
           console.error("Error sending message:", error);
@@ -248,7 +235,7 @@ export default {
             .closest(".code-block")
             .querySelector("code").textContent;
           navigator.clipboard.writeText(code).then(() => {
-            this.$message.info("代码已复制！");
+            alert("代码已复制！");
           });
         }
 

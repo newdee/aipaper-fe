@@ -11,10 +11,19 @@
             </svg>
           </div>
           <div class="right">
-            <p>[中文]{{ requestForm.title }}</p>
             <p>
+              [中文]{{ requestForm.title }}
+              <span class="add">x1</span>
+              <span class="wordage">{{requestForm.type}} | {{requestForm.language}}</span>
+            </p>
+            <!-- {{ requestForm }}  -->
+            <!-- <p>
               {{ requestForm.field ? requestForm.field[1] : "暂无" }}
               <span>含在线编辑</span>
+            </p> -->
+            <p class="alertTxt">可根据导师要求，无限改稿</p>
+            <p class="include">
+              封面 | 摘要 | 大纲目录 | 正文 | 致谢 | 参考文献
             </p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
@@ -32,8 +41,11 @@
             </svg>
           </div>
           <div class="right">
-            <p>[文献综述]</p>
-            <p>x1</p>
+            <p>
+              [论文大纲]
+              <span class="add">x1</span>
+            </p>
+            <p class="include">引言 | 主体 | 结论</p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-checkmark"></use>
@@ -48,8 +60,11 @@
             </svg>
           </div>
           <div class="right">
-            <p>[中英文摘要]</p>
-            <p>x1</p>
+            <p>
+              [文献综述]
+              <span class="add">x1</span>
+            </p>
+            <p class="include">提供背景 | 展示现状</p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-checkmark"></use>
@@ -64,8 +79,30 @@
             </svg>
           </div>
           <div class="right">
-            <p>[中英文参考文献]</p>
-            <p>x1</p>
+            <p>
+              [中英文摘要]
+              <span class="add">x1</span>
+            </p>
+            <p class="include">中英文翻译 | 简洁扼要</p>
+            <p class="alignR">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-checkmark"></use>
+              </svg>
+            </p>
+          </div>
+        </div>
+        <div class="borderBox">
+          <div class="left">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-wj-zw"></use>
+            </svg>
+          </div>
+          <div class="right">
+            <p>
+              [中英文参考文献]
+              <span class="add">x10 + </span>
+            </p>
+            <p class="include">提供依据 | 支撑论证</p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-checkmark"></use>
@@ -81,8 +118,11 @@
             </svg>
           </div>
           <div class="right">
-            <p>[学术创新]</p>
-            <p>x1</p>
+            <p>
+              [学术创新]
+              <span class="add">x1</span>
+            </p>
+            <p class="include">提出新观点 | 贡献新知识</p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-checkmark"></use>
@@ -90,23 +130,7 @@
             </p>
           </div>
         </div>
-        <!-- 论文正文(WORD版本) -->
-        <div class="borderBox">
-          <div class="left">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-wj-zw"></use>
-            </svg>
-          </div>
-          <div class="right">
-            <p>论文正文(Word版本)</p>
-            <p>x1</p>
-            <p class="alignR">
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-checkmark"></use>
-              </svg>
-            </p>
-          </div>
-        </div>
+
         <!-- 论文正文(PDF版本) -->
         <div class="borderBox">
           <div class="left">
@@ -115,8 +139,10 @@
             </svg>
           </div>
           <div class="right">
-            <p>论文正文(PDF版本)</p>
-            <p>x1</p>
+            <p>
+              Word/PDF(正文)
+              <span class="add">x1</span>
+            </p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-checkmark"></use>
@@ -132,8 +158,29 @@
             </svg>
           </div>
           <div class="right">
-            <p>论文正文(Latex版本)</p>
-            <p>x1</p>
+            <p>
+              论文正文(Latex版本)
+              <span class="add">x1</span>
+            </p>
+            <p class="alignR">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-checkmark"></use>
+              </svg>
+            </p>
+          </div>
+        </div>
+        <!-- 论文正文(WORD版本) -->
+        <div class="borderBox">
+          <div class="left">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-wj-zw"></use>
+            </svg>
+          </div>
+          <div class="right">
+            <p>
+              致谢模板
+              <span class="add">x1</span>
+            </p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-checkmark"></use>
@@ -143,105 +190,34 @@
         </div>
         <div style="width: 175px"></div>
       </div>
-      <p class="fuTitle">附加服务</p>
-      <div class="adds">
-        <div
-          v-for="(item, index) in supportedProducts"
-          :label="item"
-          :key="index + 'fu'"
-          class="labelBox floorBox"
-          v-show="item.name == '开题报告' || item.name == '任务书'"
-        >
-          <div class="left">
-            <img
-              v-if="true"
-              class="home-icon"
-              src="@/assets/images/bank-white.png"
-              alt=""
-            />
-            <img
-              v-else
-              class="home-icon"
-              src="@/assets/images/bank-dark.png"
-              alt=""
-            />
-            {{ item.name }}
-            <span v-show="item.description">({{ item.description }})</span>
-          </div>
-          <div class="right">
-            <svg
-              v-if="model || index !== 3"
-              class="icon svg-icon"
-              aria-hidden="true"
-            >
-              <use xlink:href="#icon-duigou-cu"></use>
-            </svg>
-            <svg v-else class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-fangkuang"></use>
-            </svg>
-          </div>
-        </div>
-        <div
-          v-for="(item, index) in supportedProducts"
-          :label="item"
-          :key="index + 'fu11'"
-          :class="{ labelBox: true, floorBox: true, activeClass: !model }"
-          v-show="item.name == '调查问卷'"
-          @click="juanChange"
-        >
-          <div class="left">
-            <img
-              v-if="model"
-              class="home-icon"
-              src="@/assets/images/bank-white.png"
-              alt=""
-            />
-            <img
-              v-else
-              class="home-icon"
-              src="@/assets/images/bank-dark.png"
-              alt=""
-            />
-            {{ item.name }}
-            <span v-show="item.description">({{ item.description }})</span>
-          </div>
-          <div class="right">
-            <svg v-if="model" class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-duigou-cu"></use>
-            </svg>
-            <svg v-else class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-fangkuang"></use>
-            </svg>
-          </div>
-        </div>
-        <!-- <div class="item">
-                    <p></p>
-                </div> -->
-        <!-- <el-checkbox-group
-          class="addService"
+      <p class="fuTitle">增值附加服务</p>
+
+        <el-checkbox-group
+          class="addService "
           v-model="checkboxGroup1"
           @change="fuChange"
           size="small"
         >
           <el-checkbox
             v-for="(item, index) in supportedProducts"
-            :label="item"
+            :label="item.id"
             :key="index + 'fu'"
             border
           >
             <div class="cusLabel">
-              <p>{{ item.name }}</p>
+              <p class="topIntro" v-show="item.intro">{{ item.intro }}</p>
+              <p class="addName">{{ item.name }}</p>
               <div class="price">
                 <span>0.0元</span>
                 <span>{{ item.price }}元</span>
               </div>
             </div>
           </el-checkbox>
-        </el-checkbox-group> -->
+        </el-checkbox-group>
 
-        <!-- <p class="tips" @click="reduceAIGC">
+        <p class="tips" @click="reduceAIGC">
           AIGC率知网超25%<span>包退费</span>
-        </p> -->
+        </p>
       </div>
     </div>
   </div>
@@ -257,7 +233,7 @@ export default {
   data() {
     return {
       // 定义变量
-      checkboxGroup1: [],
+      checkboxGroup1: ['6','7','10','11','12','13','14','15'],
       supportedProducts: [
         { id: "6", is_supported: true, name: "开题报告", price: 4.9 },
         {
@@ -272,16 +248,50 @@ export default {
           name: "调查问卷",
           price: 4.9,
         },
-      ],
-      supportedProducts2: [
-        { id: "6", is_supported: true, name: "开题报告", price: 4.9 },
         {
-          id: "7",
+          id: "10",
           is_supported: true,
-          name: "任务书",
-          price: 4.9,
+          name: "降AIGC痕迹",
+          intro: "AI率知网查重超25%,包退款",
+          price: 99.9,
+        },
+        {
+          id: "11",
+          is_supported: true,
+          name: "论文降重",
+          intro: "赠送一次万字查重",
+          price: 29.9,
+        },
+        {
+          id: "12",
+          is_supported: true,
+          name: "论文下载,预览",
+          intro: "无限次免费下载",
+          price: 9.9,
+        },
+        {
+          id: "13",
+          is_supported: true,
+          name: "无限改稿",
+          intro: "根据导师要求,无限改稿",
+          price: 29.9,
+        },
+        {
+          id: "14",
+          is_supported: true,
+          name: "word/laTex/PPT论文",
+          intro: "生成Word、Latex及PPT论文,可打包下载",
+          price: 29.9,
+        },
+        {
+          id: "15",
+          is_supported: true,
+          name: "参考文献下载",
+          intro: "至少10篇参考文献打包下载",
+          price: 39.9,
         },
       ],
+
       model: false,
     };
   },
@@ -291,7 +301,8 @@ export default {
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
-    this.$store.dispatch("paper/setAdditionList", this.supportedProducts2);
+    // this.$store.dispatch("paper/setAdditionList", this.supportedProducts);
+    this.fuChange()
   },
   created() {
     // eventBus.on("sendOutline", this.addE); // 订阅事件
@@ -300,21 +311,7 @@ export default {
     // eventBus.off("sendOutline", this.addE); // 移除事件监听
   },
   computed: {
-    // 计算属性
-    // supportedProducts() {
-    //   // 过滤出 is_supported 为 true 的产品
-    //   let listData = [];
-    //   listData = this.homeData.product_list.filter(
-    //     (product) =>
-    //       product.is_supported &&
-    //       (product.name == "开题报告" ||
-    //         product.name == "任务书" ||
-    //         product.name == "调查问卷")
-    //   );
-    //   // this.checkboxGroup1 = listData;
 
-    //   return listData;
-    // },
     ...mapGetters(["requestForm", "homeData"]),
   },
   methods: {
@@ -323,14 +320,15 @@ export default {
       this.$log(this.model, "model");
       if (this.model) {
         this.$store.dispatch("paper/setAdditionList", this.supportedProducts);
-      } else {
-        this.$store.dispatch("paper/setAdditionList", this.supportedProducts2);
       }
     },
     // this.$store.dispatch("paper/setAdditionList", []);
     fuChange(val) {
-      // let fuList =
-      this.$store.dispatch("paper/setAdditionList", val);
+      // let fuList =\
+      const selectedProducts = this.supportedProducts.filter(product => this.checkboxGroup1.includes(product.id));
+      this.$log('val', this.checkboxGroup1)
+
+      this.$store.dispatch("paper/setAdditionList", selectedProducts);
     },
     // 定义方法
     reduceAIGC() {
@@ -338,7 +336,6 @@ export default {
         let i = this.checkboxGroup1.indexOf("7");
         this.checkboxGroup1.splice(i, 1);
       } else {
-        console.log("576---", this.checkboxGroup1);
         this.checkboxGroup1.push("7");
       }
     },
@@ -422,13 +419,7 @@ export default {
     }
   }
 }
-.adds {
-  display: flex;
-  padding-left: 10px;
-  .floorBox {
-    margin-right: 20px;
-  }
-}
+
 .activeClass {
   background: #fff !important;
   color: #606266 !important;

@@ -2,7 +2,7 @@
   <div class="tipContain">
     <!-- tip1 -->
     <div class="tipBox">
-      <p class="tipTitle">Tips1:</p>
+      <p class="tipTitle">Tips 1:</p>
       <div class="tipCon">
         <p>
           点击
@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="tipBox">
-      <p class="tipTitle">Tips2:</p>
+      <p class="tipTitle">Tips 2:</p>
       <div class="tipCon">
         <p>
           大纲不满意可以点击下边的<span

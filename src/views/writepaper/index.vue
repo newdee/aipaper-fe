@@ -58,6 +58,7 @@
       :payStatus="payStatus"
       :paperPercent="paperPercent"
     ></order-dialog>
+    <paypopup :requestKey="requestKey" :payStatus="popupStatus"></paypopup>
   </div>
 </template>
 <script>
@@ -75,7 +76,7 @@ import eventBus from "@/utils/eventBus";
 import emitter from "@/utils/eventBus";
 import { outlineStatus } from "@/api/user";
 import orderDialog from "./components/orderDialog.vue";
-
+import paypopup from "./components/paypopup/index.vue";
 export default {
   name: "writepaper",
   data() {
@@ -86,6 +87,7 @@ export default {
       requestKey: "", //out_trade_no
       payStatus: 0,
       paperPercent: 0,
+      popupStatus: 0,
     };
   },
   components: {
@@ -97,6 +99,7 @@ export default {
     step1,
     step0,
     orderDialog,
+    paypopup,
   },
   mounted() {
     // 页面初始化
@@ -105,6 +108,7 @@ export default {
   },
   created() {
     eventBus.on("showEmitPaperDialog", this.showPaperDialog); // 订阅事件
+    eventBus.on("showEmitPaypopup", this.showPayDialog); // 订阅事件
 
     eventBus.on("emitOulineClick", this.showIndex); // 订阅事件
     eventBus.on("successOutline", this.showOutLine); // 订阅事件
@@ -112,6 +116,7 @@ export default {
   },
   beforeDestroy() {
     eventBus.off("showEmitPaperDialog", this.showPaperDialog); // 订阅事件
+    eventBus.off("showEmitPaypopup", this.showPayDialog); // 订阅事件
 
     eventBus.off("emitOulineClick", this.showIndex); // 移除事件监听
     eventBus.off("successOutline", this.showOutLine); // 移除事件监听
@@ -142,6 +147,10 @@ export default {
       if (data.paperPercent && data.paperPercent > 0) {
         this.paperPercent = data.paperPercent;
       }
+    },
+    showPayDialog(data) {
+      this.requestKey = data.requestKey;
+      this.popupStatus = Date.now();
     },
     // 定义方法
     errorBack() {

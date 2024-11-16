@@ -221,17 +221,35 @@ export default {
       });
     },
     sendPayFinish(res) {
-      let payUrl = res.result.pay_link;
-      if (payUrl) {
-        window.open(payUrl, "_blank");
-      }
-      // 关闭弹窗
-      eventBus.emit("orderDialogChange", false);
-      eventBus.emit("showEmitPaperDialog", {
+      console.log("res", res);
+      let order = {
+        out_trade_no: res.result.out_trade_no,
+        pay_amount: res.result.pay_amount,
+        pay_link: res.result.pay_link,
+      };
+      this.$store.dispatch("app/toggleCurrentOrder", order);
+
+      eventBus.emit("showEmitPaypopup", {
         requestKey: res.result.out_trade_no,
-        payStatus: 5,
+        payStatus: 2,
         paperPercent: 0,
       });
+      // let payUrl = res.result.pay_link;
+      // if (payUrl) {
+      //   window.open(payUrl, "_blank");
+      // }
+      // eventBus.emit("showEmitPaypopup", {
+      //           requestKey: res.result.out_trade_no,
+      //           payStatus: 2,
+      //           paperPercent: 0,
+      //         });
+      // 关闭弹窗
+      eventBus.emit("orderDialogChange", false);
+      // eventBus.emit("showEmitPaperDialog", {
+      //   requestKey: res.result.out_trade_no,
+      //   payStatus: 5,
+      //   paperPercent: 0,
+      // });
     },
     pushStep3: _.debounce(function (row) {
       const targetPath = "/main/writepaper";

@@ -8,7 +8,7 @@ export default {
     eliteCourses: "精品课程",
     aiTools: "AI工具",
     reduceRepetition: "降重/降AIGC率",
-    chat: "ChatGPT",
+    chat: "Chat GPT",
     documentation: "文档",
     guide: "引导页",
     permission: "权限测试页",

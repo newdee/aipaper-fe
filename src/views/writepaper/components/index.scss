@@ -55,7 +55,18 @@
       flex-grow: 1;
       position: relative;
       padding-left: 5px;
-
+      .alertTxt {
+        display: inline-block;
+        padding: 0 4px;
+        color: #f69900;
+        background-color: #f698002f;
+        border-radius: 3px;
+        margin-bottom: 5px;
+      }
+      .include {
+        font-size: 0.8em;
+        color: #999;
+      }
       .alignR {
         text-align: right;
         position: absolute;
@@ -65,13 +76,22 @@
         svg.icon {
           width: 14px;
           height: 14px;
-          color: #018417;
+          color: #35f;
         }
       }
 
       p {
         margin: 0;
         line-height: 1.5em;
+        .add {
+          font-size: 0.8em;
+          color: #999;
+        }
+        .wordage {
+          font-size: 0.8em;
+          margin-left: 2em;
+          color: #999;
+        }
       }
 
       p:first-child {
@@ -97,7 +117,7 @@
 
   .att .borderBox {
     width: 175px;
-    border-color: #01847f;
+    border-color: #35f;
     font-size: 12px;
 
     .right p {
@@ -105,57 +125,80 @@
     }
 
     svg.icon {
-      color: #01847f;
+      color: rgba(51, 85, 255, 0.5);
     }
   }
 
-  .adds {
-    .addService {
+  .addService {
+    display: flex;
+    flex-wrap: wrap;
+
+    label.el-checkbox {
+      width: 30%;
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: row-reverse;
+      padding: 10px;
+      margin: 5px 8px;
+      border-radius: 5px;
+      align-items: center;
+      height: 60px;
+      justify-content: space-between;
+      border: 1px solid #35f;
+      margin-top: 10px;
 
-      label.el-checkbox {
-        width: 150px;
-        display: flex;
-        flex-direction: row-reverse;
-        padding: 10px;
-        margin: 5px 8px;
-        border-radius: 5px;
-        align-items: center;
-        height: auto;
-        justify-content: space-between;
+      background: linear-gradient(
+        to right,
+        rgba(51, 85, 255, 0.3),
+        rgba(51, 85, 255, 0)
+      );
+      padding: 8px 16px;
 
-        .cusLabel {
-          font-size: 14px;
+      .cusLabel {
+        font-size: 14px;
+        .topIntro {
+          position: absolute;
+          top: -10px;
+          height: 20px;
+          right: 0;
+          background: rgb(246, 153, 0);
+          font-size: 10px;
+          border-radius: 3px;
+          color: #fff;
+          line-height: 20px;
+          padding: 0 5px;
+        }
+        p {
+          margin: 0px;
+          line-height: 1.5em;
+          color: #202020;
+        }
 
-          p {
-            margin: 0px;
-            line-height: 1.5em;
-            color: #202020;
-          }
+        .price span:first-child {
+          color: #ee6562;
+          font-weight: 600;
+          margin-right: 10px;
+        }
 
-          .price span:first-child {
-            color: #ee6562;
-            font-weight: 600;
-          }
-
-          .price span:last-child {
-            font-size: 12px;
-            color: #7e7e7e;
-            text-decoration: line-through;
-          }
+        .price span:last-child {
+          font-size: 12px;
+          color: #7e7e7e;
+          text-decoration: line-through;
         }
       }
     }
+    .addName {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+  }
 
-    .tips {
-      padding: 0 15px;
-      font-size: 10px;
-      margin: 0px 0px 5px 0;
-      cursor: pointer;
-      span {
-        color: #ee6562;
-      }
+  .tips {
+    padding: 0 15px;
+    font-size: 10px;
+    margin: 0px 0px 5px 0;
+    cursor: pointer;
+    span {
+      color: #ee6562;
     }
   }
 }
@@ -449,6 +492,7 @@
   font-size: 18xp;
   font-weight: bold;
   margin: 32px 0;
+  margin-bottom: 10px;
   color: #1f2937;
 }
 

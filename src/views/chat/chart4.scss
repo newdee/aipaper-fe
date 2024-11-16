@@ -1,0 +1,236 @@
+body,
+html {
+  /*height: 100%;*/
+}
+
+body {
+  background: #343541;
+  /*max-width: 900px;*/
+  margin: 0 auto;
+  padding: 0 0px;
+}
+
+
+
+dl,
+dd {
+  margin: 0;
+  padding: 0;
+}
+
+dl {}
+
+dd {
+  padding: 10px;
+  color: #f9f9f9;
+  display: flex;
+  align-items: flex-start;
+}
+
+.markdown-body {
+  border-radius: 10px;
+  background-size: 20px;
+  background-position: 10px 14px;
+  position: relative;
+  padding: 10px;
+  padding-left: 40px;
+  padding-bottom: 20px;
+  padding-top: 12px;
+}
+
+dd pre,
+dd article {
+  line-height: 25px;
+  /* height: 50px;
+      line-height: 50px; */
+}
+
+dd pre {
+  margin: 0;
+}
+
+.answer_span {
+  position: relative;
+  top: 3px;
+}
+
+.input-card-item input {
+  flex: 1;
+  box-sizing: border-box;
+  height: 50px;
+  // width: 500px;
+  font-size: 20px;
+  /*background: url(10) no-repeat;*/
+  border: 0;
+  color: #d0838e;
+  background: #40414f;
+  padding: 0 10px;
+  border-radius: 10px;
+  color: floralwhite;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border: none;
+  outline: none;
+
+  &:focus {
+    border: 1px solid #fff;
+    box-shadow: 0 3px 12px 0 rgba(255, 255, 255, .5);
+  }
+}
+
+.answer_title {
+  display: flex;
+  line-height: 24px;
+  justify-content: flex-start;
+  color: #fff;
+  padding-left: 10px;
+  font-weight: bold;
+}
+
+.atarImg {
+  width: 20px;
+  height: 20px;
+  margin-right: 15px;
+  position: relative;
+  top: 4px;
+  background-color: #fff;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.chat {
+  // height: calc(100vh - 200px);
+  height: calc(var(--vh, 1vh) * 100 - 200px);
+
+  overflow-y: auto;
+  padding: 0 7px;
+  /*width: 900px;*/
+  margin-bottom: 10px;
+  border: 0px solid #ddd;
+  margin-top: 5px
+}
+
+.copyBtn {
+  margin-top: 10px;
+  color: #c9d1d9;
+  padding-left: 20px;
+  font-size: 14px;
+  position: absolute;
+  bottom: 7px;
+  display: flex;
+  align-items: center;
+  right: 9px;
+
+  & span:hover {
+    color: #409EFF;
+    cursor: pointer;
+  }
+}
+
+.input-card {
+  position: absolute;
+  bottom: 40px;
+  left: 0px;
+  right: 0px;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 55px);
+}
+
+#chat {
+  flex: 1;
+  word-wrap: normal;
+  word-break: break-all;
+
+}
+
+
+.input-card-item {
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+  .breakRequestSpan {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -30px;
+    color: #fff;
+
+    &:hover {
+      color: #409EFF;
+      cursor: pointer;
+    }
+  }
+}
+
+.elicon {
+  position: relative;
+}
+
+.article {
+  width: 1200px;
+  margin: 30px auto;
+  overflow: hidden;
+}
+
+/*滚动条里面轨道*/
+#chat::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0);
+  background-color: rgb(20, 19, 19);
+}
+
+/*定义滚动条整体的样式*/
+#chat::-webkit-scrollbar {
+  width: 6px;
+  background-color: rgb(20, 19, 19);
+}
+
+/*滚动条的样式*/
+#chat::-webkit-scrollbar-thumb {
+  height: 20px;
+  background-image: -webkit-gradient(linear,
+      left bottom,
+      left top,
+      color-stop(0.2, rgb(125, 126, 128)),
+      color-stop(0.4, rgb(97, 98, 99)),
+      color-stop(0.8, rgb(125, 126, 128)));
+}
+
+.baseSendBtn {
+  margin-left: -1px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+.textMin {
+  font-size: 15px;
+  
+  textarea {
+    min-height: 40px !important;
+    max-height: 85px !important;
+  }
+  .el-textarea__inner {
+    color: #fffaf0 !important;
+    background: #40414f !important;
+    box-sizing: border-box;
+    font-size: 15px;
+    border: 0;
+    color: #d0838e;
+    padding: 10px 10px;
+    border-radius: 10px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border: none;
+    outline: none;
+  
+    &:focus {
+      border: 1px solid #fff;
+      box-shadow: 0 3px 12px 0 rgba(255, 255, 255, .5);
+    }
+  }
+}
