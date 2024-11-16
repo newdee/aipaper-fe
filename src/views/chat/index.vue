@@ -2,18 +2,47 @@
   <div class="chat-container">
     <div class="chat-messages">
       <div
+        :class="['messageBox', msg.type]"
         v-for="(msg, index) in chatMessages"
         :key="index"
-        :class="['message', msg.type]"
       >
-        <div
-          :class="[
-            'infoList',
-            msg.type == 'user' ? 'userTitle' : 'answerTitle',
-          ]"
-        >
-          <div v-html="renderMarkdown(msg.text)"></div>
+        <div class="userInfo">
+          <img v-if="msg.type === 'user'" :src="avatar" alt="" />
+          <img
+            v-if="msg.type === 'response'"
+            :src="logoMax"
+            alt=""
+            class="logoMax"
+          />
         </div>
+        <div :class="['message', msg.type]">
+          <div
+            :class="[
+              'infoList',
+              msg.type == 'user' ? 'userTitle' : 'answerTitle',
+            ]"
+          >
+            <div v-html="renderMarkdown(msg.text)"></div>
+          </div>
+        </div>
+        <button
+          v-if="msg.type === 'user'"
+          @click="openEditDialog(index)"
+          class="edit-icon"
+        >
+          <svg class="icon svg-icon" aria-hidden="true">
+            <use xlink:href="#icon-edit"></use>
+          </svg>
+        </button>
+        <button
+          v-if="msg.type === 'response'"
+          @click="regenerateResponse(index - 1)"
+          class="reload-icon"
+        >
+          <svg class="icon svg-icon" aria-hidden="true">
+            <use xlink:href="#icon-reload"></use>
+          </svg>
+        </button>
       </div>
     </div>
     <div class="chat-input">
@@ -26,6 +55,13 @@
         <i class="el-icon-search"></i>
       </button>
     </div>
+    <el-dialog title="编辑消息" :visible.sync="dialogVisible" width="30%">
+      <el-input type="textarea" v-model="editMessageText" rows="5"></el-input>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="confirmEdit">确认</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -35,6 +71,7 @@ import { getToken } from "@/utils/auth";
 import { marked } from "marked";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css"; // 确保路径和样式名称正确
+import { mapGetters } from "vuex";
 
 export default {
   data() {
@@ -44,6 +81,10 @@ export default {
       token: getToken(),
       sseSource: null,
       reconnectInterval: 5000,
+      dialogVisible: false,
+      editMessageIndex: null,
+      editMessageText: "",
+      logoMax: require("@/assets/images/logoMax.png"),
     };
   },
   mounted() {
@@ -53,9 +94,14 @@ export default {
   updated() {
     this.scrollToBottom();
   },
+  computed: {
+    // 计算属性
+    ...mapGetters(["avatar"]),
+  },
   methods: {
     renderMarkdown(text) {
       const renderer = new marked.Renderer();
+
       renderer.code = (code, language) => {
         const validLanguage = hljs.getLanguage(language)
           ? language
@@ -63,15 +109,20 @@ export default {
         const highlighted = hljs.highlight(validLanguage, code).value;
 
         return `
-          <div class="code-block">
-            <div class="code-header">
-              <span class="language-label">${validLanguage.toUpperCase()}</span>
-              <button class="toggle-btn">⌄</button>
-              <button class="copy-btn">⧉</button>
-            </div>
-            <pre><code class="language-${validLanguage}">${highlighted}</code></pre>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="language-label">${language.toUpperCase()}</span>
+          <div class="code-buttons">
+            <button class="toggle-btn">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-expend"></use>
+              </svg></button>
+            <button class="copy-btn">⧉</button>
           </div>
-        `;
+        </div>
+        <pre><code class="language-${validLanguage}">${highlighted}</code></pre>
+      </div>
+    `;
       };
 
       marked.setOptions({
@@ -87,6 +138,7 @@ export default {
 
       return marked.parse(text);
     },
+
     establishConnection() {
       const url = `/chat-api/createSse?token=${encodeURIComponent(this.token)}`;
 
@@ -178,12 +230,63 @@ export default {
           });
         }
 
-        if (event.target.classList.contains("toggle-btn")) {
+        // Handle toggle button click
+        if (event.target.closest(".toggle-btn")) {
           const pre = event.target.closest(".code-block").querySelector("pre");
           pre.style.display = pre.style.display === "none" ? "block" : "none";
-          event.target.textContent = pre.style.display === "none" ? "⌄" : "⌃";
+
+          // Update the SVG icon based on the display state
+          const useElement = event.target
+            .closest(".toggle-btn")
+            .querySelector("use");
+          if (pre.style.display === "none") {
+            useElement.setAttribute("xlink:href", "#icon-collapse"); // Assuming you have an icon for collapse
+          } else {
+            useElement.setAttribute("xlink:href", "#icon-expend");
+          }
         }
       });
+    },
+    openEditDialog(index) {
+      this.editMessageIndex = index;
+      this.editMessageText = this.chatMessages[index].text;
+      this.dialogVisible = true;
+    },
+    confirmEdit() {
+      if (this.editMessageText.trim() !== "") {
+        this.chatMessages[this.editMessageIndex].text = this.editMessageText;
+        this.regenerateResponse(this.editMessageIndex);
+      }
+      this.dialogVisible = false;
+    },
+    regenerateResponse(index) {
+      const message = this.chatMessages[index].text;
+      const url = `/chat-api/chat?token=${encodeURIComponent(this.token)}`;
+
+      axios
+        .post(
+          url,
+          { msg: message },
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          // Assuming response contains new answer
+          this.chatMessages.splice(index + 1, 1, {
+            text: response.data,
+            type: "response",
+          });
+        })
+        .catch((error) => {
+          console.error("Error regenerating response:", error);
+          this.$message({
+            type: "error",
+            message: "请求失败,请重试!",
+          });
+        });
     },
   },
   beforeDestroy() {
@@ -209,38 +312,51 @@ export default {
   padding: 20px;
   overflow-y: auto;
 }
-
+.messageBox {
+  position: relative;
+  max-width: 1000px;
+  padding-left: 40px;
+  padding-right: 20px;
+}
 .message {
   margin: 10px;
   padding: 10px;
   border-radius: 10px;
-  max-width: 1000px;
 }
 
 .message.user {
-  background-color: #d1e7dd;
+  background-color: #d0dfef;
   align-self: flex-start;
   color: #000;
 }
 
 .message.response {
-  background-color: rgba(255, 243, 205, 0.5);
+  background-color: #f6f7fb;
   color: #000;
   align-self: flex-end;
 }
 
 .userInfo {
-  width: 25px;
-  height: 25px;
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  width: 30px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background: #3e3f4b;
-  color: #fff;
-  margin-right: 10px;
+  overflow: hidden;
+  background: #d8e3ff;
 }
-
+.userInfo img {
+  width: 100%;
+  height: 100%;
+}
+.userInfo .logoMax {
+  width: 70%;
+  height: 70%;
+}
 .infoList {
   display: flex;
   align-items: center;
@@ -333,29 +449,62 @@ export default {
   color: #ffcc00;
 }
 
-.copy-btn,
-.toggle-btn {
-  margin-left: 5px;
-  padding: 3px 8px;
-  border: none;
-  background-color: transparent;
-  color: #ccc;
-  cursor: pointer;
-  border-radius: 3px;
-  font-size: 14px;
+.code-buttons {
+  display: flex;
+  gap: 5px;
 }
 
-.copy-btn:hover,
-.toggle-btn:hover {
-  color: #fff;
+.edit-icon {
+  display: none; /* Initially hide the button */
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  color: #666;
+}
+.reload-icon {
+  display: none; /* Initially hide the button */
+  position: absolute;
+  right: 5px;
+  bottom: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  color: #666;
+}
+
+.messageBox.user:hover .edit-icon {
+  display: block; /* Show the button on hover */
+}
+.messageBox.response:hover .reload-icon {
+  display: block; /* Show the button on hover */
 }
 
 ::v-deep .code-block {
   margin: 0;
-  padding: 10px;
+  padding: 0px;
   background-color: #2d2d2d !important;
   color: #cccccc !important;
   border-radius: 5px !important;
   overflow-x: auto !important;
+}
+::v-deep .code-header {
+  padding: 10px;
+  background: #585a73;
+  display: flex;
+  justify-content: space-between;
+}
+::v-deep .code-block pre {
+  padding: 0 10px 10px 10px;
+}
+::v-deep .code-buttons button {
+  border: none;
+  background: transparent;
+  color: #fff;
+  margin: 0 5px;
 }
 </style>
