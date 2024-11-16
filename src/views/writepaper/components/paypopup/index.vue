@@ -432,7 +432,6 @@ export default {
 }
 .payCodeTitle {
   text-align: left;
-  margin-top: 30px;
   width: 100%;
   margin-bottom: 10px;
 }
