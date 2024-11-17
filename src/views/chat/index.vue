@@ -1,5 +1,8 @@
 <template>
   <div class="chat-container">
+    <!-- <div class="navChat">
+      <el-button>清屏</el-button>
+    </div> -->
     <div class="chat-messages">
       <div
         :class="['messageBox', msg.type]"
@@ -157,7 +160,7 @@ export default {
     },
 
     establishConnection() {
-      const url = `${this.chatBaseApi}/createSse?token=${encodeURIComponent(
+      const url = `${this.chatBaseApi}createSse?token=${encodeURIComponent(
         this.token
       )}`;
 
@@ -218,7 +221,7 @@ export default {
 
       this.chatMessages.push({ text: this.message, type: "user" });
 
-      const url = `${this.chatBaseApi}/chat?token=${encodeURIComponent(
+      const url = `${this.chatBaseApi}chat?token=${encodeURIComponent(
         this.token
       )}`;
 
@@ -226,12 +229,12 @@ export default {
         .post(url, { msg: this.message })
         .then((response) => {
           console.log("Message sent successfully:", response.data);
-          // if (response.data.code !== 200) {
-          //   this.$message({
-          //     type: "error",
-          //     message: response.data.message,
-          //   });
-          // }
+          if (response.data.code !== 200 && response.data.message) {
+            this.$message({
+              type: "error",
+              message: response.data.message,
+            });
+          }
         })
         .catch((error) => {
           console.error("Error sending message:", error);
@@ -293,7 +296,7 @@ export default {
     },
     regenerateResponse(index) {
       const message = this.chatMessages[index].text;
-      const url = `${this.chatBaseApi}/chat?token=${encodeURIComponent(
+      const url = `${this.chatBaseApi}chat?token=${encodeURIComponent(
         this.token
       )}`;
 

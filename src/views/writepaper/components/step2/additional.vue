@@ -2,6 +2,9 @@
   <div>
     <!-- 页面名称 -->
     <div class="spendingBox">
+      <div class="markBox">
+        <img src="@/assets/images/mark.png" alt="">
+      </div>
       <p class="fuTitle">您将获得</p>
       <div class="maintxt">
         <div class="borderBox">
@@ -21,9 +24,9 @@
               {{ requestForm.field ? requestForm.field[1] : "暂无" }}
               <span>含在线编辑</span>
             </p> -->
-            <p class="alertTxt">可根据导师要求，无限改稿</p>
+            <p class="alertTxt">真实数据来源</p>
             <p class="include">
-              封面 | 摘要 | 大纲目录 | 正文 | 致谢 | 参考文献
+              摘要 | 大纲目录 | 正文 | 参考文献
             </p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
@@ -140,7 +143,7 @@
           </div>
           <div class="right">
             <p>
-              Word/PDF(正文)
+              论文正文(PDF版本)
               <span class="add">x1</span>
             </p>
             <p class="alignR">
@@ -178,7 +181,7 @@
           </div>
           <div class="right">
             <p>
-              致谢模板
+              论文正文(Word版本)
               <span class="add">x1</span>
             </p>
             <p class="alignR">
@@ -199,9 +202,10 @@
           size="small"
         >
           <el-checkbox
-            v-for="(item, index) in supportedProducts"
+            v-for="(item, index) in homeData.additional_service"
             :label="item.id"
             :key="index + 'fu'"
+            :disabled="item.is_supported"
             border
           >
             <div class="cusLabel">
@@ -235,61 +239,7 @@ export default {
       // 定义变量
       checkboxGroup1: ['6','7','10','11','12','13','14','15'],
       supportedProducts: [
-        { id: "6", is_supported: true, name: "开题报告", price: 4.9 },
-        {
-          id: "7",
-          is_supported: true,
-          name: "任务书",
-          price: 4.9,
-        },
-        {
-          id: "9",
-          is_supported: true,
-          name: "调查问卷",
-          price: 4.9,
-        },
-        {
-          id: "10",
-          is_supported: true,
-          name: "降AIGC痕迹",
-          intro: "AI率知网查重超25%,包退款",
-          price: 99.9,
-        },
-        {
-          id: "11",
-          is_supported: true,
-          name: "论文降重",
-          intro: "赠送一次万字查重",
-          price: 29.9,
-        },
-        {
-          id: "12",
-          is_supported: true,
-          name: "论文下载,预览",
-          intro: "无限次免费下载",
-          price: 9.9,
-        },
-        {
-          id: "13",
-          is_supported: true,
-          name: "无限改稿",
-          intro: "根据导师要求,无限改稿",
-          price: 29.9,
-        },
-        {
-          id: "14",
-          is_supported: true,
-          name: "word/laTex/PPT论文",
-          intro: "生成Word、Latex及PPT论文,可打包下载",
-          price: 29.9,
-        },
-        {
-          id: "15",
-          is_supported: true,
-          name: "参考文献下载",
-          intro: "至少10篇参考文献打包下载",
-          price: 39.9,
-        },
+
       ],
 
       model: false,
@@ -325,7 +275,7 @@ export default {
     // this.$store.dispatch("paper/setAdditionList", []);
     fuChange(val) {
       // let fuList =\
-      const selectedProducts = this.supportedProducts.filter(product => this.checkboxGroup1.includes(product.id));
+      const selectedProducts = this.homeData.additional_service.filter(product => this.checkboxGroup1.includes(product.id));
       this.$log('val', this.checkboxGroup1)
 
       this.$store.dispatch("paper/setAdditionList", selectedProducts);
@@ -386,8 +336,8 @@ export default {
     flex: none;
 
     svg.icon {
-      width: 35px;
-      height: 35px;
+      width: 33px;
+      height: 33px;
     }
   }
 
@@ -429,4 +379,5 @@ export default {
     cursor: pointer;
   }
 }
+
 </style>

@@ -44,14 +44,25 @@ service.interceptors.response.use(
    */
   (response) => {
     const res = response.data;
-    console.log("dd22222222222222----------ddd", res);
+    // console.log("dd22222222222222----------ddd", res);
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 200) {
-      Message({
-        message: res.message || "Error",
-        type: "error",
-        duration: 5 * 1000,
-      });
+      if (res.code == 401) {
+        Message({
+          message: "登录已过期,请重新登录!",
+          type: "error",
+          duration: 5 * 1000,
+        });
+        store.dispatch("user/resetToken").then(() => {
+          router.push("/login");
+        });
+      } else {
+        Message({
+          message: res.message || "Error",
+          type: "error",
+          duration: 5 * 1000,
+        });
+      }
 
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
       if (res.code === 50008 || res.code === 50014) {

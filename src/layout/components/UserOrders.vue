@@ -124,6 +124,7 @@
                 v-if="orderObj.order.payment_status == 'WAIT_BUYER_PAY'"
                 style="color: crimson"
               >
+                <i class="el-icon-shopping-cart-full"></i>
                 去支付
               </span>
             </div>
@@ -221,13 +222,17 @@ export default {
       });
     },
     sendPayFinish(res) {
-      console.log("res", res);
+      this.$log("去支付 res", res);
       let order = {
         out_trade_no: res.result.out_trade_no,
         pay_amount: res.result.pay_amount,
         pay_link: res.result.pay_link,
       };
       this.$store.dispatch("app/toggleCurrentOrder", order);
+      this.$store.dispatch(
+        "paper/setAdditionList",
+        res.result.additional_service
+      );
 
       eventBus.emit("showEmitPaypopup", {
         requestKey: res.result.out_trade_no,
