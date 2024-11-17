@@ -22,18 +22,51 @@
             payStatusObject[payTitleStatus]
           }}</span>
         </p> -->
-        <p class="payCodeTitle">支付宝支付</p>
+
         <div class="payCodeBox">
           <div class="payLeftCode">
+            <el-tabs type="border-card">
+              <el-tab-pane>
+                <span slot="label"
+                  ><svg class="icon svg-icon" aria-hidden="true">
+                    <use xlink:href="#icon-zhifubaozhifu"></use>
+                  </svg>
+                  支付宝支付</span
+                >
+                <div class="tabsBox">
+                  <iframe
+                    v-if="pollingStatus"
+                    :src="currentOrder.pay_link"
+                    height="205"
+                    width="205"
+                    frameborder="0"
+                  ></iframe>
+                  <p class="codeIntro">
+                    支持使用
+                    <b style="color: #67c23a">“花呗”</b>
+                    支付
+                  </p>
+                </div>
+              </el-tab-pane>
+              <el-tab-pane :disabled="true">
+                <span slot="label"
+                  ><svg class="icon svg-icon" aria-hidden="true">
+                    <use xlink:href="#icon-weixin"></use>
+                  </svg>
+                  微信支付</span
+                >
+                <!-- <iframe
+                  v-if="pollingStatus"
+                  :src="currentOrder.pay_link"
+                  height="205"
+                  width="205"
+                  frameborder="0"
+                ></iframe>
+                <p class="codeIntro">支持使用“花呗”支付</p> -->
+              </el-tab-pane>
+              <!-- <el-tab-pane label="消息中心">消息中心</el-tab-pane> -->
+            </el-tabs>
             <!-- left code -->
-            <iframe
-              v-if="pollingStatus"
-              :src="currentOrder.pay_link"
-              height="205"
-              width="205"
-              frameborder="0"
-            ></iframe>
-            <p class="codeIntro">支持使用“花呗”支付</p>
           </div>
           <div class="payRightPrice">
             <!-- left code -->
@@ -360,18 +393,16 @@ export default {
   padding-bottom: 30px;
 }
 .payLeftCode {
-  width: 230px;
-  height: 230px;
+  max-width: 287px;
+  // height: 230px;
   padding-top: 13px;
-  padding-left: 13px;
-  border: 1px solid #ccc;
+  // border: 1px solid #ccc;
   border-radius: 10px;
   position: relative;
   .codeIntro {
-    position: absolute;
-    bottom: -25px;
     text-align: center;
     width: 100%;
+    margin-top: 5px;
   }
 }
 .payRightPrice {
@@ -442,5 +473,11 @@ export default {
   text-align: left;
   width: 100%;
   margin-bottom: 10px;
+}
+.tabsBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 </style>

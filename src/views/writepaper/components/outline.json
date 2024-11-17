@@ -1,399 +1,404 @@
-[
-  {
-    "chapter_num": "第一章",
-    "title": "引言",
-    "sections": [
-      {
-        "title": "研究背景与意义",
-        "num": "1.1",
-        "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
-        "insert_code": {
-          "status": false,
-          "content": ""
+{
+  "outline": [
+    {
+      "chapter_num": "第一章",
+      "title": "引言",
+      "sections": [
+        {
+          "title": "研究背景与意义",
+          "num": "1.1",
+          "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
+          "insert_code": {
+            "status": false,
+            "content": ""
+          },
+          "insert_mermaid": {
+            "status": false,
+            "content": ""
+          },
+          "insert_latex_formula": {
+            "status": false,
+            "content": ""
+          },
+          "insert_table": {
+            "status": false,
+            "content": ""
+          },
+          "insert_plot": {
+            "status": false,
+            "content": ""
+          }
         },
-        "insert_mermaid": {
-          "status": false,
-          "content": ""
-        },
-        "insert_latex_formula": {
-          "status": false,
-          "content": ""
-        },
-        "insert_table": {
-          "status": false,
-          "content": ""
-        },
-        "insert_plot": {
-          "status": false,
-          "content": ""
+        {
+          "title": "本研究的主要贡献和创新点",
+          "num": "1.2",
+          "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
+          "insert_code": {
+            "status": false,
+            "content": ""
+          },
+          "insert_mermaid": {
+            "status": false,
+            "content": ""
+          },
+          "insert_latex_formula": {
+            "status": false,
+            "content": ""
+          },
+          "insert_table": {
+            "status": false,
+            "content": ""
+          },
+          "insert_plot": {
+            "status": false,
+            "content": ""
+          }
         }
-      },
-      {
-        "title": "本研究的主要贡献和创新点",
-        "num": "1.2",
-        "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
-        "insert_code": {
-          "status": false,
-          "content": ""
+      ]
+    },
+    {
+      "chapter_num": "第二章",
+      "title": "文献综述",
+      "sections": [
+        {
+          "title": "研究理论基础",
+          "num": "2.1",
+          "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
+          "insert_code": {
+            "status": false,
+            "content": ""
+          },
+          "insert_mermaid": {
+            "status": false,
+            "content": ""
+          },
+          "insert_latex_formula": {
+            "status": false,
+            "content": ""
+          },
+          "insert_table": {
+            "status": false,
+            "content": ""
+          },
+          "insert_plot": {
+            "status": false,
+            "content": ""
+          }
         },
-        "insert_mermaid": {
-          "status": false,
-          "content": ""
+        {
+          "title": "研究现状",
+          "num": "2.2",
+          "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
+          "insert_code": {
+            "status": false,
+            "content": ""
+          },
+          "insert_mermaid": {
+            "status": false,
+            "content": ""
+          },
+          "insert_latex_formula": {
+            "status": false,
+            "content": ""
+          },
+          "insert_table": {
+            "status": false,
+            "content": ""
+          },
+          "insert_plot": {
+            "status": false,
+            "content": ""
+          }
         },
-        "insert_latex_formula": {
-          "status": false,
-          "content": ""
-        },
-        "insert_table": {
-          "status": false,
-          "content": ""
-        },
-        "insert_plot": {
-          "status": false,
-          "content": ""
+        {
+          "title": "本研究的创新点",
+          "num": "2.3",
+          "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
+          "insert_code": {
+            "status": false,
+            "content": ""
+          },
+          "insert_mermaid": {
+            "status": false,
+            "content": ""
+          },
+          "insert_latex_formula": {
+            "status": false,
+            "content": ""
+          },
+          "insert_table": {
+            "status": false,
+            "content": ""
+          },
+          "insert_plot": {
+            "status": false,
+            "content": ""
+          }
         }
-      }
-    ]
-  },
-  {
-    "chapter_num": "第二章",
-    "title": "文献综述",
-    "sections": [
-      {
-        "title": "研究理论基础",
-        "num": "2.1",
-        "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
-        "insert_code": {
-          "status": false,
-          "content": ""
+      ]
+    },
+    {
+      "chapter_num": "第三章",
+      "title": "xxx的研究方法",
+      "sections": [
+        {
+          "title": "xxx技术说明",
+          "num": "3.1",
+          "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
+          "insert_code": {
+            "status": false,
+            "content": ""
+          },
+          "insert_table": {
+            "status": false,
+            "content": ""
+          },
+          "insert_plot": {
+            "status": false,
+            "content": ""
+          }
         },
-        "insert_mermaid": {
-          "status": false,
-          "content": ""
+        {
+          "title": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多方法说明",
+          "num": "3.2",
+          "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
+          "insert_code": {
+            "status": false,
+            "content": ""
+          },
+          "insert_mermaid": {
+            "status": false,
+            "content": ""
+          },
+          "insert_latex_formula": ["公式1"],
+          "insert_table": {
+            "status": false,
+            "content": ""
+          },
+          "insert_plot": {
+            "status": false,
+            "content": ""
+          }
         },
-        "insert_latex_formula": {
-          "status": false,
-          "content": ""
-        },
-        "insert_table": {
-          "status": false,
-          "content": ""
-        },
-        "insert_plot": {
-          "status": false,
-          "content": ""
+        {
+          "title": "本研究的方法设计",
+          "num": "3.3",
+          "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
+          "insert_code": {
+            "status": false,
+            "content": ""
+          },
+          "insert_mermaid": {
+            "status": false,
+            "content": ""
+          },
+          "insert_latex_formula": ["公式1", "公式2"],
+          "insert_table": {
+            "status": false,
+            "content": ""
+          },
+          "insert_plot": {
+            "status": false,
+            "content": ""
+          }
         }
-      },
-      {
-        "title": "研究现状",
-        "num": "2.2",
-        "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
-        "insert_code": {
-          "status": false,
-          "content": ""
+      ]
+    },
+    {
+      "chapter_num": "第四章",
+      "title": "xxx结果分析",
+      "sections": [
+        {
+          "title": "xxx的分析",
+          "num": "4.1",
+          "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
+          "insert_code": {
+            "status": false,
+            "content": ""
+          },
+          "insert_mermaid": {
+            "status": false,
+            "content": ""
+          },
+          "insert_latex_formula": {
+            "status": false,
+            "content": ""
+          },
+          "insert_table": {
+            "status": false,
+            "content": "xxx分析表格1"
+          },
+          "insert_plot": {
+            "status": false,
+            "content": "xxx分析图表1"
+          }
         },
-        "insert_mermaid": {
-          "status": false,
-          "content": ""
+        {
+          "title": "xxx的分析",
+          "num": "4.2",
+          "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , ",
+          "insert_code": {
+            "status": false,
+            "content": ""
+          },
+          "insert_mermaid": {
+            "status": false,
+            "content": ""
+          },
+          "insert_latex_formula": {
+            "status": false,
+            "content": ""
+          },
+          "insert_table": {
+            "status": true,
+            "content": ["xxx分析表格1", "xxx分析表格2"]
+          },
+          "insert_plot": {
+            "status": false,
+            "content": ["xxx分析表格1", "xxx分析表格2"]
+          }
         },
-        "insert_latex_formula": {
-          "status": false,
-          "content": ""
-        },
-        "insert_table": {
-          "status": false,
-          "content": ""
-        },
-        "insert_plot": {
-          "status": false,
-          "content": ""
+        {
+          "title": "结果分析",
+          "num": "4.3",
+          "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , ",
+          "insert_code": {
+            "status": false,
+            "content": ""
+          },
+          "insert_mermaid": {
+            "status": false,
+            "content": ""
+          },
+          "insert_latex_formula": {
+            "status": false,
+            "content": ""
+          },
+          "insert_table": {
+            "status": false,
+            "content": ["xxx分析表格1", "xxx分析表格2"]
+          },
+          "insert_plot": {
+            "status": false,
+            "content": "xxx分析图表1"
+          }
         }
-      },
-      {
-        "title": "本研究的创新点",
-        "num": "2.3",
-        "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
-        "insert_code": {
-          "status": false,
-          "content": ""
+      ]
+    },
+    {
+      "chapter_num": "第五章",
+      "title": "讨论与结论",
+      "sections": [
+        {
+          "title": "讨论",
+          "num": "5.1",
+          "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , ",
+          "insert_code": {
+            "status": false,
+            "content": ""
+          },
+          "insert_mermaid": {
+            "status": false,
+            "content": ""
+          },
+          "insert_latex_formula": {
+            "status": false,
+            "content": ""
+          },
+          "insert_table": {
+            "status": false,
+            "content": ""
+          },
+          "insert_plot": {
+            "status": false,
+            "content": ""
+          }
         },
-        "insert_mermaid": {
-          "status": false,
-          "content": ""
-        },
-        "insert_latex_formula": {
-          "status": false,
-          "content": ""
-        },
-        "insert_table": {
-          "status": false,
-          "content": ""
-        },
-        "insert_plot": {
-          "status": false,
-          "content": ""
+        {
+          "title": "结论",
+          "num": "5.2",
+          "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , ",
+          "insert_code": {
+            "status": false,
+            "content": ""
+          },
+          "insert_mermaid": {
+            "status": false,
+            "content": ""
+          },
+          "insert_latex_formula": {
+            "status": false,
+            "content": ""
+          },
+          "insert_table": {
+            "status": false,
+            "content": ""
+          },
+          "insert_plot": {
+            "status": false,
+            "content": ""
+          }
         }
-      }
-    ]
-  },
-  {
-    "chapter_num": "第三章",
-    "title": "xxx的研究方法",
-    "sections": [
-      {
-        "title": "xxx技术说明",
-        "num": "3.1",
-        "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
-        "insert_code": {
-          "status": false,
-          "content": ""
+      ]
+    },
+    {
+      "chapter_num": "第六章",
+      "title": "研究局限与未来展望",
+      "sections": [
+        {
+          "title": "研究局限",
+          "num": "6.1",
+          "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , ",
+          "insert_code": {
+            "status": false,
+            "content": ""
+          },
+          "insert_mermaid": {
+            "status": false,
+            "content": ""
+          },
+          "insert_latex_formula": {
+            "status": false,
+            "content": ""
+          },
+          "insert_table": {
+            "status": false,
+            "content": ""
+          },
+          "insert_plot": {
+            "status": false,
+            "content": ""
+          }
         },
-        "insert_table": {
-          "status": false,
-          "content": ""
-        },
-        "insert_plot": {
-          "status": false,
-          "content": ""
+        {
+          "title": "未来研究方向提出展望",
+          "num": "6.2",
+          "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , ",
+          "insert_code": {
+            "status": false,
+            "content": ""
+          },
+          "insert_mermaid": {
+            "status": false,
+            "content": ""
+          },
+          "insert_latex_formula": {
+            "status": false,
+            "content": ""
+          },
+          "insert_table": {
+            "status": false,
+            "content": ""
+          },
+          "insert_plot": {
+            "status": false,
+            "content": ""
+          }
         }
-      },
-      {
-        "title": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多方法说明",
-        "num": "3.2",
-        "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
-        "insert_code": {
-          "status": false,
-          "content": ""
-        },
-        "insert_mermaid": {
-          "status": false,
-          "content": ""
-        },
-        "insert_latex_formula": ["公式1"],
-        "insert_table": {
-          "status": false,
-          "content": ""
-        },
-        "insert_plot": {
-          "status": false,
-          "content": ""
-        }
-      },
-      {
-        "title": "本研究的方法设计",
-        "num": "3.3",
-        "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
-        "insert_code": {
-          "status": false,
-          "content": ""
-        },
-        "insert_mermaid": {
-          "status": false,
-          "content": ""
-        },
-        "insert_latex_formula": ["公式1", "公式2"],
-        "insert_table": {
-          "status": false,
-          "content": ""
-        },
-        "insert_plot": {
-          "status": false,
-          "content": ""
-        }
-      }
-    ]
-  },
-  {
-    "chapter_num": "第四章",
-    "title": "xxx结果分析",
-    "sections": [
-      {
-        "title": "xxx的分析",
-        "num": "4.1",
-        "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多",
-        "insert_code": {
-          "status": false,
-          "content": ""
-        },
-        "insert_mermaid": {
-          "status": false,
-          "content": ""
-        },
-        "insert_latex_formula": {
-          "status": false,
-          "content": ""
-        },
-        "insert_table": {
-          "status": false,
-          "content": "xxx分析表格1"
-        },
-        "insert_plot": {
-          "status": false,
-          "content": "xxx分析图表1"
-        }
-      },
-      {
-        "title": "xxx的分析",
-        "num": "4.2",
-        "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , ",
-        "insert_code": {
-          "status": false,
-          "content": ""
-        },
-        "insert_mermaid": {
-          "status": false,
-          "content": ""
-        },
-        "insert_latex_formula": {
-          "status": false,
-          "content": ""
-        },
-        "insert_table": {
-          "status": true,
-          "content": ["xxx分析表格1", "xxx分析表格2"]
-        },
-        "insert_plot": {
-          "status": false,
-          "content": ["xxx分析表格1", "xxx分析表格2"]
-        }
-      },
-      {
-        "title": "结果分析",
-        "num": "4.3",
-        "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , ",
-        "insert_code": {
-          "status": false,
-          "content": ""
-        },
-        "insert_mermaid": {
-          "status": false,
-          "content": ""
-        },
-        "insert_latex_formula": {
-          "status": false,
-          "content": ""
-        },
-        "insert_table": {
-          "status": false,
-          "content": ["xxx分析表格1", "xxx分析表格2"]
-        },
-        "insert_plot": {
-          "status": false,
-          "content": "xxx分析图表1"
-        }
-      }
-    ]
-  },
-  {
-    "chapter_num": "第五章",
-    "title": "讨论与结论",
-    "sections": [
-      {
-        "title": "讨论",
-        "num": "5.1",
-        "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , ",
-        "insert_code": {
-          "status": false,
-          "content": ""
-        },
-        "insert_mermaid": {
-          "status": false,
-          "content": ""
-        },
-        "insert_latex_formula": {
-          "status": false,
-          "content": ""
-        },
-        "insert_table": {
-          "status": false,
-          "content": ""
-        },
-        "insert_plot": {
-          "status": false,
-          "content": ""
-        }
-      },
-      {
-        "title": "结论",
-        "num": "5.2",
-        "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , ",
-        "insert_code": {
-          "status": false,
-          "content": ""
-        },
-        "insert_mermaid": {
-          "status": false,
-          "content": ""
-        },
-        "insert_latex_formula": {
-          "status": false,
-          "content": ""
-        },
-        "insert_table": {
-          "status": false,
-          "content": ""
-        },
-        "insert_plot": {
-          "status": false,
-          "content": ""
-        }
-      }
-    ]
-  },
-  {
-    "chapter_num": "第六章",
-    "title": "研究局限与未来展望",
-    "sections": [
-      {
-        "title": "研究局限",
-        "num": "6.1",
-        "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , ",
-        "insert_code": {
-          "status": false,
-          "content": ""
-        },
-        "insert_mermaid": {
-          "status": false,
-          "content": ""
-        },
-        "insert_latex_formula": {
-          "status": false,
-          "content": ""
-        },
-        "insert_table": {
-          "status": false,
-          "content": ""
-        },
-        "insert_plot": {
-          "status": false,
-          "content": ""
-        }
-      },
-      {
-        "title": "未来研究方向提出展望",
-        "num": "6.2",
-        "summary": "正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , 正文内容 , 数据很多正文内容 , 数据很多正文内容 , 数据很多正文内容 , ",
-        "insert_code": {
-          "status": false,
-          "content": ""
-        },
-        "insert_mermaid": {
-          "status": false,
-          "content": ""
-        },
-        "insert_latex_formula": {
-          "status": false,
-          "content": ""
-        },
-        "insert_table": {
-          "status": false,
-          "content": ""
-        },
-        "insert_plot": {
-          "status": false,
-          "content": ""
-        }
-      }
-    ]
+      ]
+    }
+  ],
+  "svgList": {
+    "name": "1"
   }
-]
+}
