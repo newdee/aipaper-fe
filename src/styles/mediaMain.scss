@@ -231,3 +231,20 @@
     }
   }
 }
+.markBox {
+  position: absolute;
+  top: -20px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  transition: transform 0.5s; /* 添加过渡效果 */
+  transform: rotate(-45deg); /* 旋转45度 */
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  &:hover {
+    transform: rotate(0deg); /* 旋转45度 */
+    cursor: pointer;
+  }
+}

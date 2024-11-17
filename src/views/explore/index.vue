@@ -136,7 +136,6 @@ export default {
         .then((res) => {
           this.mdStatus = true; // Trigger the animation and display
 
-          console.log("请求成功", this.markdownContent);
           this.markdownContent = res.result;
           this.loading = false;
         })

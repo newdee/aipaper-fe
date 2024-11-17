@@ -13,6 +13,9 @@
       :before-close="handleClose"
     >
       <div class="dialog-content">
+        <div class="markBox">
+          <img src="@/assets/images/mark.png" alt="" />
+        </div>
         <!-- <p class="dialog-text">
           当前订单状态:
           <span class="dialog_pay_text">{{
@@ -201,7 +204,7 @@ export default {
 
       orderDetailById(data)
         .then((res) => {
-          this.$log("res", res.result);
+          this.$log("---------------res-------------", res.result);
           let result = res.result;
           let orderData = res.result.order;
           // 判断支付状态
@@ -283,6 +286,11 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
+    .markBox {
+      right: 20px;
+      top: -80px;
+    }
   }
 
   .dialog-text {
