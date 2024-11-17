@@ -348,7 +348,7 @@ export default {
 }
 .messageBox {
   position: relative;
-  max-width: 1000px;
+  max-width: 1100px;
   padding-left: 40px;
   padding-right: 20px;
 }
