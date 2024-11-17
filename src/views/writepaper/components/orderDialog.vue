@@ -136,6 +136,7 @@ export default {
             done();
             this.$store.dispatch("app/setActiveIndex", 0);
             this.$store.dispatch("paper/setPollingStatus", false);
+            eventBus.emit("step0Reload", true); // 发布事件
           })
           .catch((_) => {});
       } else {
@@ -150,6 +151,7 @@ export default {
             this.ownPayStatus = false;
             this.$store.dispatch("paper/setPollingStatus", false);
             this.$store.dispatch("app/setActiveIndex", 0);
+            eventBus.emit("step0Reload", true); // 发布事件
           })
           .catch((_) => {});
       } else {

@@ -42,7 +42,7 @@
     </div>
 
     <div class="stepContent">
-      <step0 v-if="activeIndex != 3"></step0>
+      <step0 ref="step0" v-if="activeIndex != 3"></step0>
 
       <step1 v-if="activeIndex == 1"></step1>
       <step2 :outlineData="outlineData" v-if="activeIndex == 2"></step2>
@@ -129,11 +129,22 @@ export default {
       deep: true,
       immediate: true,
       handler(val) {
+        console.log("val", val);
         if (val == "mobile") {
           eventBus.emit("open-modal", true); // 发布事件
         }
       },
     },
+    // activeIndex: {
+    //   handler(val) {
+    //     this.$log("activeIndexval", val);
+    //     if (val == 0) {
+    //       this.$nextTick(() => {
+    //         this.$refs.step0.handleCurrentChange();
+    //       });
+    //     }
+    //   },
+    // },
   },
   computed: {
     // 计算属性
