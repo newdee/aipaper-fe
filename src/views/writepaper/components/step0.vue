@@ -108,7 +108,18 @@
               :key="'case3' + index"
             >
               <div class="left">生成状态：未生成</div>
-              <div class="right"></div>
+              <div class="right">
+                <el-button
+                  size="mini"
+                  class="handle"
+                  @click="sendPay(orderObj)"
+                  v-if="orderObj.order.payment_status == 'WAIT_BUYER_PAY'"
+                  style="color: crimson"
+                  icon="el-icon-shopping-cart-full"
+                >
+                  支付
+                </el-button>
+              </div>
             </div>
           </template>
           <div class="orderText rowStart handleRow">
@@ -137,7 +148,12 @@ import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 import eventBus from "@/utils/eventBus";
-import { getOutlineList, getOrderList, paperPack } from "@/api/user";
+import {
+  getOutlineList,
+  getOrderList,
+  paperPack,
+  ordersRepay,
+} from "@/api/user";
 import { throttle } from "lodash";
 import { getToken } from "@/utils/auth"; //
 
@@ -165,10 +181,10 @@ export default {
     // 页面初始化
   },
   created() {
-    // eventBus.on("sendOutline", this.addE); // 订阅事件
+    eventBus.on("step0Reload", this.handleCurrentChange); // 订阅事件
   },
   beforeDestroy() {
-    // eventBus.off("sendOutline", this.addE); // 移除事件监听
+    eventBus.off("step0Reload", this.handleCurrentChange); // 移除事件监听
   },
   computed: {
     // 计算属性
@@ -285,6 +301,33 @@ export default {
         document.body.removeChild(link);
       });
     }, 300),
+    sendPay(row) {
+      let data = {
+        out_trade_no: row.order.out_trade_no, // 订单编号，必传
+        payment_method: row.order.payment_method, // 支付方式，必传
+      };
+      ordersRepay(data).then((res) => {
+        this.$log("去支付 res", res);
+        let order = {
+          out_trade_no: res.result.out_trade_no,
+          pay_amount: res.result.pay_amount,
+          pay_link: res.result.pay_link,
+        };
+        // 保存订单信息,二维码, 价格
+        this.$store.dispatch("app/toggleCurrentOrder", order);
+        // 展示附加列表
+        this.$store.dispatch(
+          "paper/setAdditionList",
+          res.result.additional_service
+        );
+        // 展示支付弹窗
+        eventBus.emit("showEmitPaypopup", {
+          requestKey: res.result.out_trade_no,
+          payStatus: 2,
+          paperPercent: 0,
+        });
+      });
+    },
   },
 };
 </script>

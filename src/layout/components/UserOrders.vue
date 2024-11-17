@@ -118,15 +118,16 @@
               <span class="price">￥{{ orderObj.order.total_price }}</span>
             </div>
             <div class="right">
-              <span
+              <el-button
+                size="mini"
                 class="handle"
                 @click="sendPay(orderObj)"
                 v-if="orderObj.order.payment_status == 'WAIT_BUYER_PAY'"
                 style="color: crimson"
+                icon="el-icon-shopping-cart-full"
               >
-                <i class="el-icon-shopping-cart-full"></i>
                 去支付
-              </span>
+              </el-button>
             </div>
           </div>
         </div>
