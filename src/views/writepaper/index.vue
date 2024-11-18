@@ -1,14 +1,57 @@
 <template>
   <div class="mainContentSec" ref="mainSec">
     <!-- 页面名称 -->
-    <div class="stepTips">
-      <p>
-        <b>免费生成</b>毕业论文大纲&nbsp;&nbsp;&nbsp;&nbsp;
-        提供查重<b>低于10%</b>的专业初稿
-      </p>
-      <p>
-        助你<b>节省三个月</b>写作时间 &nbsp;&nbsp;&nbsp;&nbsp;只需三步，搞定论文
-      </p>
+
+    <div class="carouselBox stepTips">
+      <div class="carouselCon">
+        <el-carousel
+          height="44px"
+          direction="vertical"
+          :loop="true"
+          :autoplay="true"
+        >
+          <el-carousel-item>
+            <p class="homeSwiper">
+              <img
+                src="https://mixpaper.cn/static/img/MIXPAPER.d3c7dfc9.png"
+                alt=""
+              />
+              <b>免费生成</b>毕业论文大纲&nbsp;&nbsp;&nbsp;&nbsp;
+              提供查重<b>低于10%</b>的专业初稿
+            </p>
+          </el-carousel-item>
+          <el-carousel-item>
+            <p class="homeSwiper">
+              <img
+                src="https://mixpaper.cn/static/img/MIXPAPER.d3c7dfc9.png"
+                alt=""
+              />
+              助你<b>节省三个月</b>写作时间
+              &nbsp;&nbsp;&nbsp;&nbsp;只需三步，搞定论文
+            </p>
+          </el-carousel-item>
+          <el-carousel-item>
+            <p class="homeSwiper">
+              <img
+                src="https://mixpaper.cn/static/img/MIXPAPER.d3c7dfc9.png"
+                alt=""
+              />
+              <b>免费生成</b>毕业论文大纲&nbsp;&nbsp;&nbsp;&nbsp;
+              提供查重<b>低于10%</b>的专业初稿
+            </p>
+          </el-carousel-item>
+          <el-carousel-item>
+            <p class="homeSwiper">
+              <img
+                src="https://mixpaper.cn/static/img/MIXPAPER.d3c7dfc9.png"
+                alt=""
+              />
+              助你<b>节省三个月</b>写作时间
+              &nbsp;&nbsp;&nbsp;&nbsp;只需三步，搞定论文
+            </p>
+          </el-carousel-item>
+        </el-carousel>
+      </div>
     </div>
     <!-- <div style="padding: 0 10px">
       <swiper-one class="topSwiper"></swiper-one>
@@ -406,10 +449,34 @@ export default {
   font-size: 16px;
   color: #3355ff;
   margin-top: 15px;
-  line-height: 22px;
+  line-height: 44px;
   b {
     margin: 0 5px;
     color: #0022cc;
+  }
+}
+.carouselBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f7f7;
+  .carouselCon {
+    width: 1100px;
+  }
+}
+.homeSwiper {
+  font-size: 14px;
+  line-height: 44px;
+  text-align: center;
+  color: #1d1d1f;
+  background-color: #f7f7f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 115px;
+    height: 19px;
+    margin-right: 10px;
   }
 }
 </style>

@@ -3,6 +3,16 @@
     <!-- <div class="navChat">
       <el-button>清屏</el-button>
     </div> -->
+    <div v-show="chatMessages.length <= 0" class="defaultText">
+      <p>
+        <span
+          ><img
+            src="https://mixpaper.cn/static/img/logoMax.1191b0cc.png"
+            alt=""
+        /></span>
+        万象AI, 您的私人助手!
+      </p>
+    </div>
     <div class="chat-messages">
       <div
         :class="['messageBox', msg.type]"
@@ -334,7 +344,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .chat-container {
   display: flex;
   flex-direction: column;
@@ -547,5 +557,32 @@ export default {
   width: 100%;
   align-items: center;
   justify-content: space-between;
+}
+.defaultText {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: 0 auto;
+  font-size: 30px;
+  color: #2d2d2d;
+  display: flex;
+  padding-top: 300px;
+  align-items: flex-start;
+  justify-content: center;
+  p {
+    font-size: 24px;
+    display: flex;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 36px;
+    align-items: center;
+  }
+  img {
+    width: 46px;
+    height: 46px;
+    margin-right: 10px;
+  }
 }
 </style>

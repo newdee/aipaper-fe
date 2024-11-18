@@ -9,6 +9,7 @@
       </p>
     </div>
     <div class="questionList">
+      <p class="questionTitle">常见问答</p>
       <el-collapse v-model="activeNames">
         <el-collapse-item name="1">
           <template slot="title">
@@ -181,6 +182,11 @@ export default {
   text-align: center;
   margin-right: 5px;
   line-height: 24px;
+  font-weight: bold;
+}
+.questionTitle {
+  font-size: 16px;
+  margin-bottom: 10px;
   font-weight: bold;
 }
 </style>

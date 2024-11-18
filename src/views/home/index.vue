@@ -2,6 +2,21 @@
   <div>
     <!-- <el-button type="success" @click="jump">跳转到原页面</el-button> -->
     <!-- 页面名称 -->
+    <div class="carouselBox" v-if="carouseStatus">
+      <div class="carouselCon">
+        <el-carousel height="44px" direction="vertical" :autoplay="true">
+          <el-carousel-item v-for="item in 3" :key="item">
+            <p class="homeSwiper">
+              <img
+                src="https://mixpaper.cn/static/img/MIXPAPER.d3c7dfc9.png"
+                alt=""
+              />
+              热烈庆祝万象写作获得RRE 300万美金风投！
+            </p>
+          </el-carousel-item>
+        </el-carousel>
+      </div>
+    </div>
     <!-- <el-button type="success" @click="jump2">跳转详情页</el-button> -->
     <search-paper class="searchPaper"></search-paper>
 
@@ -34,6 +49,7 @@ export default {
   data() {
     return {
       // 定义变量
+      carouseStatus: true,
     };
   },
   components: {
@@ -92,6 +108,32 @@ export default {
       color: #fff;
       padding: 0 1.7em;
     }
+  }
+}
+// ddd
+
+.carouselBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f7f7;
+  .carouselCon {
+    width: 1100px;
+  }
+}
+.homeSwiper {
+  font-size: 14px;
+  line-height: 44px;
+  text-align: center;
+  color: #1d1d1f;
+  background-color: #f7f7f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 115px;
+    height: 19px;
+    margin-right: 10px;
   }
 }
 </style>

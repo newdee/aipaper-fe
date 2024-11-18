@@ -2,7 +2,6 @@
   <div>
     <!-- 页面名称 -->
     <div class="mainBackground">
-      <p class="homeSwiper">热烈庆祝万象写作获得RRE 300万美金风投！</p>
       <div class="leftMainText">
         <p>MIXPAPER</p>
         <p>万象写作</p>
