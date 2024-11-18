@@ -19,8 +19,13 @@
           <span class="underLeft"></span>
         </p>
       </div>
-      <div @click="$jumpUrl('/paper/preview')" class="outRight g_poin">
-        <p>范文样例</p>
+      <div class="outRight">
+        <div @click="showAdv" class="contrast">
+          <p>质量对比</p>
+        </div>
+        <div @click="$jumpUrl('/paper/preview')" class="g_poin">
+          <p>范文样例</p>
+        </div>
       </div>
     </div>
     <!-- 用户输入页面 -->
@@ -255,6 +260,7 @@
         <p>生成大纲</p>
       </div>
     </div>
+    <advantage ref="advantageDia"></advantage>
   </div>
 </template>
 <script>
@@ -266,6 +272,7 @@ import eventBus from "@/utils/eventBus";
 import { getToken } from "@/utils/auth"; //
 import { outlineCreate } from "@/api/user";
 import polling from "@/utils/polling-utils";
+import advantage from "@/views/dashboard/components/advantage";
 import { title } from "@/settings";
 export default {
   name: "outline",
@@ -351,10 +358,12 @@ export default {
           label: this.$createElement("strong", "30000"),
         },
       },
+      showContrast: false,
     };
   },
   components: {
     // webinfo,
+    advantage,
   },
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
@@ -391,6 +400,9 @@ export default {
     ...mapGetters(["homeData", "produceLineStatus", "device"]),
   },
   methods: {
+    showAdv() {
+      this.$refs.advantageDia.showDia();
+    },
     paperTypeChange(val) {
       this.$log("论文类型", val);
       if (val == "专科") {
@@ -611,16 +623,32 @@ export default {
   }
 }
 .outRight {
-  width: 117px;
+  width: 300px;
   height: 40px;
-  background: #3355ff;
-  border-radius: 20px;
-  line-height: 40px;
-  font-weight: 600;
-  font-size: 16px;
-  color: #ffffff;
-  font-style: normal;
-  text-align: center;
+  & > div {
+    display: inline-block;
+    box-sizing: content-box;
+    width: 117px;
+    height: 40px;
+    background: #3355ff;
+    border-radius: 20px;
+    line-height: 40px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #ffffff;
+    font-style: normal;
+    text-align: center;
+    cursor: pointer;
+  }
+  .contrast {
+    margin-right: 10px;
+    height: 40px;
+    background: #fff;
+    border-color: #3355ff;
+    color: #3355ff;
+    border-width: 1px;
+    border-style: solid;
+  }
 }
 
 .formItem {
