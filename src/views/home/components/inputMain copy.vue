@@ -6,32 +6,32 @@
         <!-- slides -->
         <swiper-slide>
           <div class="slider1Img">
-            <img src="@/assets/images/banner/1.png" alt="" />
+            <img src="@/assets/images/banner/banner1.png" alt="" />
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="slider1Img">
-            <img src="@/assets/images/banner/2.png" alt="" />
+            <img src="@/assets/images/banner/banner2.png" alt="" />
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="slider1Img">
-            <img src="@/assets/images/banner/3.png" alt="" />
+            <img src="@/assets/images/banner/banner3.png" alt="" />
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="slider1Img">
-            <img src="@/assets/images/banner/4.png" alt="" />
+            <img src="@/assets/images/banner/banner4.png" alt="" />
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="slider1Img">
-            <img src="@/assets/images/banner/5.png" alt="" />
+            <img src="@/assets/images/banner/banner5.png" alt="" />
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="slider1Img">
-            <img src="@/assets/images/banner/6.png" alt="" />
+            <img src="@/assets/images/banner/banner6.png" alt="" />
           </div>
         </swiper-slide>
         <!-- 其他 slides... -->

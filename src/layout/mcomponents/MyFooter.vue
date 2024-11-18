@@ -15,22 +15,21 @@
             <div class="linkImg">
               <img :src="agent_image.xhs_qrcode" alt="" />
             </div>
-            <p class="linktext">小红书</p>
+            <p class="linktext">B站</p>
           </div>
           <div class="linkbox">
             <div class="linkImg">
               <img :src="agent_image.bili_qrcode" alt="" />
             </div>
-            <p class="linktext">B站</p>
+            <p class="linktext">微信群</p>
           </div>
         </div>
       </div>
       <div></div>
-      <div class="infoBottom">
+      <!-- <div class="infoBottom">
         <p class="bottomTitle">关于万象</p>
         <ul class="bottomLink">
           <li>
-            <!-- 企业介绍 -->
             <el-tooltip class="item" effect="light" placement="left">
               <template #content>
                 <div
@@ -52,18 +51,38 @@
           <li>企业大事记</li>
           <li>合作机构</li>
         </ul>
-      </div>
+      </div> -->
       <div class="infoBottom">
         <p class="bottomTitle">产品服务</p>
         <ul class="bottomLink">
-          <li @click="$jumpUrl('/main/explore')">
-            {{ $t("route.searchPaper") }}
+          <li>
+            <a
+              href="http://wepu.kelisida.cn/?Q:hclickid=f56b1cedf9728afc"
+              target="_blank"
+              >维普</a
+            >
           </li>
-          <li @click="$jumpUrl('/main/writepaper')">
-            {{ $t("route.writePaper") }}
+          <li>
+            <a href="https://www.wanfangdata.com.cn/index.html" target="_blank"
+              >万方</a
+            >
           </li>
-          <li @click="$jumpUrl('/main/readpaper')">读论文</li>
-          <li @click="$jumpUrl('/main/amendpaper')">改论文</li>
+          <li>
+            <a href="https://www.cnki.net/" target="_blank">知网</a>
+          </li>
+          <li>
+            <a
+              href="https://xueshu.baidu.com/?source=chemnav.net"
+              target="_blank"
+              >百度学术</a
+            >
+          </li>
+          <li>
+            <a href="https://www.termonline.cn/" target="_blank">术语在线</a>
+          </li>
+          <li>
+            <a href="https://www.x-mol.com/" target="_blank">X-MOL</a>
+          </li>
         </ul>
       </div>
     </section>
@@ -227,7 +246,7 @@ export default {
 
 .siteInfo {
   display: grid;
-  grid-template-columns: 8fr 4fr 3fr 3fr;
+  grid-template-columns: 8fr 3fr 4fr 3fr;
   text-align: left;
   padding: 32px 0px;
   position: relative;
@@ -421,6 +440,32 @@ export default {
     text-align: center;
   }
 }
+.bottomLink {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
 
+.bottomLink li {
+  flex: 1 1 50%; /* Each item takes up 50% of the width to create two rows */
+  margin: 5px 0; /* Add vertical spacing */
+}
+
+.bottomLink a {
+  display: block;
+  text-align: left; /* Align text to the left */
+  text-decoration: none; /* Remove underline by default */
+  color: #333;
+  padding-left: 10px; /* Optional: add some padding for better alignment */
+  transition: color 0.3s, text-decoration 0.3s; /* Smooth transition */
+  cursor: pointer; /* Show hand cursor */
+}
+
+.bottomLink a:hover {
+  color: blue; /* Change text color to blue on hover */
+  text-decoration: underline; /* Add underline on hover */
+}
 @import "@/styles/mediaMain.scss";
 </style>

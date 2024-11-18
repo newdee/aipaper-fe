@@ -1,14 +1,14 @@
 export default {
   route: {
     writePaper: "写论文",
-    searchPaper: "AI 搜索",
+    searchPaper: "AI在线搜索",
     readPaper: "读论文",
     amendPaper: "改论文",
     integratedServices: "综合服务",
     eliteCourses: "精品课程",
     aiTools: "AI工具",
-    reduceRepetition: "降重/降AIGC率",
-    chat: "Chat GPT",
+    reduceRepetition: "降重/降AIGC",
+    chat: "ChatGPT",
     documentation: "文档",
     guide: "引导页",
     permission: "权限测试页",

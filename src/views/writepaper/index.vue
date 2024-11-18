@@ -1,6 +1,15 @@
 <template>
   <div class="mainContentSec" ref="mainSec">
     <!-- 页面名称 -->
+    <div class="stepTips">
+      <p>
+        <b>免费生成</b>毕业论文大纲&nbsp;&nbsp;&nbsp;&nbsp;
+        提供查重<b>低于10%</b>的专业初稿
+      </p>
+      <p>
+        助你<b>节省三个月</b>写作时间 &nbsp;&nbsp;&nbsp;&nbsp;只需三步，搞定论文
+      </p>
+    </div>
     <!-- <div style="padding: 0 10px">
       <swiper-one class="topSwiper"></swiper-one>
     </div> -->
@@ -51,7 +60,7 @@
         :class="[isScrollActive ? 'fixed' : '']"
       ></step3>
     </div>
-
+    <question-list></question-list>
     <!-- 论文查询生辰弹窗 -->
     <order-dialog
       :requestKey="requestKey"
@@ -68,6 +77,7 @@ import { mapGetters } from "vuex";
 import swiperOne from "./components/swiperOne.vue";
 // import eventBus from "@/utils/eventBus";
 import step0 from "./components/step0.vue";
+import questionList from "./components/questionList/index.vue";
 import step1 from "./components/step1.vue";
 import step2 from "./components/step2.vue";
 import outline from "./components/outline.vue";
@@ -100,6 +110,7 @@ export default {
     step0,
     orderDialog,
     paypopup,
+    questionList,
   },
   mounted() {
     // 页面初始化
@@ -389,5 +400,16 @@ export default {
   position: fixed;
   top: 90px;
   z-index: 100;
+}
+.stepTips {
+  text-align: center;
+  font-size: 16px;
+  color: #3355ff;
+  margin-top: 15px;
+  line-height: 22px;
+  b {
+    margin: 0 5px;
+    color: #0022cc;
+  }
 }
 </style>
