@@ -104,13 +104,14 @@
 // import webinfo from "@/components/webinfo.vue";
 
 export default {
-  name: "maincon",
+  name: "advantage",
   data() {
     return {
       // 定义变量
       advantageStatus: false,
     };
   },
+
   // watch()
   components: {
     // webinfo,
@@ -124,6 +125,9 @@ export default {
   },
   methods: {
     // 定义方法
+    showDia() {
+      this.advantageStatus = true;
+    },
   },
 };
 </script>

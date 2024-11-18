@@ -2,10 +2,12 @@
   <div>
     <!-- 页面名称 -->
     <div class="mainBackground">
+      <p class="homeSwiper">热烈庆祝万象写作获得RRE 300万美金风投！</p>
       <div class="leftMainText">
         <p>MIXPAPER</p>
         <p>万象写作</p>
       </div>
+
       <!-- <div class="mainInput">
         <p class="inputName">AI 论文快查</p>
         <div class="selectText">
@@ -29,7 +31,10 @@
         </div>
       </div> -->
       <div class="inputDesc g_poin" @click="$jumpUrl('/main/writepaper')">
-        <p>让天下没有难做的学术</p>
+        <p>
+          让天下没有难做的学术
+          <span>拒绝学术垃圾 只做学术精品</span>
+        </p>
         <div>
           <p>
             开始智能写作
