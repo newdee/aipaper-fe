@@ -341,7 +341,6 @@ export default {
   line-height: 3em;
   padding: 0 2em;
   border-bottom: 1px solid #0000001f;
-  user-select: none;
 }
 
 .wrapper .topBar i {

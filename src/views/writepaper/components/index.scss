@@ -14,8 +14,13 @@
     height: 34px;
     border-radius: 17px;
     font-size: 14px;
-    color: #d4a11c;
-    border: 1px solid #d4a11c;
+    color: rgba(51, 85, 255, 0.7);
+    border: 1px solid rgba(51, 85, 255, 0.7);
+    &:hover {
+      color: rgba(51, 85, 255, 1);
+      border: 1px solid rgba(51, 85, 255, 1);
+      cursor: pointer;
+    }
   }
 }
 
