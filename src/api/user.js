@@ -91,6 +91,13 @@ export function getInfo(params) {
     params,
   });
 }
+export function rePaper(params) {
+  return request({
+    url: "/api/ai-paper/admin/re_paper",
+    method: "get",
+    params,
+  });
+}
 export function agentInfo() {
   return request({
     url: "/api/ai-paper/agent/info",
