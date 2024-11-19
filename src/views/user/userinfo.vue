@@ -103,7 +103,7 @@
             />
             <i v-else class="el-icon-plus liImgLi"></i>
           </el-upload>
-          <p>小红书</p>
+          <p>B站</p>
         </div>
         <!-- B站 -->
         <div class="uploadLi">
@@ -124,7 +124,7 @@
             />
             <i v-else class="el-icon-plus liImgLi"></i>
           </el-upload>
-          <p>B站</p>
+          <p>微信群</p>
         </div>
         <!-- 联系客服 -->
 
