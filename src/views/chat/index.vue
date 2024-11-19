@@ -560,11 +560,11 @@ export default {
 }
 .defaultText {
   position: absolute;
+  max-width: 1100px;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  margin: 0 auto;
   font-size: 30px;
   color: #2d2d2d;
   display: flex;
