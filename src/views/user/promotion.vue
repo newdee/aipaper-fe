@@ -11,7 +11,7 @@
 // import eventBus from "@/utils/eventBus";
 
 export default {
-  name: "myFooter",
+  name: "promotion",
   data() {
     return {
       // 定义变量

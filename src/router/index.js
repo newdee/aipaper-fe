@@ -65,6 +65,14 @@ export const constantRoutes = [
       id: "3",
     },
   },
+  {
+    path: "/toPromotion",
+    component: () => import("@/views/user/toPromotion"),
+    hidden: true,
+    meta: {
+      id: "0",
+    },
+  },
   //  {
   //     path: "/home",
   //    name: "/home",

@@ -24,13 +24,12 @@
       <input-main class="swiper swiper1"></input-main>
       <div class="swiperBg swiperNews pwrapper">
         <p class="swiper swiperListTitle1">
-          <span> 精选论文推荐</span>
+          <span> 用户心声</span>
         </p>
       </div>
       <swiper-three class="swiper swiper2"></swiper-three>
     </div>
     <!-- 优势页面 -->
-
     <advantage class="swiper swiper3"></advantage>
   </div>
 </template>

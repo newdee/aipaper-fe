@@ -48,6 +48,17 @@
                     item.case.paper_case.stage | orderStatusFormatter
                   }}</el-link
                 >
+                <div v-if="item.case.paper_case.stage === 3" class="right">
+                  <el-button
+                    size="mini"
+                    class="handle"
+                    @click="sendReLoad(orderObj)"
+                    style="color: crimson"
+                    icon="el-icon-refresh"
+                  >
+                    重试
+                  </el-button>
+                </div>
               </div>
               <div class="orderTitle" :key="'title' + j">
                 <!-- {{ item.product.name }} -->
@@ -152,7 +163,13 @@
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 import { getList } from "@/api/table";
-import { getOrderList, delOrder, paperPack, ordersRepay } from "@/api/user";
+import {
+  getOrderList,
+  delOrder,
+  paperPack,
+  ordersRepay,
+  rePaper,
+} from "@/api/user";
 import { throttle } from "lodash";
 import eventBus from "@/utils/eventBus";
 
@@ -196,6 +213,23 @@ export default {
     // 计算属性
   },
   methods: {
+    sendReLoad(obj) {
+      let data = {
+        out_trade_no: obj.order.out_trade_no,
+      };
+      console.log(obj, "dddddddddddd", data);
+      rePaper(data).then((res) => {
+        console.log("res", res);
+        eventBus.emit("orderDialogChange", false);
+        this.$nextTick(() => {
+          eventBus.emit("showEmitPaperDialog", {
+            requestKey: data.out_trade_no,
+            payStatus: 4,
+            paperPercent: 0,
+          });
+        });
+      });
+    },
     sendPay(row) {
       let data = {
         out_trade_no: row.order.out_trade_no, // 订单编号，必传
