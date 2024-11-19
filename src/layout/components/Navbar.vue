@@ -391,7 +391,6 @@ export default {
     font-size: 12px;
     position: relative;
     cursor: pointer;
-    user-select: none;
 
     .img {
       border-radius: 50%;

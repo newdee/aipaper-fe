@@ -3,10 +3,10 @@
     <!-- 优势页 -->
     <el-dialog :visible.sync="advantageStatus" class="dialogContainer" top="0">
       <div slot="title" class="dialog-tittle">
-        <p>mixpaper 3.0 vs 4.0</p>
+        <p>普通AI写作工具 vs <span class="txt_red">万象写作</span></p>
       </div>
       <div class="main-txt">
-        <div class="title">4.0版优势</div>
+        <div class="title txt_red">万象写作优势</div>
         <div class="txt">
           <p class="with2">
             <span>专业性更强：</span
@@ -37,8 +37,8 @@
               </td>
             </tr>
             <tr class="tr-2">
-              <td>3.0版</td>
-              <td>4.0版</td>
+              <td>普通AI写作</td>
+              <td class="txt_red">万象写作</td>
             </tr>
             <tr class="tr-3">
               <td>
@@ -58,8 +58,8 @@
               </td>
             </tr>
             <tr class="tr-2">
-              <td>3.0版</td>
-              <td>4.0版</td>
+              <td>普通AI写作</td>
+              <td class="txt_red">万象写作</td>
             </tr>
             <tr class="tr-3">
               <td>
@@ -79,8 +79,8 @@
               </td>
             </tr>
             <tr class="tr-2">
-              <td>3.0版</td>
-              <td>4.0版</td>
+              <td>普通AI写作</td>
+              <td class="txt_red">万象写作</td>
             </tr>
             <tr class="tr-3">
               <td>
@@ -168,6 +168,9 @@ export default {
   border-radius: 10px;
   padding: 12px 15px;
   line-height: 2em;
+}
+.txt_red {
+  color: red !important;
 }
 .with2 span {
   color: $textColor4;

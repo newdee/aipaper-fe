@@ -1220,4 +1220,11 @@ export default {
 // 引入scss
 @import "@/styles/variables.scss";
 @import "./index.scss";
+
+::v-deep .el-loading-spinner {
+  top: 20% !important;
+}
+.el-loading-spinner {
+  top: 20% !important;
+}
 </style>

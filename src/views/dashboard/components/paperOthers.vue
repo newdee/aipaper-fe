@@ -182,7 +182,6 @@ p {
   border-radius: 0.5rem;
   margin-bottom: 30px;
   cursor: default;
-  user-select: none;
 }
 
 .statement p {
@@ -202,7 +201,6 @@ p {
   color: #202020;
   margin-bottom: 50px;
   cursor: default;
-  user-select: none;
   text-align: center;
   line-height: 2em;
 }

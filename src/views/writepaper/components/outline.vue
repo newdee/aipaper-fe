@@ -20,7 +20,7 @@
         </p>
       </div>
       <div class="outRight">
-        <div @click="showAdv" class="contrast">
+        <div v-if="device != 'mobile'" @click="showAdv" class="contrast">
           <p>质量对比</p>
         </div>
         <div @click="$jumpUrl('/paper/preview')" class="g_poin">

@@ -115,7 +115,6 @@ export default {
   margin-top: 23px;
   border-radius: 12px;
   overflow: hidden;
-  user-select: none;
 }
 
 .swiperNews {
