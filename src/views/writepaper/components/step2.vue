@@ -1224,4 +1224,7 @@ export default {
 ::v-deep .el-loading-spinner {
   top: 20% !important;
 }
+.el-loading-spinner {
+  top: 20% !important;
+}
 </style>
