@@ -13,6 +13,7 @@ NProgress.configure({
 
 const whiteList = [
   "/login",
+  "/toPromotion",
   "/home",
   "/home/home",
   "/paperPreview",
