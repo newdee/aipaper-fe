@@ -14,6 +14,7 @@ body {
     Microsoft YaHei, Arial, sans-serif;
 }
 body,
+html,
 h1,
 h2,
 h3,
@@ -198,6 +199,7 @@ label {
 html {
   height: 100%;
   box-sizing: border-box;
+  overflow: auto;
 }
 
 #app {
