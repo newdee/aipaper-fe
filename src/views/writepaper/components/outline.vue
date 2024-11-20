@@ -23,7 +23,7 @@
         <div v-if="device != 'mobile'" @click="showAdv" class="contrast">
           <p>质量对比</p>
         </div>
-        <div @click="$jumpUrl('/paper/preview')" class="g_poin">
+        <div @click="showExample" class="g_poin">
           <p>范文样例</p>
         </div>
       </div>
@@ -261,6 +261,7 @@
       </div>
     </div>
     <advantage ref="advantageDia"></advantage>
+    <example ref="exampleDia"></example>
   </div>
 </template>
 <script>
@@ -273,6 +274,7 @@ import { getToken } from "@/utils/auth"; //
 import { outlineCreate } from "@/api/user";
 import polling from "@/utils/polling-utils";
 import advantage from "@/views/dashboard/components/advantage";
+import example from "./example/index.vue";
 import { title } from "@/settings";
 export default {
   name: "outline",
@@ -364,6 +366,7 @@ export default {
   components: {
     // webinfo,
     advantage,
+    example,
   },
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
@@ -402,6 +405,9 @@ export default {
   methods: {
     showAdv() {
       this.$refs.advantageDia.showDia();
+    },
+    showExample() {
+      this.$refs.exampleDia.showDia();
     },
     paperTypeChange(val) {
       this.$log("论文类型", val);

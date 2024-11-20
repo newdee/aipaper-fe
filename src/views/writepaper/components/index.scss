@@ -230,10 +230,36 @@
   font-size: 14px;
   margin-top: 20px;
 }
-
+.wxContentMessage {
+  width: 600px;
+  height: 40px;
+  line-height: 40px;
+  background: linear-gradient(
+    98deg,
+    rgba(51, 85, 255, 0),
+    rgba(51, 85, 255, 0.15) 34%,
+    rgba(51, 85, 255, 0.15) 65%,
+    rgba(51, 85, 255, 0)
+  );
+  // border-radius: 4px 4px 4px 4px;
+  // text-align: center;
+  // margin: 174px auto 0;
+  // font-size: 13px;
+  // color: #787d87;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+.paperTitleLight {
+  width: 260px;
+  line-height: 40px;
+  color: #787d87;
+  text-align: center;
+}
 .generateSpan {
   text-align: center;
-  padding-bottom: 60px;
+  padding-bottom: 30px;
 
   span {
     display: inline-block;
