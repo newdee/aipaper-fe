@@ -43,7 +43,7 @@
                   ></iframe>
                   <p class="codeIntro">
                     支持使用
-                    <b style="color: #67c23a">“花呗”</b>
+                    <b style="color: #00a1e9">“花呗”</b>
                     支付
                   </p>
                 </div>
@@ -76,6 +76,23 @@
                 <b>{{ currentOrder.pay_amount }}</b>
                 元</span
               >
+              <span
+                style="
+                  margin-left: 20px;
+                  color: #999;
+                  text-decoration-line: line-through;
+                "
+              >
+                原价:
+                {{
+                  currentOrder.pay_amount == "189"
+                    ? "249"
+                    : currentOrder.pay_amount == "249"
+                    ? "389"
+                    : "49"
+                }}
+                元
+              </span>
             </p>
             <p class="popupSpan">
               您选择了 <span>{{ additionalList.length }}</span>
