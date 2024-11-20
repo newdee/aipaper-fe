@@ -92,7 +92,7 @@ export default {
 
 .pwrapper {
   padding-bottom: 0px;
-  margin-top: 60px;
+  // margin-top: 60px;
   .swiperListTitle1 {
     text-align: left;
     padding-top: 22px;
