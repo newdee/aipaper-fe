@@ -2,8 +2,13 @@
   <div class="swiperWrapper">
     <!-- 底图页面 -->
     <div class="swiperBox">
-      <el-carousel :interval="4000" type="card" :loop="true" height="200px">
-        <el-carousel-item v-for="item in imgList" :key="item">
+      <el-carousel
+        :interval="4000"
+        type="card"
+        :loop="true"
+        :height="device == 'mobile' ? '100px' : '200px'"
+      >
+        <el-carousel-item v-for="(item, index) in imgList" :key="'inm' + index">
           <div class="bannerImg">
             <img :src="item.imageUrl" alt="" />
           </div>
@@ -14,6 +19,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "inputMain",
   data() {
@@ -75,6 +82,7 @@ export default {
     swiper() {
       return this.$refs.mySwiper1.swiper;
     },
+    ...mapGetters(["device"]),
   },
   methods: {
     // 定义方法
@@ -146,10 +154,12 @@ export default {
   }
 }
 .bannerImg {
-  width: 100%;
+  width: 500px;
+  height: 200px;
+
   img {
     width: 100%;
-    height: 220px;
+    height: 100%;
   }
 }
 </style>

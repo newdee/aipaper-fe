@@ -189,4 +189,10 @@ export default {
   margin-bottom: 10px;
   font-weight: bold;
 }
+::v-deep .el-collapse-item__header {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
 </style>

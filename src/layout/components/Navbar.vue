@@ -50,6 +50,12 @@
             <img :src="logo" alt="" title="logo" />
           </div>
         </div>
+        <div v-if="!showContent" class="navleftData">
+          <div class="navWidth"></div>
+          <div class="navDataLine">
+            <data-statistics></data-statistics>
+          </div>
+        </div>
       </div>
 
       <div :class="[showContent ? '' : 'leftNavbarPosition']">
@@ -218,6 +224,7 @@ import UserOrders from "./UserOrders.vue";
 import UserOutlines from "./UserOutlines.vue";
 import { generateTitle } from "@/utils/i18n";
 import eventBus from "@/utils/eventBus";
+import dataStatistics from "@/components//DataStatistics/index.vue";
 
 import { getToken, setToken, removeToken } from "@/utils/auth"; // get token from cookie
 const _ = require("lodash");
@@ -228,6 +235,7 @@ export default {
     UserMenu,
     UserOrders,
     UserOutlines,
+    dataStatistics,
   },
   props: {
     showContent: {
@@ -780,5 +788,13 @@ export default {
 
 .menuBtn {
   font-size: 24px;
+}
+.navleftData {
+  display: flex;
+  .navWidth {
+    width: 250px;
+  }
+  .navDataLine {
+  }
 }
 </style>

@@ -1,6 +1,9 @@
 <template>
   <div>
     <!-- 页面名称 -->
+    <div class="lineDataBox">
+      <data-statistics></data-statistics>
+    </div>
     <div class="mainBackground">
       <div class="leftMainText">
         <p>MIXPAPER</p>
@@ -47,7 +50,7 @@
 <script>
 // import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
-// import webinfo from "@/components/webinfo.vue";
+import dataStatistics from "@/components//DataStatistics/index.vue";
 // import eventBus from "@/utils/eventBus";
 
 export default {
@@ -73,7 +76,7 @@ export default {
     };
   },
   components: {
-    // webinfo,
+    dataStatistics,
   },
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
@@ -107,4 +110,10 @@ export default {
 }
 
 @import "./index.scss";
+.lineDataBox {
+  position: fixed;
+  z-index: 3;
+  top: 100px;
+  left: 20px;
+}
 </style>

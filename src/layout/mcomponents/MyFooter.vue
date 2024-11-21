@@ -126,14 +126,14 @@
           </el-popover>
         </div>
         <div>
-          <!-- <el-button slot="reference" @click="$jumpUrl('/toPromotion')"> -->
-          <div class="itemLi">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-jiaruwomen"></use>
-            </svg>
-            <p>我要推广</p>
-          </div>
-          <!-- </el-button> -->
+          <el-button slot="reference" @click="$jumpUrl('/toPromotion')">
+            <div class="itemLi">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-jiaruwomen"></use>
+              </svg>
+              <p>我要推广</p>
+            </div>
+          </el-button>
           <!-- <el-popover placement="left" width="150" trigger="hover">
             <div class="qywxBox">
               <img :src="agent_image.business_qrcode" alt="" />
