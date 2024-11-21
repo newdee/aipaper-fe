@@ -1,7 +1,8 @@
 <template>
   <div class="navbar">
-    <el-row :gutter="10">
+    <!-- <el-row :gutter="10">
       <el-col :xs="6" :sm="6" :lg="6">
+        
         <div class="flex navBarRight">
           <div class="gift">
             <span class="num">1</span>
@@ -16,10 +17,8 @@
               <div class="img">登录</div>
             </div>
             <div v-else class="login_box hidden-xs-only">
-              <!-- 已登录状态下拉菜单栏 -->
               <UserMenu>
                 <div class="img">
-                  <!-- <img src="@/assets/images/user/userImg.png" alt="" /> -->
                   <span>{{ name.slice(0, 1) }}</span>
                 </div>
               </UserMenu>
@@ -27,103 +26,103 @@
           </template>
         </div>
       </el-col>
-    </el-row>
+    </el-row> -->
 
     <!-- 用户订单 -->
-    <el-drawer> </el-drawer>
+    <!-- <el-drawer> </el-drawer> -->
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import Breadcrumb from "@/components/Breadcrumb";
-import Hamburger from "@/components/Hamburger";
-import UserMenu from "./UserMenu.vue";
-// import UserOrders from "./UserOrders.vue";
-import { getToken, setToken } from "@/utils/auth"; // get token from cookie
+// import { mapGetters } from "vuex";
+// import Breadcrumb from "@/components/Breadcrumb";
+// import Hamburger from "@/components/Hamburger";
+// import UserMenu from "./UserMenu.vue";
+// // import UserOrders from "./UserOrders.vue";
+// import { getToken, setToken } from "@/utils/auth"; // get token from cookie
 export default {
-  components: {
-    Breadcrumb,
-    Hamburger,
-    UserMenu,
-    // UserOrders,
-  },
-  data() {
-    return {
-      listId: 0,
-      logo: require("@/assets/images/logo_paper.png"),
-      drawer: false,
-      direction: "rtl", //小屏菜单抽屉方向
-      orderDirection: "ltr", //用户订单抽屉方向
-      hasLogin: true,
-      ordersDrawer: false,
-
-      activeIndex: 1,
-    };
-  },
-  computed: {
-    ...mapGetters(["userInfo", "name", "avatar"]),
-  },
-  mounted() {
-    this.hasLogin = getToken();
-  },
-  methods: {
-    showOrderList() {
-      const hasToken = getToken();
-      if (hasToken) {
-        this.listId = new Date().getTime();
-        this.ordersDrawer = true;
-      } else {
-        this.$confirm("查看订单需要登录, 是否跳转到登录页?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning",
-          center: true,
-        })
-          .then(() => {
-            this.$router.push("/login");
-          })
-          .catch(() => {
-            this.$message({
-              type: "info",
-              message: "已取消生成",
-            });
-          });
-      }
-    },
-    handleClose(done) {
-      done();
-    },
-    handleOrdersClose(done) {
-      done();
-      // this.$confirm('确认关闭？')
-      //     .then(_ => {
-      //         done();
-      //     })
-      //     .catch(_ => {
-      //         alert('先不关')
-      //     });
-    },
-    jumpDetail(path) {
-      this.$router.push(path);
-    },
-    pushLogin() {
-      this.$router.push("/login");
-    },
-    showDraw() {
-      this.drawer = true;
-    },
-    toggleSideBar() {
-      this.$store.dispatch("app/toggleSideBar");
-    },
-    async logout() {
-      await this.$store.dispatch("user/logout");
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
-    },
-    toView(toPath) {
-      this.$router.push("/" + toPath + "");
-    },
-  },
+  // components: {
+  //   Breadcrumb,
+  //   Hamburger,
+  //   UserMenu,
+  //   // UserOrders,
+  //   dataStatistics,
+  // },
+  // data() {
+  //   return {
+  //     listId: 0,
+  //     logo: require("@/assets/images/logo_paper.png"),
+  //     drawer: false,
+  //     direction: "rtl", //小屏菜单抽屉方向
+  //     orderDirection: "ltr", //用户订单抽屉方向
+  //     hasLogin: true,
+  //     ordersDrawer: false,
+  //     activeIndex: 1,
+  //   };
+  // },
+  // computed: {
+  //   ...mapGetters(["userInfo", "name", "avatar"]),
+  // },
+  // mounted() {
+  //   this.hasLogin = getToken();
+  // },
+  // methods: {
+  //   showOrderList() {
+  //     const hasToken = getToken();
+  //     if (hasToken) {
+  //       this.listId = new Date().getTime();
+  //       this.ordersDrawer = true;
+  //     } else {
+  //       this.$confirm("查看订单需要登录, 是否跳转到登录页?", "提示", {
+  //         confirmButtonText: "确定",
+  //         cancelButtonText: "取消",
+  //         type: "warning",
+  //         center: true,
+  //       })
+  //         .then(() => {
+  //           this.$router.push("/login");
+  //         })
+  //         .catch(() => {
+  //           this.$message({
+  //             type: "info",
+  //             message: "已取消生成",
+  //           });
+  //         });
+  //     }
+  //   },
+  //   handleClose(done) {
+  //     done();
+  //   },
+  //   handleOrdersClose(done) {
+  //     done();
+  //     // this.$confirm('确认关闭？')
+  //     //     .then(_ => {
+  //     //         done();
+  //     //     })
+  //     //     .catch(_ => {
+  //     //         alert('先不关')
+  //     //     });
+  //   },
+  //   jumpDetail(path) {
+  //     this.$router.push(path);
+  //   },
+  //   pushLogin() {
+  //     this.$router.push("/login");
+  //   },
+  //   showDraw() {
+  //     this.drawer = true;
+  //   },
+  //   toggleSideBar() {
+  //     this.$store.dispatch("app/toggleSideBar");
+  //   },
+  //   async logout() {
+  //     await this.$store.dispatch("user/logout");
+  //     this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+  //   },
+  //   toView(toPath) {
+  //     this.$router.push("/" + toPath + "");
+  //   },
+  // },
 };
 </script>
 

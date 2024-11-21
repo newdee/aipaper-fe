@@ -1,0 +1,106 @@
+<template>
+  <div class="dataStatisticsContent">
+    <!-- 页面名称 -->
+    <div class="datastaItem">
+      <p>今日大纲</p>
+      <p>{{ primaryNumber }}</p>
+    </div>
+    <div class="datastaItem">
+      <p>今日正文</p>
+      <p>{{ secondaryNumber }}</p>
+    </div>
+  </div>
+</template>
+<script>
+// import { mapGetters } from "vuex";
+// import { sms } from "@/api/login";
+// import webinfo from "@/components/webinfo.vue";
+
+export default {
+  name: "myFooter",
+  data() {
+    return {
+      // 定义变量
+      primaryNumber: 0,
+      secondaryNumber: 0,
+      maxValue: 1000,
+    };
+  },
+  components: {
+    // webinfo,
+  },
+  mounted() {
+    // eventBus.emit("sendOutline", 5); // 发布事件
+    // 页面初始化
+    // this.generateTimeBasedNumber();
+    this.generateNumbers();
+    // Optionally update numbers every minute
+    setInterval(this.generateNumbers, 60000);
+  },
+  created() {
+    // eventBus.on("sendOutline", this.addE); // 订阅事件
+  },
+  beforeDestroy() {
+    // eventBus.off("sendOutline", this.addE); // 移除事件监听
+  },
+  computed: {
+    // 计算属性
+  },
+  methods: {
+    // 定义方法
+
+    generateNumbers() {
+      const now = new Date();
+      const totalMinutes = now.getHours() * 60 + now.getMinutes();
+      const maxMinutesInADay = 24 * 60;
+      const timeFactor = totalMinutes / maxMinutesInADay;
+
+      // Calculate the primary number
+      let newPrimaryNumber = Math.floor(timeFactor * this.maxValue);
+      newPrimaryNumber = Math.max(newPrimaryNumber, this.primaryNumber);
+
+      // Calculate the secondary number (80% of primary)
+      let newSecondaryNumber = Math.floor(newPrimaryNumber * 0.8);
+      newSecondaryNumber = Math.max(newSecondaryNumber, this.secondaryNumber);
+
+      this.primaryNumber = newPrimaryNumber;
+      this.secondaryNumber = newSecondaryNumber;
+    },
+
+    // Example usage
+  },
+};
+</script>
+<style lang="scss" scoped>
+// 引入scss
+// @import "@/styles/variables.scss";
+// @import "@/styles/mediaMain.scss";
+// @import './index.scss';
+
+// 媒体查询
+// @media only screen and (max-width: 939px) {
+// }
+// @media only screen and (max-width: 768px) {
+// }
+.dataStatisticsContent {
+  background-color: #0000001a;
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 5px;
+  .datastaItem {
+    display: flex;
+    width: 60px;
+    flex-direction: column;
+    align-items: center;
+    p:first-child {
+      color: #000;
+    }
+    p:last-child {
+      color: #35f;
+      font-weight: bold;
+      font-size: 20px;
+    }
+  }
+}
+</style>
