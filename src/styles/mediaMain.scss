@@ -1,5 +1,32 @@
 @import "./variables.scss";
 @media only screen and (max-width: 760px) {
+  // 大纲 附加功能
+  .spendingBox .att .borderBox {
+    width: 45% !important;
+  }
+  .spendingBox .borderBox .left svg.icon {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .spendingBox .addService label.el-checkbox {
+    width: 45% !important;
+  }
+  .spendingBox .addService .addName {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 120px;
+  }
+  .wxContentMessage {
+    width: 100%;
+  }
+  .markBox {
+    top: 3px !important;
+    right: 0px !important;
+    width: 84px !important;
+    height: 84px !important;
+  }
+  // 大纲结束
   .navDataLine {
     display: none;
   }
@@ -155,6 +182,10 @@
   .outlineMain {
     margin-right: 0px !important;
     margin-left: 0px !important;
+    padding-left: 0px !important;
+    .ownInput {
+      padding: 0px;
+    }
   }
   // three Swiper
   .swiper2 {
@@ -194,6 +225,15 @@
     .phoneFlex {
       display: block !important;
     }
+  }
+  // 顶部大纲
+  .navMain {
+    & > div {
+      display: flex;
+    }
+  }
+  .navleftData .navWidth {
+    width: auto !important;
   }
 }
 // 首页媒体查询
