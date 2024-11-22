@@ -59,9 +59,18 @@ export default {
       let newPrimaryNumber = Math.floor(timeFactor * this.maxValue);
       newPrimaryNumber = Math.max(newPrimaryNumber, this.primaryNumber);
 
-      // Calculate the secondary number (80% of primary)
-      let newSecondaryNumber = Math.floor(newPrimaryNumber * 0.8);
-      newSecondaryNumber = Math.max(newSecondaryNumber, this.secondaryNumber);
+      // Calculate the secondary number (between 1/3 and 1/4 of primary)
+      let minSecondaryNumber = Math.floor(newPrimaryNumber / 4);
+      let maxSecondaryNumber = Math.floor(newPrimaryNumber / 3);
+
+      // Ensure the secondary number is an integer in the specified range
+      let newSecondaryNumber = Math.max(
+        minSecondaryNumber,
+        this.secondaryNumber
+      );
+
+      // If the current secondaryNumber is greater than maxSecondaryNumber, adjust it
+      newSecondaryNumber = Math.min(newSecondaryNumber, maxSecondaryNumber);
 
       this.primaryNumber = newPrimaryNumber;
       this.secondaryNumber = newSecondaryNumber;

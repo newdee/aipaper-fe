@@ -329,6 +329,9 @@ export default {
           console.log("login输入内容", data);
 
           this.$store.dispatch("user/login", data).then(() => {
+            window.zhuge.track("登录", {
+              phone: this.phoneNum,
+            });
             this.$message({
               type: "success",
               message: "登录成功！",
