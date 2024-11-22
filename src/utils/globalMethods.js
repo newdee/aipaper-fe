@@ -27,6 +27,35 @@ const GlobalMethodsPlugin = {
 
     // 定义全局跳转方法
     Vue.prototype.$jumpUrl = function (url) {
+      const staticRoutes = {
+        "/login": "登录页",
+        "/404": "",
+        "*": "",
+        "/dashboard": "",
+        "/toPromotion": "",
+        "/": "",
+        "/main": "main",
+        "/main/writepaper": "写论文",
+        "/main/reduceRepetition": "降重/降AIGC",
+        "/main/chat": "ChatGPT",
+        "/main/explore": "AI在线搜索",
+        "/main/readpaper": "读论文",
+        "/main/amendpaper": "amendpaper",
+        "/main/integratedservices": "integratedservices",
+        "/main/eliteCourses": "eliteCourses",
+        "/main/aitools": "AI工具",
+        "/user": "",
+        "/user/promotion": "我的推广",
+        "/user/userInfo": "我的详情",
+        "/paper": "",
+        "/paper/preview": "preview",
+        "/paper/reduceRepetiton": "reduceRepetiton",
+        "/home": "",
+        "/home/home": "首页",
+      };
+      window.zhuge.track("用户访问页面", {
+        页面名称: staticRoutes[url],
+      });
       router.push(url);
     };
 
@@ -52,8 +81,7 @@ const GlobalMethodsPlugin = {
       // window.addEventListener('beforeunload', preventResize);
       // 提示用户最小窗口大小要求
     };
-
-  }
+  },
 };
 
 export default GlobalMethodsPlugin;

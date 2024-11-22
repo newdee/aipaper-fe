@@ -1336,6 +1336,9 @@ export default {
     },
     // 生成全文
     generateForm() {
+      window.zhuge.track("生成正文", {
+        title: this.requestForm.title,
+      });
       if (!this.checked) {
         this.statementDialogVisible = true;
       } else {

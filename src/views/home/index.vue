@@ -31,6 +31,7 @@
     </div>
     <!-- 优势页面 -->
     <advantage class="swiper swiper3"></advantage>
+    <!-- <el-button @click="getList">点击</el-button> -->
   </div>
 </template>
 <script>
@@ -42,6 +43,7 @@ import swiperThree from "./components/swiperThree.vue";
 import advantage from "./components/advantage.vue";
 import searchPaper from "./components/searchPaper.vue";
 // import eventBus from "@/utils/eventBus";
+import { getDomain } from "@/utils/index.js";
 
 export default {
   name: "index",
@@ -61,7 +63,17 @@ export default {
     // eventBus.emit("sendOutline", 5); // 发布事件
   },
   created() {
+    console.log("getDomain", getDomain());
+
     // eventBus.on("sendOutline", this.addE); // 订阅事件
+    zhuge.track(`访问域名`, {
+      domain: getDomain(),
+    });
+    // zhuge.track("购买商品", {
+    //   name: "手机",
+    //   price: "iPhone XS",
+    //   num: 2,
+    // });
   },
   beforeDestroy() {
     // eventBus.off("sendOutline", this.addE); // 移除事件监听
@@ -76,6 +88,12 @@ export default {
     },
     jump2() {
       this.$router.push("/main/explore");
+    },
+    getList() {
+      console.log(window.zhuge);
+      window.zhuge.track("首页点击按钮", {
+        path: "MyButton",
+      });
     },
   },
 };
