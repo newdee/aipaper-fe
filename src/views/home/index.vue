@@ -61,6 +61,7 @@ export default {
   },
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
+    // window.zhuge.load("aecb263210174e7994293e947ccaedba", { debug: true });
   },
   created() {
     console.log("getDomain", getDomain());
