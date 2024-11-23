@@ -939,7 +939,7 @@ export default {
   created() {
     this.generateIndexes(this.outline);
 
-    console.log(this.outline, "outline");
+    // this.$log(this.outline, "outline");
   },
 
   computed: {
