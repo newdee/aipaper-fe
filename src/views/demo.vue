@@ -20,6 +20,10 @@ export default {
     // webinfo,
   },
   mounted() {
+    // zhuge.track(`用户查看大纲`, {
+    //   大纲标题: row.title,
+    //   大纲key: row.key1,
+    // });
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
   },

@@ -122,6 +122,10 @@ export default {
   },
   methods: {
     jumpStep2(row) {
+      zhuge.track(`用户查看大纲`, {
+        大纲标题: row.title,
+        大纲key: row.key1,
+      });
       // row.key1
       this.$router.push(
         {

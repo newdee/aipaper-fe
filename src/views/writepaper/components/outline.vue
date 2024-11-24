@@ -404,9 +404,11 @@ export default {
   },
   methods: {
     showAdv() {
+      zhuge.track(`访问质量对比`);
       this.$refs.advantageDia.showDia();
     },
     showExample() {
+      zhuge.track(`访问范围样例`);
       this.$refs.exampleDia.showDia();
     },
     paperTypeChange(val) {

@@ -231,6 +231,12 @@ export default {
       });
     },
     sendPay(row) {
+      this.$log("去支付", row);
+      zhuge.track(`点击去支付`, {
+        订单价格: row.order.total_price,
+        订单题目: row.outline.title,
+        订单Out_trade_no: row.order.out_trade_no,
+      });
       let data = {
         out_trade_no: row.order.out_trade_no, // 订单编号，必传
         payment_method: row.order.payment_method, // 支付方式，必传
@@ -292,6 +298,7 @@ export default {
       // });
     },
     pushStep3: _.debounce(function (row) {
+      zhuge.track(`查看论文进度`, {});
       const targetPath = "/main/writepaper";
       const currentPath = this.$route.path;
       // 检查当前路径是否与目标路径相同
@@ -330,6 +337,11 @@ export default {
       });
     },
     downLoadPaper: _.debounce(function (item) {
+      zhuge.track(`下载论文`, {
+        订单价格: item.order.total_price,
+        订单题目: item.outline.title,
+        订单Out_trade_no: item.order.out_trade_no,
+      });
       this.downStatus = true;
       paperPack({ out_trade_no: item.order.out_trade_no }).then((res) => {
         this.downStatus = false;
@@ -353,6 +365,12 @@ export default {
       });
     }, 300),
     openPaper: _.debounce(function (item) {
+      this.$log(item, "预览订单");
+      zhuge.track(`预览论文`, {
+        订单价格: item.order.total_price,
+        订单题目: item.outline.title,
+        订单Out_trade_no: item.order.out_trade_no,
+      });
       const targetPath = "/main/writepaper";
       const currentPath = this.$route.path;
       this.$log("item", item);

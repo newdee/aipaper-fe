@@ -192,6 +192,11 @@ export default {
   },
   methods: {
     openPaper: _.debounce(function (item) {
+      zhuge.track(`预览论文`, {
+        订单价格: item.order.total_price,
+        订单题目: item.outline.title,
+        订单Out_trade_no: item.order.out_trade_no,
+      });
       const targetPath = "/main/writepaper";
       const currentPath = this.$route.path;
       // 检查当前路径是否与目标路径相同
@@ -228,6 +233,10 @@ export default {
       }
     }, 300),
     jumpStep2(row) {
+      zhuge.track(`用户查看大纲`, {
+        大纲标题: row.title,
+        大纲key: row.key1,
+      });
       this.$router.push(
         {
           path: "/main/writepaper",
@@ -279,6 +288,11 @@ export default {
     }, 300), // 300毫秒内最多执行一次
 
     downLoadPaper: _.debounce(function (item) {
+      zhuge.track(`下载论文`, {
+        订单价格: item.order.total_price,
+        订单题目: item.outline.title,
+        订单Out_trade_no: item.order.out_trade_no,
+      });
       this.downStatus = true;
       paperPack({ out_trade_no: item.order.out_trade_no }).then((res) => {
         this.downStatus = false;
