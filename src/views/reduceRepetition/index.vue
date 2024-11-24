@@ -139,6 +139,7 @@ export default {
       });
     },
     reduceSend() {
+      zhuge.track(`用户点击降重按钮`, {});
       let data = {
         original_paragraph: this.original_paragraph,
         user_content: this.user_content,

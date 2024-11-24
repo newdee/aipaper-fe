@@ -227,6 +227,7 @@ export default {
       };
     },
     sendMessage() {
+      zhuge.track(`GPT页面用户使用`, {});
       if (!this.message.trim()) return;
 
       this.chatMessages.push({ text: this.message, type: "user" });

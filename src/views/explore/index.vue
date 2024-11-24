@@ -126,6 +126,7 @@ export default {
       this.mdStatus = false; // Trigger the animation and display
       this.moved = true;
       this.loading = true;
+      zhuge.track(`AI搜索页面,点击搜索`, {});
 
       let data = {
         title: this.title,

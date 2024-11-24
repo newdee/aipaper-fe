@@ -126,7 +126,8 @@
           </el-popover>
         </div>
         <div>
-          <el-button slot="reference" @click="$jumpUrl('/toPromotion')">
+          <!-- <el-button slot="reference" @click="$jumpUrl('/toPromotion')"> -->
+          <el-button slot="reference" @click="$devf">
             <div class="itemLi">
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-jiaruwomen"></use>

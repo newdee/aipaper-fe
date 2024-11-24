@@ -202,6 +202,11 @@ export default {
 
   methods: {
     handleClose(done) {
+      if (this.payTitleStatus == "TRADE_SUCCESS") {
+        zhuge.track(`用户成功支付`, {});
+      } else {
+        zhuge.track(`用户取消支付`, {});
+      }
       this.$store.dispatch("app/setActiveIndex", 0);
       this.$store.dispatch("paper/setPollingStatus", false);
       done();
@@ -216,6 +221,11 @@ export default {
       // }
     },
     jumpStep() {
+      if (this.payTitleStatus == "TRADE_SUCCESS") {
+        zhuge.track(`用户成功支付`, {});
+      } else {
+        zhuge.track(`用户取消支付`, {});
+      }
       if (this.payTitleStatus == "TRADE_SUCCESS") {
         this.$confirm("关闭弹窗,不影响论文生成进度")
           .then((_) => {

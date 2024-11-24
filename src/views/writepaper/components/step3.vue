@@ -104,6 +104,10 @@ export default {
     },
     downLoadPaper: _.debounce(function (item) {
       this.downStatus = true;
+      zhuge.track(`下载论文`, {
+        路径: "step3",
+        订单Out_trade_no: this.currentOrder.out_trade_no,
+      });
       paperPack({ out_trade_no: this.currentOrder.out_trade_no }).then(
         (res) => {
           console.log("ad", res.result.zip_url);
