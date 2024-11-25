@@ -9,6 +9,7 @@ export default {
     eliteCourses: "EliteCourses",
     aiTools: "AiTools",
     chat: "ChatGPT",
+    plagiarismCheck: "PlagiarismCheck",
     reduceRepetition: "ReduceRepetition",
     dashboard: "Dashboard",
     documentation: "Documentation",

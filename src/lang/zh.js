@@ -9,6 +9,7 @@ export default {
     aiTools: "AI工具",
     reduceRepetition: "降重/降AIGC",
     chat: "ChatGPT",
+    plagiarismCheck: "论文查重",
     documentation: "文档",
     guide: "引导页",
     permission: "权限测试页",
