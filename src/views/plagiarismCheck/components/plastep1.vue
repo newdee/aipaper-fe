@@ -16,7 +16,10 @@
           <span>已选中</span>
         </div>
         <p class="plaTitle">{{ item.name }}</p>
-        <p class="plaPrice">2.7元/千字</p>
+        <p class="plaPrice">
+          <span v-if="item.unit == 0"> 1篇 </span>
+          <span v-else> {{ item.sellingPrice }} 元/ {{ item.unit }} 字 </span>
+        </p>
         <div class="plaBottom">
           <p>期刊论文专用</p>
         </div>
@@ -25,6 +28,7 @@
     <!-- form -->
     <div class="formCon">
       <el-form
+        v-loading="fileLoading"
         :model="ruleForm"
         :rules="rules"
         ref="ruleForm"
@@ -75,11 +79,17 @@
               <li>文档大小不超过30M</li>
             </div>
             <div class="uploadIntro">
-              计费方式：<span class="red">3元/万字</span>
-              <p>
+              计费方式：
+              <span class="red">
+                <b v-if="currentItem.unit == 0"> 1篇 </b>
+                <b v-else>
+                  {{ currentItem.sellingPrice }} 元/ {{ currentItem.unit }} 字
+                </b>
+              </span>
+              <p v-if="paperDetail.word_nums > 0">
                 当前输入:
-                <span class="red">21535字</span> 应付金额:
-                <span class="red">9元</span>
+                <span class="red">{{ paperDetail.word_nums }}字</span> 应付金额:
+                <span class="red">{{ paperDetail.pay_amount }}元</span>
               </p>
             </div>
           </div>
@@ -97,7 +107,7 @@
 </template>
 <script>
 // import { mapGetters } from "vuex";
-import { product, pre_create } from "@/api/paper";
+import { product, pre_create, passOrder } from "@/api/paper";
 // import webinfo from "@/components/webinfo.vue";
 // import eventBus from "@/utils/eventBus";
 
@@ -111,6 +121,7 @@ export default {
           name: "期刊版",
         },
       ],
+      fileLoading: false,
       ruleForm: {
         name: "",
         autor: "",
@@ -140,6 +151,14 @@ export default {
       paperList: [],
       currentItem: {},
       fileBackKey: "",
+      loading: true,
+      expired: false,
+      lastFetchTime: null,
+      intervalId: null,
+      paperDetail: {
+        word_nums: 0,
+        pay_amount: 0,
+      },
     };
   },
   components: {
@@ -159,11 +178,44 @@ export default {
   },
   beforeDestroy() {
     // eventBus.off("sendOutline", this.addE); // 移除事件监听
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   },
   computed: {
     // 计算属性
   },
   methods: {
+    fetchData() {
+      this.loading = true;
+      let data = {
+        fileBackKey: this.fileBackKey,
+      };
+      passOrder(data).then((res) => {
+        console.log("res", res);
+        if (res.result.api_file_parse_status == 0) {
+          clearInterval(this.intervalId);
+          this.paperDetail.pay_amount = res.result.pay_amount;
+          this.paperDetail.word_nums = res.result.word_nums;
+        }
+        // if(res)
+      });
+    },
+    checkExpiration() {
+      if (this.lastFetchTime) {
+        const now = new Date();
+        const diff = (now - this.lastFetchTime) / 1000; // Difference in seconds
+        if (diff > 120) {
+          // 120 seconds = 2 minutes
+          this.fileLoading = false;
+          this.expired = true;
+          clearInterval(this.intervalId);
+          this.fileLoading = false;
+
+          this.$message("已超时");
+        }
+      }
+    },
     beforeUpload(file) {
       // 需要先填写名字及坐着
       const isTxtDocDocxPdf = [
@@ -183,6 +235,7 @@ export default {
       return isTxtDocDocxPdf && isLt30M;
     },
     customUploadRequest({ file }) {
+      this.fileLoading = true;
       const formData = new FormData();
       formData.append("file", file);
       formData.append("jane_name", this.currentItem.janeName);
@@ -192,6 +245,12 @@ export default {
           this.$message.success("上传成功");
           console.log(response);
           this.fileBackKey = response.result;
+          // 开启轮询
+          // this.intervalId = setInterval(this.fetchData, 5000);
+          this.intervalId = setInterval(() => {
+            this.fetchData();
+            this.checkExpiration();
+          }, 5000);
         })
         .catch((error) => {
           this.$message.error("上传失败");
@@ -286,13 +345,9 @@ export default {
   margin: 1px;
   box-sizing: border-box;
   font-size: 12px;
+  color: #063b7a;
+  background: #deedff;
   line-height: 30px;
-  background: #0c368a;
-  color: #fff;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
 }
 .activeIcon {
   position: absolute;
@@ -338,5 +393,19 @@ export default {
   .activeIcon {
     display: block;
   }
+  .plaBottom {
+    --totl-primary-background: rgba(255, 255, 255, 0.8);
+    --totl-primary-font-color: #000;
+    --totl-primate-font-descolor: #565656;
+    text-align: center;
+    height: 32%;
+    margin: 1px;
+    box-sizing: border-box;
+    font-size: 12px;
+    line-height: 30px;
+    background: #0c368a;
+    color: #fff;
+  }
+  border: 1px solid #0c368a;
 }
 </style>

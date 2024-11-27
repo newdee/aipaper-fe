@@ -178,21 +178,21 @@ export const constantRoutes = [
         },
       },
       // 查重页面
-      {
-        path: "plagiarismCheck",
-        name: "plagiarismCheck",
-        component: () => import("@/views/plagiarismCheck/index"),
-        meta: {
-          keepAlive: true,
-          title: "plagiarismCheck",
-          // title: "搜论文",
-          icon: "el-icon-document-checked",
-          describe: "我的脑袋里有十亿亿篇文献",
-          id: "5-2",
-          parentId: "5",
-          inDevelopment: false,
-        },
-      },
+      // {
+      //   path: "plagiarismCheck",
+      //   name: "plagiarismCheck",
+      //   component: () => import("@/views/plagiarismCheck/index"),
+      //   meta: {
+      //     keepAlive: true,
+      //     title: "plagiarismCheck",
+      //     // title: "搜论文",
+      //     icon: "el-icon-document-checked",
+      //     describe: "我的脑袋里有十亿亿篇文献",
+      //     id: "5-2",
+      //     parentId: "5",
+      //     inDevelopment: false,
+      //   },
+      // },
       // 读论文
       {
         path: "readpaper",

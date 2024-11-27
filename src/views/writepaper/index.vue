@@ -156,6 +156,14 @@ export default {
     questionList,
   },
   mounted() {
+    this.$message({
+      showClose: true,
+      center: true,
+      duration: 6000,
+      type: "warning",
+      message:
+        "尊敬的万象用户，最近文献下载服务不太稳定，可能会导致生成失败，我们研发小伙伴已经快马加鞭的在解决，预计很快解决好，遇到问题请及时联系客服!",
+    });
     // 页面初始化
     window.addEventListener("scroll", this.handleScroll);
     // this.$store.dispatch("app/setActiveIndex", 2);

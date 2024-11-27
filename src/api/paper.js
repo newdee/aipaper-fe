@@ -15,7 +15,7 @@ export function product() {
 }
 export function passOrder(params) {
   return request({
-    url: "/api/ai-paper/pass/order/" + params,
+    url: "/api/ai-paper/pass/order/" + params.fileBackKey,
     method: "get",
   });
 }
@@ -23,7 +23,6 @@ export function pre_create(data) {
   return request({
     url: "/api/ai-paper/pass/pre_create",
     method: "post",
-    data
+    data,
   });
 }
-
