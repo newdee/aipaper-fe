@@ -2,7 +2,12 @@
   <div class="mainContentSec bgWhite">
     <!-- 页面名称 -->
     <div class="plaCheckHeader">
-      <div class="plaItem">
+      <div
+        :class="{ plaItem: true, activeItem: activeItem == index }"
+        v-for="(item, index) in paperList"
+        :key="index + 'pla'"
+        @click="selectItem(index, item)"
+      >
         <div class="activeIcon">
           <img
             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAAWCAYAAACcy/8iAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQyIDc5LjE2MDkyNCwgMjAxNy8wNy8xMy0wMTowNjozOSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpERERERjIxQUIwNzgxMUVBOEQyRUI5QTM4NDQzRjRBQyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpERERERjIxQkIwNzgxMUVBOEQyRUI5QTM4NDQzRjRBQyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkRERERGMjE4QjA3ODExRUE4RDJFQjlBMzg0NDNGNEFDIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkRERERGMjE5QjA3ODExRUE4RDJFQjlBMzg0NDNGNEFDIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+TeyztgAAAMJJREFUeNpiZLOuYsAC2IA4AIotgVgKKjbkAQsWsUAg7gJiFYZhCJiQ2MxA3AnE64arZ9E93AbEZQzDHMA8HDISPAvzMKgw6mcYIQDk4VAglhlJHg5gGEEA5GHTkeZhiZHmYfaR5mGGkebhHyPIv/9BHv43gjz8gmm49IKIBMeYcPSYhivYMJIKradAvHokebgQiH+OFA93g2J3pNTDU4G4ciQ0PO5Ae4I5QPwXJjicSujf0ILpLBCvhybhX+iKAAIMALbmGe1e8B6KAAAAAElFTkSuQmCC"
@@ -10,7 +15,7 @@
           />
           <span>已选中</span>
         </div>
-        <p class="plaTitle">期刊版</p>
+        <p class="plaTitle">{{ item.name }}</p>
         <p class="plaPrice">2.7元/千字</p>
         <div class="plaBottom">
           <p>期刊论文专用</p>
@@ -49,8 +54,10 @@
           <div class="fileUpload">
             <el-upload
               class="upload-demo"
+              action="##"
               drag
-              action="https://jsonplaceholder.typicode.com/posts/"
+              :http-request="customUploadRequest"
+              :before-upload="beforeUpload"
               multiple
             >
               <i class="el-icon-upload"></i>
@@ -90,7 +97,7 @@
 </template>
 <script>
 // import { mapGetters } from "vuex";
-// import { sms } from "@/api/login";
+import { product, pre_create } from "@/api/paper";
 // import webinfo from "@/components/webinfo.vue";
 // import eventBus from "@/utils/eventBus";
 
@@ -109,6 +116,7 @@ export default {
         autor: "",
         type: "file",
       },
+      activeItem: 0,
       rules: {
         name: [
           { required: true, message: "请输入文章名称", trigger: "blur" },
@@ -129,6 +137,9 @@ export default {
           },
         ],
       },
+      paperList: [],
+      currentItem: {},
+      fileBackKey: "",
     };
   },
   components: {
@@ -141,6 +152,7 @@ export default {
     // });
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
+    this.getList();
   },
   created() {
     // eventBus.on("sendOutline", this.addE); // 订阅事件
@@ -152,6 +164,51 @@ export default {
     // 计算属性
   },
   methods: {
+    beforeUpload(file) {
+      // 需要先填写名字及坐着
+      const isTxtDocDocxPdf = [
+        "text/plain",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/pdf",
+      ].includes(file.type);
+      const isLt30M = file.size / 1024 / 1024 < 30;
+
+      if (!isTxtDocDocxPdf) {
+        this.$message.error("上传文件只能是 txt, doc, docx, pdf 格式!");
+      }
+      if (!isLt30M) {
+        this.$message.error("上传文件大小不能超过 30MB!");
+      }
+      return isTxtDocDocxPdf && isLt30M;
+    },
+    customUploadRequest({ file }) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("jane_name", this.currentItem.janeName);
+
+      pre_create(formData)
+        .then((response) => {
+          this.$message.success("上传成功");
+          console.log(response);
+          this.fileBackKey = response.result;
+        })
+        .catch((error) => {
+          this.$message.error("上传失败");
+          console.error(error);
+        });
+    },
+    selectItem(index, item) {
+      this.activeItem = index;
+      this.currentItem = item;
+    },
+    getList() {
+      product().then((res) => {
+        this.$log(res);
+        this.paperList = res.result;
+        this.currentItem = res.result[0];
+      });
+    },
     // 定义方法
     submitForm(formName) {
       this.$emit("stepNext", 2);
@@ -197,6 +254,9 @@ export default {
   position: relative;
   margin: 9px;
   padding-top: 15px;
+}
+.activeIcon {
+  display: none;
 }
 .plaTitle {
   --totl-primary-background: rgba(255, 255, 255, 0.8);
@@ -272,6 +332,11 @@ export default {
   }
   .red {
     color: #f56c6c;
+  }
+}
+.activeItem {
+  .activeIcon {
+    display: block;
   }
 }
 </style>
