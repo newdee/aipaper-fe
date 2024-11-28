@@ -9,7 +9,9 @@
         border
       >
         <template slot="extra">
-          <el-button type="primary" size="small">上一步</el-button>
+          <el-button type="primary" size="small" @click="beforeNext"
+            >上一步</el-button
+          >
         </template>
         <el-descriptions-item span="3">
           <template slot="label">
@@ -44,13 +46,13 @@
             <i class="el-icon-location-outline"></i>
             单价
           </template>
-          苏州市
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
             <i class="el-icon-tickets"></i>
             总价
           </template>
+          {{ payOrderDetail.pay_amount }} 元
         </el-descriptions-item>
       </el-descriptions>
     </div>
@@ -63,13 +65,26 @@
           </svg>
           支付宝
         </p>
-        <div class="codeImgBox"></div>
+        <div class="codeImgBox">
+          <iframe
+            :src="payOrderDetail.pay_link"
+            height="205"
+            width="205"
+            frameborder="0"
+          ></iframe>
+        </div>
       </div>
       <div class="ppcRight">
         <p>请用 <span>支付宝</span> 扫码</p>
-        <p>应付金额: <span> 19 </span>元</p>
-        <p>订单号: <span>A17326292898569110803</span> <i>点击复制</i></p>
+        <p>
+          应付金额: <span> {{ payOrderDetail.pay_amount }} </span>元
+        </p>
+        <p>
+          订单号: <span>{{ payOrderDetail.out_trade_no }}</span> <i>点击复制</i>
+        </p>
         <p>温馨提示：请保存好订单号 以便step3中查询报告</p>
+        <p>温馨提示：您支付成功后, 查重报告会在10 - 30分钟后生成</p>
+        <p>温馨提示：您可以在step3或我的查重记录(个人中心)查看/下载查重报告</p>
 
         <div class="stepNext">
           <el-button type="success" @click="stepNext"
@@ -92,6 +107,12 @@ export default {
     return {
       // 定义变量
     };
+  },
+  props: {
+    payOrderDetail: {
+      type: Object,
+      require: true,
+    },
   },
   components: {
     // webinfo,
@@ -117,7 +138,6 @@ export default {
     // 定义方法
     stepNext(formName) {
       this.$emit("stepNext", 3);
-
       // this.$refs[formName].validate((valid) => {
       //   if (valid) {
       //     // alert('submit!');
@@ -127,6 +147,9 @@ export default {
       //     return false;
       //   }
       // });
+    },
+    beforeNext(index) {
+      this.$emit("stepNext", 1, { index: 2 });
     },
   },
 };
@@ -160,8 +183,8 @@ export default {
       text-align: center;
     }
     .codeImgBox {
-      width: 200px;
-      height: 200px;
+      width: 225px;
+      height: 225px;
       padding: 10px;
       background: #f2f2f2;
       border-radius: 3px;
@@ -169,8 +192,9 @@ export default {
     }
   }
   .ppcRight {
-    margin-left: 20px;
+    margin-left: 60px;
     padding-top: 40px;
+
     font-size: 16px;
     line-height: 30px;
     span {

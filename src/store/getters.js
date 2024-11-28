@@ -17,5 +17,6 @@ const getters = {
   activeIndex: (state) => state.app.activeIndex,
   pollingStatus: (state) => state.paper.pollingStatus,
   additionalList: (state) => state.paper.additionalList,
+  preViewId: (state) => state.paper.preViewId,
 };
 export default getters;

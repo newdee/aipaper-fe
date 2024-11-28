@@ -21,7 +21,7 @@
           <span v-else> {{ item.sellingPrice }} 元/ {{ item.unit }} 字 </span>
         </p>
         <div class="plaBottom">
-          <p>期刊论文专用</p>
+          <p>支持类型:{{ item.fileTypes }}</p>
         </div>
       </div>
     </div>
@@ -36,14 +36,36 @@
         class="demo-ruleForm"
       >
         <el-form-item label="文章题目" prop="name">
-          <el-input v-model="ruleForm.name"></el-input>
+          <el-input
+            v-model="ruleForm.name"
+            :maxlength="currentItem.titleMaxlength"
+            show-word-limit
+          ></el-input>
         </el-form-item>
         <el-form-item label="文章作者" prop="autor">
-          <el-input v-model="ruleForm.autor"></el-input>
+          <el-input
+            v-model="ruleForm.autor"
+            :maxlength="currentItem.authorMaxlength"
+            show-word-limit
+          ></el-input>
+        </el-form-item>
+        <el-form-item
+          v-if="currentItem.janeName == 'cqvipzc'"
+          label="发表日期"
+          prop="end_date"
+        >
+          <el-date-picker
+            v-model="ruleForm.end_date"
+            type="date"
+            placeholder="选择日期"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
         </el-form-item>
 
         <el-form-item label="提交方式" prop="type">
-          <el-checkbox-group v-model="ruleForm.type">
+          <p>上传文件</p>
+          <!-- <el-checkbox-group v-model="ruleForm.type">
             <el-checkbox
               label="单篇上传"
               name="file"
@@ -54,24 +76,32 @@
               name="content"
               value="content"
             ></el-checkbox>
-          </el-checkbox-group>
+          </el-checkbox-group> -->
           <div class="fileUpload">
             <el-upload
               class="upload-demo"
               action="##"
               drag
+              :show-file-list="false"
               :http-request="customUploadRequest"
               :before-upload="beforeUpload"
-              multiple
+              :on-success="successUpload"
+              :limit="1"
+              :file-list="fileList"
             >
               <i class="el-icon-upload"></i>
-              <div class="el-upload__text">
-                将文件拖到此处，或<em>点击上传</em>
-              </div>
-              <div class="el-upload__tip" slot="tip">
-                只能上传jpg/png文件，且不超过500kb
+              <div class="uploadFile">
+                <div v-if="fileList.length > 0" class="uploaded-file">
+                  <el-tag closable type="success" @close="removeFile">{{
+                    fileList[0].name
+                  }}</el-tag>
+                </div>
+                <div v-else class="el-upload__text">
+                  将文件拖到此处，或<em>点击上传</em>
+                </div>
               </div>
             </el-upload>
+
             <div class="uploadDesc">
               <li>支持的格式：txt,doc,docx,pdf</li>
               <li>pdf格式不稳定，容易乱码，请确认后再提交</li>
@@ -125,25 +155,23 @@ export default {
       ruleForm: {
         name: "",
         autor: "",
+        end_date: "",
         type: "file",
       },
       activeItem: 0,
+      maxTitle: 50,
+      maxAutor: 20,
       rules: {
-        name: [
-          { required: true, message: "请输入文章名称", trigger: "blur" },
-          {
-            min: 5,
-            max: 50,
-            message: "长度在 5 到 50 个字符",
-            trigger: "blur",
-          },
+        name: [{ required: true, message: "请输入文章名称", trigger: "blur" }],
+        end_date: [
+          { required: false, message: "请选择发表日期", trigger: "blur" },
         ],
         autor: [
-          { required: true, message: "请输入文章名称", trigger: "blur" },
+          { required: true, message: "请输入文章作者", trigger: "blur" },
           {
-            min: 5,
+            min: 2,
             max: 50,
-            message: "长度在 5 到 50 个字符",
+            message: "长度在 2 到 50 个字符",
             trigger: "blur",
           },
         ],
@@ -158,7 +186,9 @@ export default {
       paperDetail: {
         word_nums: 0,
         pay_amount: 0,
+        out_trade_no: "",
       },
+      fileList: [], // Store a single uploaded file
     };
   },
   components: {
@@ -186,20 +216,34 @@ export default {
     // 计算属性
   },
   methods: {
+    resetFrom() {
+      let data = {
+        name: "",
+        autor: "",
+        type: "file",
+      };
+      this.ruleForm = { ...data };
+    },
     fetchData() {
       this.loading = true;
       let data = {
         fileBackKey: this.fileBackKey,
       };
-      passOrder(data).then((res) => {
-        console.log("res", res);
-        if (res.result.api_file_parse_status == 0) {
-          clearInterval(this.intervalId);
-          this.paperDetail.pay_amount = res.result.pay_amount;
-          this.paperDetail.word_nums = res.result.word_nums;
-        }
-        // if(res)
-      });
+      passOrder(data)
+        .then((res) => {
+          console.log("res", res);
+          if (res.result.api_file_parse_status == 0) {
+            clearInterval(this.intervalId);
+            this.$message.success("上传成功");
+            this.fileLoading = false;
+            this.paperDetail = {};
+            this.paperDetail = { ...res.result };
+          }
+          // if(res)
+        })
+        .catch(() => {
+          this.fileList = [];
+        });
     },
     checkExpiration() {
       if (this.lastFetchTime) {
@@ -207,12 +251,11 @@ export default {
         const diff = (now - this.lastFetchTime) / 1000; // Difference in seconds
         if (diff > 120) {
           // 120 seconds = 2 minutes
-          this.fileLoading = false;
           this.expired = true;
           clearInterval(this.intervalId);
           this.fileLoading = false;
-
-          this.$message("已超时");
+          this.fileList = [];
+          this.$message("已超时,请重试!");
         }
       }
     },
@@ -234,7 +277,12 @@ export default {
       }
       return isTxtDocDocxPdf && isLt30M;
     },
+    successUpload(response, file, fileList) {
+      this.fileList = fileList.slice(-1); // Keep only the last uploaded file
+      console.log("Uploaded file:", this.fileList);
+    },
     customUploadRequest({ file }) {
+      console.log("response, file, fileList", file);
       this.fileLoading = true;
       const formData = new FormData();
       formData.append("file", file);
@@ -242,9 +290,9 @@ export default {
 
       pre_create(formData)
         .then((response) => {
-          this.$message.success("上传成功");
           console.log(response);
           this.fileBackKey = response.result;
+          this.fileList = [file];
           // 开启轮询
           // this.intervalId = setInterval(this.fetchData, 5000);
           this.intervalId = setInterval(() => {
@@ -260,6 +308,12 @@ export default {
     selectItem(index, item) {
       this.activeItem = index;
       this.currentItem = item;
+      if (item.janeName == "cqvipzc") {
+        this.$log("维普职称版");
+        this.rules.end_date[0].required = true;
+      } else {
+        this.rules.end_date[0].required = false;
+      }
     },
     getList() {
       product().then((res) => {
@@ -268,22 +322,49 @@ export default {
         this.currentItem = res.result[0];
       });
     },
+    removeFile() {
+      this.fileList = []; // Clear the file list
+      this.$message.success("文件已删除");
+      this.paperDetail = {};
+
+      // Optionally, handle server-side deletion if necessary
+    },
     // 定义方法
     submitForm(formName) {
-      this.$emit("stepNext", 2);
-
-      // this.$refs[formName].validate((valid) => {
-      //   if (valid) {
-      //     // alert('submit!');
-      //     this.$emit("stepNext", 2);
-      //   } else {
-      //     console.log("error submit!!");
-      //     return false;
-      //   }
-      // });
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          if (this.fileList.length == 0) {
+            this.$message({
+              type: "warning",
+              message: "请上传文件后,重试.",
+            });
+            return false;
+          }
+          // alert('submit!');
+          // TODO: 发表日期，“维普职称版”必传
+          let data = {
+            title: this.ruleForm.name, // 文章标题，必传
+            author: this.ruleForm.autor, // 文章作者，必传
+            end_date: this.ruleForm.end_date, // 发表日期，“维普职称版”必传 yyyy-MM-dd
+            jane_name: this.currentItem.janeName, // 产品简称，必传
+            out_trade_no: this.paperDetail.out_trade_no, // 预创建的订单编号，必传
+            pay_amount: this.paperDetail.pay_amount, // 支付价格，来源于上传完文件之后轮循得到的付款价格，必传
+          };
+          if (this.currentItem.janeName != "cqvipzc") {
+            delete data.end_date;
+          }
+          this.$emit("stepNext", 2, data);
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.fileList = []; // Clear the file list
+      this.$message.success("已重置");
+      this.paperDetail = {};
     },
   },
 };
@@ -383,7 +464,7 @@ export default {
     position: absolute;
     display: flex;
     bottom: -20px;
-    left: 0;
+    left: 1px;
   }
   .red {
     color: #f56c6c;
@@ -407,5 +488,16 @@ export default {
     color: #fff;
   }
   border: 1px solid #0c368a;
+}
+.uploadDesc {
+  margin-left: 50px;
+}
+.uploaded-file {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 5px;
 }
 </style>
