@@ -8,7 +8,7 @@ export default {
     integratedServices: "IntegratedServices",
     eliteCourses: "EliteCourses",
     aiTools: "AiTools",
-    chat: "ChatGPT",
+    chat: "AI Assistant",
     plagiarismCheck: "PlagiarismCheck",
     reduceRepetition: "ReduceRepetition",
     dashboard: "Dashboard",
