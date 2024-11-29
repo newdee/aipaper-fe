@@ -19,9 +19,22 @@ export function passOrder(params) {
     method: "get",
   });
 }
+export function report_url(params) {
+  return request({
+    url: "/api/ai-paper/pass/report_url/" + params.fileBackKey,
+    method: "get",
+  });
+}
 export function pre_create(data) {
   return request({
     url: "/api/ai-paper/pass/pre_create",
+    method: "post",
+    data,
+  });
+}
+export function pay_order(data) {
+  return request({
+    url: "/api/ai-paper/pass/pay_order",
     method: "post",
     data,
   });

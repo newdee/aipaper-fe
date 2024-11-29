@@ -14,21 +14,25 @@
       </el-steps>
     </div>
     <div v-show="active == 1" class="plaStepCon">
-      <plastep1 @stepNext="stepNext"></plastep1>
+      <plastep1 ref="step1Ref" @stepNext="stepNext"></plastep1>
     </div>
     <div v-show="active == 2" class="plaStepCon">
-      <plastep2 @stepNext="stepNext"></plastep2>
+      <plastep2
+        :payOrderDetail="payOrderDetail"
+        @stepNext="stepNext"
+      ></plastep2>
     </div>
     <div v-show="active == 3" class="plaStepCon">
-      <plastep1 @stepNext="stepNext"></plastep1>
+      <plastep3 @stepNext="stepNext"></plastep3>
     </div>
   </div>
 </template>
 <script>
 // import { mapGetters } from "vuex";
-// import { sms } from "@/api/login";
+import { pay_order } from "@/api/paper";
 import plastep1 from "./components/plastep1.vue";
 import plastep2 from "./components/plastep2.vue";
+import plastep3 from "./components/plastep3.vue";
 // import eventBus from "@/utils/eventBus";
 
 export default {
@@ -37,20 +41,19 @@ export default {
     return {
       // 定义变量
       active: 1,
+      payOrderDetail: {
+        out_trade_no: "",
+        pay_amount: 0,
+        pay_link: "",
+      },
     };
   },
   components: {
     plastep1,
     plastep2,
+    plastep3,
   },
-  mounted() {
-    // zhuge.track(`用户查看大纲`, {
-    //   大纲标题: row.title,
-    //   大纲key: row.key1,
-    // });
-    // eventBus.emit("sendOutline", 5); // 发布事件
-    // 页面初始化
-  },
+  mounted() {},
   created() {
     // eventBus.on("sendOutline", this.addE); // 订阅事件
   },
@@ -62,10 +65,21 @@ export default {
   },
   methods: {
     // 定义方法
-    stepNext(index) {
-      console.log("ddd", index);
-      this.active = index;
+    stepNext(index, data) {
+      console.log("ddd", index, data, data.index == 2);
       // 滚动到顶部.
+      if (index === 2) {
+        pay_order(data).then((res) => {
+          console.log("pay_orderres", res);
+          this.payOrderDetail = { ...res.result };
+          this.active = index;
+        });
+      }
+      if (index == 1 && data.index == 2) {
+        this.payOrderDetail = {};
+        this.$refs.step1Ref.resetFrom();
+        this.active = index;
+      }
     },
   },
 };
@@ -80,7 +94,6 @@ export default {
   background: #fff;
 }
 .stepPla {
-  margin-top: 30px;
   background: #fff;
   padding-top: 30px;
 }

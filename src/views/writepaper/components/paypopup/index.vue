@@ -84,13 +84,7 @@
                 "
               >
                 原价:
-                {{
-                  currentOrder.pay_amount == "189"
-                    ? "249"
-                    : currentOrder.pay_amount == "249"
-                    ? "389"
-                    : "49"
-                }}
+                {{ currentOrder.original_price }}
                 元
               </span>
             </p>

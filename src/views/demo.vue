@@ -10,34 +10,29 @@
 // import eventBus from "@/utils/eventBus";
 
 export default {
-  name: "myFooter",
+  name: "demo",
   data() {
     return {
       // 定义变量
     };
   },
+  computed: {
+    //
+  },
+  methods: {
+    // 定义方法
+  },
   components: {
     // webinfo,
   },
   mounted() {
-    // zhuge.track(`用户查看大纲`, {
-    //   大纲标题: row.title,
-    //   大纲key: row.key1,
-    // });
     // eventBus.emit("sendOutline", 5); // 发布事件
-    // 页面初始化
   },
   created() {
     // eventBus.on("sendOutline", this.addE); // 订阅事件
   },
   beforeDestroy() {
     // eventBus.off("sendOutline", this.addE); // 移除事件监听
-  },
-  computed: {
-    // 计算属性
-  },
-  methods: {
-    // 定义方法
   },
 };
 </script>
