@@ -104,7 +104,7 @@
           <div class="right">
             <p>
               [中英文参考文献]
-              <span class="add">x30 + </span>
+              <span class="add"> </span>
             </p>
             <p class="include">提供依据 | 支撑论证</p>
             <p class="alignR">
