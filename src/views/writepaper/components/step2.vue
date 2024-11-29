@@ -944,7 +944,7 @@ export default {
 
   computed: {
     // 计算属性
-    ...mapGetters(["requestForm", "additionalList", "device"]),
+    ...mapGetters(["requestForm", "additionalList", "homeData", "device"]),
   },
   methods: {
     showSlider() {
@@ -1378,29 +1378,12 @@ export default {
           // );
           // data.total_amount = totalPrice;
 
-          let priceList = [
-            {
-              type: "专科",
-              price: 189,
-            },
-            {
-              type: "本科",
-              price: 189,
-            },
-            {
-              type: "研究生",
-              price: 249,
-            },
-            {
-              type: "结课论文",
-              price: 49,
-            },
-          ];
+          let priceList = this.homeData.category_list;
           let result = priceList.find(
-            (item) => item.type === this.requestForm.type
+            (item) => item.name === this.requestForm.type
           );
-          this.$log(result, result.price);
-          data.total_amount = result.price;
+          this.$log(result, result.total_price);
+          data.total_amount = result.total_price;
           console.log("requestForm", this.requestForm);
           console.log("generateForm-data", JSON.stringify(data));
           console.log("generateForm-data", data);
@@ -1416,6 +1399,7 @@ export default {
                 out_trade_no: res.result.out_trade_no,
                 pay_amount: res.result.pay_amount,
                 pay_link: res.result.pay_link,
+                original_price: result.original_price,
               };
               this.$store.dispatch("app/toggleCurrentOrder", order);
 
