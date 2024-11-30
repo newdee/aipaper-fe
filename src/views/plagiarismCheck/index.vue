@@ -18,6 +18,7 @@
     </div>
     <div v-show="active == 2" class="plaStepCon">
       <plastep2
+        ref="step2Ref"
         :payOrderDetail="payOrderDetail"
         @stepNext="stepNext"
       ></plastep2>
@@ -66,13 +67,18 @@ export default {
   methods: {
     // 定义方法
     stepNext(index, data) {
-      console.log("ddd", index, data, data.index == 2);
+      console.log("ddsd");
       // 滚动到顶部.
+      if (index === 3) {
+        this.active = index;
+      }
       if (index === 2) {
         pay_order(data).then((res) => {
-          console.log("pay_orderres", res);
           this.payOrderDetail = { ...res.result };
           this.active = index;
+          this.$nextTick(() => {
+            this.$refs.step2Ref.beginPolling();
+          });
         });
       }
       if (index == 1 && data.index == 2) {

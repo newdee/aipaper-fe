@@ -80,9 +80,8 @@
           应付金额: <span> {{ payOrderDetail.pay_amount }} </span>元
         </p>
         <p>
-          订单号: <span>{{ payOrderDetail.out_trade_no }}</span> <i>点击复制</i>
+          订单号: <span>{{ payOrderDetail.out_trade_no }}</span>
         </p>
-        <p>温馨提示：请保存好订单号 以便step3中查询报告</p>
         <p>温馨提示：您支付成功后, 查重报告会在10 - 30分钟后生成</p>
         <p>温馨提示：您可以在step3或我的查重记录(个人中心)查看/下载查重报告</p>
 
@@ -96,10 +95,11 @@
   </div>
 </template>
 <script>
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 // import eventBus from "@/utils/eventBus";
+import { product, pre_create, passOrder } from "@/api/paper";
 
 export default {
   name: "myFooter",
@@ -127,17 +127,47 @@ export default {
   },
   created() {
     // eventBus.on("sendOutline", this.addE); // 订阅事件
+    // this.intervalId = setInterval(() => {
+    //   this.fetchData();
+    // }, 3000);
   },
   beforeDestroy() {
     // eventBus.off("sendOutline", this.addE); // 移除事件监听
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   },
   computed: {
     // 计算属性
+    ...mapGetters(["preViewId"]),
   },
   methods: {
+    beginPolling() {
+      this.intervalId = setInterval(() => {
+        this.fetchData();
+      }, 3000);
+    },
+    fetchData() {
+      let data = {
+        fileBackKey: this.preViewId,
+      };
+      passOrder(data)
+        .then((res) => {
+          console.log("res", res);
+          if (res.result.local_payment_status == "PRE_CREATE") {
+            this.$message.success("付款成功");
+            clearInterval(this.intervalId);
+          }
+          // if(res)
+        })
+        .catch(() => {});
+    },
     // 定义方法
     stepNext(formName) {
+      console.log("qqq");
       this.$emit("stepNext", 3);
+      clearInterval(this.intervalId);
+
       // this.$refs[formName].validate((valid) => {
       //   if (valid) {
       //     // alert('submit!');
@@ -150,6 +180,7 @@ export default {
     },
     beforeNext(index) {
       this.$emit("stepNext", 1, { index: 2 });
+      clearInterval(this.intervalId);
     },
   },
 };

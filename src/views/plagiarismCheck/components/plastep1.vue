@@ -292,6 +292,7 @@ export default {
         .then((response) => {
           console.log(response);
           this.fileBackKey = response.result;
+          this.$store.dispatch("paper/setPreviewId", this.fileBackKey);
           this.fileList = [file];
           // 开启轮询
           // this.intervalId = setInterval(this.fetchData, 5000);
