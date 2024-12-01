@@ -1,6 +1,5 @@
 <template>
   <div class="mainContentSec bgWhite">
-    <!-- 页面名称 -->
     <div class="plaCheckHeader">
       <div
         :class="{ plaItem: true, activeItem: activeItem == index }"
