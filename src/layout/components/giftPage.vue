@@ -2,11 +2,11 @@
   <div>
     <!-- 页面名称 -->
     <el-dialog
-      title="活动大礼包"
       append-to-body
       :visible.sync="dialogVisible"
       width="700px"
       :before-close="handleClose"
+      class="custom-dialog"
     >
       <div class="popup-overlay">
         <div class="popup-container">
@@ -25,19 +25,22 @@
           </div>
           <div class="popup-right">
             <!-- <img src="qr-code-placeholder.png" alt="QR Code" /> -->
-            <div class="qywxBox">
-              <img :src="agent_image.service_qrcode" alt="" />
+            <div class="popupHeader">
+              <span>
+                <img src="@/assets/images/logoMax.png" alt="" />
+              </span>
+              万象写作
             </div>
-            <p>添加微信免费领礼包</p>
+            <div class="qywxBox">
+              <!-- <img :src="agent_image.service_qrcode" alt="" /> -->
+              <img src="@/assets/images/qywx.png" alt="" />
+            </div>
+            <div class="popupBottom">
+              <p>添加客服微信 <span class="red">免费</span> 领礼包</p>
+            </div>
           </div>
         </div>
       </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
-          >确 定</el-button
-        >
-      </span>
     </el-dialog>
   </div>
 </template>
@@ -118,10 +121,10 @@ export default {
 // }
 .popup-overlay {
   width: 100%;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #000;
 }
 
 .popup-container {
@@ -140,7 +143,7 @@ export default {
 
 .popup-left {
   flex: 1;
-  background: linear-gradient(135deg, #2f9d27 50%, #34c759 50%);
+  background: url("../../assets/images/bg/bg.png") no-repeat 0 0 / 100% 100%;
   color: white;
 }
 
@@ -151,7 +154,6 @@ export default {
 
 .popup-right img {
   width: 100%;
-  max-width: 250px;
   margin: 0 auto;
 }
 
@@ -167,5 +169,33 @@ h4 {
 
 .content p {
   margin: 5px 0;
+}
+.popupHeader {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 20px;
+  & > span {
+    margin-right: 10px;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+.popupBottom {
+  margin-top: 40px;
+  font-size: 16px;
+  font-weight: bold;
+}
+::v-deep .custom-dialog .el-dialog__body {
+  padding: 0 !important;
+  margin: 0;
 }
 </style>

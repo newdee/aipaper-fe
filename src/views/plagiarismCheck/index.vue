@@ -20,6 +20,7 @@
       <plastep2
         ref="step2Ref"
         :payOrderDetail="payOrderDetail"
+        :payOrderResult="payOrderResult"
         @stepNext="stepNext"
       ></plastep2>
     </div>
@@ -42,10 +43,12 @@ export default {
     return {
       // 定义变量
       active: 1,
-      payOrderDetail: {
+      payOrderDetail: {},
+      payOrderResult: {
         out_trade_no: "",
         pay_amount: 0,
         pay_link: "",
+        original_amount: "", //产品原价
       },
     };
   },
@@ -74,7 +77,8 @@ export default {
       }
       if (index === 2) {
         pay_order(data).then((res) => {
-          this.payOrderDetail = { ...res.result };
+          this.payOrderDetail = { ...data };
+          this.payOrderResult = { ...res.result };
           this.active = index;
           this.$nextTick(() => {
             this.$refs.step2Ref.beginPolling();

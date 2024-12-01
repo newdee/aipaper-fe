@@ -3,7 +3,11 @@
     <!-- 页面名称 -->
     <div class="plaCheckHeader">
       <div
-        :class="{ plaItem: true, activeItem: activeItem == index }"
+        :class="{
+          plaItem: true,
+          activeItem: activeItem == index,
+          greenActive: item.janeName === 'paperyy',
+        }"
         v-for="(item, index) in paperList"
         :key="index + 'pla'"
         @click="selectItem(index, item)"
@@ -13,20 +17,32 @@
             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAAWCAYAAACcy/8iAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQyIDc5LjE2MDkyNCwgMjAxNy8wNy8xMy0wMTowNjozOSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpERERERjIxQUIwNzgxMUVBOEQyRUI5QTM4NDQzRjRBQyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpERERERjIxQkIwNzgxMUVBOEQyRUI5QTM4NDQzRjRBQyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkRERERGMjE4QjA3ODExRUE4RDJFQjlBMzg0NDNGNEFDIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkRERERGMjE5QjA3ODExRUE4RDJFQjlBMzg0NDNGNEFDIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+TeyztgAAAMJJREFUeNpiZLOuYsAC2IA4AIotgVgKKjbkAQsWsUAg7gJiFYZhCJiQ2MxA3AnE64arZ9E93AbEZQzDHMA8HDISPAvzMKgw6mcYIQDk4VAglhlJHg5gGEEA5GHTkeZhiZHmYfaR5mGGkebhHyPIv/9BHv43gjz8gmm49IKIBMeYcPSYhivYMJIKradAvHokebgQiH+OFA93g2J3pNTDU4G4ciQ0PO5Ae4I5QPwXJjicSujf0ILpLBCvhybhX+iKAAIMALbmGe1e8B6KAAAAAElFTkSuQmCC"
             alt=""
           />
-          <span>已选中</span>
+          <span>
+            <b v-if="item.janeName == 'paperyy'">支持查重券</b>
+            <b v-else>不支持查重券</b>
+          </span>
         </div>
         <p class="plaTitle">{{ item.name }}</p>
         <p class="plaPrice">
           <span v-if="item.unit == 0"> 1篇 </span>
           <span v-else> {{ item.sellingPrice }} 元/ {{ item.unit }} 字 </span>
         </p>
-        <div class="plaBottom">
+        <div
+          :class="{ plaBottom: true, greenActive: item.janeName === 'paperyy' }"
+        >
           <p>支持类型:{{ item.fileTypes }}</p>
         </div>
       </div>
     </div>
     <!-- form -->
     <div class="formCon">
+      <div class="formHeader">
+        <div></div>
+        <div>
+          <span> 已有订单号可点击查询 </span>
+          <el-button type="primary" @click="jumpStep3">查询报告</el-button>
+        </div>
+      </div>
       <el-form
         v-loading="fileLoading"
         :model="ruleForm"
@@ -132,15 +148,18 @@
           <el-button @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
       </el-form>
+      <el-divider></el-divider>
+      <div>
+        <reminder></reminder>
+      </div>
     </div>
   </div>
 </template>
 <script>
 // import { mapGetters } from "vuex";
 import { product, pre_create, passOrder } from "@/api/paper";
-// import webinfo from "@/components/webinfo.vue";
 // import eventBus from "@/utils/eventBus";
-
+import reminder from "./reminder.vue";
 export default {
   name: "plastep1",
   data() {
@@ -192,7 +211,7 @@ export default {
     };
   },
   components: {
-    // webinfo,
+    reminder,
   },
   mounted() {
     // zhuge.track(`用户查看大纲`, {
@@ -222,6 +241,7 @@ export default {
         autor: "",
         type: "file",
       };
+      this.fileList = [];
       this.ruleForm = { ...data };
     },
     fetchData() {
@@ -238,6 +258,12 @@ export default {
             this.fileLoading = false;
             this.paperDetail = {};
             this.paperDetail = { ...res.result };
+          }
+          if (res.result.api_file_parse_status == 1) {
+            clearInterval(this.intervalId);
+            this.fileList = [];
+            this.$message.error("上传失败, 请修改文档或更换文档后重试!");
+            this.fileLoading = false;
           }
           // if(res)
         })
@@ -299,7 +325,7 @@ export default {
           this.intervalId = setInterval(() => {
             this.fetchData();
             this.checkExpiration();
-          }, 5000);
+          }, 2000);
         })
         .catch((error) => {
           this.$message.error("上传失败");
@@ -350,16 +376,28 @@ export default {
             jane_name: this.currentItem.janeName, // 产品简称，必传
             out_trade_no: this.paperDetail.out_trade_no, // 预创建的订单编号，必传
             pay_amount: this.paperDetail.pay_amount, // 支付价格，来源于上传完文件之后轮循得到的付款价格，必传
+            original_amount: this.paperDetail.pay_amount, // 支付价格，来源于上传完文件之后轮循得到的付款价格，必传
           };
           if (this.currentItem.janeName != "cqvipzc") {
             delete data.end_date;
           }
-          this.$emit("stepNext", 2, data);
+          let step2ShowListData = {
+            ...this.paperDetail,
+            ...data,
+            name: this.currentItem.name,
+            sellingPrice: this.currentItem.sellingPrice,
+            unit: this.currentItem.unit,
+          };
+
+          this.$emit("stepNext", 2, step2ShowListData);
         } else {
           console.log("error submit!!");
           return false;
         }
       });
+    },
+    jumpStep3() {
+      this.$emit("stepNext", 3);
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -435,7 +473,7 @@ export default {
   position: absolute;
   top: -10px;
   right: -10px;
-  width: 60px;
+  width: 88px;
   height: 22px;
   font-style: normal;
   color: #fff;
@@ -488,7 +526,21 @@ export default {
     background: #0c368a;
     color: #fff;
   }
+  .greenActive {
+    background: #67c23a !important;
+  }
   border: 1px solid #0c368a;
+}
+.greenActive.activeItem {
+  border: 1px solid #67c23a !important;
+  .activeIcon {
+    background: #67c23a !important;
+    border-top-left-radius: 11px;
+    border-bottom-right-radius: 11px;
+    img {
+      display: none;
+    }
+  }
 }
 .uploadDesc {
   margin-left: 50px;
@@ -500,5 +552,11 @@ export default {
   justify-content: center;
   margin-top: 10px;
   padding: 5px;
+}
+.formHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 </style>

@@ -11,15 +11,16 @@
       <div class="container">
         <div class="section">
           <h2>推广文案</h2>
-          <p>AI写作指导平台AIpassPaper来啦！</p>
+          <p>AI写作指导平台Mixpaper来啦！</p>
           <ul>
             <li>1、3万字内容，10分钟搞定，一键下载</li>
             <li>2、千字大纲，免费生成，在线随手编辑</li>
             <li>3、无需登录注册，加载精准，走即用即停</li>
+            <li>4、邀请一人可赠送查重券(10000字以内)</li>
           </ul>
           <p>
             官网:
-            <a href="https://www.aipaperpass.com">https://www.mixpaper.com</a>
+            <a href="https://mixpaper.cn/#/home/home">https://mixpaper.cn/</a>
           </p>
         </div>
 
@@ -31,9 +32,7 @@
               {{ inv_code_url }}
             </span>
           </p>
-          <button @click="copyLink('https://www.aipaperpass.com?pic=bqdO')">
-            点击复制
-          </button>
+          <button @click="copyLink()">点击复制</button>
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -73,7 +72,7 @@ export default {
     },
     copyLink() {
       const el = document.createElement("textarea");
-      el.value = this.inv_code_url;
+      el.value = "AI论文，免费大纲，10分钟3万字 👉" + this.inv_code_url;
       document.body.appendChild(el);
       el.select();
       document.execCommand("copy");

@@ -31,6 +31,18 @@ export function report_url(params) {
     method: "get",
   });
 }
+export function pay_discount(params) {
+  return request({
+    url: "/api/ai-paper/pass/pay_discount/" + params.out_trade_no,
+    method: "get",
+  });
+}
+export function passReport(params) {
+  return request({
+    url: "/api/ai-paper/pass/report/" + params.out_trade_no,
+    method: "get",
+  });
+}
 export function pre_create(data) {
   return request({
     url: "/api/ai-paper/pass/pre_create",

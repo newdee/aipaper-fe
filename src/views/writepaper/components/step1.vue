@@ -2,6 +2,8 @@
   <div class="step1Box">
     <!-- 编辑大纲，生成全文 -->
     <div class="outlineIntroNew">
+      <!-- 滚动标签 -->
+      <div id="step1"></div>
       <p class="introTitle">编辑大纲，生成全文</p>
       <p class="introSubtitle">
         🔔
@@ -9,6 +11,7 @@
         小节进行<span>增加、删减</span>
       </p>
     </div>
+
     <!-- 论文标题
         -->
     <p class="oulineTitlePaper"><span>题目: </span>{{ requestForm.title }}</p>
@@ -19,6 +22,7 @@
     </p>
 
     <!-- 页面名称 -->
+
     <div v-if="errLineStatus" class="progressBox">
       <div class="pgBoxEl">
         <el-progress
@@ -41,8 +45,6 @@
         >大纲生成失败, 请点击重试...</el-link
       >
     </div>
-    <!-- 滚动标签 -->
-    <div id="step1"></div>
   </div>
 </template>
 <script>

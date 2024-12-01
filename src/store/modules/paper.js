@@ -4,7 +4,7 @@ const state = {
   activeIndex: 0, //
   pollingStatus: false, // paper弹窗 是否继续循环
   additionalList: [], // paper弹窗 是否继续循环
-  preViewId: "123", // 报告查询ID
+  preViewId: "", // 报告查询ID
 };
 
 const mutations = {
