@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# 捕获所有退出信号，确保在任何退出时都执行最后的 read 操作
+trap 'echo "按任意键继续..."; read -n 1' EXIT
+
 # 设置变量
 REMOTE_ORIGIN="origin"  # 远程仓库 origin
 REMOTE_GITHUB="github"  # 远程仓库 github
@@ -30,7 +33,7 @@ get_next_tag() {
       new_patch=$((patch + 1))
       new_minor=$minor
     else
-      new_patch=1
+      new_patch=0
       new_minor=$((minor + 1))
     fi
 
@@ -61,13 +64,12 @@ done
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 # 检查是否有未提交的更改
+STASHED=false
 if ! git diff-index --quiet HEAD --; then
   # 暂存当前更改
   echo "暂存当前更改..."
   git stash || { echo "暂存更改失败"; exit 1; }
   STASHED=true
-else
-  STASHED=false
 fi
 
 # 拉取最新的代码
@@ -80,13 +82,16 @@ if $STASHED; then
   git stash pop || { echo "恢复暂存的更改失败"; exit 1; }
 fi
 
-# 添加所有更改
-echo "添加所有更改..."
-git add .
+# 检查是否有任何更改需要提交
+if ! git diff-index --cached --quiet HEAD -- || ! git diff --quiet; then
+  # 添加所有更改
+  echo "添加所有更改..."
+  git add .
 
-# 提交更改
-echo "使用消息 '$MESSAGE' 提交更改..."
-git commit -m "$MESSAGE" || { echo "提交失败"; exit 1; }
+  # 提交更改
+  echo "使用消息 '$MESSAGE' 提交更改..."
+  git commit -m "$MESSAGE" || { echo "提交失败"; exit 1; }
+fi
 
 # 推送更改到 origin 仓库
 for BRANCH in "${BRANCHES[@]}"; do
@@ -105,12 +110,20 @@ echo "切换到 main 分支..."
 git checkout main || { echo "切换到 main 分支失败"; exit 1; }
 
 # 拉取最新的 main 分支代码
-echo "从 $REMOTE_GITHUB/main 拉取最新代码..."
-git pull $REMOTE_GITHUB main || { echo "拉取 main 分支代码失败"; exit 1; }
+echo "从 $REMOTE_ORIGIN/main 拉取最新代码..."
+git pull $REMOTE_ORIGIN main || { echo "拉取 main 分支代码失败"; exit 1; }
 
 # 合并 dev 分支到 main 分支
 echo "合并 dev 分支到 main 分支..."
 git merge --no-ff dev || { echo "合并过程中出现冲突，请手动解决冲突后继续。"; exit 1; }
+
+# 再次拉取以确保没有新提交（解决推送失败的问题）
+echo "从 $REMOTE_ORIGIN/main 再次拉取以确保同步..."
+git pull $REMOTE_ORIGIN main || { echo "再次拉取 main 分支代码失败"; exit 1; }
+
+# 推送合并后的 main 分支到 origin 仓库
+echo "向 $REMOTE_ORIGIN/main 推送合并后的 main 分支..."
+git push $REMOTE_ORIGIN main || { echo "推送合并后的 main 分支失败"; exit 1; }
 
 # 推送合并后的 main 分支到 github 仓库
 echo "向 $REMOTE_GITHUB/main 推送合并后的 main 分支..."
@@ -120,6 +133,10 @@ git push $REMOTE_GITHUB main || { echo "推送合并后的 main 分支失败"; e
 echo "创建标签 $TAG_NAME..."
 git tag $TAG_NAME || { echo "创建标签失败"; exit 1; }
 
+# 推送标签到 origin 仓库
+echo "向 $REMOTE_ORIGIN 推送标签 $TAG_NAME..."
+git push $REMOTE_ORIGIN $TAG_NAME || { echo "推送标签失败"; exit 1; }
+
 # 推送标签到 github 仓库
 echo "向 $REMOTE_GITHUB 推送标签 $TAG_NAME..."
 git push $REMOTE_GITHUB $TAG_NAME || { echo "推送标签失败"; exit 1; }
@@ -127,5 +144,3 @@ git push $REMOTE_GITHUB $TAG_NAME || { echo "推送标签失败"; exit 1; }
 # 切换到开发分支
 git checkout dev || { echo "切换到开发分支失败"; exit 1; }
 echo "部署完成！"
-
-read -p "按任意键继续..."
