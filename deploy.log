@@ -17,3 +17,15 @@ Untracked files:
 no changes added to commit (use "git add" and/or "git commit -a")
 Dropped refs/stash@{0} (64c393d2257f88b2ede8540ffdb0f66961195c80)
 添加所有更改...
+从 origin/main 拉取最新代码...
+Already up to date.
+恢复暂存的更改...
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   deploy.log
+
+no changes added to commit (use "git add" and/or "git commit -a")
+The stash entry is kept in case you need it again.
+添加所有更改...
