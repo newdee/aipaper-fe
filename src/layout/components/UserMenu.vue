@@ -107,7 +107,7 @@
       :direction="orderDirection"
       append-to-body
       :lock-scroll="false"
-      :size="isPhone ? '80%' : '45%'"
+      :size="isPhone ? '30%' : '30%'"
     >
       <template #title>
         <div v-if="orderTabs == 1" class="titleDrawer">我的订单</div>

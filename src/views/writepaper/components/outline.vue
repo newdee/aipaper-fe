@@ -185,7 +185,7 @@
                   </template>
                   <div class="labelBox">
                     <div class="left">
-                      <!-- <svg class="icon svg-icon" aria-hidden="true">
+                       <svg class="icon svg-icon" aria-hidden="true">
                     <use xlink:href="#icon-tubiaozoushitu"></use>
                   </svg> -->
                       <img
@@ -227,8 +227,8 @@
           <div class="formItemCon">
             <el-slider
               v-model="requestForm.word_count"
-              :min="3000"
-              :max="30000"
+              :min="minCount"
+              :max="maxCount"
               :marks="marks"
               :step="1000"
             >
@@ -304,7 +304,8 @@ export default {
         研究生: "产出的论文学术深度较高，可通过论文水平进一步控制论文深度",
         结课论文: "专科、本科课论文水准，可通过论文水平进一步控制论文深度",
       },
-
+      minCount: 3000,
+      maxCount: 30000,
       options: [
         {
           value: "中文",
@@ -342,16 +343,16 @@ export default {
       requestKey: "是是是",
       word_count: 3000,
       marks: {
-        3000: "3千字",
-        5000: "5千字",
-        8000: "8千字",
-        10000: "1万字",
-        15000: "15000字",
+        3000: "3千",
+        5000: "5千",
+        8000: "8千",
+        10000: "10000",
+        15000: "15000",
         20000: {
           style: {
             color: "#1989FA",
           },
-          label: this.$createElement("strong", "两万字"),
+          label: this.$createElement("strong", "两万"),
         },
         30000: {
           style: {
@@ -412,7 +413,12 @@ export default {
       this.$refs.exampleDia.showDia();
     },
     paperTypeChange(val) {
-      this.$log("论文类型", val);
+      let selectItem = this.homeData.category_list.find(
+        (item) => item.name == val
+      );
+      this.$log("论文类型", selectItem);
+      selectItem.min_word_num && (this.minCount = selectItem.min_word_num);
+      selectItem.max_word_num && (this.maxCount = selectItem.max_word_num);
       if (val == "专科") {
         this.requestForm.word_count = 8000;
       }

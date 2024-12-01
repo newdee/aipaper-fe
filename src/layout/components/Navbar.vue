@@ -63,7 +63,16 @@
           <!-- <div class="gift">
             <span class="num">1</span>
           </div> -->
-          <!-- <div class="btn" @click="$devf">升级专业版</div> -->
+          <div class="btn" v-if="sub_domain == 'www'" @click="showGift">
+            免费大礼包
+          </div>
+          <div class="shareBtn" @click="showLink">
+            <span>
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-icon--share"></use>
+              </svg>
+            </span>
+          </div>
           <template>
             <div
               v-if="!hasLogin"
@@ -212,6 +221,10 @@
         </div>
       </div>
     </el-drawer>
+
+    <!-- 分享页面 -->
+    <gift-page ref="giftRef"></gift-page>
+    <share-link ref="linkRef"></share-link>
   </div>
 </template>
 
@@ -220,6 +233,9 @@ import { mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 import UserMenu from "./UserMenu.vue";
+import giftPage from "./giftPage.vue";
+import shareLink from "./shareLink.vue";
+
 import UserOrders from "./UserOrders.vue";
 import UserOutlines from "./UserOutlines.vue";
 import { generateTitle } from "@/utils/i18n";
@@ -236,6 +252,8 @@ export default {
     UserOrders,
     UserOutlines,
     dataStatistics,
+    giftPage,
+    shareLink,
   },
   props: {
     showContent: {
@@ -263,7 +281,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["sidebar", "userInfo", "name", "avatar"]),
+    ...mapGetters(["sidebar", "userInfo", "name", "avatar", "sub_domain"]),
   },
 
   mounted() {
@@ -275,8 +293,19 @@ export default {
       (obj) => obj.name == "main" && obj.meta.id == "5"
     );
     this.routerList = arr.children;
+    // console.log('loca', localStorage.getItem('firstTag'))
+    // let firstTag = localStorage.getItem('firstTag');
+    // if (firstTag != '1') {
+    //   this.showGift();
+    // }
   },
   methods: {
+    showLink() {
+      this.$refs.linkRef.showInit();
+    },
+    showGift() {
+      this.$refs.giftRef.showInit();
+    },
     generateTitle,
     showOrderList(status) {
       const hasToken = getToken();
@@ -343,6 +372,12 @@ export default {
       // this.$router.push("/");
       location.reload();
     },
+  },
+  created() {
+    eventBus.on("showGift", this.showGift); // 订阅事件
+  },
+  beforeDestroy() {
+    eventBus.off("showGift", this.showGift); // 移除事件监听
   },
 };
 </script>
@@ -743,7 +778,12 @@ export default {
     }
   }
 }
-
+.shareBtn {
+  font-size: 20px;
+  &:hover {
+    cursor: pointer;
+  }
+}
 .navBarRight {
   height: 100%;
   align-items: center;

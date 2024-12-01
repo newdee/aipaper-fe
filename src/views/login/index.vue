@@ -184,6 +184,7 @@ import inputCode from "./components/inputCode.vue";
 import { sms } from "@/api/login";
 import { throttle } from "lodash";
 import { getDomain } from "@/utils/index.js";
+import eventBus from "@/utils/eventBus";
 
 export default {
   data() {
@@ -325,9 +326,22 @@ export default {
             sms_code: this.sms_code,
             sub_domain: getDomain(),
           };
+          let param = "inv_code";
 
-          console.log("login输入内容", data);
+          // Log the window location to ensure it's being accessed correctly
+          console.log("Current URL:", window.location.href);
 
+          // Retrieve the hash fragment (everything after #)
+          const hash = window.location.hash;
+
+          // Check if the hash contains the query parameters
+          const regex = new RegExp(`[?&]${param}=([^&]*)`);
+          const match = hash.match(regex);
+
+          let inv_code = match ? decodeURIComponent(match[1]) : "";
+          if (inv_code) {
+            data.inv_code = inv_code;
+          }
           this.$store.dispatch("user/login", data).then(() => {
             window.zhuge.track("登录", {
               phone: this.phoneNum,
@@ -336,6 +350,10 @@ export default {
               type: "success",
               message: "登录成功！",
             });
+            setTimeout(() => {
+              eventBus.emit("showGift"); // 发布事件
+              console.log("登录成功setTImeout");
+            }, 1500);
             this.$router.push({ path: "/" });
           });
         }

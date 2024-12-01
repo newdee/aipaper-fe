@@ -13,6 +13,12 @@ export function product() {
     method: "get",
   });
 }
+export function inviteFetch() {
+  return request({
+    url: "/api/ai-paper/user/invite/fetch",
+    method: "get",
+  });
+}
 export function passOrder(params) {
   return request({
     url: "/api/ai-paper/pass/order/" + params.fileBackKey,
@@ -22,6 +28,18 @@ export function passOrder(params) {
 export function report_url(params) {
   return request({
     url: "/api/ai-paper/pass/report_url/" + params.fileBackKey,
+    method: "get",
+  });
+}
+export function pay_discount(params) {
+  return request({
+    url: "/api/ai-paper/pass/pay_discount/" + params.out_trade_no,
+    method: "get",
+  });
+}
+export function passReport(params) {
+  return request({
+    url: "/api/ai-paper/pass/report/" + params.out_trade_no,
     method: "get",
   });
 }

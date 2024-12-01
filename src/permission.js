@@ -6,6 +6,7 @@ import NProgress from "nprogress"; // progress bar
 import "nprogress/nprogress.css"; // progress bar style
 import { getToken, setToken } from "@/utils/auth"; // get token from cookie
 import getPageTitle from "@/utils/get-page-title";
+import { getDomain } from "@/utils/index.js";
 
 NProgress.configure({
   showSpinner: false,
@@ -53,6 +54,10 @@ router.beforeEach(async (to, from, next) => {
   // determine whether the user has logged in
   // const hasToken = getToken() ? getToken() : setToken("editor-token");
   const hasToken = getToken();
+  const sub_domain = getDomain();
+  if (sub_domain && !store.getters.sub_domain) {
+          store.dispatch("user/setSubDomain", sub_domain);
+  }
   if (hasToken) {
     if (to.path === "/login" && hasToken == "editor-token") {
       // if is logged in, redirect to the home page
