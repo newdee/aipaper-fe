@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# 捕获所有退出信号，确保在任何退出时都执行最后的 read 操作
+trap 'echo "按任意键继续..."; read -n 1' EXIT
+
 # 设置变量
 REMOTE_ORIGIN="origin"  # 远程仓库 origin
 REMOTE_GITHUB="github"  # 远程仓库 github
@@ -141,5 +144,3 @@ git push $REMOTE_GITHUB $TAG_NAME || { echo "推送标签失败"; exit 1; }
 # 切换到开发分支
 git checkout dev || { echo "切换到开发分支失败"; exit 1; }
 echo "部署完成！"
-
-read -p "按任意键继续..."
