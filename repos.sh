@@ -61,13 +61,12 @@ done
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 # 检查是否有未提交的更改
+STASHED=false
 if ! git diff-index --quiet HEAD --; then
   # 暂存当前更改
   echo "暂存当前更改..."
   git stash || { echo "暂存更改失败"; exit 1; }
   STASHED=true
-else
-  STASHED=false
 fi
 
 # 拉取最新的代码
@@ -80,13 +79,16 @@ if $STASHED; then
   git stash pop || { echo "恢复暂存的更改失败"; exit 1; }
 fi
 
-# 添加所有更改
-echo "添加所有更改..."
-git add .
+# 检查是否有任何更改需要提交
+if ! git diff-index --cached --quiet HEAD -- || ! git diff --quiet; then
+  # 添加所有更改
+  echo "添加所有更改..."
+  git add .
 
-# 提交更改
-echo "使用消息 '$MESSAGE' 提交更改..."
-git commit -m "$MESSAGE" || { echo "提交失败"; exit 1; }
+  # 提交更改
+  echo "使用消息 '$MESSAGE' 提交更改..."
+  git commit -m "$MESSAGE" || { echo "提交失败"; exit 1; }
+fi
 
 # 推送更改到 origin 仓库
 for BRANCH in "${BRANCHES[@]}"; do
