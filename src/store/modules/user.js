@@ -46,16 +46,13 @@ const actions = {
     const { phone, sms_code, sub_domain } = userInfo;
     return new Promise((resolve, reject) => {
       //
-      login({
-        phone: phone.trim(),
-        sms_code: sms_code,
-        sub_domain: sub_domain,
-      })
+      login(userInfo)
         .then((response) => {
           const result = response.result;
 
           commit("SET_TOKEN", result.token);
           setToken(result.token);
+          commit("SET_DOMAIN", sub_domain);
 
           resolve();
         })
@@ -123,6 +120,9 @@ const actions = {
   },
   setAgentImage({ commit }, agent_image) {
     commit("SET_AGENT", agent_image);
+  },
+  setSubDomain({ commit }, sub_domain) {
+    commit("SET_DOMAIN", sub_domain);
   },
   // remove token
   resetToken({ commit }) {

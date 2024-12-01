@@ -1,11 +1,19 @@
 <template>
   <div class="stepCon3">
     <!-- 页面名称 -->
-    <p class="step3Title">
-      <i class="el-icon-takeaway-box"></i>
-      <b>报告查询</b>
-      <span>填写检测的“订单编号”，点击查询报告，然后下载对应的检测报告！</span>
-    </p>
+    <div class="step3Title">
+      <p>
+        <i class="el-icon-takeaway-box"></i>
+        <b>报告查询</b>
+        <span
+          >填写检测的“订单编号”，点击查询报告，然后下载对应的检测报告！</span
+        >
+      </p>
+
+      <el-button type="primary" size="small" @click="beforeNext"
+        >返回第一步</el-button
+      >
+    </div>
     <div class="reportCon">
       订单号:
       <el-input
@@ -66,6 +74,9 @@ export default {
       // 报告id保存
       this.$store.dispatch("paper/setPreviewId", "456");
     },
+    beforeNext(index) {
+      this.$emit("stepNext", 1, { index: 2 });
+    },
   },
   mounted() {
     // zhuge.track(`用户查看大纲`, {
@@ -96,7 +107,9 @@ export default {
 // }
 .step3Title {
   font-size: 18px;
-
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   color: #303133;
   b {
     margin-left: 5px;

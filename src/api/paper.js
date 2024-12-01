@@ -13,6 +13,12 @@ export function product() {
     method: "get",
   });
 }
+export function inviteFetch() {
+  return request({
+    url: "/api/ai-paper/user/invite/fetch",
+    method: "get",
+  });
+}
 export function passOrder(params) {
   return request({
     url: "/api/ai-paper/pass/order/" + params.fileBackKey,
