@@ -114,6 +114,10 @@ git pull $REMOTE_ORIGIN main || { echo "拉取 main 分支代码失败"; exit 1;
 echo "合并 dev 分支到 main 分支..."
 git merge --no-ff dev || { echo "合并过程中出现冲突，请手动解决冲突后继续。"; exit 1; }
 
+# 再次拉取以确保没有新提交（解决推送失败的问题）
+echo "从 $REMOTE_ORIGIN/main 再次拉取以确保同步..."
+git pull $REMOTE_ORIGIN main || { echo "再次拉取 main 分支代码失败"; exit 1; }
+
 # 推送合并后的 main 分支到 origin 仓库
 echo "向 $REMOTE_ORIGIN/main 推送合并后的 main 分支..."
 git push $REMOTE_ORIGIN main || { echo "推送合并后的 main 分支失败"; exit 1; }
