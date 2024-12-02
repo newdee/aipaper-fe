@@ -4,6 +4,9 @@ dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+repos.log
+repos.log*
+
 tests/**/coverage/
 package-lock.json
 # Editor directories and files
