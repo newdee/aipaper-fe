@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# 日志文件
-LOG_FILE="deploy.log"
-
 # 捕获所有退出信号，确保在任何退出时都执行最后的 read 操作
 trap 'echo "按任意键继续..."; read -n 1' EXIT
 
@@ -47,18 +44,18 @@ get_next_tag() {
 
 # 生成新的标签名称
 TAG_NAME=$(get_next_tag)
-echo "新标签名称为: $TAG_NAME" | tee -a "$LOG_FILE"
+echo "新标签名称为: $TAG_NAME"
 
 # 确保是在一个Git仓库中
 if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-  echo "此脚本必须在 git 仓库中运行。" | tee -a "$LOG_FILE"
+  echo "此脚本必须在 git 仓库中运行。"
   exit 1
 fi
 
 # 验证远程仓库是否存在
 for REMOTE in "$REMOTE_ORIGIN" "$REMOTE_GITHUB"; do
   if ! git remote | grep -q "$REMOTE"; then
-    echo "远程仓库 '$REMOTE' 不存在。" | tee -a "$LOG_FILE"
+    echo "远程仓库 '$REMOTE' 不存在。"
     exit 1
   fi
 done
@@ -70,81 +67,80 @@ CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 STASHED=false
 if ! git diff-index --quiet HEAD --; then
   # 暂存当前更改
-  echo "暂存当前更改..." | tee -a "$LOG_FILE"
-  git stash | tee -a "$LOG_FILE" || { echo "暂存更改失败" | tee -a "$LOG_FILE"; exit 1; }
+  echo "暂存当前更改..."
+  git stash || { echo "暂存更改失败"; exit 1; }
   STASHED=true
 fi
 
 # 拉取最新的代码
-echo "从 $REMOTE_ORIGIN/$CURRENT_BRANCH 拉取最新代码..." | tee -a "$LOG_FILE"
-git pull $REMOTE_ORIGIN $CURRENT_BRANCH | tee -a "$LOG_FILE" || { echo "拉取代码失败" | tee -a "$LOG_FILE"; exit 1; }
+echo "从 $REMOTE_ORIGIN/$CURRENT_BRANCH 拉取最新代码..."
+git pull $REMOTE_ORIGIN $CURRENT_BRANCH || { echo "拉取代码失败"; exit 1; }
 
 # 如果有暂存的更改，恢复它们
 if $STASHED; then
-  echo "恢复暂存的更改..." | tee -a "$LOG_FILE"
-  git stash pop | tee -a "$LOG_FILE" || { echo "恢复暂存的更改失败" | tee -a "$LOG_FILE"; exit 1; }
+  echo "恢复暂存的更改..."
+  git stash pop || { echo "恢复暂存的更改失败"; exit 1; }
 fi
 
 # 检查是否有任何更改需要提交
 if ! git diff-index --cached --quiet HEAD -- || ! git diff --quiet; then
   # 添加所有更改
-  echo "添加所有更改..." | tee -a "$LOG_FILE"
-  git add . | tee -a "$LOG_FILE"
+  echo "添加所有更改..."
+  git add .
 
   # 提交更改
-  echo "使用消息 '$MESSAGE' 提交更改..." | tee -a "$LOG_FILE"
-  git commit -m "$MESSAGE" | tee -a "$LOG_FILE" || { echo "提交失败" | tee -a "$LOG_FILE"; exit 1; }
+  echo "使用消息 '$MESSAGE' 提交更改..."
+  git commit -m "$MESSAGE" || { echo "提交失败"; exit 1; }
 fi
 
 # 推送更改到 origin 仓库
 for BRANCH in "${BRANCHES[@]}"; do
-  echo "向 $REMOTE_ORIGIN/$BRANCH 推送更改..." | tee -a "$LOG_FILE"
-  git push $REMOTE_ORIGIN $CURRENT_BRANCH:$BRANCH | tee -a "$LOG_FILE" || { echo "推送到 $REMOTE_ORIGIN/$BRANCH 失败" | tee -a "$LOG_FILE"; exit 1; }
+  echo "向 $REMOTE_ORIGIN/$BRANCH 推送更改..."
+  git push $REMOTE_ORIGIN $CURRENT_BRANCH:$BRANCH || { echo "推送到 $REMOTE_ORIGIN/$BRANCH 失败"; exit 1; }
 done
 
 # 推送更改到 github 仓库
 for BRANCH in "${BRANCHES[@]}"; do
-  echo "向 $REMOTE_GITHUB/$BRANCH 推送更改..." | tee -a "$LOG_FILE"
-  git push $REMOTE_GITHUB $CURRENT_BRANCH:$BRANCH | tee -a "$LOG_FILE" || { echo "推送到 $REMOTE_GITHUB/$BRANCH 失败" | tee -a "$LOG_FILE"; exit 1; }
+  echo "向 $REMOTE_GITHUB/$BRANCH 推送更改..."
+  git push $REMOTE_GITHUB $CURRENT_BRANCH:$BRANCH || { echo "推送到 $REMOTE_GITHUB/$BRANCH 失败"; exit 1; }
 done
 
 # 切换到 main 分支
-echo "切换到 main 分支..." | tee -a "$LOG_FILE"
-git checkout main | tee -a "$LOG_FILE" || { echo "切换到 main 分支失败" | tee -a "$LOG_FILE"; exit 1; }
+echo "切换到 main 分支..."
+git checkout main || { echo "切换到 main 分支失败"; exit 1; }
 
 # 拉取最新的 main 分支代码
-echo "从 $REMOTE_ORIGIN/main 拉取最新代码..." | tee -a "$LOG_FILE"
-git pull $REMOTE_ORIGIN main | tee -a "$LOG_FILE" || { echo "拉取 main 分支代码失败" | tee -a "$LOG_FILE"; exit 1; }
+echo "从 $REMOTE_ORIGIN/main 拉取最新代码..."
+git pull $REMOTE_ORIGIN main || { echo "拉取 main 分支代码失败"; exit 1; }
 
 # 合并 dev 分支到 main 分支
-echo "合并 dev 分支到 main 分支..." | tee -a "$LOG_FILE"
-git merge --no-ff dev | tee -a "$LOG_FILE" || { echo "合并过程中出现冲突，请手动解决冲突后继续。" | tee -a "$LOG_FILE"; exit 1; }
+echo "合并 dev 分支到 main 分支..."
+git merge --no-ff dev || { echo "合并过程中出现冲突，请手动解决冲突后继续。"; exit 1; }
 
 # 再次拉取以确保没有新提交（解决推送失败的问题）
-echo "从 $REMOTE_ORIGIN/main 再次拉取以确保同步..." | tee -a "$LOG_FILE"
-git pull $REMOTE_ORIGIN main | tee -a "$LOG_FILE" || { echo "再次拉取 main 分支代码失败" | tee -a "$LOG_FILE"; exit 1; }
+echo "从 $REMOTE_ORIGIN/main 再次拉取以确保同步..."
+git pull $REMOTE_ORIGIN main || { echo "再次拉取 main 分支代码失败"; exit 1; }
 
 # 推送合并后的 main 分支到 origin 仓库
-echo "向 $REMOTE_ORIGIN/main 推送合并后的 main 分支..." | tee -a "$LOG_FILE"
-git push $REMOTE_ORIGIN main | tee -a "$LOG_FILE" || { echo "推送合并后的 main 分支失败" | tee -a "$LOG_FILE"; exit 1; }
+echo "向 $REMOTE_ORIGIN/main 推送合并后的 main 分支..."
+git push $REMOTE_ORIGIN main || { echo "推送合并后的 main 分支失败"; exit 1; }
 
 # 推送合并后的 main 分支到 github 仓库
-echo "向 $REMOTE_GITHUB/main 推送合并后的 main 分支..." | tee -a "$LOG_FILE"
-git push $REMOTE_GITHUB main | tee -a "$LOG_FILE" || { echo "推送合并后的 main 分支失败" | tee -a "$LOG_FILE"; exit 1; }
+echo "向 $REMOTE_GITHUB/main 推送合并后的 main 分支..."
+git push $REMOTE_GITHUB main || { echo "推送合并后的 main 分支失败"; exit 1; }
 
 # 创建标签
-echo "创建标签 $TAG_NAME..." | tee -a "$LOG_FILE"
-git tag $TAG_NAME | tee -a "$LOG_FILE" || { echo "创建标签失败" | tee -a "$LOG_FILE"; exit 1; }
+echo "创建标签 $TAG_NAME..."
+git tag $TAG_NAME || { echo "创建标签失败"; exit 1; }
 
 # 推送标签到 origin 仓库
-echo "向 $REMOTE_ORIGIN 推送标签 $TAG_NAME..." | tee -a "$LOG_FILE"
-git push $REMOTE_ORIGIN $TAG_NAME | tee -a "$LOG_FILE" || { echo "推送标签失败" | tee -a "$LOG_FILE"; exit 1; }
+echo "向 $REMOTE_ORIGIN 推送标签 $TAG_NAME..."
+git push $REMOTE_ORIGIN $TAG_NAME || { echo "推送标签失败"; exit 1; }
 
 # 推送标签到 github 仓库
-echo "向 $REMOTE_GITHUB 推送标签 $TAG_NAME..." | tee -a "$LOG_FILE"
-git push $REMOTE_GITHUB $TAG_NAME | tee -a "$LOG_FILE" || { echo "推送标签失败" | tee -a "$LOG_FILE"; exit 1; }
+echo "向 $REMOTE_GITHUB 推送标签 $TAG_NAME..."
+git push $REMOTE_GITHUB $TAG_NAME || { echo "推送标签失败"; exit 1; }
 
 # 切换到开发分支
-git checkout dev | tee -a "$LOG_FILE" || { echo "切换到开发分支失败" | tee -a "$LOG_FILE"; exit 1; }
-echo "部署完成！" | tee -a "$LOG_FILE"
-
+git checkout dev || { echo "切换到开发分支失败"; exit 1; }
+echo "部署完成！"

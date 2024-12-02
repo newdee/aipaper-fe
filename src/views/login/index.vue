@@ -350,10 +350,12 @@ export default {
               type: "success",
               message: "登录成功！",
             });
-            setTimeout(() => {
-              eventBus.emit("showGift"); // 发布事件
-              console.log("登录成功setTImeout");
-            }, 1500);
+            if (getDomain() === "www") {
+              setTimeout(() => {
+                eventBus.emit("showGift"); // 发布事件
+                console.log("登录成功setTImeout");
+              }, 1500);
+            }
             this.$router.push({ path: "/" });
           });
         }
