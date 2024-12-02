@@ -65,3 +65,15 @@ The stash entry is kept in case you need it again.
 修改尚未加入提交（使用 "git add" 和/或 "git commit -a"）
 贮藏条目被保留以备您再次需要。
 添加所有更改...
+从 origin/dev 拉取最新代码...
+已经是最新的。
+恢复暂存的更改...
+位于分支 dev
+尚未暂存以备提交的变更：
+  （使用 "git add <文件>..." 更新要提交的内容）
+  （使用 "git restore <文件>..." 丢弃工作区的改动）
+	修改：     deploy.log
+
+修改尚未加入提交（使用 "git add" 和/或 "git commit -a"）
+贮藏条目被保留以备您再次需要。
+添加所有更改...
