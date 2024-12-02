@@ -25,6 +25,7 @@
           </div>
           <template v-for="(route, i) in routerList">
             <div
+              v-if="!route.hidden"
               :key="'route_' + i"
               :class="[
                 'navItem',
@@ -63,16 +64,39 @@
           <!-- <div class="gift">
             <span class="num">1</span>
           </div> -->
-          <div class="btn" v-if="sub_domain == 'www'" @click="showGift">
-            免费大礼包
+          <div class="giftBtn" v-if="sub_domain == 'www'" @click="showGift">
+            <i class="el-icon-present"></i>
+            <span>免费大礼包 </span>
           </div>
-          <div class="shareBtn" @click="showLink">
-            <span>
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-icon--share"></use>
-              </svg>
-            </span>
-          </div>
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="分享获取免费查重券"
+            placement="top"
+          >
+            <div class="shareBtn" @click="showLink">
+              <span>
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-icon--share"></use>
+                </svg>
+              </span>
+            </div>
+          </el-tooltip>
+          <!-- 钱包 -->
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="我的钱包"
+            placement="top"
+            v-if="false"
+          >
+            <div class="walletBox" @click="$jumpUrl('/main/orderList')">
+              <span>
+                <i class="el-icon-wallet"></i>
+              </span>
+            </div>
+          </el-tooltip>
+          <!-- 登录按钮 -->
           <template>
             <div
               v-if="!hasLogin"
@@ -780,6 +804,14 @@ export default {
 }
 .shareBtn {
   font-size: 20px;
+  color: #3355ff;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.walletBox {
+  font-size: 24px;
+  color: #3355ff;
   &:hover {
     cursor: pointer;
   }
@@ -813,16 +845,24 @@ export default {
     }
   }
 
-  .btn {
-    background-color: #3355ff;
-    color: #fff;
+  .giftBtn {
+    background-color: rgba(51, 85, 255, 0.3);
     box-sizing: border-box;
-    border-radius: 18px;
+    border-radius: 5px;
     height: 36px;
     padding: 0px 10px;
     line-height: 36px;
+    font-size: 20px;
     cursor: pointer;
     user-select: none;
+    color: #3355ff;
+    display: flex;
+    align-items: center;
+    span {
+      color: blue;
+      font-size: 15px;
+      margin-left: 5px;
+    }
   }
 }
 

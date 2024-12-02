@@ -43,6 +43,7 @@
       <template v-for="(route, i) in routerList">
         <div
           :key="'route_' + i"
+          v-if="!route.hidden"
           :class="['mItemWrapper', route.meta.inDevelopment ? 'gray' : '']"
           :active="route.name == $route.name"
           @click="$jumpUrl('/main/' + route.path)"
