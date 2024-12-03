@@ -17,7 +17,7 @@
 // 引入
 // const PDFJS = require("pdfjs-dist");
 // PDFJS.GlobalWorkerOptions.workerSrc = require("pdfjs-dist/build/pdf.js");
-import PDFJS from "pdfjs-dist/build/pdf.js";
+// import PDFJS from "pdfjs-dist/build/pdf.js";
 
 export default {
   props: {
