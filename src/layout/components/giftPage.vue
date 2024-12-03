@@ -7,6 +7,7 @@
       width="800px"
       :before-close="handleClose"
       class="custom-dialog"
+      :show-close="false"
     >
       <div class="popup-overlay">
         <div class="popup-container">
@@ -27,6 +28,9 @@
             </div>
           </div>
           <div class="popup-right">
+            <span @click="closeDialog" class="closeIcon">
+              <i class="el-icon-close"></i>
+            </span>
             <!-- <img src="qr-code-placeholder.png" alt="QR Code" /> -->
             <div class="popupHeader">
               <span>
@@ -68,10 +72,13 @@ export default {
   methods: {
     showInit() {
       this.dialogVisible = true;
-      inviteFetch().then((res) => {
-        console.log("linkres", res);
-        this.inv_code_url = res.result.inv_code_url;
-      });
+      // inviteFetch().then((res) => {
+      //   console.log("linkres", res);
+      //   this.inv_code_url = res.result.inv_code_url;
+      // });
+    },
+    closeDialog() {
+      this.dialogVisible = false;
     },
     copyLink() {
       const el = document.createElement("textarea");
@@ -134,17 +141,19 @@ export default {
   display: flex;
   background: white;
   position: absolute;
-  top: 30%;
+  top: 35%;
   border-radius: 10px;
   overflow: hidden;
   width: 100%;
   max-width: 800px;
+  margin-top: -56px;
 }
 
 .popup-left,
 .popup-right {
   width: 400px;
   padding: 50px 20px;
+  position: relative;
 }
 
 .popup-left {
@@ -157,6 +166,16 @@ export default {
   width: 400px;
   padding: 30px 50px;
   text-align: center;
+  .closeIcon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 22px;
+    &:hover {
+      cursor: pointer;
+      color: #35f;
+    }
+  }
 }
 
 .popup-right img {
@@ -177,6 +196,7 @@ h4 {
 
 .content p {
   margin: 5px 0;
+  font-size: 16px;
 }
 .popupHeader {
   display: flex;

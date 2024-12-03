@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       // 定义变量
-      pdfUrl: require("@/assets/samples/1.pdf"),
+      // pdfUrl: require("@/assets/samples/1.pdf"),
       sampleTitle: 1,
       sampleMaterial: 1,
       sampleTiles: [1, 2],
@@ -59,14 +59,14 @@ export default {
         // 5: '"答辩汇报PPT"',
       },
       titleSamplesMap: {
-        1: require("@/assets/samples/1.pdf"),
-        2: require("@/assets/samples/2.pdf"),
-      },
-      materialsSamplesMap: {
-        1: require("@/assets/samples/1.pdf"),
-        2: require("@/assets/samples/3.pdf"),
-        3: require("@/assets/samples/4.pdf"),
-        4: require("@/assets/samples/5.pdf"),
+        //   1: require("@/assets/samples/1.pdf"),
+        //   2: require("@/assets/samples/2.pdf"),
+        // },
+        // materialsSamplesMap: {
+        //   1: require("@/assets/samples/1.pdf"),
+        //   2: require("@/assets/samples/3.pdf"),
+        //   3: require("@/assets/samples/4.pdf"),
+        //   4: require("@/assets/samples/5.pdf"),
       },
       list: [
         {
@@ -279,7 +279,7 @@ export default {
 
       // 在这里执行其他操作
       if (newVal == 1) {
-        this.pdfUrl = require("@/assets/samples/1.pdf");
+        // this.pdfUrl = require("@/assets/samples/1.pdf");
       } else {
         this.pdfUrl = this.materialsSamplesMap[newVal];
       }
