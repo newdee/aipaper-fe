@@ -5,11 +5,7 @@
     </div> -->
     <div v-show="chatMessages.length <= 0" class="defaultText">
       <p>
-        <span
-          ><img
-            src="https://mixpaper.cn/static/img/logoMax.1191b0cc.png"
-            alt=""
-        /></span>
+        <span><img src="@/assets/images/logoMax.png" alt="" /></span>
         万象AI, 您的私人助手!
       </p>
     </div>
@@ -70,15 +66,18 @@
       </div>
     </div>
     <div class="chat-input">
-      <input
-        v-model="message"
+      <el-input
+        type="textarea"
         placeholder="请输入您的问题"
-        @keyup.enter="sendMessage"
-      />
+        v-model="message"
+        @keydown.native="handleKeydown"
+      >
+      </el-input>
       <button @click="sendMessage">
         <i class="el-icon-search"></i>
       </button>
     </div>
+    <div></div>
     <el-dialog title="编辑消息" :visible.sync="dialogVisible" width="30%">
       <el-input type="textarea" v-model="editMessageText" rows="5"></el-input>
       <span slot="footer" class="dialog-footer">
@@ -101,6 +100,7 @@ export default {
   data() {
     return {
       message: "",
+      textarea: "",
       chatMessages: [],
       token: getToken(),
       sseSource: null,
@@ -129,6 +129,13 @@ export default {
     ...mapGetters(["avatar"]),
   },
   methods: {
+    handleKeydown(e) {
+      if (e.keyCode === 13 && !e.shiftKey) {
+        // Enter key pressed without Shift
+        e.preventDefault(); // Prevents the default behavior (inserting a new line)
+        this.sendMessage(); // Call the function to perform the search
+      }
+    },
     renderMarkdown(text) {
       const renderer = new marked.Renderer();
 
