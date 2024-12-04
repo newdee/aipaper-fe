@@ -48,22 +48,15 @@
                   </p>
                 </div>
               </el-tab-pane>
-              <el-tab-pane :disabled="true">
-                <span slot="label"
-                  ><svg class="icon svg-icon" aria-hidden="true">
+              <!-- <el-tab-pane :disabled="true">
+                <span slot="label">
+                  <svg class="icon svg-icon" aria-hidden="true">
                     <use xlink:href="#icon-weixin"></use>
                   </svg>
-                  微信支付</span
-                >
-                <!-- <iframe
-                  v-if="pollingStatus"
-                  :src="currentOrder.pay_link"
-                  height="205"
-                  width="205"
-                  frameborder="0"
-                ></iframe>
-                <p class="codeIntro">支持使用“花呗”支付</p> -->
-              </el-tab-pane>
+                  微信支付
+                </span>
+
+              </el-tab-pane> -->
               <!-- <el-tab-pane label="消息中心">消息中心</el-tab-pane> -->
             </el-tabs>
             <!-- left code -->
