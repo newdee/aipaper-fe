@@ -45,7 +45,7 @@ export default {
         },
         {
           name: "全网最优质AI生成的论文内容，富含学术性创新，一次搞定",
-          imageUrl: require("@/assets/images/avantage3.jpg"),
+          // imageUrl: require("@/assets/images/avantage3.jpg"),
 
           label: "优质内容",
         },

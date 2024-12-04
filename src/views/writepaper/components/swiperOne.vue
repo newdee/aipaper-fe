@@ -6,17 +6,17 @@
         <!-- slides -->
         <swiper-slide>
           <div class="slider1Img">
-            <img src="@/assets/images/swiperWrite.png" alt="" />
+            <!-- <img src="@/assets/images/swiperWrite.png" alt="" /> -->
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="slider1Img">
-            <img src="@/assets/images/swiperWrite2.png" alt="" />
+            <!-- <img src="@/assets/images/swiperWrite2.png" alt="" /> -->
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="slider1Img">
-            <img src="@/assets/images/swiperWrite3.png" alt="" />
+            <!-- <img src="@/assets/images/swiperWrite3.png" alt="" /> -->
           </div>
         </swiper-slide>
         <!-- 其他 slides... -->

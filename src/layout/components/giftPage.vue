@@ -4,16 +4,20 @@
     <el-dialog
       append-to-body
       :visible.sync="dialogVisible"
-      width="700px"
+      width="800px"
       :before-close="handleClose"
       class="custom-dialog"
+      :show-close="false"
     >
       <div class="popup-overlay">
         <div class="popup-container">
           <div class="popup-left">
-            <h2>免费领取论文资料大礼包</h2>
-            <h3>「毕业攻略 资料模板不重样」</h3>
-            <p>送 <strong>10,000字</strong> 论文查重券</p>
+            <div class="popConTitle">免费领取论文资料大礼包</div>
+
+            <div class="test2Box">
+              <img src="@/assets/images/bg/text2.png" alt="" />
+            </div>
+            <div class="countImg">送 <span>10000字</span> 论文查重券</div>
             <div class="content">
               <h4>资料：</h4>
               <p>选题参考、开题报告、写作技巧、写作雷区、答辩攻略</p>
@@ -24,6 +28,9 @@
             </div>
           </div>
           <div class="popup-right">
+            <span @click="closeDialog" class="closeIcon">
+              <i class="el-icon-close"></i>
+            </span>
             <!-- <img src="qr-code-placeholder.png" alt="QR Code" /> -->
             <div class="popupHeader">
               <span>
@@ -65,10 +72,13 @@ export default {
   methods: {
     showInit() {
       this.dialogVisible = true;
-      inviteFetch().then((res) => {
-        console.log("linkres", res);
-        this.inv_code_url = res.result.inv_code_url;
-      });
+      // inviteFetch().then((res) => {
+      //   console.log("linkres", res);
+      //   this.inv_code_url = res.result.inv_code_url;
+      // });
+    },
+    closeDialog() {
+      this.dialogVisible = false;
     },
     copyLink() {
       const el = document.createElement("textarea");
@@ -130,15 +140,20 @@ export default {
 .popup-container {
   display: flex;
   background: white;
-  border-radius: 8px;
+  position: absolute;
+  top: 35%;
+  border-radius: 10px;
   overflow: hidden;
   width: 100%;
   max-width: 800px;
+  margin-top: -56px;
 }
 
 .popup-left,
 .popup-right {
-  padding: 20px;
+  width: 400px;
+  padding: 50px 20px;
+  position: relative;
 }
 
 .popup-left {
@@ -148,12 +163,24 @@ export default {
 }
 
 .popup-right {
-  width: 300px;
+  width: 400px;
+  padding: 30px 50px;
   text-align: center;
+  .closeIcon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 22px;
+    &:hover {
+      cursor: pointer;
+      color: #35f;
+    }
+  }
 }
 
 .popup-right img {
-  width: 100%;
+  width: 270px;
+  height: 270px;
   margin: 0 auto;
 }
 
@@ -169,6 +196,7 @@ h4 {
 
 .content p {
   margin: 5px 0;
+  font-size: 16px;
 }
 .popupHeader {
   display: flex;
@@ -194,8 +222,37 @@ h4 {
   font-size: 16px;
   font-weight: bold;
 }
-::v-deep .custom-dialog .el-dialog__body {
-  padding: 0 !important;
-  margin: 0;
+.custom-dialog .el-dialog__header {
+  display: none;
+}
+.test2Box {
+  width: 247px;
+  height: 84px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.countImg {
+  font-size: 22px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  span {
+    display: inline-block;
+    width: 140px;
+    height: 93px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 24px;
+    background: url("../../assets/images/bg/bg3.png") no-repeat 0 0 /100% 100%;
+  }
+}
+.popConTitle {
+  font-size: 20px;
+  line-height: 30px;
+  margin-bottom: 30px;
 }
 </style>

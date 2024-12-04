@@ -43,7 +43,7 @@ export default {
           title: "数据安全",
           description:
             "我们采用先进的加密技术和严格的访问控制措施来保护用户隐私和数据安全。您的论文信息不会被存储！",
-          imageUrl: require("@/assets/images/avantage3.jpg"),
+          // imageUrl: require("@/assets/images/avantage3.jpg"),
         },
         {
           title: "查重降重",

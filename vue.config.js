@@ -1,6 +1,8 @@
 "use strict";
 const path = require("path");
 const defaultSettings = require("./src/settings.js");
+// const TerserPlugin = require("terser-webpack-plugin");
+// const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 function resolve(dir) {
   return path.join(__dirname, dir);
@@ -87,6 +89,19 @@ module.exports = {
         "@": resolve("src"),
       },
     },
+    // optimization: {
+    //   minimize: true,
+    //   minimizer: [
+    //     new TerserPlugin({
+    //       terserOptions: {
+    //         compress: {
+    //           drop_console: true,
+    //         },
+    //       },
+    //     }),
+    //     new OptimizeCSSAssetsPlugin({}),
+    //   ],
+    // },
   },
   chainWebpack(config) {
     // it can improve the speed of the first screen, it is recommended to turn on preload

@@ -8,13 +8,6 @@
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
     />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-    <!-- 引入MathJax -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script
-      id="MathJax-script"
-      async
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
-    ></script>
     <title><%= webpackConfig.name %></title>
 
     <script type="text/javascript">
@@ -75,17 +68,17 @@
           }
         };
         window.zhuge.load("39ed0a5ba1d942cfb946b9c500d31ab7", {
-          //配置应用的AppKey
+          // 配置应用的AppKey
           superProperty: {
-            //全局的事件属性(选填)
+            // 全局的事件属性(选填)
             mixpaper: "数据分析",
           },
           // debug: true,
-          adTrack: false, //广告监测开关，默认为false
-          zgsee: false, //视屏采集开关， 默认为false
+          adTrack: false, // 广告监测开关，默认为false
+          zgsee: false, // 视屏采集开关， 默认为false
           autoTrack: false,
-          //启用全埋点采集（选填，默认false）
-          singlePage: true, //是否是单页面应用（SPA），启用autoTrack后生效（选填，默认false）
+          // 启用全埋点采集（选填，默认false）
+          singlePage: true, // 是否是单页面应用（SPA），启用autoTrack后生效（选填，默认false）
         });
       })();
     </script>
