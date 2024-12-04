@@ -4,9 +4,11 @@ dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-repos.log
-repos.log*
+# 忽略 deploy.log 文件
+deploy.log
 
+# 忽略所有以 deploy.log 为前缀的文件
+deploy.log*
 tests/**/coverage/
 package-lock.json
 # Editor directories and files
