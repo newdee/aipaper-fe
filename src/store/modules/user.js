@@ -52,6 +52,7 @@ const actions = {
 
           commit("SET_TOKEN", result.token);
           setToken(result.token);
+          localStorage.setItem("loginID", result.token);
           commit("SET_DOMAIN", sub_domain);
 
           resolve();
@@ -123,6 +124,12 @@ const actions = {
   },
   setSubDomain({ commit }, sub_domain) {
     commit("SET_DOMAIN", sub_domain);
+  },
+  setSubDomain({ commit }, sub_domain) {
+    commit("SET_DOMAIN", sub_domain);
+  },
+  setStoreToken({ commit }, token) {
+    commit("SET_TOKEN", token);
   },
   // remove token
   resetToken({ commit }) {
