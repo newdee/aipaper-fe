@@ -100,15 +100,14 @@
     <div class="floatMenuWrapper" v-if="true">
       <div class="menu">
         <!-- <el-button v-popover:popover1> -->
-        <el-button @click="$devf">
+        <!-- <el-button @click="$devf">
           <div class="itemLi ai">
-            <!-- <img src="@/assets/images/robat-ai.png" alt="" /> -->
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-a-ziyuan4"></use>
             </svg>
             <p style="width: 3em">AI助手</p>
           </div>
-        </el-button>
+        </el-button> -->
 
         <div>
           <el-popover placement="left" width="150" trigger="hover">
@@ -128,14 +127,14 @@
         </div>
         <div>
           <!-- <el-button slot="reference" @click="$jumpUrl('/toPromotion')"> -->
-          <el-button slot="reference" @click="$devf">
+          <!-- <el-button slot="reference" @click="$devf">
             <div class="itemLi">
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-jiaruwomen"></use>
               </svg>
               <p>我要推广</p>
             </div>
-          </el-button>
+          </el-button> -->
           <!-- <el-popover placement="left" width="150" trigger="hover">
             <div class="qywxBox">
               <img :src="agent_image.business_qrcode" alt="" />

@@ -1,10 +1,10 @@
 <template>
   <div class="chatMain">
-    <div class="sidebarLeft">
+    <!-- <div class="sidebarLeft">
       <div class="sliderContent">
         <span>asdfasdf</span>
       </div>
-    </div>
+    </div> -->
     <div class="chat-container">
       <!-- <div class="navChat">
       <el-button>清屏</el-button>
@@ -72,7 +72,7 @@
         </div>
       </div>
       <div class="chatBottom GH">
-        <div class="chatBottomHeader">
+        <!-- <div class="chatBottomHeader">
           <el-tooltip
             class="item"
             effect="dark"
@@ -117,7 +117,7 @@
               <i class="el-icon-circle-plus-outline"></i>
             </el-tooltip>
           </div>
-        </div>
+        </div> -->
         <div class="chatBoxInput">
           <el-input
             type="textarea"

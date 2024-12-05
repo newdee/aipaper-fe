@@ -7,6 +7,7 @@ import "nprogress/nprogress.css"; // progress bar style
 import { getToken, setToken } from "@/utils/auth"; // get token from cookie
 import getPageTitle from "@/utils/get-page-title";
 import { getDomain } from "@/utils/index.js";
+import { login } from "./api/user";
 
 NProgress.configure({
   showSpinner: false,
@@ -53,10 +54,23 @@ router.beforeEach(async (to, from, next) => {
 
   // determine whether the user has logged in
   // const hasToken = getToken() ? getToken() : setToken("editor-token");
-  const hasToken = getToken();
+  let loginId = localStorage.getItem("loginID");
+
+  let hasToken = getToken();
   const sub_domain = getDomain();
   if (sub_domain && !store.getters.sub_domain) {
-          store.dispatch("user/setSubDomain", sub_domain);
+    store.dispatch("user/setSubDomain", sub_domain);
+  }
+  console.log("loginId111", loginId);
+  console.log("hasToken222", hasToken);
+  if (!hasToken) {
+    if (loginId) {
+      console.log("loginId", loginId);
+      console.log("hasToken", hasToken);
+      setToken(loginId);
+      store.dispatch("user/setStoreToken", loginId);
+      hasToken = loginId;
+    }
   }
   if (hasToken) {
     if (to.path === "/login" && hasToken == "editor-token") {
