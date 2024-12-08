@@ -18,10 +18,17 @@
         <div class="order">
           <div class="orderNum rowBetween">
             <!-- <div class="left">订单号：{{ orderObj.order.out_trade_no }}</div> -->
-            <div class="left">
-              <p class="overHidden">
-                订单号: {{ orderObj.order.out_trade_no }}
-              </p>
+            <div class="left" style="width: 60%">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                :content="`订单号: ${orderObj.order.out_trade_no}`"
+                placement="top"
+              >
+                <p class="overHidden">
+                  订单号: {{ orderObj.order.out_trade_no }}
+                </p>
+              </el-tooltip>
             </div>
             <div class="right">
               时间：{{ orderObj.order.created_at | dateFormatter }}

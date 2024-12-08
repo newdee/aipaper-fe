@@ -111,6 +111,10 @@
       :paperPercent="paperPercent"
     ></order-dialog>
     <paypopup :requestKey="requestKey" :payStatus="popupStatus"></paypopup>
+    <down-line
+      :requestKey="requestKeyLine"
+      :payStatus="popupStatusLine"
+    ></down-line>
   </div>
 </template>
 <script>
@@ -128,8 +132,10 @@ import step3 from "./components/step3.vue";
 import eventBus from "@/utils/eventBus";
 import emitter from "@/utils/eventBus";
 import { outlineStatus } from "@/api/user";
+import { pay_download } from "@/api/paper";
 import orderDialog from "./components/orderDialog.vue";
 import paypopup from "./components/paypopup/index.vue";
+import downLine from "./components/paypopup/downloadOutline.vue";
 export default {
   name: "writepaper",
   data() {
@@ -138,7 +144,9 @@ export default {
       isScrollActive: false,
       outlineData: [],
       requestKey: "", //out_trade_no
+      requestKeyLine: "", //out_trade_no
       payStatus: 0,
+      popupStatusLine: 0,
       paperPercent: 0,
       popupStatus: 0,
     };
@@ -154,6 +162,7 @@ export default {
     orderDialog,
     paypopup,
     questionList,
+    downLine,
   },
   mounted() {
     // this.$message({
@@ -176,6 +185,7 @@ export default {
     eventBus.on("emitOulineClick", this.showIndex); // 订阅事件
     eventBus.on("successOutline", this.showOutLine); // 订阅事件
     eventBus.on("pdfSuccessClick", this.showIndex3); // 订阅事件
+    eventBus.on("showDownOutline", this.showDownOutline); // 订阅事件
   },
   beforeDestroy() {
     eventBus.off("showEmitPaperDialog", this.showPaperDialog); // 订阅事件
@@ -184,6 +194,7 @@ export default {
     eventBus.off("emitOulineClick", this.showIndex); // 移除事件监听
     eventBus.off("successOutline", this.showOutLine); // 移除事件监听
     eventBus.off("pdfSuccessClick", this.showIndex3); // 订阅事件
+    eventBus.off("showDownOutline", this.showDownOutline); // 订阅事件
 
     window.removeEventListener("scroll", this.handleScroll);
   },
@@ -225,6 +236,38 @@ export default {
     showPayDialog(data) {
       this.requestKey = data.requestKey;
       this.popupStatus = Date.now();
+    },
+    showDownOutline(data) {
+      console.log("showDownOutline-data", data);
+
+      // 生成二维码
+      let data1 = {
+        key: data.key,
+        payment_method: "alipay",
+      };
+      pay_download(data1).then((res) => {
+        console.log("res", res);
+        let order = {
+          //
+          key: data.key,
+          out_trade_no: res.result.out_trade_no,
+          pay_amount: res.result.pay_amount,
+          pay_link: res.result.pay_link,
+          original_price: res.result.original_price
+            ? res.result.original_price
+            : res.result.pay_amount,
+          payment_method: res.result.payment_method,
+        };
+        // 弹窗里的附加信息
+        let addList = res.result.additional_service
+          ? res.result.additional_service
+          : [];
+
+        this.$store.dispatch("paper/setAdditionList", addList);
+        this.$store.dispatch("app/toggleCurrentOrder", order);
+        this.requestKeyLine = res.result.out_trade_no;
+        this.popupStatusLine = Date.now();
+      });
     },
     // 定义方法
     errorBack() {

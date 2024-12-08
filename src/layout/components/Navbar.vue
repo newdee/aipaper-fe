@@ -393,6 +393,7 @@ export default {
     },
     loginOut() {
       removeToken();
+      localStorage.removeItem("loginID");
       // this.$router.push("/");
       location.reload();
     },

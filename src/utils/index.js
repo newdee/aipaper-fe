@@ -168,3 +168,20 @@ export function getDomain(func, wait, immediate) {
   }
   return sub_domain;
 }
+export function downloadFile(url, filename) {
+  // Create an anchor element
+  const link = document.createElement("a");
+  link.href = url;
+
+  // Set the download attribute to suggest a filename
+  link.download = filename || "download";
+
+  // Append the link to the body
+  document.body.appendChild(link);
+
+  // Programmatically click the link to trigger the download
+  link.click();
+
+  // Remove the link from the document
+  document.body.removeChild(link);
+}

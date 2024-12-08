@@ -26,13 +26,23 @@
             <div class="orderTitle">{{ orderObj.title }}</div>
             <div class="orderText rowBetween handleRow">
               <div class="left">大纲状态：{{ orderObj.status }}</div>
-              <div class="right" @click="jumpStep2(orderObj)">
+              <div class="right">
                 <el-button
+                  @click="downLoadLine(orderObj)"
+                  icon="el-icon-download"
+                  :disabled="orderObj.status != '生成成功'"
+                  type="text"
+                >
+                  付费下载
+                </el-button>
+                <el-button
+                  @click="jumpStep2(orderObj)"
                   icon="el-icon-view"
                   :disabled="orderObj.status != '生成成功'"
                   type="text"
-                  >查看大纲</el-button
                 >
+                  查看大纲
+                </el-button>
               </div>
             </div>
           </div>
@@ -121,6 +131,19 @@ export default {
     // 计算属性
   },
   methods: {
+    downLoadLine(row) {
+      let requestForm = {
+        title: row.title,
+        threeCon: false,
+        language: row.language,
+        type: row.type,
+        field: ["哲学", row.field],
+        key: row.key1,
+      };
+      this.$store.dispatch("app/setRequestForm", requestForm);
+      eventBus.emit("showDownOutline", requestForm);
+      eventBus.emit("orderDialogChange", false);
+    },
     jumpStep2(row) {
       zhuge.track(`用户查看大纲`, {
         大纲标题: row.title,

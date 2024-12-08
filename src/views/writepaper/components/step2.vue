@@ -38,21 +38,21 @@
             AI帮写
           </el-button>
         </el-tooltip>
-        <!-- <el-tooltip
+        <el-tooltip
           class="item"
           effect="dark"
-          content="保存大纲"
+          content="付费下载"
           placement="top"
         >
           <el-button
-            type="primary"
-            @click="saveOutline"
+            type="success"
+            @click="downLoadLine"
             size="mini"
-            icon="el-icon-check"
+            icon="el-icon-download"
           >
-            保存
+            付费下载
           </el-button>
-        </el-tooltip> -->
+        </el-tooltip>
       </div>
       <!-- draggable // 支持用户拖拽-->
       <el-tree
@@ -219,11 +219,23 @@
         </div>
       </el-tree>
     </div>
-    <div @click="reloadOutline" class="outlineRepeat g_poin">
-      <p>
+    <div class="outlineRepeat g_poin">
+      <p @click="reloadOutline">
         大纲不满意? 重新生成
         <i class="el-icon-refresh"></i>
       </p>
+      <el-tooltip class="item" effect="dark" content="付费下载" placement="top">
+        <el-button
+          style="margin-left: 10px"
+          type="success"
+          @click="downLoadLine"
+          round
+          plain
+          icon="el-icon-download"
+        >
+          付费下载大纲
+        </el-button>
+      </el-tooltip>
     </div>
     <!-- 付费项选择 -->
     <additional></additional>
@@ -529,6 +541,8 @@ import { getOrder, editLine } from "@/api/user";
 import additional from "./step2/additional.vue";
 import eventBus from "@/utils/eventBus";
 import { outlineStatus } from "@/api/user";
+import { down_url } from "@/api/paper";
+
 import polling from "@/utils/get-order-detail.js";
 import tips from "./step2/tips";
 export default {
@@ -947,6 +961,29 @@ export default {
     ...mapGetters(["requestForm", "additionalList", "homeData", "device"]),
   },
   methods: {
+    downLoadLine() {
+      console.log("requestForm", this.requestForm);
+      eventBus.emit("showDownOutline", this.requestForm);
+      // let data = {
+      //   key1: this.requestForm.key,
+      // };
+      // down_url(data).then((res) => {
+      //   this.$log(res);
+      //   if (res.result.down_url) {
+      //     // downloadFile(res.result.down_url);
+      //     // const link = document.createElement("a");
+      //     // link.href = res.result.down_url;
+      //     // // Set the download attribute to suggest a filename
+      //     // link.download = "download";
+      //     // // Append the link to the body
+      //     // document.body.appendChild(link);
+      //     // // Programmatically click the link to trigger the download
+      //     // link.click();
+      //     // // Remove the link from the document
+      //     // document.body.removeChild(link);
+      //   }
+      // });
+    },
     showSlider() {
       this.sliderStatus = true;
       this.paper_words = 1000;
