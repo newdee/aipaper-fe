@@ -25,6 +25,12 @@ export function passOrder(params) {
     method: "get",
   });
 }
+export function down_url(params) {
+  return request({
+    url: "/api/ai-paper/paper/outline/down_url/" + params.key1,
+    method: "get",
+  });
+}
 export function report_url(params) {
   return request({
     url: "/api/ai-paper/pass/report_url/" + params.fileBackKey,
@@ -53,6 +59,14 @@ export function pre_create(data) {
 export function pay_order(data) {
   return request({
     url: "/api/ai-paper/pass/pay_order",
+    method: "post",
+    data,
+  });
+}
+// 下载大纲接口
+export function pay_download(data) {
+  return request({
+    url: "/api/ai-paper/paper/outline/pay_download",
     method: "post",
     data,
   });

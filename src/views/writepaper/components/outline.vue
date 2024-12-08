@@ -265,6 +265,7 @@
   </div>
 </template>
 <script>
+import OrderType from "@/utils/orderTypes";
 import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
@@ -291,6 +292,7 @@ export default {
         key: "",
         word_count: 5000,
       },
+      OrderType: OrderType,
       index: 1,
       carProp: {
         value: "name",

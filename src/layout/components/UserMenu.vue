@@ -107,7 +107,7 @@
       :direction="orderDirection"
       append-to-body
       :lock-scroll="false"
-      :size="isPhone ? '30%' : '30%'"
+      :size="device == 'mobile' ? '80%' : '50%'"
     >
       <template #title>
         <div v-if="orderTabs == 1" class="titleDrawer">我的订单</div>
@@ -163,7 +163,7 @@ export default {
   },
   computed: {
     // 计算属性
-    ...mapGetters(["avatar", "userInfo"]),
+    ...mapGetters(["avatar", "userInfo", "device"]),
   },
   methods: {
     closeDialog() {
@@ -171,6 +171,7 @@ export default {
     },
     loginOut() {
       removeToken();
+      localStorage.removeItem("loginID");
       // this.$router.push("/");
       location.reload();
     },
