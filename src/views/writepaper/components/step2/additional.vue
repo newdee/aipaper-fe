@@ -194,9 +194,39 @@
         </div>
         <div style="width: 175px"></div>
       </div>
-      <p class="fuTitle">增值附加服务</p>
+      <!-- <p class="fuTitle">增值附加服务</p> -->
+      <p class="fuTitle">价格预估</p>
 
-        <el-checkbox-group
+      <div class="priceList">
+        <p>
+          <span>
+            学科:
+          </span>
+          本科
+        </p>
+        <p>
+          <span>
+            字数:
+          </span>
+          本科
+        </p>
+        <p>
+          <span>
+            预估费用:
+          </span>
+          48元
+        </p>
+      </div>
+
+      <p>如果价格有疑问，参考价格体系说明。（鼠标移入查看价格图）</p>
+      <el-table :data="tableData" style="width: 100%">
+      <el-table-column prop="wordCount" align="center" label="字数"></el-table-column>
+      <el-table-column prop="vocational"  align="center" label="专科"></el-table-column>
+      <el-table-column prop="undergraduate" align="center"  label="本科"></el-table-column>
+      <el-table-column prop="master" align="center"  label="研究生"></el-table-column>
+      <el-table-column prop="finalPaper"  align="center" label="结课论文"></el-table-column>
+    </el-table>
+        <!-- <el-checkbox-group
           class="addService "
           v-model="checkboxGroup1"
           @change="fuChange"
@@ -218,11 +248,11 @@
               </div>
             </div>
           </el-checkbox>
-        </el-checkbox-group>
+        </el-checkbox-group> -->
 
-        <p class="tips" @click="reduceAIGC">
+        <!-- <p class="tips" @click="reduceAIGC">
           AIGC率知网超25%<span>包退费</span>
-        </p>
+        </p> -->
       </div>
     </div>
   </div>
@@ -242,7 +272,14 @@ export default {
       supportedProducts: [
 
       ],
-
+      tableData: [
+        { wordCount: "5000以下", vocational: 38, undergraduate: 48, master: 68, finalPaper: 28 },
+        { wordCount: "6000-8000", vocational: 38, undergraduate: 48, master: 68, finalPaper: 38 },
+        { wordCount: "9000-10000", vocational: 58, undergraduate: 68, master: 88, finalPaper: 38 },
+        { wordCount: "10000 - 15000", vocational: 58, undergraduate: 68, master: 88, finalPaper: "-" },
+        { wordCount: "16000 - 20000", vocational: 78, undergraduate: 88, master: 108, finalPaper: "-" },
+        { wordCount: "21000 - 30000", vocational: 98, undergraduate: 108, master: 128, finalPaper: "-" }
+      ],
       model: false,
     };
   },

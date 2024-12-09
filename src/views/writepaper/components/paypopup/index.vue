@@ -8,7 +8,7 @@
       :close-on-click-modal="false"
       title="支付订单"
       :visible.sync="popupStatus"
-      :width="device == 'mobile' ? '90%' : '50%'"
+      :width="device == 'mobile' ? '90%' : '60%'"
       class="order-dialog"
       :before-close="handleClose"
     >
