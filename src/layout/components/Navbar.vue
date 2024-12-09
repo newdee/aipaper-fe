@@ -58,7 +58,12 @@
           </div>
         </div>
       </div>
-
+      <!-- 礼包 -->
+      <div class="giftBox">
+        <img src="../../assets/images/bg/giftbox.png" alt="" />
+        <p>全场限时 <b>半价</b>，喜迎 <b>2025</b>年！</p>
+      </div>
+      <!-- 礼包结束 -->
       <div :class="[showContent ? '' : 'leftNavbarPosition']">
         <div class="flex navBarRight">
           <!-- <div class="gift">
@@ -877,5 +882,16 @@ export default {
   }
   .navDataLine {
   }
+}
+.giftBox {
+  display: flex;
+  align-items: center;
+  img {
+    width: 26px;
+    margin-right: 8px;
+    height: 26px;
+  }
+  font-size: 18px;
+  color: #e20000;
 }
 </style>
