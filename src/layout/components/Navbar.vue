@@ -61,7 +61,7 @@
       <!-- 礼包 -->
       <div class="giftBox">
         <img src="../../assets/images/bg/giftbox.png" alt="" />
-        <p>全场限时 <b>半价</b>，喜迎 <b>2025</b>年！</p>
+        <p>全场限时 <b>半价</b>，喜迎 <b>2025</b> 年！</p>
       </div>
       <!-- 礼包结束 -->
       <div :class="[showContent ? '' : 'leftNavbarPosition']">
