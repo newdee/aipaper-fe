@@ -6,12 +6,22 @@
       :append-to-body="true"
       :lock-scroll="false"
       :close-on-click-modal="false"
-      title="支付订单"
       :visible.sync="popupStatus"
-      :width="device == 'mobile' ? '90%' : '50%'"
+      :width="device == 'mobile' ? '90%' : '60%'"
       class="order-dialog"
       :before-close="handleClose"
     >
+      <template slot="title">
+        <div class="titleHeader">
+          <p class="dialogTitleP">支付订单</p>
+          <div class="titleRight">
+            <p style="font-size: 15px">看样例，质量我放心。</p>
+            <div @click="showExample" class="g_poin btnExample">
+              <p>范文样例</p>
+            </div>
+          </div>
+        </div>
+      </template>
       <div class="dialog-content">
         <div class="payCodeBox">
           <div class="payLeftCode">
@@ -86,8 +96,17 @@
               <div class="dItem"><span>大纲ID:</span>{{ requestForm.key }}</div>
             </div>
           </div>
+
+          <!-- 二维码展示 -->
+          <div class="code1V1">
+            <div>
+              <img src="@/assets/images/bg/1v1img.png" alt="" />
+            </div>
+            <p>1v1人工服务，全程售后无忧</p>
+          </div>
         </div>
       </div>
+      <example ref="exampleDia"></example>
     </el-dialog>
   </div>
 </template>
@@ -99,6 +118,7 @@ import { getOrder, orderDetailById } from "@/api/user";
 import { down_url } from "@/api/paper";
 import { mapGetters } from "vuex";
 import { downloadFile } from "@/utils/index";
+import example from "../example/index.vue";
 
 export default {
   name: "myFooter",
@@ -118,6 +138,10 @@ export default {
       pollingInterval: 1500, // 轮询间隔时间，单位毫秒
       successIndex: 0,
     };
+  },
+  components: {
+    // webinfo,
+    example,
   },
   props: {
     payStatus: {
@@ -147,9 +171,7 @@ export default {
       },
     },
   },
-  components: {
-    // webinfo,
-  },
+
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
@@ -172,6 +194,10 @@ export default {
   },
 
   methods: {
+    showExample() {
+      zhuge.track(`访问范围样例`);
+      this.$refs.exampleDia.showDia();
+    },
     handleClose(done) {
       if (this.payTitleStatus == "TRADE_SUCCESS") {
         zhuge.track(`用户成功支付`, {});
@@ -524,6 +550,41 @@ export default {
     color: #606266;
     font-weight: 100;
     margin-right: 7px;
+  }
+}
+.titleHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 50px;
+}
+.dialogTitleP {
+  font-size: 20px;
+  font-weight: bold;
+}
+.titleRight {
+  display: flex;
+  align-items: center;
+}
+.code1V1 {
+  position: absolute;
+  bottom: -10px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  div {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 10px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  p {
+    color: #303133;
   }
 }
 </style>

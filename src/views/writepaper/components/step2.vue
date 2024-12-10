@@ -1385,6 +1385,7 @@ export default {
             user_id: 1, // 固定传一
             payment_method: "alipay", // 支付方式
             total_amount: 149.85, // 总价
+            pay_type: "PAY_ALL",
             key: this.requestForm.key, // 大纲的key
             // paper_type: this.requestForm.type,
             // paper_words: this.paper_words,
@@ -1428,15 +1429,16 @@ export default {
           getOrder(data)
             .then((res) => {
               console.log("res", res);
-              console.log("res", res);
-              let payUrl = res.result.pay_link;
-              console.log("payUrl", payUrl);
               //  保存订单信息 用于下载展示
               let order = {
                 out_trade_no: res.result.out_trade_no,
                 pay_amount: res.result.pay_amount,
                 pay_link: res.result.pay_link,
                 original_price: result.original_price,
+                pay_type: data.pay_type,
+                payment_method: data.payment_method,
+                key: data.key,
+                items: data.items,
               };
               this.$store.dispatch("app/toggleCurrentOrder", order);
 

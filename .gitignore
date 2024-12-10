@@ -4,11 +4,19 @@ dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+<<<<<<< HEAD
+=======
+
+>>>>>>> e3a53e88a242eee1eef32d9abfafd315acd1e48b
 # 忽略 deploy.log 文件
 deploy.log
 
 # 忽略所有以 deploy.log 为前缀的文件
 deploy.log*
+<<<<<<< HEAD
+=======
+# 忽略 deploy.log 文件
+>>>>>>> e3a53e88a242eee1eef32d9abfafd315acd1e48b
 tests/**/coverage/
 package-lock.json
 # Editor directories and files

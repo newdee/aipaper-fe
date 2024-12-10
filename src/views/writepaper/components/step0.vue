@@ -255,6 +255,7 @@ export default {
       }
     }, 300),
     jumpStep2(row) {
+      this.$log("row", row);
       zhuge.track(`用户查看大纲`, {
         大纲标题: row.title,
         大纲key: row.key1,
@@ -277,6 +278,7 @@ export default {
             type: row.type,
             field: ["哲学", row.field],
             key: row.key1,
+            word_count: row.word_count,
           };
           this.$store.dispatch("app/setRequestForm", requestForm);
           eventBus.emit("setFormData", requestForm); // 发布事件

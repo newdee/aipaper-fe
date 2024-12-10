@@ -3,7 +3,7 @@
     <!-- 页面名称 -->
     <div class="spendingBox">
       <div class="markBox">
-        <img src="@/assets/images/mark.png" alt="">
+        <img src="@/assets/images/mark.png" alt="" />
       </div>
       <p class="fuTitle">您将获得</p>
       <div class="maintxt">
@@ -17,7 +17,9 @@
             <p>
               [中文]{{ requestForm.title }}
               <span class="add">x1</span>
-              <span class="wordage">{{requestForm.type}} | {{requestForm.language}}</span>
+              <span class="wordage"
+                >{{ requestForm.type }} | {{ requestForm.language }}</span
+              >
             </p>
             <!-- {{ requestForm }}  -->
             <!-- <p>
@@ -25,9 +27,7 @@
               <span>含在线编辑</span>
             </p> -->
             <p class="alertTxt">真实数据来源</p>
-            <p class="include">
-              摘要 | 大纲目录 | 正文 | 参考文献
-            </p>
+            <p class="include">摘要 | 大纲目录 | 正文 | 参考文献</p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-checkmark"></use>
@@ -42,7 +42,6 @@
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-zhengwenmoban"></use>
             </svg>
-
           </div>
           <div class="right">
             <p>
@@ -196,37 +195,66 @@
       </div>
       <!-- <p class="fuTitle">增值附加服务</p> -->
       <p class="fuTitle">价格预估</p>
-
+      <!-- {{ requestForm }} -->
       <div class="priceList">
         <p>
-          <span>
-            学科:
-          </span>
-          本科
+          <span> 学科: </span>
+          {{ requestForm.type }}
         </p>
         <p>
-          <span>
-            字数:
-          </span>
-          本科
+          <span> 字数: </span>
+          {{ requestForm.word_count }}
         </p>
         <p>
-          <span>
-            预估费用:
-          </span>
-          48元
+          <span> 预估费用: </span>
+          <b class="danger">
+            {{ getPrice(requestForm.type, requestForm.word_count) }}</b
+          >
         </p>
       </div>
 
-      <p>如果价格有疑问，参考价格体系说明。（鼠标移入查看价格图）</p>
-      <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="wordCount" align="center" label="字数"></el-table-column>
-      <el-table-column prop="vocational"  align="center" label="专科"></el-table-column>
-      <el-table-column prop="undergraduate" align="center"  label="本科"></el-table-column>
-      <el-table-column prop="master" align="center"  label="研究生"></el-table-column>
-      <el-table-column prop="finalPaper"  align="center" label="结课论文"></el-table-column>
-    </el-table>
-        <!-- <el-checkbox-group
+      <div style="padding-bottom: 40px">
+        <el-popover placement="top-start" width="800" trigger="hover">
+          <el-table
+            header-row-class-name="bgTable"
+            border
+            stripe
+            :data="tableData"
+            style="width: 100%"
+          >
+            <el-table-column
+              prop="wordCount"
+              align="center"
+              label="字数"
+            ></el-table-column>
+            <el-table-column
+              prop="vocational"
+              align="center"
+              label="专科"
+            ></el-table-column>
+            <el-table-column
+              prop="undergraduate"
+              align="center"
+              label="本科"
+            ></el-table-column>
+            <el-table-column
+              prop="master"
+              align="center"
+              label="研究生"
+            ></el-table-column>
+            <el-table-column
+              prop="finalPaper"
+              align="center"
+              label="结课论文"
+            ></el-table-column>
+          </el-table>
+          <p class="priceLine" slot="reference">
+            如果价格有疑问，参考价格体系说明。（鼠标移入查看价格图）
+          </p>
+        </el-popover>
+      </div>
+
+      <!-- <el-checkbox-group
           class="addService "
           v-model="checkboxGroup1"
           @change="fuChange"
@@ -250,10 +278,9 @@
           </el-checkbox>
         </el-checkbox-group> -->
 
-        <!-- <p class="tips" @click="reduceAIGC">
+      <!-- <p class="tips" @click="reduceAIGC">
           AIGC率知网超25%<span>包退费</span>
         </p> -->
-      </div>
     </div>
   </div>
 </template>
@@ -268,17 +295,51 @@ export default {
   data() {
     return {
       // 定义变量
-      checkboxGroup1: ['6','7','10','11','12','13','14','15'],
-      supportedProducts: [
-
-      ],
+      checkboxGroup1: ["6", "7", "10", "11", "12", "13", "14", "15"],
+      supportedProducts: [],
       tableData: [
-        { wordCount: "5000以下", vocational: 38, undergraduate: 48, master: 68, finalPaper: 28 },
-        { wordCount: "6000-8000", vocational: 38, undergraduate: 48, master: 68, finalPaper: 38 },
-        { wordCount: "9000-10000", vocational: 58, undergraduate: 68, master: 88, finalPaper: 38 },
-        { wordCount: "10000 - 15000", vocational: 58, undergraduate: 68, master: 88, finalPaper: "-" },
-        { wordCount: "16000 - 20000", vocational: 78, undergraduate: 88, master: 108, finalPaper: "-" },
-        { wordCount: "21000 - 30000", vocational: 98, undergraduate: 108, master: 128, finalPaper: "-" }
+        {
+          wordCount: "5000以下",
+          vocational: 38,
+          undergraduate: 48,
+          master: 68,
+          finalPaper: 28,
+        },
+        {
+          wordCount: "6000-8000",
+          vocational: 38,
+          undergraduate: 48,
+          master: 68,
+          finalPaper: 38,
+        },
+        {
+          wordCount: "9000-10000",
+          vocational: 58,
+          undergraduate: 68,
+          master: 88,
+          finalPaper: 38,
+        },
+        {
+          wordCount: "10000 - 15000",
+          vocational: 58,
+          undergraduate: 68,
+          master: 88,
+          finalPaper: "-",
+        },
+        {
+          wordCount: "16000 - 20000",
+          vocational: 78,
+          undergraduate: 88,
+          master: 108,
+          finalPaper: "-",
+        },
+        {
+          wordCount: "21000 - 30000",
+          vocational: 98,
+          undergraduate: 108,
+          master: 128,
+          finalPaper: "-",
+        },
       ],
       model: false,
     };
@@ -290,7 +351,7 @@ export default {
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
     // this.$store.dispatch("paper/setAdditionList", this.supportedProducts);
-    this.fuChange()
+    this.fuChange();
   },
   created() {
     // eventBus.on("sendOutline", this.addE); // 订阅事件
@@ -299,10 +360,36 @@ export default {
     // eventBus.off("sendOutline", this.addE); // 移除事件监听
   },
   computed: {
-
     ...mapGetters(["requestForm", "homeData"]),
   },
   methods: {
+    getPrice(educationLevel, wordCount) {
+      const levelMap = {
+        专科: "vocational",
+        本科: "undergraduate",
+        研究生: "master",
+        结课论文: "finalPaper",
+      };
+
+      const levelKey = levelMap[educationLevel];
+      if (!levelKey) return "未知学历";
+
+      const range = this.tableData.find((item) => {
+        const [min, max] = item.wordCount
+          .split("-")
+          .map((w) => w.trim().replace(/[^\d]/g, ""));
+        if (max) {
+          return wordCount >= parseInt(min) && wordCount <= parseInt(max);
+        }
+        return wordCount < parseInt(min);
+      });
+
+      if (range && range[levelKey] !== "-") {
+        return `${range[levelKey]}元`;
+      } else {
+        return "无对应价格";
+      }
+    },
     juanChange(index) {
       this.model = !this.model;
       this.$log(this.model, "model");
@@ -313,8 +400,10 @@ export default {
     // this.$store.dispatch("paper/setAdditionList", []);
     fuChange(val) {
       // let fuList =\
-      const selectedProducts = this.homeData.additional_service.filter(product => this.checkboxGroup1.includes(product.id));
-      this.$log('val', this.checkboxGroup1)
+      const selectedProducts = this.homeData.additional_service.filter(
+        (product) => this.checkboxGroup1.includes(product.id)
+      );
+      this.$log("val", this.checkboxGroup1);
 
       this.$store.dispatch("paper/setAdditionList", selectedProducts);
     },
@@ -417,5 +506,22 @@ export default {
     cursor: pointer;
   }
 }
+.priceList {
+  padding-left: 20px;
+  line-height: 30px;
+  font-size: 16px;
+}
 
+.priceLine {
+  width: 350px;
+  margin: 0 auto;
+  margin-top: 40px;
+  text-decoration: underline;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.bgTable {
+  background: red;
+}
 </style>

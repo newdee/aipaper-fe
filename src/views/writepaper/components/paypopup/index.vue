@@ -12,7 +12,18 @@
       class="order-dialog"
       :before-close="handleClose"
     >
-      <div class="dialog-content">
+      <template slot="title">
+        <div class="titleHeader">
+          <p class="dialogTitleP">支付订单</p>
+          <div class="titleRight">
+            <p style="font-size: 15px">看样例，质量我放心。</p>
+            <div @click="showExample" class="g_poin btnExample">
+              <p>范文样例</p>
+            </div>
+          </div>
+        </div>
+      </template>
+      <div v-loading="loading" class="dialog-content">
         <div class="markBox">
           <img src="@/assets/images/mark.png" alt="" />
         </div>
@@ -63,6 +74,19 @@
           </div>
           <div class="payRightPrice">
             <!-- left code -->
+            <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+              <el-tab-pane
+                :disabled="orderPayDisabled"
+                label="正式版"
+                name="PAY_ALL"
+              ></el-tab-pane>
+              <el-tab-pane
+                :disabled="orderPayDisabled"
+                label="预览版"
+                name="PAY_STAGES"
+              ></el-tab-pane>
+            </el-tabs>
+
             <p class="payTitle">
               支付金额:
               <span>
@@ -81,19 +105,37 @@
                 元
               </span>
             </p>
-            <p class="popupSpan">
+
+            <div class="payFrom">
+              <div class="formitem">
+                <span>学业类型:</span>
+                <b>{{ requestForm.type }}</b>
+              </div>
+              <div class="formitem">
+                <span>字数:</span>
+                <b>{{ requestForm.word_count }}</b>
+              </div>
+              <div class="formitem">
+                <span>说明:</span>
+                <b
+                  >预览版可以查看约全文30%内容，若满意可支付剩余费用，解锁全文。</b
+                >
+              </div>
+              <div class="formitem">
+                <span>备注:</span>
+                <b>预览版不可退费</b>
+              </div>
+            </div>
+            <!-- <p class="popupSpan">
               您选择了 <span>{{ additionalList.length }}</span>
               项增值服务(仅限单次生成)
-            </p>
-            <div class="fujia">
+            </p> -->
+            <!-- <div class="fujia">
               <div
                 class="liFu"
                 v-for="(item, index) in additionalList"
                 :key="index + 'pop'"
               >
-                <!-- <p class="introSpan">
-                  {{ item.intro }}
-                </p> -->
                 <p class="topIntro" v-show="item.intro">{{ item.intro }}</p>
 
                 <p>{{ item.name }}</p>
@@ -102,10 +144,18 @@
                   <span>{{ item.price }}元</span>
                 </p>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
+        <!-- 二维码展示 -->
+        <div class="code1V1">
+          <div>
+            <img src="@/assets/images/bg/1v1img.png" alt="" />
+          </div>
+          <p>1v1人工服务，全程售后无忧</p>
+        </div>
       </div>
+      <example ref="exampleDia"></example>
     </el-dialog>
   </div>
 </template>
@@ -115,13 +165,15 @@
 import eventBus from "@/utils/eventBus";
 import { getOrder, orderDetailById } from "@/api/user";
 import { mapGetters } from "vuex";
+import example from "../example/index.vue";
 
 export default {
   name: "myFooter",
   data() {
     return {
       // 定义变量
-      popupStatus: false,
+      activeName: "PAY_ALL", // 支付类型：PAY_ALL-正式版，PAY_STAGES-预览版
+      popupStatus: true,
       intervalId: "",
       payTitleStatus: "PRE_CREATE",
       payStatusObject: {
@@ -133,6 +185,9 @@ export default {
       listData: [], // 存储请求返回的数据
       pollingInterval: 2000, // 轮询间隔时间，单位毫秒
       successIndex: 0,
+      orderId: "",
+      loading: false,
+      orderPayDisabled: false, // 去支付 不能切换订单
     };
   },
   props: {
@@ -159,11 +214,13 @@ export default {
         // 在这里执行你需要的操作
         this.popupStatus = true;
         this.$store.dispatch("paper/setPollingStatus", true);
+        this.orderId = this.requestKey;
         this.getDetail();
       },
     },
   },
   components: {
+    example,
     // webinfo,
   },
   mounted() {
@@ -183,11 +240,50 @@ export default {
       "device",
       "currentOrder",
       "requestForm",
-      "additionalList",
+      // "additionalList",
     ]),
   },
 
   methods: {
+    handleClick(tab, event) {
+      this.loading = true;
+      console.log(this.activeName, "activeName");
+      console.log(this.currentOrder, "currentOrder");
+      // 停止上一次循环
+      this.$store.dispatch("paper/setPollingStatus", false);
+      // 重新生成订单
+      // let data = {
+      //   payment_method: "alipay", // 支付方式
+      //   pay_type: this.activeName,
+      //   key: this.currentOrder.key,
+      //   items: this.currentOrder.items,
+      // };
+      getOrder(data).then((res) => {
+        let order = {
+          out_trade_no: res.result.out_trade_no,
+          pay_amount: res.result.pay_amount,
+          pay_link: res.result.pay_link,
+          original_price: result.original_price,
+          pay_type: data.pay_type,
+          payment_method: data.payment_method,
+          key: data.key,
+          items: data.items,
+        };
+        this.$store.dispatch("app/toggleCurrentOrder", order);
+        let _this = this;
+        setTimeout(() => {
+          _this.loading = false;
+
+          _this.$store.dispatch("paper/setPollingStatus", true);
+          _this.orderId = res.result.out_trade_no;
+          _this.getDetail();
+        }, 2000);
+      });
+    },
+    showExample() {
+      zhuge.track(`访问范围样例`);
+      this.$refs.exampleDia.showDia();
+    },
     handleClose(done) {
       if (this.payTitleStatus == "TRADE_SUCCESS") {
         zhuge.track(`用户成功支付`, {});
@@ -289,9 +385,9 @@ export default {
         });
     },
     getDetail() {
-      this.$log("d1111", this.requestKey);
-      if (this.requestKey) {
-        this.getList({ key: this.requestKey }, 10000);
+      this.$log("d1111", this.orderId);
+      if (this.orderId) {
+        this.getList({ key: this.orderId });
       } else {
         this.$message({
           type: "warning",
@@ -334,9 +430,10 @@ export default {
     align-items: center;
     justify-content: center;
     position: relative;
+    padding-bottom: 50px;
     .markBox {
-      right: 20px;
-      top: -80px;
+      right: 10px;
+      top: 20px;
     }
   }
 
@@ -409,7 +506,6 @@ export default {
 .payLeftCode {
   max-width: 287px;
   // height: 230px;
-  padding-top: 13px;
   // border: 1px solid #ccc;
   border-radius: 10px;
   position: relative;
@@ -493,5 +589,64 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.titleHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 50px;
+}
+.dialogTitleP {
+  font-size: 20px;
+  font-weight: bold;
+}
+.titleRight {
+  display: flex;
+  align-items: center;
+}
+.code1V1 {
+  position: absolute;
+  bottom: -10px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  div {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 10px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  p {
+    color: #303133;
+  }
+}
+
+.payFrom {
+  margin-top: 20px;
+  line-height: 30px;
+  font-size: 14px;
+  .formitem {
+    display: flex;
+    b {
+      display: inline-block;
+      width: 50%;
+    }
+    span {
+      display: inline-block;
+      width: 70px;
+      text-align: right;
+      margin-right: 8px;
+      color: #000;
+    }
+  }
+}
+::v-deep .el-tabs--card > .el-tabs__header .el-tabs__item.is-active {
+  background: #409eff !important;
+  color: #fff !important;
 }
 </style>

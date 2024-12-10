@@ -294,3 +294,32 @@ li {
 .GH {
   cursor: pointer;
 }
+
+// 范文样例
+.btnExample {
+  display: inline-block;
+  box-sizing: content-box;
+  width: 117px;
+  height: 40px;
+  background: #3355ff;
+  border-radius: 20px;
+  line-height: 40px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #ffffff;
+  font-style: normal;
+  text-align: center;
+  cursor: pointer;
+}
+.danger {
+  color: #f56c6c;
+}
+.warning {
+  color: #e6a23c;
+}
+.success {
+  color: #67c23a;
+}
+.info {
+  color: #909399;
+}
