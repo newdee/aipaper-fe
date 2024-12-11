@@ -36,18 +36,8 @@
                 src="https://mixpaper.cn/static/img/MIXPAPER.d3c7dfc9.png"
                 alt=""
               />
-              <b>免费生成</b>毕业论文大纲&nbsp;&nbsp;&nbsp;&nbsp;
-              提供查重<b>低于10%</b>的专业初稿
-            </p>
-          </el-carousel-item>
-          <el-carousel-item>
-            <p class="homeSwiper">
-              <img
-                src="https://mixpaper.cn/static/img/MIXPAPER.d3c7dfc9.png"
-                alt=""
-              />
-              助你<b>节省三个月</b>写作时间
-              &nbsp;&nbsp;&nbsp;&nbsp;只需三步，搞定论文
+              郑重承诺：
+              <b>不满意，不收费！</b>
             </p>
           </el-carousel-item>
         </el-carousel>

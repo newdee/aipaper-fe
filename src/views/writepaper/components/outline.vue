@@ -20,10 +20,14 @@
         </p>
       </div>
       <div class="outRight">
-        <div v-if="device != 'mobile'" @click="showAdv" class="contrast">
+        <div
+          v-if="device != 'mobile'"
+          @click="showAdv"
+          class="btnExample contrast"
+        >
           <p>质量对比</p>
         </div>
-        <div @click="showExample" class="g_poin">
+        <div @click="showExample" class="g_poin btnExample">
           <p>范文样例</p>
         </div>
       </div>
@@ -650,21 +654,7 @@ export default {
 .outRight {
   width: 300px;
   height: 40px;
-  & > div {
-    display: inline-block;
-    box-sizing: content-box;
-    width: 117px;
-    height: 40px;
-    background: #3355ff;
-    border-radius: 20px;
-    line-height: 40px;
-    font-weight: 600;
-    font-size: 16px;
-    color: #ffffff;
-    font-style: normal;
-    text-align: center;
-    cursor: pointer;
-  }
+
   .contrast {
     margin-right: 10px;
     height: 40px;

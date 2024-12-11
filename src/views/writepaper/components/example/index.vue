@@ -5,6 +5,7 @@
       :visible.sync="advantageStatus"
       width="900px"
       top="0"
+      append-to-body
       class="dialogContainer"
     >
       <div class="drafrContent">
@@ -408,16 +409,18 @@ export default {
       this.advantageStatus = true;
     },
     scrollToSection(sectionId) {
-      // 获取 el-dialog 内部的滚动容器
-      const container = this.$el.querySelector(".main-txt");
-      const targetElement = this.$el.querySelector(`#${sectionId}`);
+      console.log(this.$refs, "refs");
+      const container = document.querySelector(".el-dialog__body .main-txt");
+      const targetElement = document.querySelector(
+        `.el-dialog__body #${sectionId}`
+      );
       this.activeId = sectionId;
+      this.$log(container, targetElement);
       if (container && targetElement) {
-        // 使用 vue-scrollto 或者其他库的滚动方法，确保滚动目标是容器内部
         this.$scrollTo(targetElement, 500, {
-          container: container, // 指定滚动容器为 .main-txt
+          container: container,
           easing: "ease-in-out",
-          offset: 30, // 如果需要额外的偏移
+          offset: 30,
         });
       }
     },
