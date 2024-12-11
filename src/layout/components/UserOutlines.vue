@@ -168,6 +168,7 @@ export default {
               type: row.type,
               field: ["哲学", row.field],
               key: row.key1,
+              word_count: row.word_count,
             };
             this.$store.dispatch("app/setRequestForm", requestForm);
 

@@ -76,6 +76,13 @@ export function ordersRepay(data) {
     data,
   });
 }
+export function balance_pay(data) {
+  return request({
+    url: "/api/ai-paper/orders/balance_pay",
+    method: "post",
+    data,
+  });
+}
 export function outlineCreate(data) {
   return request({
     url: "/api/ai-paper/paper/outline/create",

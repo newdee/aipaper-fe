@@ -203,13 +203,11 @@
         </p>
         <p>
           <span> 字数: </span>
-          {{ requestForm.word_count }}
+          {{ requestForm.word_count ? requestForm.word_count : "暂无" }}
         </p>
         <p>
           <span> 预估费用: </span>
-          <b class="danger">
-            {{ getPrice(requestForm.type, requestForm.word_count) }}</b
-          >
+          <b class="danger"> {{ requestForm.predict_price }}</b>
         </p>
       </div>
 

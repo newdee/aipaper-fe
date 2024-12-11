@@ -20,7 +20,12 @@
           }}</span>
         </p>
         <!-- 订单支付成功展示页面 -->
-        <div v-if="payTitleStatus == 'TRADE_SUCCESS'">
+        <div
+          v-if="
+            payTitleStatus == 'TRADE_SUCCESS' ||
+            this.payTitleStatus == 'TRADE_DEPOSIT_SUCCESS'
+          "
+        >
           <div class="paperProgress">
             <el-progress
               type="circle"
@@ -59,6 +64,7 @@ export default {
       intervalId: "",
       payTitleStatus: "PRE_CREATE",
       payStatusObject: {
+        TRADE_DEPOSIT_SUCCESS: "您已成功支付预付款, 论文生成中",
         TRADE_SUCCESS: "您已成功支付订单, 论文生成中",
         WAIT_BUYER_PAY: "未付款交易超时关闭，或支付完成后全额退款",
         PRE_CREATE: "交易创建，等待买家付款",
@@ -130,7 +136,10 @@ export default {
 
   methods: {
     handleClose(done) {
-      if (this.payTitleStatus == "TRADE_SUCCESS") {
+      if (
+        this.payTitleStatus == "TRADE_SUCCESS" ||
+        this.payTitleStatus == "TRADE_DEPOSIT_SUCCESS"
+      ) {
         this.$confirm("关闭弹窗,不影响论文生成进度")
           .then((_) => {
             done();
@@ -144,7 +153,10 @@ export default {
       }
     },
     jumpStep() {
-      if (this.payTitleStatus == "TRADE_SUCCESS") {
+      if (
+        this.payTitleStatus == "TRADE_SUCCESS" ||
+        this.payTitleStatus == "TRADE_DEPOSIT_SUCCESS"
+      ) {
         this.$confirm("关闭弹窗,不影响论文生成进度")
           .then((_) => {
             // done();
@@ -190,7 +202,8 @@ export default {
           if (orderData.payment_status) {
             this.payTitleStatus = orderData.payment_status;
             if (
-              this.payTitleStatus == "TRADE_SUCCESS" &&
+              (this.payTitleStatus == "TRADE_SUCCESS" ||
+                this.payTitleStatus == "TRADE_DEPOSIT_SUCCESS") &&
               this.successIndex <= 0
             ) {
               this.addE(1500);

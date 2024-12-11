@@ -93,6 +93,7 @@
                 <b>{{ currentOrder.pay_amount }}</b>
                 元</span
               >
+              <!-- {{ currentOrder.returnStatus }} -->
               <span
                 style="
                   margin-left: 20px;
@@ -173,7 +174,7 @@ export default {
     return {
       // 定义变量
       activeName: "PAY_ALL", // 支付类型：PAY_ALL-正式版，PAY_STAGES-预览版
-      popupStatus: true,
+      popupStatus: false,
       intervalId: "",
       payTitleStatus: "PRE_CREATE",
       payStatusObject: {
@@ -213,9 +214,16 @@ export default {
         this.$log("支付状态发生变化", "新值:", newVal, "旧值:", oldVal);
         // 在这里执行你需要的操作
         this.popupStatus = true;
+        this.activeName = this.currentOrder.pay_type;
         this.$store.dispatch("paper/setPollingStatus", true);
         this.orderId = this.requestKey;
         this.getDetail();
+        if (this.currentOrder.payment_status) {
+          this.$log(this.currentOrder.payment_status);
+          this.orderPayDisabled = true;
+        } else {
+          this.orderPayDisabled = false;
+        }
       },
     },
   },
@@ -252,18 +260,19 @@ export default {
       // 停止上一次循环
       this.$store.dispatch("paper/setPollingStatus", false);
       // 重新生成订单
-      // let data = {
-      //   payment_method: "alipay", // 支付方式
-      //   pay_type: this.activeName,
-      //   key: this.currentOrder.key,
-      //   items: this.currentOrder.items,
-      // };
+      let data = {
+        payment_method: "alipay", // 支付方式
+        pay_type: this.activeName,
+        key: this.currentOrder.key,
+        items: this.currentOrder.items,
+      };
       getOrder(data).then((res) => {
+        console.log("切换后订单", res);
         let order = {
           out_trade_no: res.result.out_trade_no,
           pay_amount: res.result.pay_amount,
           pay_link: res.result.pay_link,
-          original_price: result.original_price,
+          original_price: res.result.original_price,
           pay_type: data.pay_type,
           payment_method: data.payment_method,
           key: data.key,
@@ -273,11 +282,10 @@ export default {
         let _this = this;
         setTimeout(() => {
           _this.loading = false;
-
           _this.$store.dispatch("paper/setPollingStatus", true);
           _this.orderId = res.result.out_trade_no;
           _this.getDetail();
-        }, 2000);
+        }, 4000);
       });
     },
     showExample() {
@@ -353,18 +361,39 @@ export default {
           // 判断支付状态
           if (orderData.payment_status) {
             this.payTitleStatus = orderData.payment_status;
-            if (this.payTitleStatus == "TRADE_SUCCESS") {
-              eventBus.emit("showEmitPaperDialog", {
-                requestKey: this.currentOrder.out_trade_no,
-                payStatus: 2,
-                paperPercent: 0,
-              });
-              this.popupStatus = false;
-            } else {
+            if (this.currentOrder.returnStatus) {
+              console.log(this.payTitleStatus);
+              if (
+                this.currentOrder.returnStatus == "付尾款" &&
+                this.payTitleStatus == "TRADE_SUCCESS"
+              ) {
+                this.paySend();
+                return false;
+              }
+              if (
+                this.currentOrder.returnStatus == "去支付" &&
+                (this.payTitleStatus == "TRADE_SUCCESS" ||
+                  this.payTitleStatus == "TRADE_DEPOSIT_SUCCESS")
+              ) {
+                this.paySend();
+                return false;
+              }
               let _this = this;
               setTimeout(() => {
                 _this.getList(data, delay, maxRetries, currentRetry);
               }, delay);
+            } else {
+              if (
+                this.payTitleStatus == "TRADE_SUCCESS" ||
+                this.payTitleStatus == "TRADE_DEPOSIT_SUCCESS"
+              ) {
+                this.paySend();
+              } else {
+                let _this = this;
+                setTimeout(() => {
+                  _this.getList(data, delay, maxRetries, currentRetry);
+                }, delay);
+              }
             }
           }
         })
@@ -383,6 +412,14 @@ export default {
             console.error("达到最大重试次数，停止轮询");
           }
         });
+    },
+    paySend() {
+      eventBus.emit("showEmitPaperDialog", {
+        requestKey: this.currentOrder.out_trade_no,
+        payStatus: 2,
+        paperPercent: 0,
+      });
+      this.popupStatus = false;
     },
     getDetail() {
       this.$log("d1111", this.orderId);

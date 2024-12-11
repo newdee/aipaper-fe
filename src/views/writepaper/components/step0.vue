@@ -64,7 +64,7 @@
       </div>
       <div class="outlineListClass" v-if="orderList.length > 0">
         <div class="lineNav">
-          <p>最近生成的论文</p>
+          <p>近期订单</p>
         </div>
         <div
           class="order"
@@ -98,17 +98,44 @@
                 >
                   预览
                 </el-button>
-                <el-button
-                  v-if="orderObj.order_item_response[0].case.paper_case.stage"
-                  icon="el-icon-download"
-                  :disabled="
-                    orderObj.order_item_response[0].case.paper_case.stage !=
-                      2 || downStatus
+                <template
+                  v-if="
+                    orderObj.order_item_response[0].case.paper_case.stage == 2
                   "
-                  type="text"
-                  @click="downLoadPaper(orderObj)"
                 >
-                  下载
+                  <el-button
+                    icon="el-icon-download"
+                    :disabled="
+                      orderObj.order.payment_status != 'TRADE_SUCCESS' ||
+                      downStatus
+                    "
+                    type="text"
+                    @click="downLoadPaper(orderObj)"
+                  >
+                    下载
+                  </el-button>
+                </template>
+                <el-button
+                  size="mini"
+                  class="handle"
+                  @click="sendPay(orderObj, '去支付')"
+                  v-if="orderObj.order.payment_status == 'WAIT_BUYER_PAY'"
+                  style="color: crimson"
+                  icon="el-icon-shopping-cart-full"
+                >
+                  去支付
+                </el-button>
+                <el-button
+                  size="mini"
+                  class="handle"
+                  @click="sendPay(orderObj, '付尾款')"
+                  v-if="
+                    orderObj.order.payment_status == 'TRADE_DEPOSIT_SUCCESS'
+                  "
+                  style="color: crimson"
+                  icon="el-icon-shopping-cart-full"
+                >
+                  付尾款
                 </el-button>
               </div>
             </div>
@@ -122,12 +149,24 @@
                 <el-button
                   size="mini"
                   class="handle"
-                  @click="sendPay(orderObj)"
+                  @click="sendPay(orderObj, '去支付')"
                   v-if="orderObj.order.payment_status == 'WAIT_BUYER_PAY'"
                   style="color: crimson"
                   icon="el-icon-shopping-cart-full"
                 >
-                  支付
+                  去支付
+                </el-button>
+                <el-button
+                  size="mini"
+                  class="handle"
+                  @click="sendPay(orderObj, '付尾款')"
+                  v-if="
+                    orderObj.order.payment_status == 'TRADE_DEPOSIT_SUCCESS'
+                  "
+                  style="color: crimson"
+                  icon="el-icon-shopping-cart-full"
+                >
+                  付尾款
                 </el-button>
               </div>
             </div>
@@ -163,6 +202,7 @@ import {
   getOrderList,
   paperPack,
   ordersRepay,
+  balance_pay,
 } from "@/api/user";
 import { throttle } from "lodash";
 import { getToken } from "@/utils/auth"; //
@@ -339,31 +379,63 @@ export default {
         document.body.removeChild(link);
       });
     }, 300),
-    sendPay(row) {
+    sendPay(row, status) {
+      zhuge.track(`点击去支付`, {
+        订单价格: row.order.total_price,
+        订单题目: row.outline.title,
+        订单Out_trade_no: row.order.out_trade_no,
+      });
       let data = {
         out_trade_no: row.order.out_trade_no, // 订单编号，必传
         payment_method: row.order.payment_method, // 支付方式，必传
       };
-      ordersRepay(data).then((res) => {
-        this.$log("去支付 res", res);
-        let order = {
-          out_trade_no: res.result.out_trade_no,
-          pay_amount: res.result.pay_amount,
-          pay_link: res.result.pay_link,
-        };
-        // 保存订单信息,二维码, 价格
-        this.$store.dispatch("app/toggleCurrentOrder", order);
-        // 展示附加列表
-        this.$store.dispatch(
-          "paper/setAdditionList",
-          res.result.additional_service
-        );
-        // 展示支付弹窗
-        eventBus.emit("showEmitPaypopup", {
-          requestKey: res.result.out_trade_no,
-          payStatus: 2,
-          paperPercent: 0,
+
+      if (status == "付尾款") {
+        balance_pay(data).then((res) => {
+          this.sendPayFinish(res, row, status);
         });
+      } else {
+        ordersRepay(data).then((res) => {
+          this.sendPayFinish(res, row, status);
+        });
+      }
+    },
+    sendPayFinish(res, row, status) {
+      this.$log("去支付 res", res);
+      let currentOrder = row.order;
+      // 存储订单信息用于订单页展示
+      let outLineData = row.outline;
+      let requestForm = {
+        title: outLineData.title,
+        language: outLineData.language,
+        type: outLineData.type,
+        field: ["哲学", outLineData.field],
+        key: outLineData.key1,
+        word_count: outLineData.word_count,
+      };
+      this.$store.dispatch("app/setRequestForm", requestForm);
+      // 存储订单信息用于订单页展示
+      let order = {
+        out_trade_no: res.result.out_trade_no,
+        pay_amount: res.result.pay_amount,
+        pay_link: res.result.pay_link,
+        original_price: res.result.original_amount,
+        pay_type: currentOrder.pay_type,
+        payment_status: currentOrder.payment_status,
+        returnStatus: status,
+      };
+      // 保存订单信息,二维码, 价格
+      this.$store.dispatch("app/toggleCurrentOrder", order);
+      // 展示附加列表
+      this.$store.dispatch(
+        "paper/setAdditionList",
+        res.result.additional_service
+      );
+      // 展示支付弹窗
+      eventBus.emit("showEmitPaypopup", {
+        requestKey: res.result.out_trade_no,
+        payStatus: 2,
+        paperPercent: 0,
       });
     },
   },
