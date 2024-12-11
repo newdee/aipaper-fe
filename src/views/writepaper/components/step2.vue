@@ -1396,20 +1396,38 @@ export default {
                 quantity: 1, // 数量
                 price: 149.85, //价格
               },
-              ...this.additionalList,
+              {
+                id: "6",
+                product_id: "6",
+                intro: "",
+                is_supported: true,
+                name: "开题报告",
+                quantity: 1, // 数量
+                now_Price: 0,
+                price: 4.9,
+              },
+              {
+                id: "7",
+                product_id: "7",
+                quantity: 1, // 数量
+                intro: "",
+                is_supported: true,
+                name: "任务书",
+                now_Price: 0,
+                price: 4.9,
+              },
+              {
+                id: "9",
+                product_id: "9",
+                intro: "",
+                quantity: 1, // 数量
+                is_supported: false,
+                name: "调查问卷",
+                now_Price: 0,
+                price: 4.9,
+              },
             ],
           };
-          data.items.forEach((product) => {
-            // Add a new property 'quantity' with a value of 1
-            product.quantity = 1;
-            if (!product.product_id) {
-              product.product_id = product.id;
-            }
-
-            // Remove the 'is_supported' property
-            delete product.is_supported;
-          });
-
           // const totalPrice = data.items.reduce(
           //   (sum, item) => sum + item.price,
           //   0

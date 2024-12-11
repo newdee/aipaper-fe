@@ -16,14 +16,14 @@
                 <p>返回第一步</p>
               </div>
             </el-tooltip>
-            <div class="pdfNavItem">
+            <!-- <div class="pdfNavItem">
               <i class="el-icon-edit"></i>
               <span>编辑Word版论文</span>
             </div>
             <div class="pdfNavItem">
               <i class="el-icon-edit"></i>
               <span>编辑Latex版论文</span>
-            </div>
+            </div> -->
             <div @click="$jumpUrl('/main/reduceRepetition')" class="pdfNavItem">
               <i class="el-icon-film"></i>
               <span>{{ $t("route.reduceRepetition") }}</span>
@@ -33,6 +33,7 @@
           <div
             @click="downLoadPaper"
             v-loading="downStatus"
+            v-if="currentOrder.payment_status == 'TRADE_SUCCESS'"
             class="pdfNavRight g_poin"
           >
             <i class="el-icon-download"></i>
@@ -232,6 +233,7 @@ export default {
   .pdfNavLeft {
     display: flex;
     align-items: center;
+    flex: 1;
     justify-content: space-between;
   }
 

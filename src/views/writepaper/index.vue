@@ -212,7 +212,7 @@ export default {
   },
   computed: {
     // 计算属性
-    ...mapGetters(["activeIndex", "device", ""]),
+    ...mapGetters(["activeIndex", "device", "requestForm"]),
   },
   methods: {
     // 展示论文加载弹窗
@@ -329,15 +329,14 @@ export default {
       outlineStatus(data).then((res) => {
         this.showOutLine(res.result.outline.outline);
         // 复现大纲接口
-        // let data = {
-        //   title: res.result.title,
-        //   language: res.result.language,
-        //   field: ["查看大纲", to.query.field],
-        //   type: this.requestForm.type,
-        //   key: to.query.key1,
-        // };
+        let data = {
+          ...this.requestForm,
+          predict_price: res.result.predict_price,
+        };
+        console.log("0000000", data);
+
         // 保存大纲输入信息
-        // this.$store.dispatch("app/setRequestForm", data);
+        this.$store.dispatch("app/setRequestForm", data);
         // 填充大纲列表数据
       });
     }
