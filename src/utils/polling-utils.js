@@ -33,7 +33,15 @@ export default function polling(
           // 重置大纲按钮状态
           store.dispatch("app/setProStatus", false);
           // 如果不是生成中状态，则解析结果
+
           resolve(res.result.outline.outline);
+          let requestForm = store.getters.requestForm;
+          let data = {
+            ...requestForm,
+            predict_price: res.result.predict_price,
+          };
+          // 保存大纲输入信息
+          store.dispatch("app/setRequestForm", data);
         }
       })
       .catch((error) => {

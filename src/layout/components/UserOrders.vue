@@ -59,17 +59,6 @@
                     item.case.paper_case.stage | orderStatusFormatter
                   }}</el-link
                 >
-                <div v-if="item.case.paper_case.stage === 3" class="right">
-                  <el-button
-                    size="mini"
-                    class="handle"
-                    @click="sendReLoad(orderObj)"
-                    style="color: crimson"
-                    icon="el-icon-refresh"
-                  >
-                    重试
-                  </el-button>
-                </div>
               </div>
               <div class="orderTitle orderTitleSpan" :key="'title' + j">
                 <!-- {{ item.product.name }} -->
@@ -127,6 +116,17 @@
                       下载
                     </el-button>
                   </template>
+                  <div v-if="item.case.paper_case.stage === 3" class="right">
+                    <el-button
+                      size="mini"
+                      class="handle"
+                      @click="sendReLoad(orderObj)"
+                      style="color: crimson"
+                      icon="el-icon-refresh"
+                    >
+                      重试
+                    </el-button>
+                  </div>
                 </div>
               </div>
             </template>

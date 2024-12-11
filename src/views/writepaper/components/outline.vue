@@ -11,13 +11,13 @@
           <span class="underLeft"></span>
         </p>
         <!-- checkoutPaper(2) -->
-        <p
+        <!-- <p
           @click="$devf"
           :class="['outLeftTitle', 'paperClass', index == 2 ? 'activeLT' : '']"
         >
           万象学术版
           <span class="underLeft"></span>
-        </p>
+        </p> -->
       </div>
       <div class="outRight">
         <div
