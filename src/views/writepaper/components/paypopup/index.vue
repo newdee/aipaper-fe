@@ -119,7 +119,7 @@
               <div class="formitem">
                 <span>说明:</span>
                 <b
-                  >预览版可以查看约全文30%内容，若满意可支付剩余费用，解锁全文。</b
+                  >预览版可以查看约全文50%内容，若满意可支付剩余费用，解锁全文。</b
                 >
               </div>
               <div class="formitem">
@@ -272,7 +272,7 @@ export default {
           out_trade_no: res.result.out_trade_no,
           pay_amount: res.result.pay_amount,
           pay_link: res.result.pay_link,
-          original_price: res.result.original_price,
+          original_price: res.result.original_amount,
           pay_type: data.pay_type,
           payment_method: data.payment_method,
           key: data.key,

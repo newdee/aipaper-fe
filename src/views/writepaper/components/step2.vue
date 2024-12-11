@@ -1452,7 +1452,7 @@ export default {
                 out_trade_no: res.result.out_trade_no,
                 pay_amount: res.result.pay_amount,
                 pay_link: res.result.pay_link,
-                original_price: result.original_price,
+                original_price: res.result.original_amount,
                 pay_type: data.pay_type,
                 payment_method: data.payment_method,
                 key: data.key,

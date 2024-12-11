@@ -50,6 +50,17 @@
     <!-- <div class="pdfBox">
       <PdfViewer :pdfUrl="step3PdfUrl" ref="pdfViewer" />
     </div> -->
+    <el-dialog title="温馨提示" :visible.sync="dialogVisible" width="30%">
+      <p style="line-height: 24px">
+        注意：此为预览版，只展示全文的50%。若满意请支付尾款，解锁全文并支持下载，下载有更多的惊喜哟~
+      </p>
+      <span slot="footer" class="dialog-footer">
+        <!-- <el-button @click="dialogVisible = false">取 消</el-button> -->
+        <el-button type="primary" @click="dialogVisible = false"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -65,6 +76,7 @@ export default {
   data() {
     return {
       // 定义变量
+      dialogVisible: false,
       data: "",
       // pdfUrl: require("@/assets/third_output.pdf"),
       pdfUrl: "",
@@ -81,9 +93,40 @@ export default {
   },
 
   watch: {
+    step3PdfUrl(newValue, oldValue) {
+      console.log("step3PdfUrl 发生了变化");
+      console.log("旧值:", this.currentOrder.payment_status);
+      this.dialogVisible = false;
+
+      // 在这里执行你需要的逻辑
+      if (this.currentOrder.payment_status == "TRADE_DEPOSIT_SUCCESS") {
+        let _this = this;
+        this.$nextTick(() => {
+          setTimeout(() => {
+            _this.dialogVisible = true;
+          }, 1000);
+        });
+      } else {
+        let _this = this;
+        this.$nextTick(() => {
+          setTimeout(() => {
+            _this.dialogVisible = false;
+          }, 1000);
+        });
+      }
+    },
     pdfUrl: {
       handler(newVal, oldVal) {
         this.pdfUrl = newVal;
+        console.log(
+          "this.currentOrder.payment_status",
+          this.currentOrder.payment_status
+        );
+        if (this.currentOrder.payment_status == "TRADE_SUCCESS") {
+          this.dialogVisible = true;
+        } else {
+          this.dialogVisible = false;
+        }
       },
       deep: true, // 启用深度监听
     },
