@@ -209,10 +209,13 @@
           <span> 预估费用: </span>
           <b class="danger"> {{ requestForm.predict_price }}</b>
         </p>
+        <p style="text-align: center; color: #606266; font-size: 16px">
+          9.9元看全文50%
+        </p>
       </div>
 
       <div style="padding-bottom: 40px">
-        <el-popover placement="top-start" width="800" trigger="hover">
+        <el-popover placement="top" width="800" trigger="hover">
           <el-table
             header-row-class-name="bgTable"
             border

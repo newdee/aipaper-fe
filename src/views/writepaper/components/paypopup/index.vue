@@ -23,7 +23,12 @@
           </div>
         </div>
       </template>
-      <div v-loading="loading" class="dialog-content">
+      <div
+        v-loading="loading"
+        :element-loading-text="'倒计时 ' + indexNum + ' 秒'"
+        element-loading-spinner="el-icon-loading"
+        class="dialog-content"
+      >
         <div class="markBox">
           <img src="@/assets/images/mark.png" alt="" />
         </div>
@@ -173,6 +178,7 @@ export default {
   data() {
     return {
       // 定义变量
+      indexNum: 5,
       activeName: "PAY_ALL", // 支付类型：PAY_ALL-正式版，PAY_STAGES-预览版
       popupStatus: false,
       intervalId: "",
@@ -253,8 +259,19 @@ export default {
   },
 
   methods: {
+    startCountdown() {
+      const countdownInterval = setInterval(() => {
+        if (this.indexNum > 0) {
+          this.indexNum--;
+        } else {
+          clearInterval(countdownInterval); // 停止循环
+          this.indexNum = 5;
+        }
+      }, 1000); // 每隔 1000 毫秒（1秒）执行一次
+    },
     handleClick(tab, event) {
       this.loading = true;
+      this.startCountdown();
       console.log(this.activeName, "activeName");
       console.log(this.currentOrder, "currentOrder");
       // 停止上一次循环
