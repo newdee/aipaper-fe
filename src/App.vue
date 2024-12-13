@@ -5,6 +5,26 @@
       <p>尊敬的用户，您好！</p>
       <p>我们正在进行系统升级和维护，预计维护时间为 5 小时。</p>
       <p>给您带来的不便，我们深表歉意，感谢您的理解与支持！</p>
+      <div
+        class="imgCode"
+        style="
+          margin-top: 40px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        "
+      >
+        <div class="contentP">
+          <img
+            style="width: 100%; height: 100%"
+            src="./assets/images/bg/1v1img.png"
+            alt=""
+          />
+        </div>
+
+        <p>如需维护期间,下载大纲,正文, 查看记录,可联系客服</p>
+        <p>联系客服,获取更多资讯及优惠活动</p>
+      </div>
     </div>
     <div v-else>
       <router-view />
@@ -63,5 +83,17 @@ export default {
     font-size: 1.2em;
     margin: 10px 0;
   }
+}
+.contentP {
+  width: 160px;
+  height: 160px;
+  border-radius: 8px;
+  background-color: #fff;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+.imgCode p {
+  line-height: 20px;
+  margin: 3px !important;
 }
 </style>
