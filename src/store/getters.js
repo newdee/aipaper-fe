@@ -19,5 +19,6 @@ const getters = {
   pollingStatus: (state) => state.paper.pollingStatus,
   additionalList: (state) => state.paper.additionalList,
   preViewId: (state) => state.paper.preViewId,
+  bdVid: (state) => state.paper.bdVid,
 };
 export default getters;

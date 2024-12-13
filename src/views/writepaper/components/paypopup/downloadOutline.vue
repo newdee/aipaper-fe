@@ -273,6 +273,8 @@ export default {
               //   paperPercent: 0,
               // });
               // alert("支付成功!");
+              this.$bdSave();
+
               let data = {
                 key1: this.currentOrder.key,
               };

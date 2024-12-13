@@ -169,14 +169,15 @@ export default {
     // this.$store.dispatch("app/setActiveIndex", 2);
   },
   created() {
+    this.getBdVidFromUrl();
     eventBus.on("showEmitPaperDialog", this.showPaperDialog); // 订阅事件
     eventBus.on("showEmitPaypopup", this.showPayDialog); // 订阅事件
-
     eventBus.on("emitOulineClick", this.showIndex); // 订阅事件
     eventBus.on("successOutline", this.showOutLine); // 订阅事件
     eventBus.on("pdfSuccessClick", this.showIndex3); // 订阅事件
     eventBus.on("showDownOutline", this.showDownOutline); // 订阅事件
   },
+
   beforeDestroy() {
     eventBus.off("showEmitPaperDialog", this.showPaperDialog); // 订阅事件
     eventBus.off("showEmitPaypopup", this.showPayDialog); // 订阅事件
@@ -215,6 +216,18 @@ export default {
     ...mapGetters(["activeIndex", "device", "requestForm"]),
   },
   methods: {
+    getBdVidFromUrl() {
+      // 获取当前页面的 URL
+      let bdVid = "";
+      const url = new URL(window.location.href);
+      // 使用 URLSearchParams 对象解析查询字符串
+      const params = new URLSearchParams(url.search);
+      // 提取 bd_vid 的值
+      bdVid = params.get("bd_vid");
+      // 如果需要，可以在控制台输出查看
+      this.$store.dispatch("paper/setBdVid", bdVid);
+      console.log("bd_vid:", this.bdVid);
+    },
     // 展示论文加载弹窗
     showPaperDialog(data) {
       this.requestKey = data.requestKey;

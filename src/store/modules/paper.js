@@ -5,6 +5,7 @@ const state = {
   pollingStatus: false, // paper弹窗 是否继续循环
   additionalList: [], // paper弹窗 是否继续循环
   preViewId: "", // 报告查询ID
+  bdVid: "",
 };
 
 const mutations = {
@@ -13,6 +14,9 @@ const mutations = {
   },
   TOGGLE_PREVIEW: (state, preViewId) => {
     state.preViewId = preViewId;
+  },
+  SAVE_VID: (state, bdVid) => {
+    state.bdVid = bdVid;
   },
   TOGGLE_POLLING: (state, pollingStatus) => {
     state.pollingStatus = pollingStatus;
@@ -28,6 +32,9 @@ const actions = {
   },
   setPreviewId({ commit }, preViewId) {
     commit("TOGGLE_PREVIEW", preViewId);
+  },
+  setBdVid({ commit }, bdVid) {
+    commit("SAVE_VID", bdVid);
   },
   setPollingStatus({ commit }, pollingStatus) {
     commit("TOGGLE_POLLING", pollingStatus);
