@@ -41,7 +41,7 @@
         <el-tooltip
           class="item"
           effect="dark"
-          content="付费下载"
+          content="付费下载大纲"
           placement="top"
         >
           <el-button
@@ -50,7 +50,7 @@
             size="mini"
             icon="el-icon-download"
           >
-            付费下载
+            付费下载大纲
           </el-button>
         </el-tooltip>
       </div>

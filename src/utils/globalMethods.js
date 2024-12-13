@@ -1,7 +1,9 @@
 // src/plugins/globalMethods.js
 import router from "@/router";
 import ElementUI from "element-ui";
+import store from "@/store";
 
+import { bd_convert } from "@/api/paper";
 const GlobalMethodsPlugin = {
   install(Vue) {
     Vue.prototype.$sayHello = function (name) {
@@ -80,6 +82,22 @@ const GlobalMethodsPlugin = {
       // });
       // window.addEventListener('beforeunload', preventResize);
       // 提示用户最小窗口大小要求
+    };
+    Vue.prototype.$bdSave = function (name) {
+      // console.log('Global method called!');
+      let data = {
+        out_trade_no: store.getters.currentOrder.out_trade_no,
+        bd_vid: store.getters.bdVid,
+      };
+      console.log("currentOrder", store.getters.currentOrder);
+      console.log("currentObd_vidrder", store.getters.bdVid);
+      console.log("data", data);
+
+      bd_convert(data).then((res) => {
+        console.log("--------", res);
+      });
+      // this.$msgbox(options)
+      // 执行你需要的操作
     };
   },
 };

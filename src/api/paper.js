@@ -49,6 +49,14 @@ export function passReport(params) {
     method: "get",
   });
 }
+// 百度推广接口
+export function bd_convert(params) {
+  return request({
+    url: "/api/ai-paper/orders/bd_convert",
+    method: "get",
+    params: params,
+  });
+}
 export function pre_create(data) {
   return request({
     url: "/api/ai-paper/pass/pre_create",

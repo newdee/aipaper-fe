@@ -431,6 +431,8 @@ export default {
         });
     },
     paySend() {
+      this.$bdSave();
+
       eventBus.emit("showEmitPaperDialog", {
         requestKey: this.currentOrder.out_trade_no,
         payStatus: 2,
