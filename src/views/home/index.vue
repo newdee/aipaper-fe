@@ -1,6 +1,8 @@
 <template>
   <div>
     <!-- <el-button type="success" @click="jump">跳转到原页面</el-button> -->
+    <!-- 公告管理 -->
+    <!-- <announcement></announcement> -->
     <!-- 页面名称 -->
     <div class="carouselBox" v-if="carouseStatus">
       <div class="carouselCon">
@@ -44,7 +46,7 @@ import advantage from "./components/advantage.vue";
 import searchPaper from "./components/searchPaper.vue";
 // import eventBus from "@/utils/eventBus";
 import { getDomain } from "@/utils/index.js";
-
+// import announcement from "@/components/announcement/index.vue";
 export default {
   name: "index",
   data() {
@@ -58,6 +60,7 @@ export default {
     advantage,
     searchPaper,
     swiperThree,
+    // announcement,
   },
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
