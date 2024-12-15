@@ -3,8 +3,9 @@
     <!-- 优势页 -->
     <el-dialog
       :visible.sync="advantageStatus"
-      width="900px"
+      :width="device == 'mobile' ? '400px' : '900px'"
       top="0"
+      :title="device == 'mobile' ? '示例毕业论文' : ''"
       append-to-body
       class="dialogContainer"
     >
@@ -68,9 +69,10 @@
           </div>
         </div>
 
-        <div class="dialogHeader">
+        <div v-if="device != 'mobile'" class="dialogHeader">
           <p>示例毕业论文</p>
         </div>
+
         <div class="main-txt">
           <div id="sec1"></div>
           <div class="paperPdfSlider">
@@ -278,7 +280,7 @@
   </div>
 </template>
 <script>
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 
@@ -392,17 +394,14 @@ export default {
     };
   },
 
-  // watch()
-  components: {
-    // webinfo,
+  computed: {
+    // 计算属性
+    ...mapGetters(["device"]),
   },
   mounted() {
     // 页面初始化
   },
 
-  computed: {
-    // 计算属性
-  },
   methods: {
     // 定义方法
     showDia() {

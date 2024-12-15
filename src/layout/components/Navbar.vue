@@ -59,7 +59,7 @@
         </div>
       </div>
       <!-- 礼包 -->
-      <div class="giftBox">
+      <div class="giftBox hidden-xs-only">
         <img src="../../assets/images/bg/giftbox.png" alt="" />
         <p>全场限时 <b>半价</b>，喜迎 <b>2025</b> 年！</p>
       </div>
@@ -69,7 +69,11 @@
           <!-- <div class="gift">
             <span class="num">1</span>
           </div> -->
-          <div class="giftBtn" v-if="sub_domain == 'www'" @click="showGift">
+          <div
+            class="giftBtn hidden-xs-only"
+            v-if="sub_domain == 'www'"
+            @click="showGift"
+          >
             <i class="el-icon-present"></i>
             <span>免费大礼包 </span>
           </div>
@@ -310,7 +314,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["sidebar", "userInfo", "name", "avatar", "sub_domain"]),
+    ...mapGetters([
+      "sidebar",
+      "userInfo",
+      "name",
+      "avatar",
+      "device",
+      "sub_domain",
+    ]),
   },
 
   mounted() {
@@ -865,9 +876,14 @@ export default {
     display: flex;
     align-items: center;
     span {
+      display: inline-block; /* 将span设置为行内块级元素 */
+      width: 75px; /* 设置固定宽度，具体宽度可根据需要调整 */
       color: blue;
       font-size: 15px;
       margin-left: 5px;
+      overflow: hidden; /* 隐藏超出内容 */
+      white-space: nowrap; /* 强制文本在一行中显示 */
+      text-overflow: ellipsis; /* 添加省略号 */
     }
   }
 }
