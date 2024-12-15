@@ -224,18 +224,6 @@
         大纲不满意? 重新生成
         <i class="el-icon-refresh"></i>
       </p>
-      <el-tooltip class="item" effect="dark" content="付费下载" placement="top">
-        <el-button
-          style="margin-left: 10px"
-          type="success"
-          @click="downLoadLine"
-          round
-          plain
-          icon="el-icon-download"
-        >
-          付费下载大纲
-        </el-button>
-      </el-tooltip>
     </div>
     <!-- 付费项选择 -->
     <additional></additional>

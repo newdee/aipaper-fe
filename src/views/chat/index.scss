@@ -43,6 +43,9 @@ dd {
   margin: 10px;
   padding: 10px;
   border-radius: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
 }
 
 .message.user {
@@ -51,7 +54,7 @@ dd {
   color: #000;
 }
 
-.message.response {
+.message.assistant {
   background-color: #f6f7fb;
   color: #000;
   align-self: flex-end;
@@ -86,10 +89,11 @@ dd {
   justify-content: flex-start;
   font-size: 14px;
   line-height: 22px;
+  color: #606266;
 }
 
 .userTitle {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .code-block {
@@ -143,7 +147,7 @@ dd {
 .messageBox.user:hover .edit-icon {
   display: block; /* Show the button on hover */
 }
-.messageBox.response:hover .reload-icon {
+.messageBox.assistant:hover .reload-icon {
   display: block; /* Show the button on hover */
 }
 
@@ -254,10 +258,12 @@ dd {
 .chatMain {
   display: flex;
   .sidebarLeft {
+    position: relative;
     width: 260px;
     border-right: 1px solid hsl(var(--border));
     pointer-events: auto;
     background: #fff;
+    transition: width 0.3s linear;
     .sliderContent {
       display: flex;
       flex-direction: column;
@@ -266,6 +272,34 @@ dd {
       padding: 4px;
     }
     border-right: 1px solid #dcdfe6;
+  }
+  .sidebarLeft0 {
+    position: relative;
+    width: 0px;
+    border-right: none;
+    background: #fff;
+    transition: width 0.3s linear;
+  }
+  .arrowControl {
+    position: absolute;
+    width: 10px;
+    height: 25px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    top: 35%;
+    right: -5px;
+    z-index: 10;
+    &:hover {
+      cursor: pointer;
+      background-color: #ccc;
+    }
+  }
+  .arrowControlRight {
+    right: -10px !important;
   }
   .chat-container {
     flex: 1;
@@ -342,10 +376,41 @@ dd {
     border-radius: 8px;
     align-items: center;
     width: 100px;
+    position: relative;
     margin-right: 10px;
     background-color: #f2f2f2;
+    transition: all 0.3s linear;
     img {
       width: 100%;
     }
+    &:hover {
+      transform: scale(1.1);
+      .delImgBtn {
+        display: block;
+      }
+    }
+  }
+  .delImgBtn {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 20px;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    display: none;
+    border: 1px solid #f2f2f2;
+    border-radius: 5px;
+  }
+}
+.imgBox {
+  width: 50px;
+  height: 50px;
+  margin-top: 5px;
+  img {
+    width: 100%;
+    height: 100%;
   }
 }

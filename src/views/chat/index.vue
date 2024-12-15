@@ -1,8 +1,41 @@
 <template>
   <div class="chatMain">
-    <div class="sidebarLeft">
+    <div
+      v-if="false"
+      :class="[leftChatListStatus ? 'sidebarLeft' : 'sidebarLeft0']"
+    >
+      <el-tooltip
+        class="item"
+        effect="dark"
+        content="收起会话"
+        placement="right"
+      >
+        <div
+          @click="leftChatListStatus = false"
+          v-show="leftChatListStatus"
+          class="arrowControl"
+        >
+          <i class="el-icon-arrow-left"></i>
+        </div>
+      </el-tooltip>
+
+      <el-tooltip
+        class="item"
+        effect="dark"
+        content="打开会话"
+        placement="right"
+      >
+        <div
+          v-show="!leftChatListStatus"
+          @click="leftChatListStatus = true"
+          class="arrowControl arrowControlRight"
+        >
+          <i class="el-icon-arrow-right"></i>
+        </div>
+      </el-tooltip>
+
       <div class="sliderTitle">
-        <div class="sliderLeft">
+        <div class="sliderLeft" @click="addChatItem">
           <div class="sliderBtn">
             <i class="el-icon-plus"></i>
           </div>
@@ -47,28 +80,49 @@
       </div>
       <div class="chat-messages">
         <div
-          :class="['messageBox', msg.type]"
+          :class="['messageBox', msg.role]"
           v-for="(msg, index) in chatMessages"
           :key="index"
         >
           <div class="userInfo">
-            <img v-if="msg.type === 'user'" :src="avatar" alt="" />
+            <img v-if="msg.role === 'user'" :src="avatar" alt="" />
             <img
-              v-if="msg.type === 'response'"
+              v-if="msg.role === 'assistant'"
               :src="logoMax"
               alt=""
               class="logoMax"
             />
           </div>
           <div :class="['message', msg.type]">
-            <div
-              :class="[
-                'infoList',
-                msg.type == 'user' ? 'userTitle' : 'answerTitle',
-              ]"
-            >
-              <div v-html="renderMarkdown(msg.text)"></div>
-              <div v-if="msg.type === 'response'" class="responseBottom">
+            <!-- 问 user -->
+            <template v-if="msg.role == 'user'">
+              <div
+                v-for="(item, index) in msg.content"
+                :key="'wen' + index"
+                class="userTitle infoList"
+              >
+                <div v-if="item.type == 'text'" class="textBox">
+                  {{ item.text }}
+                </div>
+                <div v-if="item.type == 'image_url'" class="imgBox">
+                  <img :src="item.image_url.url" alt="" />
+                </div>
+              </div>
+            </template>
+            <!-- 答 user -->
+            <template v-if="msg.role == 'assistant'">
+              <div
+                v-for="(item, index) in msg.content"
+                :key="'wen' + index"
+                class="answerTitle infoList"
+              >
+                <div class="textBox">
+                  <div v-html="renderMarkdown(item.text)"></div>
+                </div>
+              </div>
+            </template>
+            <!-- <div v-html="renderMarkdown(msg.content.text)"></div> -->
+            <!-- <div v-if="msg.type === 'assistant'" class="responseBottom">
                 <div></div>
                 <el-tooltip
                   class="item"
@@ -87,8 +141,7 @@
                     </svg>
                   </el-button>
                 </el-tooltip>
-              </div>
-            </div>
+              </div> -->
           </div>
           <button
             v-if="msg.type === 'user'"
@@ -109,7 +162,8 @@
             content="切换模型"
             placement="top"
           >
-            <el-dropdown>
+            <module-select v-model="modelName"></module-select>
+            <!-- <el-dropdown>
               <div class="workItem">
                 <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-OpenAI"></use>
@@ -123,7 +177,7 @@
                   {{ item.modelName }}
                 </el-dropdown-item>
               </el-dropdown-menu>
-            </el-dropdown>
+            </el-dropdown> -->
           </el-tooltip>
 
           <el-tooltip
@@ -144,16 +198,16 @@
             </div>
           </el-tooltip>
 
-          <el-tooltip
+          <!-- <el-tooltip
             class="item"
             effect="dark"
             content="上传文件"
             placement="top"
           >
-            <div class="workItem">
+            <div class="workItem" @click="getFile">
               <i class="el-icon-paperclip"></i>
             </div>
-          </el-tooltip>
+          </el-tooltip> -->
           <!-- <div class="workItem">
             <el-tooltip
               class="item"
@@ -171,7 +225,7 @@
             type="textarea"
             :autosize="{ minRows: 2, maxRows: 4 }"
             placeholder="请输入您的问题"
-            v-model="message"
+            v-model="inputMessage"
             @keydown.native="handleKeydown"
           >
           </el-input>
@@ -198,7 +252,7 @@
             <el-button
               icon="el-icon-s-promotion"
               type="primary "
-              @click="sendMessage"
+              @click="establishConnection"
               >发送</el-button
             >
           </div>
@@ -210,6 +264,9 @@
             :key="'file' + index"
             class="fileBox"
           >
+            <div class="delImgBtn red" @click="resetImgList">
+              <i class="el-icon-delete"></i>
+            </div>
             <img :src="item.image_url.url" alt="" />
           </div>
         </div>
@@ -232,11 +289,15 @@ import { marked } from "marked";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css"; // 确保路径和样式名称正确
 import { mapGetters } from "vuex";
-
+import moduleSelect from "./component/moduleSelect.vue";
 export default {
+  components: {
+    moduleSelect,
+  },
   data() {
     return {
-      message: "",
+      leftChatListStatus: false,
+      inputMessage: "",
       textarea: "",
       chatMessages: [],
       model_list: [
@@ -267,7 +328,8 @@ export default {
       editMessageText: "",
       logoMax: require("@/assets/images/logoMax.png"),
       chatBaseApi: "",
-      chatList: [],
+      localChatList: [],
+      modelName: "gpt-4o-mini",
       imgBoxList: [], // 上传图片列表
       currentChatData: [
         {
@@ -276,6 +338,12 @@ export default {
             {
               type: "text",
               text: "你好",
+            },
+            {
+              type: "image_url",
+              image_url: {
+                url: "",
+              },
             },
           ],
         },
@@ -290,16 +358,19 @@ export default {
         },
       ],
       base64Image: "",
+      chatId: "",
     };
   },
   created() {
     this.chatBaseApi = process.env.VUE_APP_CHAT_BASE_API;
-
+    this.chatId = this.generateUniqueId();
     console.log("Chat API Base URL:", process.env.VUE_APP_CHAT_BASE_API);
+    this.localChatList = JSON.parse(localStorage.getItem("chatList"));
+    console.log("this.localChatList", this.localChatList);
   },
   mounted() {
     this.getChatInfo();
-    this.establishConnection();
+    // this.establishConnection();
     this.addCopyAndToggleListeners();
   },
   updated() {
@@ -310,7 +381,29 @@ export default {
     ...mapGetters(["avatar"]),
   },
   methods: {
+    resetImgList() {
+      this.imgBoxList = [];
+    },
+    generateUniqueId() {
+      const timestamp = Date.now().toString(36); // 基于当前时间的时间戳
+      const randomNum = Math.random().toString(36).substr(2, 9); // 随机数
+      return `id_${timestamp}_${randomNum}`;
+    },
+    addChatItem() {
+      this.leftChatListStatus = !this.leftChatListStatus;
+    },
+    getFile() {
+      console.log("chatMessages", this.chatMessages);
+      this.leftChatListStatus = !this.leftChatListStatus;
+    },
     onFileChange(event) {
+      if (this.imgBoxList.length >= 1) {
+        this.$message({
+          type: "warning",
+          message: "暂支持单图片上传",
+        });
+        return false;
+      }
       const file = event.target.files[0]; // 获取用户选择的文件
       if (file) {
         const reader = new FileReader();
@@ -334,7 +427,8 @@ export default {
       if (e.keyCode === 13 && !e.shiftKey) {
         // Enter key pressed without Shift
         e.preventDefault(); // Prevents the default behavior (inserting a new line)
-        this.sendMessage(); // Call the function to perform the search
+
+        this.establishConnection(); // Call the function to perform the search
       }
     },
     getChatInfo() {
@@ -343,7 +437,7 @@ export default {
       )}`;
       axios.get(url, { token: this.token }).then((response) => {
         console.log(response, "sssreposne");
-        // this.model_list = response.data.result.model_list;
+        this.model_list = response.data.result.model_list;
         this.temperature = response.data.result.temperature;
       });
     },
@@ -386,8 +480,42 @@ export default {
 
       return marked.parse(text);
     },
+    setLocal() {
+      let data = {
+        model: this.modelName,
+        stream: true,
+        temperature: this.temperature,
+        top_p: 1,
+        id: this.chatId,
+        messages: [],
+      };
+      data.messages = this.currentChatData;
 
+      if (this.localChatList.length < 1) {
+        // 如果列表为空，则直接添加
+        this.localChatList.push(data);
+      } else {
+        // 查找与当前 chatId 匹配的索引
+        let index = this.localChatList.findIndex(
+          (item) => item.id === this.chatId
+        );
+
+        if (index !== -1) {
+          // 如果找到了匹配的项，用 data 替换原来的项
+          this.localChatList[index] = data;
+        } else {
+          // 如果没有找到匹配的项，将 data 添加到数组中
+          this.localChatList.push(data);
+        }
+      }
+
+      // 更新 localStorage
+      localStorage.setItem("chatList", JSON.stringify(this.localChatList));
+    },
     establishConnection() {
+      if (!this.inputMessage.trim()) {
+        return false;
+      }
       const url = `${this.chatBaseApi}createSse?token=${encodeURIComponent(
         this.token
       )}`;
@@ -399,6 +527,9 @@ export default {
       this.sseSource.onmessage = (event) => {
         if (event.data === "[DONE]") {
           currentMessage = "";
+          // 存储数据
+          this.setLocal();
+          // alert("结束了");
         } else {
           // 添加一个基本的 JSON 检查
           if (
@@ -409,18 +540,25 @@ export default {
               const parsedData = JSON.parse(event.data);
               if (parsedData.content) {
                 currentMessage += parsedData.content;
-
+                console.log("....", currentMessage);
+                // 存储结构
+                let content = [
+                  {
+                    type: "text",
+                    text: currentMessage,
+                  },
+                ];
                 if (
                   this.chatMessages.length &&
-                  this.chatMessages[this.chatMessages.length - 1].type ===
-                    "response"
+                  this.chatMessages[this.chatMessages.length - 1].role ===
+                    "assistant"
                 ) {
-                  this.chatMessages[this.chatMessages.length - 1].text =
-                    currentMessage;
+                  this.chatMessages[this.chatMessages.length - 1].content =
+                    content;
                 } else {
                   this.chatMessages.push({
-                    text: currentMessage,
-                    type: "response",
+                    content: content,
+                    role: "assistant",
                   });
                 }
               }
@@ -437,28 +575,56 @@ export default {
           }
         }
       };
-
-      this.sseSource.onerror = () => {
-        console.error("SSE Error: attempting to reconnect");
-        this.sseSource.close();
-        setTimeout(this.establishConnection, this.reconnectInterval);
+      // 判断 SSE 连接是否成功建立
+      this.sseSource.onopen = () => {
+        console.log("SSE connection established.");
+        // 你可以在这里执行其他初始化逻辑
+        if (!this.inputMessage.trim()) {
+          return false;
+        }
+        this.sendMessage();
       };
+      this.sseSource.onerror = () => {
+        // console.error("SSE Error: attempting to reconnect");
+        // this.sseSource.close();
+        // setTimeout(this.establishConnection, this.reconnectInterval);
+      };
+    },
+    // 发送消息 组装信息
+    setChatData() {
+      let data = {
+        role: "user",
+        content: [],
+      };
+      if (!!this.inputMessage) {
+        data.content.push({
+          type: "text",
+          text: this.inputMessage,
+        });
+      }
+      if (this.imgBoxList.length > 0) {
+        this.imgBoxList.forEach((item) => {
+          data.content.push(item);
+        });
+      }
+      this.chatMessages.push(data);
     },
     sendMessage() {
       zhuge.track(`GPT页面用户使用`, {});
-      if (!this.message.trim()) return;
-
-      this.chatMessages.push({ text: this.message, type: "user" });
 
       const url = `${this.chatBaseApi}chat?token=${encodeURIComponent(
         this.token
       )}`;
       let data = {
-        msg: this.message, // 用户输入的信息，如果是上传文件，需要根据上传文件接口的返参将用户输入和返参进行拼接
+        msg: this.inputMessage, // 用户输入的信息，如果是上传文件，需要根据上传文件接口的返参将用户输入和返参进行拼接
         temperature: 0.7, // 温度
-        model: "gpt-4o-mini", // 用户所选模型，不在模型列表的请求会被后端拒绝
+        model: this.modelName, // 用户所选模型，不在模型列表的请求会被后端拒绝
         image_url: "", // 图片的base64格式，如果上传图片需要该字段，不传图片则留空
       };
+      if (this.imgBoxList.length > 0) {
+        data.image_url = this.imgBoxList[0].image_url.url;
+      }
+      this.setChatData();
       axios
         .post(url, data)
         .then((response) => {
@@ -468,6 +634,7 @@ export default {
               type: "error",
               message: response.data.message,
             });
+          } else {
           }
         })
         .catch((error) => {
@@ -478,11 +645,12 @@ export default {
           });
           if (error.response && error.response.status === 401) {
             this.token = getToken();
-            this.sendMessage();
+            // this.establishConnection();
           }
         });
 
-      this.message = "";
+      this.inputMessage = "";
+      this.imgBoxList = [];
     },
     scrollToBottom() {
       const container = this.$el.querySelector(".chat-messages");
@@ -528,6 +696,7 @@ export default {
       }
       this.dialogVisible = false;
     },
+    // 发送聊天消息
     regenerateResponse(index) {
       const message = this.chatMessages[index].text;
       const url = `${this.chatBaseApi}chat?token=${encodeURIComponent(
@@ -549,7 +718,7 @@ export default {
           this.imgBoxList = [];
           this.chatMessages.splice(index + 1, 1, {
             text: response.data,
-            type: "response",
+            type: "assistant",
           });
         })
         .catch((error) => {
