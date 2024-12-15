@@ -1,10 +1,40 @@
 <template>
   <div class="chatMain">
-    <!-- <div class="sidebarLeft">
-      <div class="sliderContent">
-        <span>asdfasdf</span>
+    <div class="sidebarLeft">
+      <div class="sliderTitle">
+        <div class="sliderLeft">
+          <div class="sliderBtn">
+            <i class="el-icon-plus"></i>
+          </div>
+        </div>
+        <div class="sliderRight">
+          <div class="sliderBtn">
+            <i class="el-icon-delete"></i>
+          </div>
+          <div class="sliderBtn">
+            <i class="el-icon-refresh"></i>
+          </div>
+        </div>
       </div>
-    </div> -->
+      <div class="sliderItems">
+        <!-- <div
+          :class="[
+            activeIndex == index ? 'sliderChat activeSilder' : 'sliderChat',
+          ]"
+        >
+          <i class="el-icon-chat-dot-round"></i>
+          <p>你好</p>
+        </div> -->
+        <div class="sliderChat">
+          <i class="el-icon-chat-dot-round"></i>
+          <p>你好</p>
+        </div>
+        <div class="sliderChat">
+          <i class="el-icon-chat-dot-round"></i>
+          <p>你好</p>
+        </div>
+      </div>
+    </div>
     <div class="chat-container">
       <!-- <div class="navChat">
       <el-button>清屏</el-button>
@@ -72,18 +102,28 @@
         </div>
       </div>
       <div class="chatBottom GH">
-        <!-- <div class="chatBottomHeader">
+        <div class="chatBottomHeader">
           <el-tooltip
             class="item"
             effect="dark"
             content="切换模型"
             placement="top"
           >
-            <div class="workItem">
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-OpenAI"></use>
-              </svg>
-            </div>
+            <el-dropdown>
+              <div class="workItem">
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-OpenAI"></use>
+                </svg>
+              </div>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item
+                  v-for="(item, index) in model_list"
+                  :key="'model' + index"
+                >
+                  {{ item.modelName }}
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
           </el-tooltip>
 
           <el-tooltip
@@ -92,7 +132,14 @@
             content="上传图片"
             placement="top"
           >
-            <div class="workItem">
+            <div class="workItem upload-button">
+              <input
+                class="file-input"
+                ref="fileInput"
+                type="file"
+                @change="onFileChange"
+                accept="image/*"
+              />
               <i class="el-icon-picture-outline-round"></i>
             </div>
           </el-tooltip>
@@ -107,7 +154,7 @@
               <i class="el-icon-paperclip"></i>
             </div>
           </el-tooltip>
-          <div class="workItem">
+          <!-- <div class="workItem">
             <el-tooltip
               class="item"
               effect="dark"
@@ -116,8 +163,9 @@
             >
               <i class="el-icon-circle-plus-outline"></i>
             </el-tooltip>
-          </div>
-        </div> -->
+          </div> -->
+        </div>
+
         <div class="chatBoxInput">
           <el-input
             type="textarea"
@@ -155,6 +203,16 @@
             >
           </div>
         </div>
+        <div v-if="imgBoxList.length > 0" class="fileBottom">
+          <!-- <img :src="base64Image" alt="Uploaded Image" /> -->
+          <div
+            v-for="(item, index) in imgBoxList"
+            :key="'file' + index"
+            class="fileBox"
+          >
+            <img :src="item.image_url.url" alt="" />
+          </div>
+        </div>
       </div>
       <el-dialog title="编辑消息" :visible.sync="dialogVisible" width="30%">
         <el-input type="textarea" v-model="editMessageText" rows="5"></el-input>
@@ -181,14 +239,57 @@ export default {
       message: "",
       textarea: "",
       chatMessages: [],
+      model_list: [
+        {
+          modelName: "claude-3-5",
+          select: false,
+        },
+        {
+          modelName: "gpt-4o-all",
+          select: false,
+        },
+        {
+          modelName: "gpt-4o-mini",
+          select: true,
+        },
+        {
+          modelName: "o1-mini",
+          select: false,
+        },
+      ],
+      temperature: 0.5,
       token: getToken(),
       sseSource: null,
+      activeIndex: 0,
       reconnectInterval: 5000,
       dialogVisible: false,
       editMessageIndex: null,
       editMessageText: "",
       logoMax: require("@/assets/images/logoMax.png"),
       chatBaseApi: "",
+      chatList: [],
+      imgBoxList: [], // 上传图片列表
+      currentChatData: [
+        {
+          role: "user",
+          content: [
+            {
+              type: "text",
+              text: "你好",
+            },
+          ],
+        },
+        {
+          role: "assistant",
+          content: [
+            {
+              type: "text",
+              text: "你好！有什么我可以帮助你的吗？",
+            },
+          ],
+        },
+      ],
+      base64Image: "",
     };
   },
   created() {
@@ -197,6 +298,7 @@ export default {
     console.log("Chat API Base URL:", process.env.VUE_APP_CHAT_BASE_API);
   },
   mounted() {
+    this.getChatInfo();
     this.establishConnection();
     this.addCopyAndToggleListeners();
   },
@@ -208,12 +310,42 @@ export default {
     ...mapGetters(["avatar"]),
   },
   methods: {
+    onFileChange(event) {
+      const file = event.target.files[0]; // 获取用户选择的文件
+      if (file) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file); // 将文件读取为Data URL
+        reader.onload = () => {
+          let data = {
+            type: "image_url",
+            image_url: {
+              url: reader.result,
+            },
+          };
+          this.imgBoxList.push(data);
+        };
+
+        reader.onerror = (error) => {
+          console.error("Error reading file: ", error);
+        };
+      }
+    },
     handleKeydown(e) {
       if (e.keyCode === 13 && !e.shiftKey) {
         // Enter key pressed without Shift
         e.preventDefault(); // Prevents the default behavior (inserting a new line)
         this.sendMessage(); // Call the function to perform the search
       }
+    },
+    getChatInfo() {
+      const url = `${this.chatBaseApi}chatAllInfo?token=${encodeURIComponent(
+        this.token
+      )}`;
+      axios.get(url, { token: this.token }).then((response) => {
+        console.log(response, "sssreposne");
+        // this.model_list = response.data.result.model_list;
+        this.temperature = response.data.result.temperature;
+      });
     },
     renderMarkdown(text) {
       const renderer = new marked.Renderer();
@@ -321,9 +453,14 @@ export default {
       const url = `${this.chatBaseApi}chat?token=${encodeURIComponent(
         this.token
       )}`;
-
+      let data = {
+        msg: this.message, // 用户输入的信息，如果是上传文件，需要根据上传文件接口的返参将用户输入和返参进行拼接
+        temperature: 0.7, // 温度
+        model: "gpt-4o-mini", // 用户所选模型，不在模型列表的请求会被后端拒绝
+        image_url: "", // 图片的base64格式，如果上传图片需要该字段，不传图片则留空
+      };
       axios
-        .post(url, { msg: this.message })
+        .post(url, data)
         .then((response) => {
           console.log("Message sent successfully:", response.data);
           if (response.data.code !== 200 && response.data.message) {
@@ -409,6 +546,7 @@ export default {
         )
         .then((response) => {
           // Assuming response contains new answer
+          this.imgBoxList = [];
           this.chatMessages.splice(index + 1, 1, {
             text: response.data,
             type: "response",
@@ -432,255 +570,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.chat-container {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 180px);
-  background-color: #fff;
-  color: #e0e0e0;
-  position: relative;
-}
-
-.chat-messages {
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
-}
-.messageBox {
-  position: relative;
-  max-width: 1100px;
-  padding-left: 40px;
-  padding-right: 20px;
-}
-.message {
-  margin: 10px;
-  padding: 10px;
-  border-radius: 10px;
-}
-
-.message.user {
-  background-color: #d0dfef;
-  align-self: flex-start;
-  color: #000;
-}
-
-.message.response {
-  background-color: #f6f7fb;
-  color: #000;
-  align-self: flex-end;
-}
-
-.userInfo {
-  position: absolute;
-  top: 5px;
-  left: 10px;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  overflow: hidden;
-  background: #d8e3ff;
-}
-.userInfo img {
-  width: 100%;
-  height: 100%;
-}
-.userInfo .logoMax {
-  width: 70%;
-  height: 70%;
-}
-.infoList {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  font-size: 14px;
-  line-height: 22px;
-}
-
-.userTitle {
-  font-size: 16px;
-}
-
-.code-block {
-  position: relative;
-  border: 1px solid #333;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 20px;
-  background-color: #2d2d2d;
-}
-
-.code-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #444;
-  padding: 5px 10px;
-  color: #ccc;
-  font-size: 12px;
-}
-
-.language-label {
-  font-weight: bold;
-  color: #ffcc00;
-}
-
-.code-buttons {
-  display: flex;
-  gap: 5px;
-}
-
-.edit-icon {
-  display: none; /* Initially hide the button */
-  position: absolute;
-  right: 5px;
-  top: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.5em;
-  color: #666;
-}
-.reload-icon {
-  cursor: pointer;
-
-  font-size: 24px;
-
-  color: #000;
-}
-
-.messageBox.user:hover .edit-icon {
-  display: block; /* Show the button on hover */
-}
-.messageBox.response:hover .reload-icon {
-  display: block; /* Show the button on hover */
-}
-
-::v-deep .code-block {
-  margin: 0;
-  padding: 0px;
-  background-color: #2d2d2d !important;
-  color: #cccccc !important;
-  border-radius: 5px !important;
-  overflow-x: auto !important;
-}
-::v-deep .code-header {
-  padding: 10px;
-  background: #585a73;
-  display: flex;
-  justify-content: space-between;
-}
-::v-deep .code-block pre {
-  padding: 0 10px 10px 10px;
-}
-::v-deep .code-buttons button {
-  border: none;
-  background: transparent;
-  color: #fff;
-  margin: 0 5px;
-}
-.responseBottom {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-}
-.defaultText {
-  position: absolute;
-  max-width: 1100px;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 300px;
-  font-size: 30px;
-  color: #2d2d2d;
-  display: flex;
-  padding-top: 300px;
-  align-items: flex-start;
-  justify-content: center;
-  p {
-    font-size: 24px;
-    display: flex;
-    font-weight: 600;
-    justify-content: center;
-    line-height: 36px;
-    align-items: center;
-  }
-  img {
-    width: 46px;
-    height: 46px;
-    margin-right: 10px;
-  }
-}
-.chatBottom {
-  border-top: 1px solid #dcdfe6;
-  padding: 5px;
-  padding-left: 10px;
-  .chatBottomHeader {
-    height: 40px;
-
-    display: flex;
-    align-items: center;
-    font-size: 22px;
-    color: #57606a;
-    .workItem {
-      margin-right: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-  .tipBottom {
-    color: #808080;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    .bottomLeft {
-      p {
-        margin-top: 5px;
-      }
-      .icon {
-        font-size: 16px;
-      }
-      .tipText {
-        font-size: 12px;
-        margin-left: 5px;
-      }
-    }
-    .bottomRight {
-      width: 80px;
-      height: 40px;
-    }
-  }
-}
-::v-deep .chatBoxInput {
-  textarea {
-    border: none;
-    resize: none;
-  }
-}
-.chatMain {
-  display: flex;
-  .sidebarLeft {
-    width: 260px;
-    border-right: 1px solid hsl(var(--border));
-    pointer-events: auto;
-    background: #fff;
-    .sliderContent {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      height: 100%;
-      padding: 4px;
-    }
-    border-right: 1px solid #dcdfe6;
-  }
-  .chat-container {
-    flex: 1;
-  }
-}
+@import "./index.scss";
 </style>

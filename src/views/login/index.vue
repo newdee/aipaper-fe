@@ -272,16 +272,16 @@ export default {
       this.getCode();
     },
     openNewWindow() {
-      window.open(
-        "https://file.mixpaper.cn/pdf/%E6%9C%8D%E5%8A%A1%E6%9D%A1%E6%AC%BE.pdf",
-        "_blank"
-      );
+      // window.open(
+      //   "https://file.mixpaper.cn/pdf/%E6%9C%8D%E5%8A%A1%E6%9D%A1%E6%AC%BE.pdf",
+      //   "_blank"
+      // );
     },
     openNewWindowYinsi() {
-      window.open(
-        "https://file.mixpaper.cn/pdf/%E9%9A%90%E7%A7%81%E6%9D%A1%E6%AC%BE.pdf",
-        "_blank"
-      );
+      // window.open(
+      //   "https://file.mixpaper.cn/pdf/%E9%9A%90%E7%A7%81%E6%9D%A1%E6%AC%BE.pdf",
+      //   "_blank"
+      // );
     },
     canClick() {
       this.agreeStatus = !this.agreeStatus;

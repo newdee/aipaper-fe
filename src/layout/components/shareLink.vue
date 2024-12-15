@@ -5,7 +5,7 @@
       title="专属分享页"
       append-to-body
       :visible.sync="dialogVisible"
-      width="500px"
+      :width="device == 'mobile' ? '80%' : '50%'"
       :before-close="handleClose"
     >
       <div class="container">
@@ -45,7 +45,7 @@
   </div>
 </template>
 <script>
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import { inviteFetch } from "@/api/paper";
 // import webinfo from "@/components/webinfo.vue";
 // import eventBus from "@/utils/eventBus";
@@ -60,7 +60,8 @@ export default {
     };
   },
   computed: {
-    //
+    // 计算属性
+    ...mapGetters(["device"]),
   },
   methods: {
     showInit() {

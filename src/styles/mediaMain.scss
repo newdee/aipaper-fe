@@ -1,5 +1,25 @@
 @import "./variables.scss";
 @media only screen and (max-width: 760px) {
+  .dialogHeader {
+    width: 400px !important;
+  }
+  ::v-deep .dialogContainer {
+    .el-dialog__headerbtn {
+      z-index: 100 !important;
+    }
+  }
+  .main-txt {
+    overflow-x: hidden !important;
+    .paperPdfSlider {
+      width: 400px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      margin-left: -40px !important;
+      .s1 {
+        display: none;
+      }
+    }
+  }
   // 大纲 附加功能
   .spendingBox .att .borderBox {
     width: 45% !important;
@@ -194,7 +214,7 @@
       margin-top: 30px;
     }
     .newSlider {
-      height: 400px;
+      height: 380px;
       border-radius: 8px;
       img {
         height: 100%;
