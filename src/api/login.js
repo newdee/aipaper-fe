@@ -1,15 +1,16 @@
 import request from "@/utils/request";
+let baseUrl = process.env.VUE_APP_BASE_API;
 
 export function sms(data) {
   return request({
-    url: "/dev-api/api/auth/sms",
+    url: baseUrl + "/api/auth/sms",
     method: "post",
     data,
   });
 }
 export function login(data) {
   return request({
-    url: "/dev-api/api/auth/login/phone",
+    url: baseUrl + "/api/auth/login/phone",
     method: "post",
     data,
   });
