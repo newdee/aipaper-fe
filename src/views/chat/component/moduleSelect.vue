@@ -22,16 +22,21 @@
 export default {
   props: {
     value: String,
+    model_list: {
+      type: Array,
+      require: true,
+      default: [],
+    },
   },
   data() {
     return {
       dropdownOpen: false,
-      model_list: [
-        { modelName: "claude-3-5", select: false },
-        { modelName: "gpt-4o-all", select: false },
-        { modelName: "gpt-4o-mini", select: true },
-        { modelName: "o1-mini", select: false },
-      ],
+      // model_list: [
+      //   { modelName: "claude-3-5", select: false },
+      //   { modelName: "gpt-4o-all", select: false },
+      //   { modelName: "gpt-4o-mini", select: true },
+      //   { modelName: "o1-mini", select: false },
+      // ],
     };
   },
   computed: {

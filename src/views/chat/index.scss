@@ -367,8 +367,8 @@ dd {
   cursor: pointer;
 }
 .fileBottom {
-  height: 110px;
   display: flex;
+  margin-top: 10px;
   align-items: center;
   .fileBox {
     display: flex;
@@ -389,6 +389,9 @@ dd {
         display: block;
       }
     }
+  }
+  .fileNameBox {
+    height: 100px;
   }
   .delImgBtn {
     position: absolute;

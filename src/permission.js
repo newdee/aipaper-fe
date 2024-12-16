@@ -61,8 +61,8 @@ router.beforeEach(async (to, from, next) => {
   if (sub_domain && !store.getters.sub_domain) {
     store.dispatch("user/setSubDomain", sub_domain);
   }
-  console.log("loginId111", loginId);
-  console.log("hasToken222", hasToken);
+  // console.log("loginId111", loginId);
+  // console.log("hasToken222", hasToken);
   if (!hasToken) {
     if (loginId) {
       console.log("loginId", loginId);
