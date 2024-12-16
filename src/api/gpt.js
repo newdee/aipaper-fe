@@ -1,23 +1,23 @@
 import request from "@/utils/request";
 import { getToken } from "@/utils/auth";
-
+let chatBaseUrl = process.env.VUE_APP_CHAT_BASE_API;
 export function chatApi(data) {
   return request({
-    url: "/chat-api/chat?token=" + getToken(),
+    url: chatBaseUrl + "/chat?token=" + getToken(),
     method: "post",
     data,
   });
 }
 export function uploadFile(data) {
   return request({
-    url: "/chat-api/uploadFile?token=" + getToken(),
+    url: chatBaseUrl + "/uploadFile?token=" + getToken(),
     method: "post",
     data,
   });
 }
 export function chatAllInfo() {
   return request({
-    url: "/chat-api/chatAllInfo?token=" + getToken(),
+    url: chatBaseUrl + "/chatAllInfo?token=" + getToken(),
     method: "get",
   });
 }
