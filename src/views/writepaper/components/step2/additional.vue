@@ -5,7 +5,7 @@
       <div class="markBox">
         <img src="@/assets/images/mark.png" alt="" />
       </div>
-      <p class="fuTitle">您将获得</p>
+      <p class="fuTitle">继续生成全文,您将获得</p>
       <div class="maintxt">
         <div class="borderBox">
           <div class="left">

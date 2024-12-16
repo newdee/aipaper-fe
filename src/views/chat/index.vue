@@ -107,6 +107,9 @@
                 <div v-if="item.type == 'image_url'" class="imgBox">
                   <img :src="item.image_url.url" alt="" />
                 </div>
+                <div v-if="item.type == 'file'" class="fileAnBox">
+                  <el-tag type="success">{{ item.file_detail.name }}</el-tag>
+                </div>
               </div>
             </template>
             <!-- 答 user -->
@@ -162,7 +165,10 @@
             content="切换模型"
             placement="top"
           >
-            <module-select v-model="modelName"></module-select>
+            <module-select
+              v-model="modelName"
+              :model_list="model_list"
+            ></module-select>
             <!-- <el-dropdown>
               <div class="workItem">
                 <svg class="icon svg-icon" aria-hidden="true">
@@ -198,16 +204,14 @@
             </div>
           </el-tooltip>
 
-          <!-- <el-tooltip
+          <el-tooltip
             class="item"
             effect="dark"
             content="上传文件"
             placement="top"
           >
-            <div class="workItem" @click="getFile">
-              <i class="el-icon-paperclip"></i>
-            </div>
-          </el-tooltip> -->
+            <file-select @changeFile="changeFile"></file-select>
+          </el-tooltip>
           <!-- <div class="workItem">
             <el-tooltip
               class="item"
@@ -259,15 +263,22 @@
         </div>
         <div v-if="imgBoxList.length > 0" class="fileBottom">
           <!-- <img :src="base64Image" alt="Uploaded Image" /> -->
-          <div
-            v-for="(item, index) in imgBoxList"
-            :key="'file' + index"
-            class="fileBox"
-          >
-            <div class="delImgBtn red" @click="resetImgList">
-              <i class="el-icon-delete"></i>
-            </div>
-            <img :src="item.image_url.url" alt="" />
+          <div v-for="(item, index) in imgBoxList" :key="'file' + index">
+            <template v-if="item.type == 'image_url'">
+              <div class="fileBox">
+                <div class="delImgBtn red" @click="resetImgList">
+                  <i class="el-icon-delete"></i>
+                </div>
+                <img :src="item.image_url.url" alt="" />
+              </div>
+            </template>
+            <template v-if="item.type == 'file'">
+              <div>
+                <el-tag closable type="success" @close="resetImgList">
+                  {{ item.file_detail.name }}
+                </el-tag>
+              </div>
+            </template>
           </div>
         </div>
       </div>
@@ -285,14 +296,17 @@
 <script>
 import axios from "axios";
 import { getToken } from "@/utils/auth";
+import { chatApi, chatAllInfo } from "@/api/gpt";
 import { marked } from "marked";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css"; // 确保路径和样式名称正确
 import { mapGetters } from "vuex";
 import moduleSelect from "./component/moduleSelect.vue";
+import FileSelect from "./component/FileSelect.vue";
 export default {
   components: {
     moduleSelect,
+    FileSelect,
   },
   data() {
     return {
@@ -300,24 +314,7 @@ export default {
       inputMessage: "",
       textarea: "",
       chatMessages: [],
-      model_list: [
-        {
-          modelName: "claude-3-5",
-          select: false,
-        },
-        {
-          modelName: "gpt-4o-all",
-          select: false,
-        },
-        {
-          modelName: "gpt-4o-mini",
-          select: true,
-        },
-        {
-          modelName: "o1-mini",
-          select: false,
-        },
-      ],
+      model_list: [],
       temperature: 0.5,
       token: getToken(),
       sseSource: null,
@@ -343,6 +340,13 @@ export default {
               type: "image_url",
               image_url: {
                 url: "",
+              },
+            },
+            {
+              type: "file",
+              file_detail: {
+                name: "",
+                info: "",
               },
             },
           ],
@@ -381,6 +385,19 @@ export default {
     ...mapGetters(["avatar"]),
   },
   methods: {
+    changeFile(fileInfo) {
+      console.log("文件名:", fileInfo.fileName);
+      console.log("返回结果:", fileInfo.result);
+      this.imgBoxList = [];
+      let data = {
+        type: "file",
+        file_detail: {
+          name: fileInfo.fileName,
+          info: fileInfo.result,
+        },
+      };
+      this.imgBoxList.push(data);
+    },
     resetImgList() {
       this.imgBoxList = [];
     },
@@ -432,13 +449,14 @@ export default {
       }
     },
     getChatInfo() {
-      const url = `${this.chatBaseApi}chatAllInfo?token=${encodeURIComponent(
-        this.token
-      )}`;
-      axios.get(url, { token: this.token }).then((response) => {
-        console.log(response, "sssreposne");
-        this.model_list = response.data.result.model_list;
-        this.temperature = response.data.result.temperature;
+      // const url = `${this.chatBaseApi}chatAllInfo?token=${encodeURIComponent(
+      //   this.token
+      // )}`;
+      // axios.get(url, { token: this.token }).then((response) => {
+      chatAllInfo({ token: this.token }).then((response) => {
+        this.model_list = response.result.model_list;
+        this.temperature = response.result.temperature;
+        console.log(response, "sssreposne", this.model_list);
       });
     },
     renderMarkdown(text) {
@@ -612,9 +630,9 @@ export default {
     sendMessage() {
       zhuge.track(`GPT页面用户使用`, {});
 
-      const url = `${this.chatBaseApi}chat?token=${encodeURIComponent(
-        this.token
-      )}`;
+      // const url = `${this.chatBaseApi}chat?token=${encodeURIComponent(
+      //   this.token
+      // )}`;
       let data = {
         msg: this.inputMessage, // 用户输入的信息，如果是上传文件，需要根据上传文件接口的返参将用户输入和返参进行拼接
         temperature: 0.7, // 温度
@@ -622,20 +640,17 @@ export default {
         image_url: "", // 图片的base64格式，如果上传图片需要该字段，不传图片则留空
       };
       if (this.imgBoxList.length > 0) {
-        data.image_url = this.imgBoxList[0].image_url.url;
+        if (this.imgBoxList[0].type == "image_url") {
+          data.image_url = this.imgBoxList[0].image_url.url;
+        }
+        if (this.imgBoxList[0].type == "file") {
+          data.msg += this.imgBoxList[0].file_detail.info;
+        }
       }
       this.setChatData();
-      axios
-        .post(url, data)
+      chatApi(data)
         .then((response) => {
-          console.log("Message sent successfully:", response.data);
-          if (response.data.code !== 200 && response.data.message) {
-            this.$message({
-              type: "error",
-              message: response.data.message,
-            });
-          } else {
-          }
+          console.log("Message sent successfully:", response);
         })
         .catch((error) => {
           console.error("Error sending message:", error);
@@ -692,42 +707,8 @@ export default {
     confirmEdit() {
       if (this.editMessageText.trim() !== "") {
         this.chatMessages[this.editMessageIndex].text = this.editMessageText;
-        this.regenerateResponse(this.editMessageIndex);
       }
       this.dialogVisible = false;
-    },
-    // 发送聊天消息
-    regenerateResponse(index) {
-      const message = this.chatMessages[index].text;
-      const url = `${this.chatBaseApi}chat?token=${encodeURIComponent(
-        this.token
-      )}`;
-
-      axios
-        .post(
-          url,
-          { msg: message },
-          {
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-            },
-          }
-        )
-        .then((response) => {
-          // Assuming response contains new answer
-          this.imgBoxList = [];
-          this.chatMessages.splice(index + 1, 1, {
-            text: response.data,
-            type: "assistant",
-          });
-        })
-        .catch((error) => {
-          console.error("Error regenerating response:", error);
-          this.$message({
-            type: "error",
-            message: "请求失败,请重试!",
-          });
-        });
     },
   },
   beforeDestroy() {
