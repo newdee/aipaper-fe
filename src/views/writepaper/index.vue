@@ -155,14 +155,14 @@ export default {
     downLine,
   },
   mounted() {
-    // this.$message({
-    //   showClose: true,
-    //   center: true,
-    //   duration: 6000,
-    //   type: "warning",
-    //   message:
-    //     "尊敬的万象用户，目前用户量增长较快，生成论文数量较多，服务器处于超载状态，若生成失败，请重试。 如果重试不成功，请及时联系客服！",
-    // });
+    this.$message({
+      showClose: true,
+      center: true,
+      duration: 6000,
+      type: "warning",
+      message:
+        "尊敬的万象用户，目前用户量增长较快，生成论文数量较多，服务器处于超载状态，若生成失败，请重试。 如果重试不成功，请及时联系客服！",
+    });
 
     // 页面初始化
     window.addEventListener("scroll", this.handleScroll);
