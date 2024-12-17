@@ -5,7 +5,7 @@
       <div class="markBox">
         <img src="@/assets/images/mark.png" alt="" />
       </div>
-      <p class="fuTitle">继续生成全文,您将获得</p>
+      <p class="fuTitle">继续生成全文,您将获得以下权益</p>
       <div class="maintxt">
         <div class="borderBox">
           <div class="left">
@@ -209,8 +209,12 @@
           <span> 预估费用: </span>
           <b class="danger"> {{ requestForm.predict_price }}</b>
         </p>
-        <p style="text-align: center; color: #606266; font-size: 16px">
-          9.9元看全文50%
+        <p style="text-align: center; color: #606266; font-size: 14px">
+          担心生成后不满意?
+          <span class="red" style="font-weight: bold; font-size: 20px">
+            9.9
+          </span>
+          元生成预览版,满意再付款
         </p>
       </div>
 
