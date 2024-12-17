@@ -203,16 +203,30 @@ export default {
       rightPhoneNum: true,
       codeRegExrStatus: true,
       sms_code: "",
+      bd_vid: "", //百度id
     };
   },
   components: { inputCode },
   mounted() {
     // this.getSubdomain();
-    console.log("getDomain", getDomain());
-    console.log("location", window.location);
-    console.log("hostname", window.location.hostname);
+    const url = window.location.href;
+    this.getBdVid(url);
+    // console.log("getDomain", getDomain());
+    // console.log("location", window.location);
+    // console.log("hostname", window.location.hostname);
   },
   methods: {
+    getBdVid(url) {
+      // 定义正则表达式来匹配 bd_vid 的值
+      const regex = /[?&]bd_vid=([^&#]*)/;
+      // 使用正则表达式在 URL 中查找匹配项
+      const match = url.match(regex);
+      // 如果匹配成功，返回捕获的组，否则返回 null
+      let bdVid = match ? decodeURIComponent(match[1]) : null;
+      this.bd_vid = bdVid;
+      this.$store.dispatch("paper/setBdVid", bdVid);
+      console.log("bd_vid:", bdVid);
+    },
     // 重新获取验证码
     repeatCode() {
       // 60秒倒计时
@@ -306,6 +320,7 @@ export default {
         }
       }
     },
+
     loginOrRegister: throttle(function (phoneNum) {
       if (phoneNum.trim() == "") {
         console.log("178---无输入内容", phoneNum);
@@ -337,11 +352,17 @@ export default {
           // Check if the hash contains the query parameters
           const regex = new RegExp(`[?&]${param}=([^&]*)`);
           const match = hash.match(regex);
+          console.log("hash", hash);
+          console.log("match", hash);
 
           let inv_code = match ? decodeURIComponent(match[1]) : "";
           if (inv_code) {
             data.inv_code = inv_code;
           }
+          let bd_vid = this.bd_vid;
+          data.bd_vid = bd_vid ? bd_vid : "";
+          console.log("data", data);
+          // return
           this.$store.dispatch("user/login", data).then(() => {
             window.zhuge.track("登录", {
               phone: this.phoneNum,
