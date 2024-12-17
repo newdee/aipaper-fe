@@ -58,16 +58,22 @@
           <i class="el-icon-chat-dot-round"></i>
           <p>你好</p>
         </div> -->
-        <div class="sliderChat">
-          <i class="el-icon-chat-dot-round"></i>
-          <p>你好</p>
-        </div>
-        <div class="sliderChat">
-          <i class="el-icon-chat-dot-round"></i>
-          <p>你好</p>
-        </div>
+        <template v-for="(item, index) in localChatList">
+          <div :key="'dialog' + index" class="sliderChat">
+            <i class="el-icon-chat-dot-round"></i>
+            <!-- <p>{{ item }}</p> -->
+          </div>
+        </template>
       </div>
     </div>
+
+    <SidebarChatList
+      :leftChatListStatus="leftChatListStatus"
+      :localChatList="localChatList"
+      @update:leftChatListStatus="updateLeftChatListStatus"
+      @add-chat-item="addChatItem"
+      @select-chat="handleSelectChat"
+    />
     <div class="chat-container">
       <!-- <div class="navChat">
       <el-button>清屏</el-button>
@@ -212,16 +218,16 @@
           >
             <file-select @changeFile="changeFile"></file-select>
           </el-tooltip>
-          <!-- <div class="workItem">
+          <div class="workItem">
             <el-tooltip
               class="item"
               effect="dark"
               content="新建对话"
               placement="top"
             >
-              <i class="el-icon-circle-plus-outline"></i>
+              <i @click="setNewDialog" class="el-icon-circle-plus-outline"></i>
             </el-tooltip>
-          </div> -->
+          </div>
         </div>
 
         <div class="chatBoxInput">
@@ -303,16 +309,20 @@ import "highlight.js/styles/atom-one-dark.css"; // 确保路径和样式名称�
 import { mapGetters } from "vuex";
 import moduleSelect from "./component/moduleSelect.vue";
 import FileSelect from "./component/FileSelect.vue";
+import SidebarChatList from "./component/SidebarChatList.vue";
 export default {
   components: {
     moduleSelect,
     FileSelect,
+    SidebarChatList,
   },
   data() {
     return {
       leftChatListStatus: false,
       inputMessage: "",
       textarea: "",
+      // 当前对话框
+
       chatMessages: [],
       model_list: [],
       temperature: 0.5,
@@ -325,9 +335,11 @@ export default {
       editMessageText: "",
       logoMax: require("@/assets/images/logoMax.png"),
       chatBaseApi: "",
+      // 本地对话存储
       localChatList: [],
       modelName: "gpt-4o-mini",
       imgBoxList: [], // 上传图片列表
+      // 数据示例
       currentChatData: [
         {
           role: "user",
@@ -369,7 +381,8 @@ export default {
     this.chatBaseApi = process.env.VUE_APP_CHAT_BASE_API;
     this.chatId = this.generateUniqueId();
     console.log("Chat API Base URL:", process.env.VUE_APP_CHAT_BASE_API);
-    this.localChatList = JSON.parse(localStorage.getItem("chatList"));
+    let listData = JSON.parse(localStorage.getItem("chatList"));
+    this.localChatList = listData ? listData : [];
     console.log("this.localChatList", this.localChatList);
   },
   mounted() {
@@ -385,6 +398,29 @@ export default {
     ...mapGetters(["avatar"]),
   },
   methods: {
+    updateLeftChatListStatus(status) {
+      this.leftChatListStatus = status;
+    },
+    addChatItem() {
+      // 添加新对话逻辑
+      const newChat = {
+        id: Math.random().toString(36).substr(2, 9), // 生成唯一ID
+        messages: [{ content: [{ text: "New chat" }] }],
+      };
+      this.localChatList.push(newChat);
+    },
+    handleSelectChat(index, id) {
+      console.log(`Selected chat index: ${index}, id: ${id}`);
+      // 在这里处理选中的聊天逻辑
+    },
+    // 存储数据， 新建对话
+    setNewDialog() {
+      this.setLocal();
+      // 新建对话，
+      this.chatId = this.generateUniqueId();
+      this.imgBoxList = [];
+      this.chatMessages = [];
+    },
     changeFile(fileInfo) {
       console.log("文件名:", fileInfo.fileName);
       console.log("返回结果:", fileInfo.result);
@@ -507,7 +543,7 @@ export default {
         id: this.chatId,
         messages: [],
       };
-      data.messages = this.currentChatData;
+      data.messages = this.chatMessages;
 
       if (this.localChatList.length < 1) {
         // 如果列表为空，则直接添加
@@ -558,7 +594,6 @@ export default {
               const parsedData = JSON.parse(event.data);
               if (parsedData.content) {
                 currentMessage += parsedData.content;
-                console.log("....", currentMessage);
                 // 存储结构
                 let content = [
                   {
