@@ -21,6 +21,12 @@ export function chatAllInfo() {
     method: "get",
   });
 }
+export function closeSession() {
+  return request({
+    url: chatBaseUrl + "/closeSession?token=" + getToken(),
+    method: "get",
+  });
+}
 export function product() {
   return request({
     url: "/api/ai-paper/pass/product",

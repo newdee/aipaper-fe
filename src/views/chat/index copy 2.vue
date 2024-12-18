@@ -1,12 +1,79 @@
 <template>
   <div class="chatMain">
+    <div
+      v-if="false"
+      :class="[leftChatListStatus ? 'sidebarLeft' : 'sidebarLeft0']"
+    >
+      <el-tooltip
+        class="item"
+        effect="dark"
+        content="收起会话"
+        placement="right"
+      >
+        <div
+          @click="leftChatListStatus = false"
+          v-show="leftChatListStatus"
+          class="arrowControl"
+        >
+          <i class="el-icon-arrow-left"></i>
+        </div>
+      </el-tooltip>
+
+      <el-tooltip
+        class="item"
+        effect="dark"
+        content="打开会话"
+        placement="right"
+      >
+        <div
+          v-show="!leftChatListStatus"
+          @click="leftChatListStatus = true"
+          class="arrowControl arrowControlRight"
+        >
+          <i class="el-icon-arrow-right"></i>
+        </div>
+      </el-tooltip>
+
+      <div class="sliderTitle">
+        <div class="sliderLeft" @click="addChatItem">
+          <div class="sliderBtn">
+            <i class="el-icon-plus"></i>
+          </div>
+        </div>
+        <div class="sliderRight">
+          <div class="sliderBtn">
+            <i class="el-icon-delete"></i>
+          </div>
+          <div class="sliderBtn">
+            <i class="el-icon-refresh"></i>
+          </div>
+        </div>
+      </div>
+      <div class="sliderItems">
+        <!-- <div
+          :class="[
+            activeIndex == index ? 'sliderChat activeSilder' : 'sliderChat',
+          ]"
+        >
+          <i class="el-icon-chat-dot-round"></i>
+          <p>你好</p>
+        </div> -->
+        <template v-for="(item, index) in localChatList">
+          <div :key="'dialog' + index" class="sliderChat">
+            <i class="el-icon-chat-dot-round"></i>
+            <!-- <p>{{ item }}</p> -->
+          </div>
+        </template>
+      </div>
+    </div>
+
     <SidebarChatList
       :leftChatListStatus="leftChatListStatus"
       :localChatList="localChatList"
       @update:leftChatListStatus="updateLeftChatListStatus"
+      @add-chat-item="addChatItem"
       @refresh-item="reloadChatList"
       @select-chat="handleSelectChat"
-      @add-chat="addChatItem"
     />
     <div class="chat-container">
       <!-- <div class="navChat">
@@ -236,7 +303,7 @@
 <script>
 import axios from "axios";
 import { getToken } from "@/utils/auth";
-import { chatApi, chatAllInfo, closeSession } from "@/api/gpt";
+import { chatApi, chatAllInfo } from "@/api/gpt";
 import { marked } from "marked";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css"; // 确保路径和样式名称正确
@@ -337,21 +404,15 @@ export default {
     addChatItem() {
       // 添加新对话逻辑
       console.log("dddd", this.leftChatListStatus);
-      this.setNewDialog();
+      // this.setNewDialog();
     },
     reloadChatList() {
-      // this.setNewDialog();
+      this.setNewDialog();
       this.chatId = this.generateUniqueId();
       let listData = JSON.parse(localStorage.getItem("chatList"));
-      console.log("papapapaapap", listData);
       this.localChatList = listData ? listData : [];
     },
     handleSelectChat(index, id) {
-      if (this.chatId == id) {
-        return false;
-      } else {
-        this.closeSSE();
-      }
       console.log(`Selected chat index: ${index}, id: ${id}`);
       let currentItem = this.localChatList.find((item) => item.id == id);
       console.log("currentItem", currentItem);
@@ -363,15 +424,8 @@ export default {
 
       // 在这里处理选中的聊天逻辑
     },
-    closeSSE() {
-      closeSession().then((res) => {
-        console.log("关闭会话成功");
-      });
-    },
     // 存储数据， 新建对话
     setNewDialog() {
-      // 关闭链接
-      this.closeSSE();
       if (this.chatMessages.length <= 0) {
         return false;
       }
@@ -402,7 +456,9 @@ export default {
       const randomNum = Math.random().toString(36).substr(2, 9); // 随机数
       return `id_${timestamp}_${randomNum}`;
     },
-
+    addChatItem() {
+      this.leftChatListStatus = !this.leftChatListStatus;
+    },
     getFile() {
       console.log("chatMessages", this.chatMessages);
       this.leftChatListStatus = !this.leftChatListStatus;
