@@ -532,12 +532,17 @@ export default {
           });
       } else {
         this.$store.dispatch("app/setProStatus", false);
-        this.$confirm("生成大纲需要登录, 是否跳转到登录页?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning",
-          center: true,
-        })
+        this.$confirm(
+          "生成大纲需要登录, 是否跳转到登录页?<br>登录联系客服有好礼哟!",
+          "提示",
+          {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning",
+            center: true,
+            dangerouslyUseHTMLString: true,
+          }
+        )
           .then(() => {
             // 存储用户数据并跳转
 

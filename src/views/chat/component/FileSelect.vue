@@ -29,7 +29,6 @@ export default {
 
       try {
         const response = await uploadFile(formData);
-        console.log("resp", response);
 
         if (response.code === 200) {
           const resultData = {
