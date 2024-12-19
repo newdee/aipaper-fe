@@ -4,6 +4,7 @@
       <svg class="icon svg-icon" aria-hidden="true">
         <use xlink:href="#icon-OpenAI"></use>
       </svg>
+      <span class="selected-model">{{ currentModelName }}</span>
     </div>
     <ul v-if="dropdownOpen" class="dropdown-menu">
       <li
@@ -24,19 +25,13 @@ export default {
     value: String,
     model_list: {
       type: Array,
-      require: true,
-      default: [],
+      required: true,
+      default: () => [],
     },
   },
   data() {
     return {
       dropdownOpen: false,
-      // model_list: [
-      //   { modelName: "claude-3-5", select: false },
-      //   { modelName: "gpt-4o-all", select: false },
-      //   { modelName: "gpt-4o-mini", select: true },
-      //   { modelName: "o1-mini", select: false },
-      // ],
     };
   },
   computed: {
@@ -156,5 +151,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.selected-model {
+  margin-left: 10px;
+  font-size: 16px;
+  color: #333;
+  display: inline-block;
+  vertical-align: middle;
 }
 </style>

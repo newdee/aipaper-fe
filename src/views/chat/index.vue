@@ -99,17 +99,59 @@
       </div>
       <div class="chatBottom GH">
         <div class="chatBottomHeader">
-          <el-tooltip
-            class="item"
-            effect="dark"
-            content="切换模型"
-            placement="top"
-          >
-            <module-select
-              v-model="modelName"
-              :model_list="model_list"
-            ></module-select>
-            <!-- <el-dropdown>
+          <div style="display: flex; align-items: center">
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="上传图片"
+              placement="top"
+            >
+              <div class="workItem upload-button">
+                <input
+                  class="file-input"
+                  ref="fileInput"
+                  type="file"
+                  @change="onFileChange"
+                  accept="image/*"
+                />
+                <i class="el-icon-picture-outline-round"></i>
+              </div>
+            </el-tooltip>
+
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="上传文件"
+              placement="top"
+            >
+              <file-select @changeFile="changeFile"></file-select>
+            </el-tooltip>
+            <div class="workItem">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="新建对话"
+                placement="top"
+              >
+                <i
+                  @click="setNewDialog"
+                  class="el-icon-circle-plus-outline"
+                ></i>
+              </el-tooltip>
+            </div>
+          </div>
+          <div>
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="切换模型"
+              placement="top"
+            >
+              <module-select
+                v-model="modelName"
+                :model_list="model_list"
+              ></module-select>
+              <!-- <el-dropdown>
               <div class="workItem">
                 <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-OpenAI"></use>
@@ -124,42 +166,6 @@
                 </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown> -->
-          </el-tooltip>
-
-          <el-tooltip
-            class="item"
-            effect="dark"
-            content="上传图片"
-            placement="top"
-          >
-            <div class="workItem upload-button">
-              <input
-                class="file-input"
-                ref="fileInput"
-                type="file"
-                @change="onFileChange"
-                accept="image/*"
-              />
-              <i class="el-icon-picture-outline-round"></i>
-            </div>
-          </el-tooltip>
-
-          <el-tooltip
-            class="item"
-            effect="dark"
-            content="上传文件"
-            placement="top"
-          >
-            <file-select @changeFile="changeFile"></file-select>
-          </el-tooltip>
-          <div class="workItem">
-            <el-tooltip
-              class="item"
-              effect="dark"
-              content="新建对话"
-              placement="top"
-            >
-              <i @click="setNewDialog" class="el-icon-circle-plus-outline"></i>
             </el-tooltip>
           </div>
         </div>
