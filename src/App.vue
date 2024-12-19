@@ -3,7 +3,8 @@
     <div v-if="isMaintenance" class="maintenance">
       <h1>网站升级中</h1>
       <p>尊敬的用户，您好！</p>
-      <p>我们正在进行系统升级和维护，预计维护时间为 12 小时。</p>
+      <!-- <p>网站被攻击,程序猿紧急修复中，预计维护时间为 10 小时。</p> -->
+      <p>网站被攻击,程序猿紧急修复中，预计维护时间为 10 小时。</p>
       <p>给您带来的不便，我们深表歉意，感谢您的理解与支持！</p>
       <div
         class="imgCode"
@@ -37,7 +38,7 @@ export default {
   name: "App",
   data() {
     return {
-      isMaintenance: false, // 设置为 true 表示网站正在维护
+      isMaintenance: true, // 设置为 true 表示网站正在维护
     };
   },
   components: {
