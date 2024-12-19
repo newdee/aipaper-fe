@@ -160,8 +160,13 @@ export default {
       center: true,
       duration: 6000,
       type: "warning",
-      message:
-        "尊敬的万象用户，目前用户量增长较快，生成论文数量较多，服务器处于超载状态，若生成失败，请重试。 如果重试不成功，请及时联系客服！",
+      dangerouslyUseHTMLString: true,
+      message: `
+        <p style="text-align: center;">
+        近期用户数激增，服务器压力较大。外加网站遭遇攻击，给大家带来的不变，敬请谅解。
+      </p>
+<p style="text-align: center;margin-top: 10px">如果生成大纲或者正文失败，请重试，重试不成功，请及时联系客服解决！再次抱歉，我们一直在努力，让学术更简单！</p>
+        `,
     });
 
     // 页面初始化
