@@ -420,7 +420,9 @@ export default {
       this.$refs.advantageDia.showDia();
     },
     showExample() {
-      zhuge.track(`访问范围样例`);
+      window.zhuge.track("访问范围样例", {
+        点击页面: "写论文页面",
+      });
       this.$refs.exampleDia.showDia();
     },
     paperTypeChange(val) {
@@ -496,7 +498,6 @@ export default {
         outlineCreate(data)
           .then((res) => {
             window.zhuge.track("生成大纲", {
-              论文题目: this.requestForm.title,
               语言: this.requestForm.language,
               科目: this.requestForm.field[1],
               论文类型: this.requestForm.type,

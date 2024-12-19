@@ -1,4 +1,4 @@
-// logger.js
+// plugins/loggerPlugin.js
 const isProduction = process.env.NODE_ENV === "production";
 
 const logger = {
@@ -17,4 +17,17 @@ const logger = {
   },
 };
 
-export default logger;
+const LoggerPlugin = {
+  install(Vue) {
+    Vue.prototype.$log = logger.log;
+    Vue.prototype.$warn = logger.warn;
+    Vue.prototype.$error = logger.error;
+
+    // 定义全局函数
+    window.LLog = logger.log;
+    window.LWarn = logger.warn;
+    window.LError = logger.error;
+  },
+};
+
+export default LoggerPlugin;

@@ -279,9 +279,7 @@ export default {
       let data = {
         out_trade_no: obj.order.out_trade_no,
       };
-      console.log(obj, "dddddddddddd", data);
       rePaper(data).then((res) => {
-        console.log("res", res);
         eventBus.emit("orderDialogChange", false);
         this.$nextTick(() => {
           eventBus.emit("showEmitPaperDialog", {

@@ -65,8 +65,6 @@ router.beforeEach(async (to, from, next) => {
   // console.log("hasToken222", hasToken);
   if (!hasToken) {
     if (loginId) {
-      console.log("loginId", loginId);
-      console.log("hasToken", hasToken);
       setToken(loginId);
       store.dispatch("user/setStoreToken", loginId);
       hasToken = loginId;

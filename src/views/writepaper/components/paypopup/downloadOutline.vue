@@ -195,7 +195,9 @@ export default {
 
   methods: {
     showExample() {
-      zhuge.track(`访问范围样例`);
+      window.zhuge.track("访问范围样例", {
+        点击页面: "大纲付费下载",
+      });
       this.$refs.exampleDia.showDia();
     },
     handleClose(done) {

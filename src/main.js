@@ -14,7 +14,6 @@ import "element-ui/lib/theme-chalk/display.css";
 import App from "./App";
 import store from "./store";
 import router from "./router";
-import logger from "@/utils/logger";
 import "@/icons"; // icon
 import "@/permission"; // permission control
 import "@/utils/rem";
@@ -28,7 +27,6 @@ Vue.component("global-modal", globalDialog);
 Vue.prototype.$bus = new Vue();
 // const VConsole = require("vconsole");
 // const vConsole = new VConsole();
-//  console.log("VConsole is enabled");
 
 import VueMarkdown from "vue-markdown";
 Vue.component("vue-markdown", VueMarkdown);
@@ -71,9 +69,6 @@ Vue.use(VueClipboard);
 Vue.config.productionTip = false;
 
 Vue.prototype.$minWidth = 500;
-Vue.prototype.$log = logger.log;
-Vue.prototype.$warn = logger.warn;
-Vue.prototype.$error = logger.error;
 // eventBus.js
 import VueScrollTo from "vue-scrollto";
 
@@ -85,7 +80,10 @@ let scrollOptions = {
 };
 
 Vue.use(VueScrollTo, scrollOptions);
+import LoggerPlugin from "@/utils/loggerPlugin";
 
+// 使用 Logger 插件
+Vue.use(LoggerPlugin);
 import TextareaAutosize from "vue-textarea-autosize";
 
 Vue.use(TextareaAutosize);

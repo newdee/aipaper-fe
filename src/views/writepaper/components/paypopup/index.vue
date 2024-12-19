@@ -306,14 +306,28 @@ export default {
       });
     },
     showExample() {
-      zhuge.track(`访问范围样例`);
+      window.zhuge.track("访问范围样例", {
+        点击页面: "论文付款页面",
+      });
       this.$refs.exampleDia.showDia();
     },
     handleClose(done) {
       if (this.payTitleStatus == "TRADE_SUCCESS") {
-        zhuge.track(`用户成功支付`, {});
+        window.zhuge.track("用户成功付款", {
+          价格: this.currentOrder.pay_amount,
+          语言: this.requestForm.language,
+          科目: this.requestForm.field[1],
+          学历: this.requestForm.type,
+          论文字数: this.requestForm.word_count,
+        });
       } else {
-        zhuge.track(`用户取消支付`, {});
+        window.zhuge.track("用户取消付款", {
+          价格: this.currentOrder.pay_amount,
+          语言: this.requestForm.language,
+          科目: this.requestForm.field[1],
+          学历: this.requestForm.type,
+          论文字数: this.requestForm.word_count,
+        });
       }
       this.$store.dispatch("app/setActiveIndex", 0);
       this.$store.dispatch("paper/setPollingStatus", false);
@@ -329,11 +343,6 @@ export default {
       // }
     },
     jumpStep() {
-      if (this.payTitleStatus == "TRADE_SUCCESS") {
-        zhuge.track(`用户成功支付`, {});
-      } else {
-        zhuge.track(`用户取消支付`, {});
-      }
       if (this.payTitleStatus == "TRADE_SUCCESS") {
         this.$confirm("关闭弹窗,不影响论文生成进度")
           .then((_) => {
@@ -432,7 +441,14 @@ export default {
     },
     paySend() {
       this.$bdSave();
-
+      LLog("陈宫支付", this.currentOrder, this.requestForm);
+      window.zhuge.track("用户成功付款", {
+        价格: this.currentOrder.pay_amount,
+        语言: this.requestForm.language,
+        科目: this.requestForm.field[1],
+        学历: this.requestForm.type,
+        论文字数: this.requestForm.word_count,
+      });
       eventBus.emit("showEmitPaperDialog", {
         requestKey: this.currentOrder.out_trade_no,
         payStatus: 2,

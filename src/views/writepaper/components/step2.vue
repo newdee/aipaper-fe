@@ -1362,7 +1362,12 @@ export default {
     // 生成全文
     generateForm() {
       window.zhuge.track("生成正文", {
-        title: this.requestForm.title,
+        // title: this.requestForm.title,
+        语言: this.requestForm.language,
+        科目: this.requestForm.field[1],
+        论文类型: this.requestForm.type,
+        论文水平: this.requestForm.paper_level,
+        论文字数: this.requestForm.word_count,
       });
       if (!this.checked) {
         this.statementDialogVisible = true;

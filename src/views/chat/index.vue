@@ -316,7 +316,7 @@ export default {
     this.chatId = this.generateUniqueId();
     let listData = JSON.parse(localStorage.getItem("chatList"));
     this.localChatList = listData ? listData : [];
-    console.log("listData", listData);
+    LLog("listData", listData);
   },
   mounted() {
     this.getChatInfo();
@@ -336,14 +336,14 @@ export default {
     },
     addChatItem() {
       // 添加新对话逻辑
-      console.log("dddd", this.leftChatListStatus);
+      LLog("dddd", this.leftChatListStatus);
       this.setNewDialog();
     },
     reloadChatList() {
       // this.setNewDialog();
       this.chatId = this.generateUniqueId();
       let listData = JSON.parse(localStorage.getItem("chatList"));
-      console.log("papapapaapap", listData);
+      LLog("papapapaapap", listData);
       this.localChatList = listData ? listData : [];
     },
     handleSelectChat(index, id) {
@@ -352,9 +352,9 @@ export default {
       } else {
         this.closeSSE();
       }
-      console.log(`Selected chat index: ${index}, id: ${id}`);
+      LLog(`Selected chat index: ${index}, id: ${id}`);
       let currentItem = this.localChatList.find((item) => item.id == id);
-      console.log("currentItem", currentItem);
+      LLog("currentItem", currentItem);
       this.modelName = currentItem.model;
       this.temperature = currentItem.temperature;
       this.modelName = currentItem.model;
@@ -365,7 +365,7 @@ export default {
     },
     closeSSE() {
       closeSession().then((res) => {
-        console.log("关闭会话成功");
+        LLog("关闭会话成功");
       });
     },
     // 存储数据， 新建对话
@@ -382,8 +382,8 @@ export default {
       this.chatMessages = [];
     },
     changeFile(fileInfo) {
-      console.log("文件名:", fileInfo.fileName);
-      console.log("返回结果:", fileInfo.result);
+      LLog("文件名:", fileInfo.fileName);
+      LLog("返回结果:", fileInfo.result);
       this.imgBoxList = [];
       let data = {
         type: "file",
@@ -404,7 +404,7 @@ export default {
     },
 
     getFile() {
-      console.log("chatMessages", this.chatMessages);
+      LLog("chatMessages", this.chatMessages);
       this.leftChatListStatus = !this.leftChatListStatus;
     },
     onFileChange(event) {
@@ -450,7 +450,7 @@ export default {
       chatAllInfo({ token: this.token }).then((response) => {
         this.model_list = response.result.model_list;
         this.temperature = response.result.temperature;
-        console.log(response, "sssreposne", this.model_list);
+        LLog(response, "sssreposne", this.model_list);
       });
     },
     renderMarkdown(text) {
@@ -588,7 +588,7 @@ export default {
       };
       // 判断 SSE 连接是否成功建立
       this.sseSource.onopen = () => {
-        console.log("SSE connection established.");
+        LLog("SSE connection established.");
         // 你可以在这里执行其他初始化逻辑
         if (!this.inputMessage.trim()) {
           return false;
@@ -643,7 +643,7 @@ export default {
       this.setChatData();
       chatApi(data)
         .then((response) => {
-          console.log("Message sent successfully:", response);
+          LLog("Message sent successfully:", response);
         })
         .catch((error) => {
           console.error("Error sending message:", error);
