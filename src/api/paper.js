@@ -65,6 +65,13 @@ export function pre_create(data) {
     data,
   });
 }
+export function title_recommend(data) {
+  return request({
+    url: baseUrl + "/api/ai-paper/paper/title_recommend",
+    method: "post",
+    data,
+  });
+}
 export function pay_order(data) {
   return request({
     url: baseUrl + "/api/ai-paper/pass/pay_order",

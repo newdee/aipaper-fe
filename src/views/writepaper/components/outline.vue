@@ -60,6 +60,10 @@
               show-word-limit
               placeholder="请输入完整题目，题目越完整大纲越准确"
             ></el-input>
+            <!-- <TitleInput
+              v-model="requestForm.title"
+              :requestForm="requestForm"
+            ></TitleInput> -->
           </div>
         </div>
       </div>
@@ -280,7 +284,7 @@ import { outlineCreate } from "@/api/user";
 import polling from "@/utils/polling-utils";
 import advantage from "@/views/dashboard/components/advantage";
 import example from "./example/index.vue";
-import { title } from "@/settings";
+import TitleInput from "./outline/TitleInput.vue";
 export default {
   name: "outline",
   data() {
@@ -374,6 +378,7 @@ export default {
     // webinfo,
     advantage,
     example,
+    TitleInput,
   },
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
