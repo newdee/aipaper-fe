@@ -86,7 +86,7 @@ export const constantRoutes = [
     path: "/",
     component: Layout,
     // redirect: "/home/home",
-    redirect: "/main/writepaper ",
+    redirect: "/main/writepaper",
     meta: {
       id: "4",
     },
