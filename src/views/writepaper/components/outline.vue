@@ -54,16 +54,16 @@
           >
           </el-cascader>
           <div class="userInputCon">
-            <el-input
+            <!-- <el-input
               v-model="requestForm.title"
               maxlength="60"
               show-word-limit
               placeholder="请输入完整题目，题目越完整大纲越准确"
-            ></el-input>
-            <!-- <TitleInput
+            ></el-input> -->
+            <TitleInput
               v-model="requestForm.title"
               :requestForm="requestForm"
-            ></TitleInput> -->
+            ></TitleInput>
           </div>
         </div>
       </div>
