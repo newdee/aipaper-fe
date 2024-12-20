@@ -1,17 +1,20 @@
 <template>
   <div class="title-input-wrapper" @click.stop>
-    <el-input
-      v-model="innerValue"
-      maxlength="60"
-      placeholder="输入5~50字论文标题，如果不知道写什么标题，可以试试推荐哦~"
-      @focus="showDropdown = true"
-    >
-      <template #append>
-        <el-button @click="toggleDropdown" icon="el-icon-guide">
-          推荐标题</el-button
-        >
-      </template>
-    </el-input>
+    <div style="position: relative">
+      <div @click="toggleDropdown" class="recomBtn" icon="el-icon-guide">
+        <svg class="icon g-svg-icon" aria-hidden="true">
+          <use xlink:href="#icon-youhua1"></use>
+        </svg>
+        AI推荐论文题目
+      </div>
+      <el-input
+        v-model="innerValue"
+        maxlength="60"
+        placeholder="输入5~50字论文题目，如果不知道写什么，可以填写想法关键词后，使用AI推荐哦~"
+        @focus="showDropdown = true"
+      >
+      </el-input>
+    </div>
 
     <div v-if="showDropdown" class="title-dropdown" @click.stop>
       <div class="info-section">
@@ -33,7 +36,7 @@
         <div class="info-item">
           <div class="info-title">题目相关信息</div>
           <div class="info-content">
-            <div>输入您的想法<br />输入您的关键词</div>
+            <div>输入您的想法关键词</div>
           </div>
         </div>
         <div class="arrow">
@@ -47,20 +50,30 @@
         </div>
       </div>
       <div class="recommendation-section">
-        <div class="recommendation-header">热门标题</div>
+        <div class="recommendation-header">
+          智能推荐标题
+          <p><i class="el-icon-warning-outline"></i>点击题目确认</p>
+        </div>
         <div v-loading="loading" class="recommendation-content">
           <div
             v-for="(recommendation, index) in recommendations"
             :key="index"
+            type="primary"
             class="recommendation-item"
             @click="selectRecommendation(recommendation)"
           >
-            {{ recommendation }}
+            <div class="itemParen">
+              {{ recommendation }}
+            </div>
+            <div class="itemBtn">
+              <i class="el-icon-circle-plus-outline"></i>
+              <span style="margin-left: 3px">采纳</span>
+            </div>
           </div>
         </div>
         <div class="generate-button">
-          <el-button type="primary" size="mini" @click="getList"
-            >生成推荐题目</el-button
+          <el-button type="text" size="mini" @click="getList"
+            >不满意? 换一组</el-button
           >
         </div>
       </div>
@@ -223,8 +236,19 @@ export default {
 
 .recommendation-header {
   font-weight: bold;
+  font-size: 14px;
   color: #f56c6c;
   margin-bottom: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  p {
+    color: #909399;
+    font-weight: 200;
+    font-size: 12px;
+    left: 100px;
+  }
 }
 
 .recommendation-content {
@@ -236,14 +260,88 @@ export default {
   padding: 5px 0;
   cursor: pointer;
   color: #606266;
-}
-
-.recommendation-item:hover {
-  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f6f7f7;
+  width: 66%;
+  height: 30px;
+  padding-right: 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  .itemBtn {
+    font-size: 13px;
+    color: #547dff;
+    margin-left: 6px;
+    display: none;
+  }
+  .itemParen {
+    // flex: 1;
+    width: calc(100% - 63px);
+  }
+  .itemParen {
+    height: 28px;
+    padding: 0 14px;
+    width: 380px;
+    color: #2b2f36;
+    flex: 1;
+    font-size: 13px;
+    line-height: 30px;
+    color: #547dff;
+    margin-left: 6px;
+    // display: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 13px;
+    color: #2b2f36;
+    cursor: pointer;
+  }
+  &:hover {
+    cursor: pointer;
+    // color: #409eff;
+    // background-color: #409eff;
+    background-color: rgba(64, 158, 255, 0.1);
+    // color: #fff;
+    .itemBtn {
+      display: block;
+    }
+  }
 }
 
 .generate-button {
   text-align: right;
   margin-top: 10px;
+}
+.recomBtn {
+  position: absolute;
+  width: 136px;
+  height: 30px;
+  background: #f4f4fe;
+  border-radius: 6px 6px 6px 6px;
+  text-align: center;
+  line-height: 30px;
+  font-weight: 400;
+  font-size: 13px;
+  color: #3355ff;
+  right: 3px;
+  z-index: 2;
+  top: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  &:hover {
+    background-color: #3355ff;
+    color: #fff;
+    .g-svg-icon {
+      color: #fff;
+    }
+  }
+}
+.g-svg-icon {
+  font-size: 20x;
+  color: #3355ff;
+  margin-right: 5px;
 }
 </style>

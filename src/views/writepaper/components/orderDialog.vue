@@ -32,7 +32,10 @@
               :percentage="currentNumber"
             ></el-progress>
           </div>
-          <p class="dialog-text">正文生成中, 预计时间30分钟, 请稍等</p>
+          <p class="dialog-text">正在调取大量真实文献，加速生成正文中，</p>
+          <p class="dialog-text">
+            预计需要<span class="parimary"> 30分钟 </span>，请耐心等待
+          </p>
           <p class="dialog-text">
             如您关闭此弹窗,请在
             <span class="dialog_pay_text">我的订单</span>
@@ -343,6 +346,7 @@ export default {
   .dialog-text {
     font-size: 1rem;
     margin: 10px 0;
+    text-align: center;
     color: #555;
   }
 
@@ -379,6 +383,7 @@ export default {
     .dialog-text {
       font-size: 0.9rem;
       margin: 10px 0;
+      text-align: center;
     }
 
     .paperProgress {
