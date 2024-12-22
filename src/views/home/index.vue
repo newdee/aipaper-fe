@@ -67,12 +67,11 @@ export default {
     // window.zhuge.load("aecb263210174e7994293e947ccaedba", { debug: true });
   },
   created() {
-    console.log("getDomain", getDomain());
-
-    // eventBus.on("sendOutline", this.addE); // 订阅事件
-    zhuge.track(`访问域名`, {
-      domain: getDomain(),
-    });
+    // console.log("getDomain", getDomain());
+    // // eventBus.on("sendOutline", this.addE); // 订阅事件
+    // zhuge.track(`访问域名`, {
+    //   domain: getDomain(),
+    // });
     // zhuge.track("购买商品", {
     //   name: "手机",
     //   price: "iPhone XS",

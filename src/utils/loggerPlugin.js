@@ -25,8 +25,8 @@ const LoggerPlugin = {
 
     // 定义全局函数
     window.LLog = logger.log;
-    window.LWarn = logger.warn;
-    window.LError = logger.error;
+    window.WLong = logger.warn;
+    window.ELog = logger.error;
   },
 };
 

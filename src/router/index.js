@@ -305,6 +305,15 @@ export const constantRoutes = [
           icon: "dashboard",
         },
       },
+      // {
+      //   path: "setting",
+      //   name: "setting",
+      //   component: () => import("@/views/user/setting.vue"),
+      //   meta: {
+      //     title: "运营配置",
+      //     icon: "dashboard",
+      //   },
+      // },
       {
         path: "userInfo",
         name: "userInfo",

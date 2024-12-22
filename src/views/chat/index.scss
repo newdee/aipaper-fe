@@ -35,9 +35,20 @@ dd {
 }
 .messageBox {
   position: relative;
+  display: flex;
   max-width: 1100px;
   padding-left: 40px;
   padding-right: 20px;
+  margin-bottom: 5px;
+}
+.flexChat {
+  overflow: hidden;
+  .messageBox.user {
+    float: right;
+  }
+  .messageBox.infoList {
+    float: left;
+  }
 }
 .message {
   margin: 10px;
@@ -45,7 +56,7 @@ dd {
   border-radius: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 5px;
+  padding: 8px 16px;
 }
 
 .message.user {
@@ -72,6 +83,27 @@ dd {
   border-radius: 50%;
   overflow: hidden;
   background: #d8e3ff;
+}
+.userImg {
+  position: absolute;
+  top: 2px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #d8e3ff;
+  right: -7px !important;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  .logoMax {
+    width: 70%;
+    height: 70%;
+  }
 }
 .userInfo img {
   width: 100%;
@@ -210,10 +242,10 @@ dd {
 .chatBottom {
   border-top: 1px solid #dcdfe6;
   padding: 5px;
+  position: relative;
   padding-left: 10px;
   .chatBottomHeader {
     height: 40px;
-
     display: flex;
     align-items: center;
     color: #57606a;
@@ -229,10 +261,18 @@ dd {
   }
   .tipBottom {
     color: #808080;
+    overflow: hidden;
+    position: absolute;
+    bottom: 0px;
+    padding-left: 10px;
+    padding-right: 50px;
+    z-index: 10;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     .bottomLeft {
+      float: left;
       p {
         margin-top: 5px;
       }
@@ -245,6 +285,7 @@ dd {
       }
     }
     .bottomRight {
+      float: right;
       width: 80px;
       height: 40px;
     }
@@ -258,6 +299,8 @@ dd {
 }
 .chatMain {
   display: flex;
+  max-width: 1200px;
+
   .sidebarLeft {
     position: relative;
     width: 260px;

@@ -126,6 +126,9 @@ import { pay_download } from "@/api/paper";
 import orderDialog from "./components/orderDialog.vue";
 import paypopup from "./components/paypopup/index.vue";
 import downLine from "./components/paypopup/downloadOutline.vue";
+
+import { getDomain } from "@/utils/index.js";
+
 export default {
   name: "writepaper",
   data() {
@@ -155,19 +158,19 @@ export default {
     downLine,
   },
   mounted() {
-    this.$message({
-      showClose: true,
-      center: true,
-      duration: 6000,
-      type: "warning",
-      dangerouslyUseHTMLString: true,
-      message: `
-        <p style="text-align: center;">
-        近期用户数激增，服务器压力较大。外加网站遭遇攻击，给大家带来的不变，敬请谅解。
-      </p>
-<p style="text-align: center;margin-top: 10px">如果生成大纲或者正文失败，请重试，重试不成功，请及时联系客服解决！再次抱歉，我们一直在努力，让学术更简单！</p>
-        `,
-    });
+    //     this.$message({
+    //       showClose: true,
+    //       center: true,
+    //       duration: 6000,
+    //       type: "warning",
+    //       dangerouslyUseHTMLString: true,
+    //       message: `
+    //         <p style="text-align: center;">
+    //         近期用户数激增，服务器压力较大。外加网站遭遇攻击，给大家带来的不变，敬请谅解。
+    //       </p>
+    // <p style="text-align: center;margin-top: 10px">如果生成大纲或者正文失败，请重试，重试不成功，请及时联系客服解决！再次抱歉，我们一直在努力，让学术更简单！</p>
+    //         `,
+    //     });
 
     // 页面初始化
     window.addEventListener("scroll", this.handleScroll);
@@ -181,6 +184,13 @@ export default {
     eventBus.on("successOutline", this.showOutLine); // 订阅事件
     eventBus.on("pdfSuccessClick", this.showIndex3); // 订阅事件
     eventBus.on("showDownOutline", this.showDownOutline); // 订阅事件
+
+    LLog("getDomain", getDomain());
+
+    // eventBus.on("sendOutline", this.addE); // 订阅事件
+    zhuge.track(`访问域名`, {
+      domain: getDomain(),
+    });
   },
 
   beforeDestroy() {
@@ -199,7 +209,6 @@ export default {
       deep: true,
       immediate: true,
       handler(val) {
-        console.log("val", val);
         if (val == "mobile") {
           eventBus.emit("open-modal", true); // 发布事件
         }
@@ -231,7 +240,6 @@ export default {
       bdVid = params.get("bd_vid");
       // 如果需要，可以在控制台输出查看
       this.$store.dispatch("paper/setBdVid", bdVid);
-      console.log("bd_vid:", this.bdVid);
     },
     // 展示论文加载弹窗
     showPaperDialog(data) {
@@ -246,15 +254,12 @@ export default {
       this.popupStatus = Date.now();
     },
     showDownOutline(data) {
-      console.log("showDownOutline-data", data);
-
       // 生成二维码
       let data1 = {
         key: data.key,
         payment_method: "alipay",
       };
       pay_download(data1).then((res) => {
-        console.log("res", res);
         let order = {
           //
           key: data.key,
@@ -338,7 +343,6 @@ export default {
   beforeRouteUpdate(to, from, next) {
     // 当路由的查询参数发生变化时，这个方法会被调用
     // this.activeIndex = to.query.activeIndex || 0;
-    //  console.log("dddddddddddddddddddd---------", to, from,);
 
     if (to.query.key1) {
       let data = {
@@ -351,7 +355,6 @@ export default {
           ...this.requestForm,
           predict_price: res.result.predict_price,
         };
-        console.log("0000000", data);
 
         // 保存大纲输入信息
         this.$store.dispatch("app/setRequestForm", data);

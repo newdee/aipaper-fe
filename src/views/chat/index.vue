@@ -19,53 +19,47 @@
         </p>
       </div>
       <div class="chat-messages">
-        <div
-          :class="['messageBox', msg.role]"
-          v-for="(msg, index) in chatMessages"
-          :key="index"
-        >
-          <div class="userInfo">
-            <img v-if="msg.role === 'user'" :src="avatar" alt="" />
-            <img
-              v-if="msg.role === 'assistant'"
-              :src="logoMax"
-              alt=""
-              class="logoMax"
-            />
-          </div>
-          <div :class="['message', msg.type]">
-            <!-- 问 user -->
-            <template v-if="msg.role == 'user'">
-              <div
-                v-for="(item, index) in msg.content"
-                :key="'wen' + index"
-                class="userTitle infoList"
-              >
-                <div v-if="item.type == 'text'" class="textBox">
-                  {{ item.text }}
+        <div v-for="(msg, index) in chatMessages" :key="index" class="flexChat">
+          <div :class="['messageBox', msg.role]">
+            <div :class="['message', msg.type]">
+              <!-- 问 user -->
+              <template v-if="msg.role == 'user'">
+                <div
+                  v-for="(item, index) in msg.content"
+                  :key="'wen' + index"
+                  class="userTitle infoList"
+                >
+                  <div v-if="item.type == 'text'" class="textBox">
+                    {{ item.text }}
+                  </div>
+                  <div v-if="item.type == 'image_url'" class="imgBox">
+                    <img :src="item.image_url.url" alt="" />
+                  </div>
+                  <div v-if="item.type == 'file'" class="fileAnBox">
+                    <el-tag type="success">{{ item.file_detail.name }}</el-tag>
+                  </div>
                 </div>
-                <div v-if="item.type == 'image_url'" class="imgBox">
-                  <img :src="item.image_url.url" alt="" />
+                <div class="userImg">
+                  <img :src="avatar" alt="" />
                 </div>
-                <div v-if="item.type == 'file'" class="fileAnBox">
-                  <el-tag type="success">{{ item.file_detail.name }}</el-tag>
+              </template>
+              <!-- 答 user -->
+              <template v-if="msg.role == 'assistant'">
+                <div class="userInfo">
+                  <img :src="logoMax" alt="" class="logoMax" />
                 </div>
-              </div>
-            </template>
-            <!-- 答 user -->
-            <template v-if="msg.role == 'assistant'">
-              <div
-                v-for="(item, index) in msg.content"
-                :key="'wen' + index"
-                class="answerTitle infoList"
-              >
-                <div class="textBox">
-                  <div v-html="renderMarkdown(item.text)"></div>
+                <div
+                  v-for="(item, index) in msg.content"
+                  :key="'wen' + index"
+                  class="answerTitle infoList"
+                >
+                  <div class="textBox">
+                    <div v-html="renderMarkdown(item.text)"></div>
+                  </div>
                 </div>
-              </div>
-            </template>
-            <!-- <div v-html="renderMarkdown(msg.content.text)"></div> -->
-            <!-- <div v-if="msg.type === 'assistant'" class="responseBottom">
+              </template>
+              <!-- <div v-html="renderMarkdown(msg.content.text)"></div> -->
+              <!-- <div v-if="msg.type === 'assistant'" class="responseBottom">
                 <div></div>
                 <el-tooltip
                   class="item"
@@ -85,16 +79,17 @@
                   </el-button>
                 </el-tooltip>
               </div> -->
+            </div>
+            <button
+              v-if="msg.type === 'user'"
+              @click="openEditDialog(index)"
+              class="edit-icon"
+            >
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-edit"></use>
+              </svg>
+            </button>
           </div>
-          <button
-            v-if="msg.type === 'user'"
-            @click="openEditDialog(index)"
-            class="edit-icon"
-          >
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-edit"></use>
-            </svg>
-          </button>
         </div>
       </div>
       <div class="chatBottom GH">
@@ -173,7 +168,7 @@
         <div class="chatBoxInput">
           <el-input
             type="textarea"
-            :autosize="{ minRows: 2, maxRows: 4 }"
+            :autosize="{ minRows: 6, maxRows: 6 }"
             placeholder="请输入您的问题"
             v-model="inputMessage"
             @keydown.native="handleKeydown"
@@ -185,18 +180,22 @@
         </div>
         <div class="tipBottom">
           <div class="bottomLeft">
-            <p>
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-feiji"></use>
-              </svg>
-              <span class="tipText">Ctrl + Enter</span>
-            </p>
-            <p>
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-huiche"></use>
-              </svg>
-              <span class="tipText">Enter</span>
-            </p>
+            <transition name="el-zoom-in-top">
+              <p v-show="inputMessage.length < 20">
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-feiji"></use>
+                </svg>
+                <span class="tipText">Ctrl + Enter</span>
+              </p>
+            </transition>
+            <transition name="el-zoom-in-top">
+              <p v-show="inputMessage.length < 20">
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-huiche"></use>
+                </svg>
+                <span class="tipText">Enter</span>
+              </p>
+            </transition>
           </div>
           <div class="bottomRight">
             <el-button
@@ -262,7 +261,7 @@ export default {
       inputMessage: "",
       textarea: "",
       // 当前对话框
-
+      isMessageSent: false,
       chatMessages: [],
       model_list: [],
       temperature: 0.7,
@@ -599,7 +598,11 @@ export default {
         if (!this.inputMessage.trim()) {
           return false;
         }
-        this.sendMessage();
+        // 只在第一次连接成功时调用 sendMessage
+        if (!this.isMessageSent) {
+          this.sendMessage();
+          this.isMessageSent = true; // 设置标志位为 true，防止重复发送
+        }
       };
       this.sseSource.onerror = () => {
         // console.error("SSE Error: attempting to reconnect");
@@ -662,7 +665,7 @@ export default {
             // this.establishConnection();
           }
         });
-
+      this.isMessageSent = false;
       this.inputMessage = "";
       this.imgBoxList = [];
     },

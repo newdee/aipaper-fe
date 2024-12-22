@@ -115,8 +115,7 @@ export default {
   position: absolute;
   bottom: calc(100% + 4px);
   left: 0;
-  width: 200px;
-  max-height: 200px;
+  width: 260px;
   overflow-y: auto;
   background-color: #fff;
   border: 1px solid #e4e7ed;
@@ -154,9 +153,11 @@ export default {
 }
 .selected-model {
   margin-left: 10px;
+  width: 220px;
   font-size: 16px;
   color: #333;
   display: inline-block;
   vertical-align: middle;
+  margin-right: 50px;
 }
 </style>
