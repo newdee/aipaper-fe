@@ -45,7 +45,7 @@
           </div>
           <div class="right">
             <p>
-              [论文大纲]
+              [开题报告]
               <span class="add">x1</span>
             </p>
             <p class="include">引言 | 主体 | 结论</p>
@@ -122,7 +122,7 @@
           </div>
           <div class="right">
             <p>
-              [学术创新]
+              [任务书]
               <span class="add">x1</span>
             </p>
             <p class="include">提出新观点 | 贡献新知识</p>

@@ -55,12 +55,12 @@
               </div>
             </div>
             <div class="menuGroup menuAboutMixPaper">
-              <div class="menuItem" @click="jumpDetail('/user/setting')">
+              <!-- <div class="menuItem" @click="jumpDetail('/user/setting')">
                 <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-updatelog"></use>
                 </svg>
                 运营配置
-              </div>
+              </div> -->
               <div class="menuItem gray" @click="$devf">
                 <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-updatelog"></use>

@@ -28,6 +28,12 @@ export function getUserInfo() {
     method: "get",
   });
 }
+export function channels() {
+  return request({
+    url: baseUrl + "/api/ai-paper/coupon/channels",
+    method: "get",
+  });
+}
 // export function getUserInfo(data) {
 //   return request({
 //     url: '/dev-api/api/ai-paper/orders/order',
