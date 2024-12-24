@@ -172,7 +172,7 @@
               <el-button
                 size="mini"
                 class="handle"
-                @click="sendPay(orderObj, '去支付')"
+                @click="$sendPay(orderObj, '去支付')"
                 v-if="orderObj.order.payment_status == 'WAIT_BUYER_PAY'"
                 style="color: crimson"
                 icon="el-icon-shopping-cart-full"
@@ -182,7 +182,7 @@
               <el-button
                 size="mini"
                 class="handle"
-                @click="sendPay(orderObj, '付尾款')"
+                @click="$sendPay(orderObj, '付尾款')"
                 v-if="orderObj.order.payment_status == 'TRADE_DEPOSIT_SUCCESS'"
                 style="color: crimson"
                 icon="el-icon-shopping-cart-full"
@@ -290,111 +290,111 @@ export default {
         });
       });
     },
-    sendPay(row, status) {
-      this.$log("去支付", row);
-      zhuge.track(`点击去支付`, {
-        订单价格: row.order.total_price,
-        订单题目: row.outline.title,
-        订单Out_trade_no: row.order.out_trade_no,
-      });
-      let data = {
-        out_trade_no: row.order.out_trade_no, // 订单编号，必传
-        payment_method: row.order.payment_method, // 支付方式，必传
-      };
-      if (status == "付尾款") {
-        balance_pay(data).then((res) => {
-          const targetPath = "/main/writepaper";
-          const currentPath = this.$route.path;
-          // 检查当前路径是否与目标路径相同
-          if (currentPath !== targetPath) {
-            this.$router.push(
-              {
-                path: "/main/writepaper",
-                // query: { key1: row.key1, field: row.field },
-              },
-              () => {
-                this.$nextTick(() => {
-                  this.sendPayFinish(res, row, status);
-                });
-              }
-            );
-          } else {
-            this.sendPayFinish(res, row, status);
-          }
-        });
-      } else {
-        ordersRepay(data).then((res) => {
-          const targetPath = "/main/writepaper";
-          const currentPath = this.$route.path;
-          // 检查当前路径是否与目标路径相同
-          if (currentPath !== targetPath) {
-            this.$router.push(
-              {
-                path: "/main/writepaper",
-                // query: { key1: row.key1, field: row.field },
-              },
-              () => {
-                this.$nextTick(() => {
-                  this.sendPayFinish(res, row, status);
-                });
-              }
-            );
-          } else {
-            this.sendPayFinish(res, row, status);
-          }
-        });
-      }
-    },
-    sendPayFinish(res, row, status) {
-      this.$log("去支付 res", res, row.order);
-      let currentOrder = row.order;
-      let order = {
-        out_trade_no: res.result.out_trade_no,
-        pay_amount: res.result.pay_amount,
-        pay_link: res.result.pay_link,
-        original_price: res.result.original_amount,
-        pay_type: currentOrder.pay_type,
-        payment_status: currentOrder.payment_status,
-        returnStatus: status,
-      };
-      let outLineData = row.outline;
-      let requestForm = {
-        title: outLineData.title,
-        language: outLineData.language,
-        type: outLineData.type,
-        field: ["哲学", outLineData.field],
-        key: outLineData.key1,
-        word_count: outLineData.word_count,
-      };
-      this.$store.dispatch("app/setRequestForm", requestForm);
-      this.$store.dispatch("app/toggleCurrentOrder", order);
-      // this.$store.dispatch(
-      //   "paper/setAdditionList",
-      //   res.result.additional_service
-      // );
+    // sendPay(row, status) {
+    //   this.$log("去支付", row);
+    //   zhuge.track(`点击去支付`, {
+    //     订单价格: row.order.total_price,
+    //     订单题目: row.outline.title,
+    //     订单Out_trade_no: row.order.out_trade_no,
+    //   });
+    //   let data = {
+    //     out_trade_no: row.order.out_trade_no, // 订单编号，必传
+    //     payment_method: row.order.payment_method, // 支付方式，必传
+    //   };
+    //   if (status == "付尾款") {
+    //     balance_pay(data).then((res) => {
+    //       const targetPath = "/main/writepaper";
+    //       const currentPath = this.$route.path;
+    //       // 检查当前路径是否与目标路径相同
+    //       if (currentPath !== targetPath) {
+    //         this.$router.push(
+    //           {
+    //             path: "/main/writepaper",
+    //             // query: { key1: row.key1, field: row.field },
+    //           },
+    //           () => {
+    //             this.$nextTick(() => {
+    //               this.sendPayFinish(res, row, status);
+    //             });
+    //           }
+    //         );
+    //       } else {
+    //         this.sendPayFinish(res, row, status);
+    //       }
+    //     });
+    //   } else {
+    //     ordersRepay(data).then((res) => {
+    //       const targetPath = "/main/writepaper";
+    //       const currentPath = this.$route.path;
+    //       // 检查当前路径是否与目标路径相同
+    //       if (currentPath !== targetPath) {
+    //         this.$router.push(
+    //           {
+    //             path: "/main/writepaper",
+    //             // query: { key1: row.key1, field: row.field },
+    //           },
+    //           () => {
+    //             this.$nextTick(() => {
+    //               this.sendPayFinish(res, row, status);
+    //             });
+    //           }
+    //         );
+    //       } else {
+    //         this.sendPayFinish(res, row, status);
+    //       }
+    //     });
+    //   }
+    // },
+    // sendPayFinish(res, row, status) {
+    //   this.$log("去支付 res", res, row.order);
+    //   let currentOrder = row.order;
+    //   let order = {
+    //     out_trade_no: res.result.out_trade_no,
+    //     pay_amount: res.result.pay_amount,
+    //     pay_link: res.result.pay_link,
+    //     original_price: res.result.original_amount,
+    //     pay_type: currentOrder.pay_type,
+    //     payment_status: currentOrder.payment_status,
+    //     returnStatus: status,
+    //   };
+    //   let outLineData = row.outline;
+    //   let requestForm = {
+    //     title: outLineData.title,
+    //     language: outLineData.language,
+    //     type: outLineData.type,
+    //     field: ["哲学", outLineData.field],
+    //     key: outLineData.key1,
+    //     word_count: outLineData.word_count,
+    //   };
+    //   this.$store.dispatch("app/setRequestForm", requestForm);
+    //   this.$store.dispatch("app/toggleCurrentOrder", order);
+    //   // this.$store.dispatch(
+    //   //   "paper/setAdditionList",
+    //   //   res.result.additional_service
+    //   // );
 
-      eventBus.emit("showEmitPaypopup", {
-        requestKey: res.result.out_trade_no,
-        payStatus: 2,
-        paperPercent: 0,
-      });
-      // let payUrl = res.result.pay_link;
-      // if (payUrl) {
-      //   window.open(payUrl, "_blank");
-      // }
-      // eventBus.emit("showEmitPaypopup", {
-      //           requestKey: res.result.out_trade_no,
-      //           payStatus: 2,
-      //           paperPercent: 0,
-      //         });
-      // 关闭弹窗
-      eventBus.emit("orderDialogChange", false);
-      // eventBus.emit("showEmitPaperDialog", {
-      //   requestKey: res.result.out_trade_no,
-      //   payStatus: 5,
-      //   paperPercent: 0,
-      // });
-    },
+    //   eventBus.emit("showEmitPaypopup", {
+    //     requestKey: res.result.out_trade_no,
+    //     payStatus: 2,
+    //     paperPercent: 0,
+    //   });
+    //   // let payUrl = res.result.pay_link;
+    //   // if (payUrl) {
+    //   //   window.open(payUrl, "_blank");
+    //   // }
+    //   // eventBus.emit("showEmitPaypopup", {
+    //   //           requestKey: res.result.out_trade_no,
+    //   //           payStatus: 2,
+    //   //           paperPercent: 0,
+    //   //         });
+    //   // 关闭弹窗
+    //   eventBus.emit("orderDialogChange", false);
+    //   // eventBus.emit("showEmitPaperDialog", {
+    //   //   requestKey: res.result.out_trade_no,
+    //   //   payStatus: 5,
+    //   //   paperPercent: 0,
+    //   // });
+    // },
     pushStep3: _.debounce(function (row) {
       zhuge.track(`查看论文进度`, {});
       const targetPath = "/main/writepaper";
