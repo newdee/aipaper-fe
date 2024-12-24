@@ -180,7 +180,7 @@
         </div>
         <div class="tipBottom">
           <div class="bottomLeft">
-            <transition name="el-zoom-in-top">
+            <!-- <transition name="el-zoom-in-top">
               <p v-show="inputMessage.length < 20">
                 <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-feiji"></use>
@@ -195,7 +195,7 @@
                 </svg>
                 <span class="tipText">Enter</span>
               </p>
-            </transition>
+            </transition> -->
           </div>
           <div class="bottomRight">
             <el-button
@@ -607,6 +607,7 @@ export default {
       this.sseSource.onerror = () => {
         // console.error("SSE Error: attempting to reconnect");
         // this.sseSource.close();
+        this.isMessageSent = false;
         // setTimeout(this.establishConnection, this.reconnectInterval);
       };
     },

@@ -441,26 +441,30 @@ export default {
         订单Out_trade_no: item.order.out_trade_no,
       });
       this.downStatus = true;
-      paperPack({ out_trade_no: item.order.out_trade_no }).then((res) => {
-        this.downStatus = false;
-        // window.open(res.result.zip_url, "_blank");
-        // Create a temporary link element
-        const link = document.createElement("a");
-        link.href = res.result.zip_url;
+      paperPack({ out_trade_no: item.order.out_trade_no })
+        .then((res) => {
+          this.downStatus = false;
+          // window.open(res.result.zip_url, "_blank");
+          // Create a temporary link element
+          const link = document.createElement("a");
+          link.href = res.result.zip_url;
 
-        // Set the download attribute to suggest a filename
-        link.download =
-          item.order_item_response[0].case.paper_case.title + ".zip"; // Change 'filename.zip' to the desired file name
+          // Set the download attribute to suggest a filename
+          link.download =
+            item.order_item_response[0].case.paper_case.title + ".zip"; // Change 'filename.zip' to the desired file name
 
-        // Append the link to the body
-        document.body.appendChild(link);
+          // Append the link to the body
+          document.body.appendChild(link);
 
-        // Programmatically click the link to trigger the download
-        link.click();
+          // Programmatically click the link to trigger the download
+          link.click();
 
-        // Remove the link from the document
-        document.body.removeChild(link);
-      });
+          // Remove the link from the document
+          document.body.removeChild(link);
+        })
+        .catch((err) => {
+          this.downStatus = false;
+        });
     }, 300),
     openPaper: _.debounce(function (item) {
       this.$log(item, "预览订单");

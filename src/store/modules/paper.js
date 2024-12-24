@@ -6,6 +6,7 @@ const state = {
   additionalList: [], // paper弹窗 是否继续循环
   preViewId: "", // 报告查询ID
   bdVid: "",
+  orderStatus: "", //支付时判断支付状态
 };
 
 const mutations = {
@@ -17,6 +18,9 @@ const mutations = {
   },
   SAVE_VID: (state, bdVid) => {
     state.bdVid = bdVid;
+  },
+  SET_ORDERS: (state, orderStatus) => {
+    state.orderStatus = orderStatus;
   },
   TOGGLE_POLLING: (state, pollingStatus) => {
     state.pollingStatus = pollingStatus;
@@ -35,6 +39,9 @@ const actions = {
   },
   setBdVid({ commit }, bdVid) {
     commit("SAVE_VID", bdVid);
+  },
+  setOrderStatus({ commit }, orderStatus) {
+    commit("SET_ORDERS", orderStatus);
   },
   setPollingStatus({ commit }, pollingStatus) {
     commit("TOGGLE_POLLING", pollingStatus);

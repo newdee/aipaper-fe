@@ -20,5 +20,6 @@ const getters = {
   additionalList: (state) => state.paper.additionalList,
   preViewId: (state) => state.paper.preViewId,
   bdVid: (state) => state.paper.bdVid,
+  orderStatus: (state) => state.paper.orderStatus,
 };
 export default getters;

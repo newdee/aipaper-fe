@@ -118,7 +118,7 @@
                 <el-button
                   size="mini"
                   class="handle"
-                  @click="sendPay(orderObj, '去支付')"
+                  @click="$sendPay(orderObj, '去支付')"
                   v-if="orderObj.order.payment_status == 'WAIT_BUYER_PAY'"
                   style="color: crimson"
                   icon="el-icon-shopping-cart-full"
@@ -128,7 +128,7 @@
                 <el-button
                   size="mini"
                   class="handle"
-                  @click="sendPay(orderObj, '付尾款')"
+                  @click="$sendPay(orderObj, '付尾款')"
                   v-if="
                     orderObj.order.payment_status == 'TRADE_DEPOSIT_SUCCESS'
                   "
@@ -149,7 +149,7 @@
                 <el-button
                   size="mini"
                   class="handle"
-                  @click="sendPay(orderObj, '去支付')"
+                  @click="$sendPay(orderObj, '去支付')"
                   v-if="orderObj.order.payment_status == 'WAIT_BUYER_PAY'"
                   style="color: crimson"
                   icon="el-icon-shopping-cart-full"
@@ -159,7 +159,7 @@
                 <el-button
                   size="mini"
                   class="handle"
-                  @click="sendPay(orderObj, '付尾款')"
+                  @click="$sendPay(orderObj, '付尾款')"
                   v-if="
                     orderObj.order.payment_status == 'TRADE_DEPOSIT_SUCCESS'
                   "
@@ -379,65 +379,66 @@ export default {
         document.body.removeChild(link);
       });
     }, 300),
-    sendPay(row, status) {
-      zhuge.track(`点击去支付`, {
-        订单价格: row.order.total_price,
-        订单题目: row.outline.title,
-        订单Out_trade_no: row.order.out_trade_no,
-      });
-      let data = {
-        out_trade_no: row.order.out_trade_no, // 订单编号，必传
-        payment_method: row.order.payment_method, // 支付方式，必传
-      };
+    // sendPay(row, status) {
+    //   zhuge.track(`点击去支付`, {
+    //     订单价格: row.order.total_price,
+    //     订单题目: row.outline.title,
+    //     订单Out_trade_no: row.order.out_trade_no,
+    //   });
+    //   let data = {
+    //     out_trade_no: row.order.out_trade_no, // 订单编号，必传
+    //     payment_method: row.order.payment_method, // 支付方式，必传
+    //   };
 
-      if (status == "付尾款") {
-        balance_pay(data).then((res) => {
-          this.sendPayFinish(res, row, status);
-        });
-      } else {
-        ordersRepay(data).then((res) => {
-          this.sendPayFinish(res, row, status);
-        });
-      }
-    },
-    sendPayFinish(res, row, status) {
-      this.$log("去支付 res", res);
-      let currentOrder = row.order;
-      // 存储订单信息用于订单页展示
-      let outLineData = row.outline;
-      let requestForm = {
-        title: outLineData.title,
-        language: outLineData.language,
-        type: outLineData.type,
-        field: ["哲学", outLineData.field],
-        key: outLineData.key1,
-        word_count: outLineData.word_count,
-      };
-      this.$store.dispatch("app/setRequestForm", requestForm);
-      // 存储订单信息用于订单页展示
-      let order = {
-        out_trade_no: res.result.out_trade_no,
-        pay_amount: res.result.pay_amount,
-        pay_link: res.result.pay_link,
-        original_price: res.result.original_amount,
-        pay_type: currentOrder.pay_type,
-        payment_status: currentOrder.payment_status,
-        returnStatus: status,
-      };
-      // 保存订单信息,二维码, 价格
-      this.$store.dispatch("app/toggleCurrentOrder", order);
-      // 展示附加列表
-      this.$store.dispatch(
-        "paper/setAdditionList",
-        res.result.additional_service
-      );
-      // 展示支付弹窗
-      eventBus.emit("showEmitPaypopup", {
-        requestKey: res.result.out_trade_no,
-        payStatus: 2,
-        paperPercent: 0,
-      });
-    },
+    //   if (status == "付尾款") {
+    //     balance_pay(data).then((res) => {
+    //       this.sendPayFinish(res, row, status);
+    //     });
+    //   } else {
+    //     ordersRepay(data).then((res) => {
+    //       this.sendPayFinish(res, row, status);
+    //     });
+    //   }
+    // },
+    // sendPayFinish(res, row, status) {
+    //   this.$log("去支付 res", res);
+    //   let currentOrder = row.order;
+    //   // 存储订单信息用于订单页展示
+    //   let outLineData = row.outline;
+    //   let requestForm = {
+    //     title: outLineData.title,
+    //     language: outLineData.language,
+    //     type: outLineData.type,
+    //     field: ["哲学", outLineData.field],
+    //     key: outLineData.key1,
+    //     word_count: outLineData.word_count,
+    //   };
+    //   this.$store.dispatch("app/setRequestForm", requestForm);
+    //   // 存储订单信息用于订单页展示
+    //   let order = {
+    //     out_trade_no: res.result.out_trade_no,
+    //     pay_amount: res.result.pay_amount,
+    //     pay_link: res.result.pay_link,
+    //     original_price: res.result.original_amount,
+    //     pay_type: currentOrder.pay_type,
+    //     payment_status: currentOrder.payment_status,
+    //     returnStatus: status,
+    //     order_type: res.result.order_type,
+    //   };
+    //   // 保存订单信息,二维码, 价格
+    //   this.$store.dispatch("app/toggleCurrentOrder", order);
+    //   // 展示附加列表
+    //   this.$store.dispatch(
+    //     "paper/setAdditionList",
+    //     res.result.additional_service
+    //   );
+    //   // 展示支付弹窗
+    //   eventBus.emit("showEmitPaypopup", {
+    //     requestKey: res.result.out_trade_no,
+    //     payStatus: 2,
+    //     paperPercent: 0,
+    //   });
+    // },
   },
 };
 </script>

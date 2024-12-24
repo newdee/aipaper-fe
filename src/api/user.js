@@ -22,6 +22,20 @@ export function gpt_search(params) {
     params,
   });
 }
+export function batch_create(params) {
+  return request({
+    url: baseUrl + "/api/ai-paper/coupon/batch_create",
+    method: "get",
+    params,
+  });
+}
+export function coupon_list(params) {
+  return request({
+    url: baseUrl + "/api/ai-paper/coupon/coupon_list",
+    method: "get",
+    params,
+  });
+}
 export function getUserInfo() {
   return request({
     url: baseUrl + "/api/ai-paper/user/info",

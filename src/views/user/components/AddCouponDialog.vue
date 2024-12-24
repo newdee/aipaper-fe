@@ -77,6 +77,7 @@ export default {
         channel: "",
       },
       discountRates: [
+        { label: "0%", value: 0 },
         { label: "10%", value: 0.1 },
         { label: "20%", value: 0.2 },
         { label: "30%", value: 0.3 },
@@ -122,6 +123,7 @@ export default {
     getList() {
       channels().then((res) => {
         console.log("res", res);
+        this.channels = res.result;
       });
     },
     handleClose() {

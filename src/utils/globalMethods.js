@@ -2,8 +2,16 @@
 import router from "@/router";
 import ElementUI from "element-ui";
 import store from "@/store";
+import eventBus from "@/utils/eventBus";
 
-import { bd_convert } from "@/api/paper";
+import {
+  getOutlineList,
+  getOrderList,
+  paperPack,
+  ordersRepay,
+  balance_pay,
+} from "@/api/user";
+
 const GlobalMethodsPlugin = {
   install(Vue) {
     Vue.prototype.$sayHello = function (name) {
@@ -25,6 +33,60 @@ const GlobalMethodsPlugin = {
       });
       // this.$msgbox(options)
       // 执行你需要的操作
+    };
+
+    // 付尾款
+    Vue.prototype.$sendPay = function (row, status) {
+      zhuge.track(`点击去支付`, {
+        订单价格: row.order.total_price,
+        订单题目: row.outline.title,
+        订单Out_trade_no: row.order.out_trade_no,
+      });
+      const processResponse = (res, currentOrder, status) => {
+        this.$log("去支付 res", res);
+
+        let outLineData = row.outline;
+        let requestForm = {
+          title: outLineData.title,
+          language: outLineData.language,
+          type: outLineData.type,
+          field: ["哲学", outLineData.field],
+          key: outLineData.key1,
+          word_count: outLineData.word_count,
+        };
+        store.dispatch("app/setRequestForm", requestForm);
+
+        let order = {
+          out_trade_no: res.result.out_trade_no,
+          pay_amount: res.result.pay_amount,
+          pay_link: res.result.pay_link,
+          original_price: res.result.original_amount,
+          pay_type: currentOrder.pay_type,
+          payment_status: currentOrder.payment_status,
+          returnStatus: status,
+          order_type: res.result.order_type,
+        };
+        store.dispatch("app/toggleCurrentOrder", order);
+
+        store.dispatch("paper/setAdditionList", res.result.additional_service);
+
+        eventBus.emit("showEmitPaypopup", {
+          requestKey: res.result.out_trade_no,
+          payStatus: 2,
+          paperPercent: 0,
+        });
+      };
+
+      const data = {
+        out_trade_no: row.order.out_trade_no,
+        payment_method: row.order.payment_method,
+      };
+
+      const paymentMethod = status === "付尾款" ? balance_pay : ordersRepay;
+
+      paymentMethod(data).then((res) => {
+        processResponse(res, row.order, status);
+      });
     };
 
     // 定义全局跳转方法

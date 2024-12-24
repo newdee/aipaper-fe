@@ -79,6 +79,23 @@
           </div>
           <div class="payRightPrice">
             <!-- left code -->
+            <!-- 付费下载大纲不展示 -->
+            <div
+              v-show="currentOrder.order_type !== 'OUTLINE_DOWNLOAD'"
+              style="margin-top: -20px; margin-bottom: 15px"
+            >
+              <span>使用优惠卷: </span>
+              <el-input
+                style="width: 300px"
+                size="small"
+                placeholder="请输入优惠卷编号"
+                v-model="coupon_code"
+              >
+              </el-input>
+              <el-button size="mini" type="primary" plain @click="useCoupon"
+                >兑换</el-button
+              >
+            </div>
             <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
               <el-tab-pane
                 :disabled="orderPayDisabled"
@@ -169,9 +186,15 @@
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 import eventBus from "@/utils/eventBus";
-import { getOrder, orderDetailById } from "@/api/user";
+import {
+  getOrder,
+  orderDetailById,
+  ordersRepay,
+  balance_pay,
+} from "@/api/user";
 import { mapGetters } from "vuex";
 import example from "../example/index.vue";
+import OrderType from "@/utils/orderTypes";
 
 export default {
   name: "myFooter",
@@ -194,6 +217,7 @@ export default {
       successIndex: 0,
       orderId: "",
       loading: false,
+      coupon_code: "",
       orderPayDisabled: false, // 去支付 不能切换订单
     };
   },
@@ -259,21 +283,108 @@ export default {
   },
 
   methods: {
+    useCoupon() {
+      this.$confirm("优惠卷兑换后，无法退回, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          if (this.currentOrder.returnStatus == "去支付") {
+            this.payUseCode();
+          } else if (this.currentOrder.returnStatus == "付尾款") {
+            this.payWeiUseCode();
+          } else {
+            this.handleClick();
+          }
+          console.log("currentOrder", this.currentOrder);
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消兑换",
+          });
+        });
+    },
     startCountdown() {
       const countdownInterval = setInterval(() => {
         if (this.indexNum > 0) {
           this.indexNum--;
         } else {
+          this.loading = false;
           clearInterval(countdownInterval); // 停止循环
           this.indexNum = 5;
         }
       }, 1000); // 每隔 1000 毫秒（1秒）执行一次
     },
+    payWeiUseCode() {
+      this.loading = true;
+      this.startCountdown();
+      // 停止上一次循环
+      this.$store.dispatch("paper/setPollingStatus", false);
+      let data = {
+        out_trade_no: this.currentOrder.out_trade_no,
+        payment_method: "alipay",
+        coupon_code: this.coupon_code,
+      };
+      balance_pay(data).then((res) => {
+        this.resetForm();
+
+        let order = {
+          ...this.currentOrder,
+          out_trade_no: res.result.out_trade_no,
+          pay_amount: res.result.pay_amount,
+          pay_link: res.result.pay_link,
+          original_price: res.result.original_amount,
+          order_type: res.result.order_type,
+        };
+        this.$store.dispatch("app/toggleCurrentOrder", order);
+        let _this = this;
+        setTimeout(() => {
+          _this.loading = false;
+          _this.$store.dispatch("paper/setPollingStatus", true);
+          _this.orderId = res.result.out_trade_no;
+          _this.getDetail();
+        }, 4000);
+      });
+    },
+    payUseCode() {
+      this.loading = true;
+      this.startCountdown();
+      // 停止上一次循环
+      this.$store.dispatch("paper/setPollingStatus", false);
+      let data = {
+        out_trade_no: this.currentOrder.out_trade_no,
+        payment_method: "alipay",
+        coupon_code: this.coupon_code,
+      };
+      ordersRepay(data).then((res) => {
+        let order = {
+          ...this.currentOrder,
+          out_trade_no: res.result.out_trade_no,
+          pay_amount: res.result.pay_amount,
+          pay_link: res.result.pay_link,
+          original_price: res.result.original_amount,
+          order_type: res.result.order_type,
+        };
+        this.resetForm();
+
+        this.$store.dispatch("app/toggleCurrentOrder", order);
+        let _this = this;
+        setTimeout(() => {
+          _this.loading = false;
+          _this.$store.dispatch("paper/setPollingStatus", true);
+          _this.orderId = res.result.out_trade_no;
+          _this.getDetail();
+        }, 4000);
+      });
+    },
+    resetForm() {
+      this.coupon_code = "";
+    },
     handleClick(tab, event) {
       this.loading = true;
       this.startCountdown();
-      console.log(this.activeName, "activeName");
-      console.log(this.currentOrder, "currentOrder");
       // 停止上一次循环
       this.$store.dispatch("paper/setPollingStatus", false);
       // 重新生成订单
@@ -282,9 +393,11 @@ export default {
         pay_type: this.activeName,
         key: this.currentOrder.key,
         items: this.currentOrder.items,
+        coupon_code: this.coupon_code,
       };
       getOrder(data).then((res) => {
         console.log("切换后订单", res);
+        this.resetForm();
         let order = {
           out_trade_no: res.result.out_trade_no,
           pay_amount: res.result.pay_amount,
@@ -506,6 +619,7 @@ export default {
     .markBox {
       right: 10px;
       top: 20px;
+      z-index: 10;
     }
   }
 
