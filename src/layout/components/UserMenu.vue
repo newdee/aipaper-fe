@@ -43,10 +43,7 @@
               </div>
               <!-- v-if="userInfo.role == 'LEVEL_PROXY'" -->
               <div
-                v-if="
-                  userInfo.permission == 'AGENT' ||
-                  userInfo.permission == 'SUPER_ADMIN'
-                "
+                v-if="userInfo.permission == 'AGENT'"
                 class="menuItem"
                 @click="$jumpUrl('/user/promotion')"
               >

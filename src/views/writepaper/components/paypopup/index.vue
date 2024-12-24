@@ -284,6 +284,13 @@ export default {
 
   methods: {
     useCoupon() {
+      if (!this.coupon_code) {
+        this.$message({
+          type: "warning",
+          message: "请输入优惠卷！",
+        });
+        return false;
+      }
       this.$confirm("优惠卷兑换后，无法退回, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -327,26 +334,35 @@ export default {
         payment_method: "alipay",
         coupon_code: this.coupon_code,
       };
-      balance_pay(data).then((res) => {
-        this.resetForm();
+      balance_pay(data)
+        .then((res) => {
+          this.resetForm();
 
-        let order = {
-          ...this.currentOrder,
-          out_trade_no: res.result.out_trade_no,
-          pay_amount: res.result.pay_amount,
-          pay_link: res.result.pay_link,
-          original_price: res.result.original_amount,
-          order_type: res.result.order_type,
-        };
-        this.$store.dispatch("app/toggleCurrentOrder", order);
-        let _this = this;
-        setTimeout(() => {
-          _this.loading = false;
-          _this.$store.dispatch("paper/setPollingStatus", true);
-          _this.orderId = res.result.out_trade_no;
-          _this.getDetail();
-        }, 4000);
-      });
+          let order = {
+            ...this.currentOrder,
+            out_trade_no: res.result.out_trade_no,
+            pay_amount: res.result.pay_amount,
+            pay_link: res.result.pay_link,
+            original_price: res.result.original_amount,
+            order_type: res.result.order_type,
+          };
+          this.$store.dispatch("app/toggleCurrentOrder", order);
+          let _this = this;
+          setTimeout(() => {
+            _this.loading = false;
+            _this.$store.dispatch("paper/setPollingStatus", true);
+            _this.orderId = res.result.out_trade_no;
+            _this.getDetail();
+          }, 4000);
+        })
+        .catch((error) => {
+          let _this = this;
+          setTimeout(() => {
+            _this.orderId = _this.currentOrder.out_trade_no;
+            _this.$store.dispatch("paper/setPollingStatus", true);
+            _this.getDetail();
+          }, 4000);
+        });
     },
     payUseCode() {
       this.loading = true;
@@ -358,26 +374,35 @@ export default {
         payment_method: "alipay",
         coupon_code: this.coupon_code,
       };
-      ordersRepay(data).then((res) => {
-        let order = {
-          ...this.currentOrder,
-          out_trade_no: res.result.out_trade_no,
-          pay_amount: res.result.pay_amount,
-          pay_link: res.result.pay_link,
-          original_price: res.result.original_amount,
-          order_type: res.result.order_type,
-        };
-        this.resetForm();
+      ordersRepay(data)
+        .then((res) => {
+          let order = {
+            ...this.currentOrder,
+            out_trade_no: res.result.out_trade_no,
+            pay_amount: res.result.pay_amount,
+            pay_link: res.result.pay_link,
+            original_price: res.result.original_amount,
+            order_type: res.result.order_type,
+          };
+          this.resetForm();
 
-        this.$store.dispatch("app/toggleCurrentOrder", order);
-        let _this = this;
-        setTimeout(() => {
-          _this.loading = false;
-          _this.$store.dispatch("paper/setPollingStatus", true);
-          _this.orderId = res.result.out_trade_no;
-          _this.getDetail();
-        }, 4000);
-      });
+          this.$store.dispatch("app/toggleCurrentOrder", order);
+          let _this = this;
+          setTimeout(() => {
+            _this.loading = false;
+            _this.$store.dispatch("paper/setPollingStatus", true);
+            _this.orderId = res.result.out_trade_no;
+            _this.getDetail();
+          }, 4000);
+        })
+        .catch((error) => {
+          let _this = this;
+          setTimeout(() => {
+            _this.orderId = _this.currentOrder.out_trade_no;
+            _this.$store.dispatch("paper/setPollingStatus", true);
+            _this.getDetail();
+          }, 4000);
+        });
     },
     resetForm() {
       this.coupon_code = "";
@@ -395,28 +420,38 @@ export default {
         items: this.currentOrder.items,
         coupon_code: this.coupon_code,
       };
-      getOrder(data).then((res) => {
-        console.log("切换后订单", res);
-        this.resetForm();
-        let order = {
-          out_trade_no: res.result.out_trade_no,
-          pay_amount: res.result.pay_amount,
-          pay_link: res.result.pay_link,
-          original_price: res.result.original_amount,
-          pay_type: data.pay_type,
-          payment_method: data.payment_method,
-          key: data.key,
-          items: data.items,
-        };
-        this.$store.dispatch("app/toggleCurrentOrder", order);
-        let _this = this;
-        setTimeout(() => {
-          _this.loading = false;
-          _this.$store.dispatch("paper/setPollingStatus", true);
-          _this.orderId = res.result.out_trade_no;
-          _this.getDetail();
-        }, 4000);
-      });
+      getOrder(data)
+        .then((res) => {
+          console.log("切换后订单", res);
+          this.resetForm();
+          let order = {
+            ...this.currentOrder,
+            out_trade_no: res.result.out_trade_no,
+            pay_amount: res.result.pay_amount,
+            pay_link: res.result.pay_link,
+            original_price: res.result.original_amount,
+            pay_type: data.pay_type,
+            payment_method: data.payment_method,
+            key: data.key,
+            items: data.items,
+          };
+          this.$store.dispatch("app/toggleCurrentOrder", order);
+          let _this = this;
+          setTimeout(() => {
+            _this.loading = false;
+            _this.$store.dispatch("paper/setPollingStatus", true);
+            _this.orderId = res.result.out_trade_no;
+            _this.getDetail();
+          }, 4000);
+        })
+        .catch((error) => {
+          let _this = this;
+          setTimeout(() => {
+            _this.orderId = _this.currentOrder.out_trade_no;
+            _this.$store.dispatch("paper/setPollingStatus", true);
+            _this.getDetail();
+          }, 4000);
+        });
     },
     showExample() {
       window.zhuge.track("访问范围样例", {

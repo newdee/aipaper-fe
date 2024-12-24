@@ -65,6 +65,8 @@ const GlobalMethodsPlugin = {
           payment_status: currentOrder.payment_status,
           returnStatus: status,
           order_type: res.result.order_type,
+          discounted_price: res.result.discounted_price, // 优惠金额
+          is_discount: res.result.is_discount, // 优惠金额
         };
         store.dispatch("app/toggleCurrentOrder", order);
 
