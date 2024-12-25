@@ -32,9 +32,13 @@
               :percentage="currentNumber"
             ></el-progress>
           </div>
-          <p class="dialog-text">正在调取大量真实文献，加速生成正文中，</p>
           <p class="dialog-text">
-            预计需要<span class="parimary"> 30分钟 </span>，请耐心等待
+            正在调取大量
+            <span style="font-weight: bold" class="primary">真实文献</span
+            >，加速生成正文中，
+          </p>
+          <p class="dialog-text">
+            预计需要<span class="primary"> 30分钟 </span>，请耐心等待
           </p>
           <p class="dialog-text">
             如您关闭此弹窗,请在
