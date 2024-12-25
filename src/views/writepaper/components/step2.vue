@@ -1450,6 +1450,8 @@ export default {
                 payment_method: data.payment_method,
                 key: data.key,
                 items: data.items,
+                discounted_price: res.result.discounted_price, // 优惠金额
+                is_discount: res.result.is_discount, // 优惠金额
               };
               this.$store.dispatch("app/toggleCurrentOrder", order);
 
