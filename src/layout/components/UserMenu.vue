@@ -23,7 +23,9 @@
               <p class="tel">{{ userInfo.phone }}</p>
               <div class="tel">
                 <span class="tel">{{ $t("login.lastLogin") }}：</span>
-                <p class="tel">{{ userInfo.last_login_time }}</p>
+                <p class="tel">
+                  {{ userInfo.last_login_time | dateFormatter }}
+                </p>
               </div>
             </div>
           </div>
@@ -52,6 +54,8 @@
               </div>
             </div>
             <div class="menuGroup menuAboutMixPaper">
+              <!-- v-if="userInfo.permission == 'SUPER_ADMIN'" -->
+
               <div
                 v-if="userInfo.permission == 'SUPER_ADMIN'"
                 class="menuItem"

@@ -78,7 +78,10 @@
                       >
                         发送验证码
                       </span>
-                      <span v-show="!codeTimeStatus && index != 0">
+                      <span
+                        v-show="!codeTimeStatus && index != 0"
+                        @click="repeatCode"
+                      >
                         重新发送
                       </span>
                     </div>
@@ -229,33 +232,32 @@ export default {
     },
     // 重新获取验证码
     repeatCode() {
-      // 60秒倒计时
+      if (this.codeTimeStatus) return; // 如果已经在倒计时，不重复开始
+
+      // 模拟发送请求，可以替换为实际的API请求
       let data = {
         phone: this.phoneNum,
-        // phone: "13164661907",
       };
-      console.log("this.data", data);
 
-      sms(data).then((res) => {
-        this.index++;
-        this.codeTimeStatus = false;
-        if (this.codeTimeStatus) return; // 如果已经在倒计时，不重复开始
-        this.secondsLeft = 60; // 重置为 60 秒
-        this.codeTimeStatus = true;
-        this.countdownInterval = setInterval(() => {
-          this.secondsLeft--;
-          if (this.secondsLeft <= 0) {
-            clearInterval(this.countdownInterval);
-            this.codeTimeStatus = false;
-            this.secondsLeft = 0;
-            // 可以在这里添加倒计时结束后的处理逻辑
-          }
-        }, 1000);
-      });
-      // 请求成功
+      sms(data)
+        .then((res) => {
+          this.index++;
+          this.codeTimeStatus = true;
+          this.secondsLeft = 60; // 重置倒计时为60秒
 
-      // 失败
-      // this.codeTimeStatus = true;
+          this.countdownInterval = setInterval(() => {
+            this.secondsLeft--;
+            if (this.secondsLeft <= 0) {
+              clearInterval(this.countdownInterval);
+              this.codeTimeStatus = false;
+              this.secondsLeft = 0;
+            }
+          }, 1000);
+        })
+        .catch((error) => {
+          console.error("发送验证码失败", error);
+          // 可以在这里显示错误提示信息
+        });
     },
     codeChange(val) {
       if (val == "loading") {
@@ -337,8 +339,8 @@ export default {
           // 判断是否点击已阅读
 
           let data = {
-            phone: this.phoneNum,
-            sms_code: this.sms_code,
+            phone: this.phoneNum.trim(),
+            sms_code: this.sms_code.trim(),
             sub_domain: getDomain(),
           };
           let param = "inv_code";

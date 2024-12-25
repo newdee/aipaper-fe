@@ -81,7 +81,10 @@
             <!-- left code -->
             <!-- 付费下载大纲不展示 -->
             <div
-              v-show="currentOrder.order_type !== 'OUTLINE_DOWNLOAD'"
+              v-show="
+                currentOrder.order_type !== 'OUTLINE_DOWNLOAD' &&
+                currentOrder.is_discount == 1
+              "
               style="margin-top: -20px; margin-bottom: 15px"
             >
               <span>使用优惠卷: </span>
@@ -116,6 +119,12 @@
                 元</span
               >
               <!-- {{ currentOrder.returnStatus }} -->
+              <span
+                v-if="currentOrder.discounted_price > 0"
+                class="discountedPrice"
+              >
+                优惠金额: {{ currentOrder.discounted_price }} 元
+              </span>
               <span
                 style="
                   margin-left: 20px;
@@ -345,6 +354,8 @@ export default {
             pay_link: res.result.pay_link,
             original_price: res.result.original_amount,
             order_type: res.result.order_type,
+            is_discount: res.result.is_discount,
+            discounted_price: res.result.discounted_price,
           };
           this.$store.dispatch("app/toggleCurrentOrder", order);
           let _this = this;
@@ -383,6 +394,8 @@ export default {
             pay_link: res.result.pay_link,
             original_price: res.result.original_amount,
             order_type: res.result.order_type,
+            is_discount: res.result.is_discount,
+            discounted_price: res.result.discounted_price,
           };
           this.resetForm();
 
@@ -434,6 +447,8 @@ export default {
             payment_method: data.payment_method,
             key: data.key,
             items: data.items,
+            is_discount: res.result.is_discount,
+            discounted_price: res.result.discounted_price,
           };
           this.$store.dispatch("app/toggleCurrentOrder", order);
           let _this = this;
@@ -653,7 +668,7 @@ export default {
     padding-bottom: 50px;
     .markBox {
       right: 10px;
-      top: 20px;
+      top: 50px;
       z-index: 10;
     }
   }
@@ -743,6 +758,12 @@ export default {
     display: flex;
     align-items: center;
     color: #000;
+    position: relative;
+    .discountedPrice {
+      position: absolute;
+      left: 0px;
+      top: 30px;
+    }
     span {
       color: rgb(252, 106, 0);
       margin-left: 5px;

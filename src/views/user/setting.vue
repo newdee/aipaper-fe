@@ -79,13 +79,15 @@
           </template>
         </el-table-column>
         <el-table-column prop="create_time" label="创建时间" width="220">
-          <template> </template>
+          <template slot-scope="scope">
+            {{ scope.row.create_time | dateFormatter }}
+          </template>
         </el-table-column>
-        <el-table-column
-          prop="expire_time"
-          label="过期时间"
-          width="220"
-        ></el-table-column>
+        <el-table-column prop="expire_time" label="过期时间" width="220">
+          <template slot-scope="scope">
+            {{ scope.row.expire_time | dateFormatter }}
+          </template>
+        </el-table-column>
         <el-table-column
           prop="channel"
           label="渠道"
@@ -132,7 +134,7 @@
 
 <script>
 import AddCouponDialog from "./components/AddCouponDialog.vue";
-import { channels, batch_create, coupon_list } from "@/api/user";
+import { channels, coupon_list } from "@/api/user";
 
 export default {
   data() {
@@ -211,10 +213,7 @@ export default {
       this.addCouponDialogVisible = true;
     },
     handleAddCoupon(coupon) {
-      batch_create(coupon).then((res) => {
-        this.$message.success("优惠券添加成功");
-        console.log("res", res);
-      });
+      this.getList();
     },
 
     toChildPage() {

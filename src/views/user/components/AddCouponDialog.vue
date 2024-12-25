@@ -51,6 +51,15 @@
           ></el-option>
         </el-select>
       </el-form-item>
+      <el-form-item v-show="codeList.length > 1" label="生成的优惠卷">
+        <el-input
+          type="textarea"
+          :rows="2"
+          placeholder="请输入内容"
+          v-model="codeList"
+        >
+        </el-input>
+      </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="handleClose">取消</el-button>
@@ -60,7 +69,8 @@
 </template>
 
 <script>
-import { channels } from "@/api/user";
+import { channels, batch_create } from "@/api/user";
+
 export default {
   props: {
     visible: {
@@ -77,16 +87,16 @@ export default {
         channel: "",
       },
       discountRates: [
-        { label: "0%", value: 0 },
-        { label: "10%", value: 0.1 },
-        { label: "20%", value: 0.2 },
-        { label: "30%", value: 0.3 },
-        { label: "40%", value: 0.4 },
-        { label: "50%", value: 0.5 },
-        { label: "60%", value: 0.6 },
-        { label: "70%", value: 0.7 },
-        { label: "80%", value: 0.8 },
-        { label: "90%", value: 0.9 },
+        { label: "免费", value: 0 },
+        { label: "一折", value: 0.1 },
+        { label: "二折", value: 0.2 },
+        { label: "三折", value: 0.3 },
+        { label: "四折", value: 0.4 },
+        { label: "五折", value: 0.5 },
+        { label: "六折", value: 0.6 },
+        { label: "七折", value: 0.7 },
+        { label: "八折", value: 0.8 },
+        { label: "九折", value: 0.9 },
       ],
       channels: [
         { display_name: "淘宝", channel: "tb" },
@@ -114,6 +124,7 @@ export default {
           return time.getTime() < Date.now();
         },
       },
+      codeList: "",
     };
   },
   created() {
@@ -133,8 +144,12 @@ export default {
     submitForm() {
       this.$refs.couponForm.validate((valid) => {
         if (valid) {
-          this.$emit("add-coupon", { ...this.couponForm });
-          this.handleClose();
+          batch_create(this.couponForm).then((res) => {
+            this.$message.success("优惠券添加成功");
+            console.log("优惠券添加成功", res.result);
+            this.codeList = res.result.join(",");
+            this.$emit("add-coupon");
+          });
         } else {
           this.$message.error("请填写完整的优惠券信息");
         }
