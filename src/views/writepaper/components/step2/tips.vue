@@ -74,7 +74,7 @@ export default {
   },
   computed: {
     outlineBottom() {
-      return this.offsetTop + this.parentHeight - 100;
+      return this.offsetTop + this.parentHeight - 200;
     },
   },
   beforeDestroy() {
