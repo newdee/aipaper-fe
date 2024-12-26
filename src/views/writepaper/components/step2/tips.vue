@@ -38,7 +38,7 @@
       <p class="tipTitle">Tips 2:</p>
       <div class="tipCon">
         <p>
-          {{ parentHeight }} 大纲不满意可以点击下边的<span
+          大纲不满意可以点击下边的<span
             >【重新生成按钮<i class="el-icon-refresh"></i>】</span
           >
         </p>
@@ -53,7 +53,6 @@ export default {
     return {
       isFixed: false,
       offsetTop: 0,
-      outlineBottom: 0,
     };
   },
   props: {
@@ -67,12 +66,16 @@ export default {
       // 使用示例
       const element = document.querySelector("#fixedCard");
       this.offsetTop = this.getElementOffsetTop(element) - 10;
-      this.outlineBottom =
-        this.getElementOffsetTop(element) + this.parentHeight - 100;
+
       // 初始化位置
       console.log("元素距离页面顶部的距离加上滚动高度:", this.offsetTop);
       window.addEventListener("scroll", this.handleScroll);
     });
+  },
+  computed: {
+    outlineBottom() {
+      return this.offsetTop + this.parentHeight - 100;
+    },
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -97,7 +100,8 @@ export default {
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
-      console.log("dddd", scrollTop);
+      console.log("dddd", this.outlineBottom);
+      console.log("dd2222222222dd", scrollTop);
 
       // 判断是否需要固定
       if (scrollTop > this.offsetTop && scrollTop < this.outlineBottom) {
