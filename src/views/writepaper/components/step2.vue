@@ -15,9 +15,10 @@
       v-loading="loading"
       element-loading-text="AI帮写中,请稍等...."
       class="outlineMain"
+      ref="outlineParent"
     >
       <div>
-        <tips></tips>
+        <tips :parentHeight="parentHeight"></tips>
       </div>
       <!-- <p class="tips">拖拽章节,可实现章节排序</p> -->
       <p class="tips">当您编辑大纲时,会自动保存</p>
@@ -226,7 +227,10 @@
       </p>
     </div>
     <!-- 付费项选择 -->
+    <div id="reduceId"></div>
+
     <additional></additional>
+
     <div class="warningP agreeText">
       <el-checkbox v-model="checked">
         我已阅读并同意：平台所生成的全文为范文，仅用作参考，不用作毕业论文、发表刊物等
@@ -848,7 +852,7 @@ export default {
         "36分钟前 论文《201**********》生成成功",
         "31分钟前 论文《南宁圣**********》生成成功",
       ],
-
+      parentHeight: 0,
       marks: {
         5000: "5000字",
         8000: "8000字",
@@ -936,6 +940,12 @@ export default {
         this.generateIndexes(this.outline);
       },
     },
+    loading: {
+      immediate: true,
+      handler(val) {
+        this.updateParentHeight();
+      },
+    },
   },
 
   created() {
@@ -982,6 +992,19 @@ export default {
       eventBus.emit("reloadOutline", 3);
     },
     // 先保存再调用AI更新
+    updateParentHeight() {
+      // 获取元素高度
+      console.log(
+        "dddddd-------------------------------------------------------------------",
+        "sssss"
+      );
+
+      this.$nextTick(() => {
+        if (this.$refs.outlineParent) {
+          this.parentHeight = this.$refs.outlineParent.offsetHeight;
+        }
+      });
+    },
     saveOutlineTwo() {
       this.loading = true;
       let data = {

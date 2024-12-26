@@ -1,5 +1,8 @@
 <template>
-  <div class="tipContain">
+  <div
+    id="fixedCard"
+    :class="{ tipContain: isFixed, fixedCard: true, fixed: isFixed }"
+  >
     <!-- tip1 -->
     <div class="tipBox">
       <p class="tipTitle">Tips 1:</p>
@@ -25,12 +28,17 @@
           ，注意这个会有等待时间。
         </p>
       </div>
+      <div class="jumpBtn">
+        <el-button @click="jumpUrl" type="success" size="mini"
+          >跳转到生成正文</el-button
+        >
+      </div>
     </div>
     <div class="tipBox">
       <p class="tipTitle">Tips 2:</p>
       <div class="tipCon">
         <p>
-          大纲不满意可以点击下边的<span
+          {{ parentHeight }} 大纲不满意可以点击下边的<span
             >【重新生成按钮<i class="el-icon-refresh"></i>】</span
           >
         </p>
@@ -39,55 +47,85 @@
   </div>
 </template>
 <script>
-// import { mapGetters } from "vuex";
-// import { sms } from "@/api/login";
-// import webinfo from "@/components/webinfo.vue";
-// import eventBus from "@/utils/eventBus";
-
 export default {
-  name: "myFooter",
+  name: "tips",
   data() {
     return {
-      // 定义变量
+      isFixed: false,
+      offsetTop: 0,
+      outlineBottom: 0,
     };
   },
-  components: {
-    // webinfo,
+  props: {
+    parentHeight: {
+      type: Number,
+      required: true,
+    },
   },
   mounted() {
-    // eventBus.emit("sendOutline", 5); // 发布事件
-    // 页面初始化
-  },
-  created() {
-    // eventBus.on("sendOutline", this.addE); // 订阅事件
+    this.$nextTick(() => {
+      // 使用示例
+      const element = document.querySelector("#fixedCard");
+      this.offsetTop = this.getElementOffsetTop(element) - 10;
+      this.outlineBottom =
+        this.getElementOffsetTop(element) + this.parentHeight - 200;
+      // 初始化位置
+      console.log("元素距离页面顶部的距离加上滚动高度:", this.offsetTop);
+      window.addEventListener("scroll", this.handleScroll);
+    });
   },
   beforeDestroy() {
-    // eventBus.off("sendOutline", this.addE); // 移除事件监听
-  },
-  computed: {
-    // 计算属性
+    window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
-    // 定义方法
+    getElementOffsetTop(element) {
+      if (!element) return null;
+
+      // 获取元素距离视口顶部的距离
+      const rect = element.getBoundingClientRect();
+
+      // 获取页面滚动的垂直距离
+      const scrollTop = window.scrollY || window.pageYOffset;
+
+      // 计算元素距离页面顶部的距离
+      const offsetTop = rect.top + scrollTop;
+
+      return offsetTop;
+    },
+    handleScroll() {
+      const scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop;
+      console.log("dddd", scrollTop);
+
+      // 判断是否需要固定
+      if (scrollTop > this.offsetTop && scrollTop < this.outlineBottom) {
+        this.isFixed = true;
+      } else {
+        this.isFixed = false;
+      }
+    },
+    jumpUrl() {
+      this.$scrollTo("#reduceId", 500, { offset: -100 });
+    },
   },
 };
 </script>
-<style lang="scss" scoped>
-// 引入scss
-// @import "@/styles/variables.scss";
-// @import "@/styles/mediaMain.scss";
-// @import './index.scss';
 
-// 媒体查询
-// @media only screen and (max-width: 939px) {
-// }
-// @media only screen and (max-width: 768px) {
-// }
+<style lang="scss" scoped>
 .tipContain {
-  position: absolute;
-  right: -200px;
-  top: 20px;
+  position: fixed !important;
+  top: 62px !important;
+  left: 1136px !important;
+  z-index: 1000;
 }
+.fixedCard {
+  position: absolute;
+  left: 880px;
+  top: 0px;
+}
+
 .tipBox {
   width: 189px;
   padding: 9px;
@@ -100,8 +138,6 @@ export default {
   font-size: 14px;
   color: #000;
   font-weight: bold;
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
-    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   margin-bottom: 10px;
 }
 .tipCon {
@@ -112,5 +148,11 @@ export default {
       color: #d75300;
     }
   }
+}
+.jumpBtn {
+  margin-top: 15px;
+}
+.card {
+  margin-bottom: 15px;
 }
 </style>
