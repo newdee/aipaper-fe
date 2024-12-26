@@ -68,7 +68,7 @@ export default {
       const element = document.querySelector("#fixedCard");
       this.offsetTop = this.getElementOffsetTop(element) - 10;
       this.outlineBottom =
-        this.getElementOffsetTop(element) + this.parentHeight - 200;
+        this.getElementOffsetTop(element) + this.parentHeight - 100;
       // 初始化位置
       console.log("元素距离页面顶部的距离加上滚动高度:", this.offsetTop);
       window.addEventListener("scroll", this.handleScroll);
