@@ -19,6 +19,7 @@
             payStatusObject[payTitleStatus]
           }}</span>
         </p>
+        <p>{{ currentOrder }}</p>
         <!-- 订单支付成功展示页面 -->
         <div
           v-if="
@@ -138,7 +139,7 @@ export default {
   },
   computed: {
     // 计算属性
-    ...mapGetters(["pollingStatus", "device"]),
+    ...mapGetters(["pollingStatus", "device", "currentOrder"]),
   },
 
   methods: {

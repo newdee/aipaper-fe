@@ -5,6 +5,7 @@
       <div class="markBox">
         <img src="@/assets/images/mark.png" alt="" />
       </div>
+      {{ requestForm }}
       <p class="fuTitle">继续生成全文,您将获得以下权益</p>
       <div class="maintxt">
         <div class="borderBox">
@@ -26,8 +27,28 @@
               {{ requestForm.field ? requestForm.field[1] : "暂无" }}
               <span>含在线编辑</span>
             </p> -->
-            <p class="alertTxt">真实数据来源</p>
-            <p class="include">摘要 | 大纲目录 | 正文 | 参考文献</p>
+            <p
+              v-if="
+                requestForm.product == '毕业论文' ||
+                requestForm.product ==
+                  '结课论文                                                       '
+              "
+              class="alertTxt"
+            >
+              真实数据来源
+            </p>
+            <p v-else class="alertTxt">{{ requestForm.product }}</p>
+            <p
+              v-if="
+                requestForm.product == '毕业论文' ||
+                requestForm.product ==
+                  '结课论文                                                       '
+              "
+              class="include"
+            >
+              摘要 | 大纲目录 | 正文 | 参考文献
+            </p>
+            <p v-else class="include">{{ requestForm.product }}</p>
             <p class="alignR">
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-checkmark"></use>
@@ -36,7 +57,15 @@
           </div>
         </div>
       </div>
-      <div class="att">
+      <!-- 附件部分 -->
+      <div
+        v-show="
+          requestForm.product == '毕业论文' ||
+          requestForm.product ==
+            '结课论文                                                       '
+        "
+        class="att"
+      >
         <div class="borderBox">
           <div class="left">
             <svg class="icon svg-icon" aria-hidden="true">
@@ -207,12 +236,12 @@
         </p>
         <p>
           <span> 预估费用: </span>
-          <b class="danger"> {{ requestForm.predict_price }}</b>
+          <b class="danger"> {{ defaultPrice }}</b>
         </p>
         <p style="text-align: center; color: #606266; font-size: 14px">
           担心生成后不满意?
           <span class="red" style="font-weight: bold; font-size: 20px">
-            9.9
+            19.9
           </span>
           元生成预览版,满意再付款
         </p>
@@ -294,6 +323,7 @@
 // import webinfo from "@/components/webinfo.vue";
 // import eventBus from "@/utils/eventBus";
 import { mapGetters } from "vuex";
+import { predict_price } from "@/api/paper";
 
 export default {
   name: "additional",
@@ -346,17 +376,28 @@ export default {
           finalPaper: "-",
         },
       ],
+      defaultPrice: "",
       model: false,
     };
   },
   components: {
     // webinfo,
   },
+  watch: {
+    "requestForm.key": {
+      handler(newVal, oldVal) {
+        console.log(`requestForm.key changed from ${oldVal} to ${newVal}`);
+        // 在这里可以执行你希望在 requestForm.key 变化时进行的操作
+        this.getDefaultPrice();
+      },
+      immediate: true,
+    },
+  },
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
     // this.$store.dispatch("paper/setAdditionList", this.supportedProducts);
-    this.fuChange();
+    // this.fuChange();
   },
   created() {
     // eventBus.on("sendOutline", this.addE); // 订阅事件
@@ -368,6 +409,19 @@ export default {
     ...mapGetters(["requestForm", "homeData"]),
   },
   methods: {
+    getDefaultPrice() {
+      // 获取预估价格
+      let data = {
+        key: this.requestForm.key,
+        type: this.requestForm.type,
+        product: this.requestForm.product,
+        word_count: this.requestForm.word_count,
+      };
+      predict_price(data).then((res) => {
+        LLog("res-----------------", res);
+        this.defaultPrice = res.result.predict_price;
+      });
+    },
     getPrice(educationLevel, wordCount) {
       const levelMap = {
         专科: "vocational",
@@ -403,15 +457,15 @@ export default {
       }
     },
     // this.$store.dispatch("paper/setAdditionList", []);
-    fuChange(val) {
-      // let fuList =\
-      const selectedProducts = this.homeData.additional_service.filter(
-        (product) => this.checkboxGroup1.includes(product.id)
-      );
-      this.$log("val", this.checkboxGroup1);
+    // fuChange(val) {
+    //   // let fuList =\
+    //   const selectedProducts = this.homeData.additional_service.filter(
+    //     (product) => this.checkboxGroup1.includes(product.id)
+    //   );
+    //   this.$log("val", this.checkboxGroup1);
 
-      this.$store.dispatch("paper/setAdditionList", selectedProducts);
-    },
+    //   this.$store.dispatch("paper/setAdditionList", selectedProducts);
+    // },
     // 定义方法
     reduceAIGC() {
       if (this.checkboxGroup1.indexOf("7") != -1) {

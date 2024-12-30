@@ -856,7 +856,7 @@ export default {
       marks: {
         5000: "5000字",
         8000: "8000字",
-        10000: " 10000字",
+        10000: "10000字",
         15000: "15000字",
         20000: {
           style: {
@@ -1382,6 +1382,77 @@ export default {
           this.loading = false;
         });
     },
+    // 根据type获取items
+    getItems(type) {
+      //       1. 用户勾选毕业论文，items中的product_id需要把1、6、7、9都传
+      // 2. 用户勾选结课论文，items中的product_id需要把1、6、7、9都传
+      // 3. 用户勾选开题报告，items中的product_id只传6
+      // 4. 用户勾选任务书，items中的product_id只传7
+      // 5. 用户勾选文献综述，items中的product_id只传16
+      // 6. 增加type、product、word_count入参，不需要传字数的就传0
+      let ownItem = [];
+      let itemKai = {
+        id: "6",
+        product_id: "6",
+        intro: "",
+        is_supported: true,
+        name: "开题报告",
+        quantity: 1, // 数量
+        now_Price: 0,
+        price: 4.9,
+      };
+      let itemRen = {
+        id: "7",
+        product_id: "7",
+        quantity: 1, // 数量
+        intro: "",
+        is_supported: true,
+        name: "任务书",
+        now_Price: 0,
+        price: 4.9,
+      };
+      let ownProduct = this.requestForm.product;
+      if (ownProduct == "毕业论文" || ownProduct == "结课论文") {
+        ownItem = [
+          {
+            product_id: "1", //正文id
+            quantity: 1, // 数量
+            price: 149.85, //价格
+          },
+          itemKai,
+          itemRen,
+          {
+            id: "9",
+            product_id: "9",
+            intro: "",
+            quantity: 1, // 数量
+            is_supported: false,
+            name: "调查问卷",
+            now_Price: 0,
+            price: 4.9,
+          },
+        ];
+      }
+      if (ownProduct == "开题报告") {
+        ownItem = [itemKai];
+      }
+      if (ownProduct == "任务书") {
+        ownItem = [itemRen];
+      }
+      if (ownProduct == "文献综述") {
+        ownItem = [
+          {
+            id: "16",
+            product_id: "16",
+            intro: "",
+            name: "文献综述",
+            quantity: 1, // 数量
+          },
+        ];
+      }
+
+      return ownItem;
+    },
     // 生成全文
     generateForm() {
       window.zhuge.track("生成正文", {
@@ -1396,6 +1467,8 @@ export default {
         this.statementDialogVisible = true;
       } else {
         const hasToken = getToken();
+        // 判断item2传参
+        let ownItem = this.getItems();
         if (hasToken) {
           let data = {
             user_id: 1, // 固定传一
@@ -1403,53 +1476,11 @@ export default {
             total_amount: 149.85, // 总价
             pay_type: "PAY_ALL",
             key: this.requestForm.key, // 大纲的key
-            // paper_type: this.requestForm.type,
-            // paper_words: this.paper_words,
-            // key: "eb3a2422-301c-47ba-be1f-7c334e15c655",
-            items: [
-              {
-                product_id: "1", //正文id
-                quantity: 1, // 数量
-                price: 149.85, //价格
-              },
-              {
-                id: "6",
-                product_id: "6",
-                intro: "",
-                is_supported: true,
-                name: "开题报告",
-                quantity: 1, // 数量
-                now_Price: 0,
-                price: 4.9,
-              },
-              {
-                id: "7",
-                product_id: "7",
-                quantity: 1, // 数量
-                intro: "",
-                is_supported: true,
-                name: "任务书",
-                now_Price: 0,
-                price: 4.9,
-              },
-              {
-                id: "9",
-                product_id: "9",
-                intro: "",
-                quantity: 1, // 数量
-                is_supported: false,
-                name: "调查问卷",
-                now_Price: 0,
-                price: 4.9,
-              },
-            ],
+            product: this.requestForm.product, // 大纲的key
+            type: this.requestForm.type, // 大纲的key
+            word_count: this.requestForm.word_count, // 大纲的key
+            items: ownItem,
           };
-          // const totalPrice = data.items.reduce(
-          //   (sum, item) => sum + item.price,
-          //   0
-          // );
-          // data.total_amount = totalPrice;
-
           let priceList = this.homeData.category_list;
           let result = priceList.find(
             (item) => item.name === this.requestForm.type

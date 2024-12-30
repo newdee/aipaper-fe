@@ -80,10 +80,10 @@ let scrollOptions = {
 };
 
 Vue.use(VueScrollTo, scrollOptions);
-import LoggerPlugin from "@/utils/loggerPlugin";
+import logPlugin from "@/utils/loggerPlugin";
 
 // 使用 Logger 插件
-Vue.use(LoggerPlugin);
+Vue.use(logPlugin);
 import TextareaAutosize from "vue-textarea-autosize";
 
 Vue.use(TextareaAutosize);

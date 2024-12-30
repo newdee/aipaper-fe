@@ -1,4 +1,4 @@
-// plugins/loggerPlugin.js
+// plugins/logPlugin.js
 const isProduction = process.env.NODE_ENV === "production";
 
 const logger = {
@@ -17,7 +17,7 @@ const logger = {
   },
 };
 
-const LoggerPlugin = {
+const logPlugin = {
   install(Vue) {
     Vue.prototype.$log = logger.log;
     Vue.prototype.$warn = logger.warn;
@@ -30,4 +30,4 @@ const LoggerPlugin = {
   },
 };
 
-export default LoggerPlugin;
+export default logPlugin;

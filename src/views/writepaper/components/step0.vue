@@ -211,9 +211,35 @@
       width="60%"
     >
       <div>
-        <div>
-          <el-tag>已经生成过的内容</el-tag>
-          <el-tag type="success">最开始选的内容</el-tag>
+        <div style="margin-bottom: 20px">
+          <div
+            v-show="original_item.product"
+            style="display: flex; align-items: center"
+          >
+            <p>第一次所选内容:</p>
+            <el-tag>
+              <span>
+                {{ original_item.product }}
+              </span>
+            </el-tag>
+          </div>
+          <div
+            v-show="generated_items.length > 0"
+            style="display: flex; align-items: center"
+          >
+            <p>已经生成过的内容:</p>
+
+            <el-tag
+              style="margin-left: 8px"
+              v-for="(item, index) in generated_items"
+              :key="'or2i' + index"
+              type="success"
+            >
+              <span>
+                {{ item.product }}
+              </span>
+            </el-tag>
+          </div>
         </div>
         <!-- 论文类型 -->
         <div
@@ -236,7 +262,7 @@
                   :value="item.name"
                 >
                   <!-- <div class="labelBox"> -->
-                  <div :class="getClass(item)">
+                  <div :class="getClass(item.name)">
                     <div class="left">
                       <img
                         v-if="outlineListDialog.product == item.name"
@@ -303,16 +329,16 @@ export default {
   name: "step0",
   data() {
     return {
-      dialogVisible: true,
+      dialogVisible: false,
       // 定义变量
       outlinesList: [], // 大纲列表
       orderList: [], // 订单列表
       downStatus: false,
       outlineListDialog: {
-        product: "毕业论文",
+        product: "",
         word_count: 0,
       },
-      original_item: [],
+      original_item: {},
       generated_items: [],
     };
   },
@@ -340,11 +366,11 @@ export default {
     ...mapGetters(["device", "homeData"]),
   },
   methods: {
-    getClass(item) {
+    getClass(currentName) {
       return {
         labelBox: true, // 始终应用的类
-        firstReduct: item.name == this.highlightName, // 根据条件动态添加
-        alsoReduct: item.name == this.highlightName, // 根据条件动态添加
+        // firstRe: this.original_item.some((item) => item.name === currentName), // 根据条件动态添加
+        // alsoRe: this.generated_items.some((item) => item.name === currentName), // 根据条件动态添加
       };
     },
     requestProductChange(val) {
@@ -357,8 +383,13 @@ export default {
     },
     sendList(row) {
       LLog(row, "ssddd");
-      this.original_item = row.original_item;
-      this.generated_items = row.generated_items;
+      LLog(row.generated_items, "ssddd");
+      this.original_item = row.original_item ? row.original_item : {};
+      this.generated_items = row.generated_items ? row.generated_items : [];
+      LLog(this.generated_items, "this.generated_items");
+
+      let _this = this;
+      _this.dialogVisible = true;
     },
     downLoadLine(row) {
       let requestForm = {
@@ -437,7 +468,8 @@ export default {
             type: row.type,
             field: ["哲学", row.field],
             key: row.key1,
-            word_count: row.word_count,
+            word_count: row.word_count ? row.word_count : 0,
+            product: row.product,
           };
           this.$store.dispatch("app/setRequestForm", requestForm);
           eventBus.emit("setFormData", requestForm); // 发布事件
@@ -804,5 +836,11 @@ export default {
       transform: translateY(3px);
     }
   }
+}
+.firstRe {
+  background: red;
+}
+.alsoRe {
+  background: green;
 }
 </style>

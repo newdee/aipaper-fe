@@ -68,7 +68,6 @@ export default {
       this.offsetTop = this.getElementOffsetTop(element) - 10;
 
       // 初始化位置
-      console.log("元素距离页面顶部的距离加上滚动高度:", this.offsetTop);
       window.addEventListener("scroll", this.handleScroll);
     });
   },
@@ -100,8 +99,6 @@ export default {
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
-      console.log("dddd", this.outlineBottom);
-      console.log("dd2222222222dd", scrollTop);
 
       // 判断是否需要固定
       if (scrollTop > this.offsetTop && scrollTop < this.outlineBottom) {

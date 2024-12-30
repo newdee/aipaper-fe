@@ -58,6 +58,13 @@ export function bd_convert(params) {
     params: params,
   });
 }
+export function predict_price(params) {
+  return request({
+    url: baseUrl + "/api/ai-paper/paper/predict_price",
+    method: "get",
+    params: params,
+  });
+}
 export function pre_create(data) {
   return request({
     url: baseUrl + "/api/ai-paper/pass/pre_create",
