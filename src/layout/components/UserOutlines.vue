@@ -25,24 +25,39 @@
           <div>
             <div class="orderTitle">{{ orderObj.title }}</div>
             <div class="orderText rowBetween handleRow">
-              <div class="left">大纲状态：{{ orderObj.status }}</div>
+              <div class="left">
+                <div>大纲状态：{{ orderObj.status }}</div>
+                <div>大纲类型：{{ orderObj.product }}</div>
+              </div>
               <div class="right">
-                <el-button
-                  @click="downLoadLine(orderObj)"
-                  icon="el-icon-download"
-                  :disabled="orderObj.status != '生成成功'"
-                  type="text"
-                >
-                  付费下载
-                </el-button>
-                <el-button
-                  @click="jumpStep2(orderObj)"
-                  icon="el-icon-view"
-                  :disabled="orderObj.status != '生成成功'"
-                  type="text"
-                >
-                  查看大纲
-                </el-button>
+                <div>
+                  <el-button
+                    @click="downLoadLine(orderObj)"
+                    icon="el-icon-download"
+                    :disabled="orderObj.status != '生成成功'"
+                    type="text"
+                  >
+                    付费下载
+                  </el-button>
+                  <el-button
+                    @click="jumpStep2(orderObj)"
+                    icon="el-icon-view"
+                    :disabled="orderObj.status != '生成成功'"
+                    type="text"
+                  >
+                    查看大纲
+                  </el-button>
+                </div>
+                <div>
+                  <el-button
+                    @click="downLoadLine(orderObj)"
+                    icon="el-icon-edit"
+                    :disabled="orderObj.status != '生成成功'"
+                    type="text"
+                  >
+                    根据此大纲继续生成正文,任务书等
+                  </el-button>
+                </div>
               </div>
             </div>
           </div>
@@ -289,6 +304,9 @@ export default {
 
 .rowBetween .right {
   color: #409eff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .orderNum.rowBetween div {

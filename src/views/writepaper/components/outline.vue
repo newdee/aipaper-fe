@@ -91,7 +91,7 @@
         </div>
         <!-- 论文类型 -->
         <div class="selectLang formItem leftType">
-          <p class="formItemLabel">论文类型</p>
+          <p class="formItemLabel">学业类型</p>
           <div class="formItemCon">
             <el-radio-group
               @change="paperTypeChange"
@@ -150,6 +150,74 @@
           </div>
         </div>
       </div>
+      <!-- 论文类型 -->
+      <div
+        :class="[
+          'firstItem',
+          'secondItem',
+          device == 'mobile' ? 'mobilebox' : '',
+        ]"
+      >
+        <div class="selectLang formItem">
+          <p class="formItemLabel">论文类型</p>
+          <div class="formItemCon">
+            <el-radio-group
+              @change="requestProductChange"
+              v-model="requestForm.product"
+            >
+              <el-radio
+                v-for="item in homeData.category_product_list"
+                :key="item.name"
+                :label="item.name"
+                :value="item.name"
+              >
+                <!-- <el-tooltip class="item" effect="dark" placement="top"> -->
+                <template slot="content">
+                  <p style="width: 200px; line-height: 20px">
+                    {{ typeTips[item.name] }}
+                  </p>
+                </template>
+                <div class="labelBox">
+                  <div class="left">
+                    <!-- <svg class="icon svg-icon" aria-hidden="true">
+                    <use xlink:href="#icon-tubiaozoushitu"></use>
+                  </svg> -->
+                    <img
+                      v-if="requestForm.product == item.name"
+                      class="home-icon"
+                      src="@/assets/images/bank-white.png"
+                      alt=""
+                    />
+                    <img
+                      v-else
+                      class="home-icon"
+                      src="@/assets/images/bank-dark.png"
+                      alt=""
+                    />
+                    {{ item.name }}
+                    <span v-show="item.description"
+                      >({{ item.description }})</span
+                    >
+                  </div>
+                  <div class="right">
+                    <svg
+                      v-if="requestForm.product == item.name"
+                      class="icon svg-icon"
+                      aria-hidden="true"
+                    >
+                      <use xlink:href="#icon-duigou-cu"></use>
+                    </svg>
+                    <svg v-else class="icon svg-icon" aria-hidden="true">
+                      <use xlink:href="#icon-fangkuang"></use>
+                    </svg>
+                  </div>
+                </div>
+                <!-- </el-tooltip> -->
+              </el-radio>
+            </el-radio-group>
+          </div>
+        </div>
+      </div>
       <div
         :class="[
           'firstItem',
@@ -180,22 +248,6 @@
                   </template>
                   <div class="labelBox">
                     <div class="left">
-                      <!-- <svg class="icon svg-icon" aria-hidden="true">
-                <el-tooltip
-                  class="item custom-tooltip"
-                  effect="dark"
-                  placement="top"
-                >
-                  <template slot="content">
-                    <p style="width: 200px; line-height: 20px">
-                      {{ item.description }}
-                    </p>
-                  </template>
-                  <div class="labelBox">
-                    <div class="left">
-                       <svg class="icon svg-icon" aria-hidden="true">
-                    <use xlink:href="#icon-tubiaozoushitu"></use>
-                  </svg> -->
                       <img
                         v-if="requestForm.paper_level == item.name"
                         class="home-icon"
@@ -230,7 +282,15 @@
           </div>
         </div>
         <!-- 论文字数 -->
-        <div class="selectLang formItem wordItem firstItem">
+        <div
+          v-if="
+            !(
+              requestForm.product == '开题报告' ||
+              requestForm.product == '任务书'
+            )
+          "
+          class="selectLang formItem wordItem firstItem"
+        >
           <p class="formItemLabel">论文字数</p>
           <div class="formItemCon">
             <el-slider
@@ -295,6 +355,7 @@ export default {
         threeCon: false,
         language: "中文",
         type: "本科",
+        product: "毕业论文",
         paper_level: "初级",
         field: ["哲学", "哲学类"],
         key: "",
@@ -425,6 +486,14 @@ export default {
       });
       this.$refs.exampleDia.showDia();
     },
+    requestProductChange(val) {
+      if (
+        this.requestForm.product == "开题报告" ||
+        this.requestForm.product == "任务书"
+      ) {
+        this.requestForm.word_count = 0;
+      }
+    },
     paperTypeChange(val) {
       let selectItem = this.homeData.category_list.find(
         (item) => item.name == val
@@ -492,6 +561,7 @@ export default {
           language: this.requestForm.language,
           field: this.requestForm.field[1],
           type: this.requestForm.type,
+          product: this.requestForm.product,
           paper_level: this.requestForm.paper_level == "初级" ? 0 : 3,
           word_count: this.requestForm.word_count,
         };
@@ -500,7 +570,8 @@ export default {
             window.zhuge.track("生成大纲", {
               语言: this.requestForm.language,
               科目: this.requestForm.field[1],
-              论文类型: this.requestForm.type,
+              学业类型: this.requestForm.type,
+              论文类型: this.requestForm.product,
               论文水平: this.requestForm.paper_level,
               论文字数: this.requestForm.word_count,
             });

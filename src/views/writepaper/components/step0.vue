@@ -12,7 +12,21 @@
         >
           <div class="order">
             <div>
-              <div class="orderTitle">{{ orderObj.title }}</div>
+              <div class="orderTitle stpe0Outline">
+                <div class="titleOrder">
+                  {{ orderObj.title }}
+                </div>
+                <div style="width: 165px; display: inline-block">
+                  <el-button
+                    @click="sendList(orderObj)"
+                    icon="el-icon-edit"
+                    :disabled="orderObj.status != '生成成功'"
+                    type="text"
+                  >
+                    继续生成正文,任务书等
+                  </el-button>
+                </div>
+              </div>
               <div class="orderText rowBetween handleRow">
                 <div class="left">大纲状态：{{ orderObj.status }}</div>
                 <div class="right">
@@ -190,6 +204,84 @@
         </div>
       </div>
     </div>
+    <!-- 弹窗 -->
+    <el-dialog
+      title="选择生成的论文类型"
+      :visible.sync="dialogVisible"
+      width="60%"
+    >
+      <div>
+        <div>
+          <el-tag>已经生成过的内容</el-tag>
+          <el-tag type="success">最开始选的内容</el-tag>
+        </div>
+        <!-- 论文类型 -->
+        <div
+          :class="[
+            'firstItem',
+            'secondItem',
+            device == 'mobile' ? 'mobilebox' : '',
+          ]"
+        >
+          <div class="selectLang formItem">
+            <div class="formItemCon">
+              <el-radio-group
+                @change="requestProductChange"
+                v-model="outlineListDialog.product"
+              >
+                <el-radio
+                  v-for="item in homeData.category_product_list"
+                  :key="item.name"
+                  :label="item.name"
+                  :value="item.name"
+                >
+                  <!-- <div class="labelBox"> -->
+                  <div :class="getClass(item)">
+                    <div class="left">
+                      <img
+                        v-if="outlineListDialog.product == item.name"
+                        class="home-icon"
+                        src="@/assets/images/bank-white.png"
+                        alt=""
+                      />
+                      <img
+                        v-else
+                        class="home-icon"
+                        src="@/assets/images/bank-dark.png"
+                        alt=""
+                      />
+                      {{ item.name }}
+                      <span v-show="item.description"
+                        >({{ item.description }})</span
+                      >
+                    </div>
+                    <div class="right">
+                      <svg
+                        v-if="outlineListDialog.product == item.name"
+                        class="icon svg-icon"
+                        aria-hidden="true"
+                      >
+                        <use xlink:href="#icon-duigou-cu"></use>
+                      </svg>
+                      <svg v-else class="icon svg-icon" aria-hidden="true">
+                        <use xlink:href="#icon-fangkuang"></use>
+                      </svg>
+                    </div>
+                  </div>
+                  <!-- </el-tooltip> -->
+                </el-radio>
+              </el-radio-group>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -211,10 +303,17 @@ export default {
   name: "step0",
   data() {
     return {
+      dialogVisible: true,
       // 定义变量
       outlinesList: [], // 大纲列表
       orderList: [], // 订单列表
       downStatus: false,
+      outlineListDialog: {
+        product: "毕业论文",
+        word_count: 0,
+      },
+      original_item: [],
+      generated_items: [],
     };
   },
   components: {
@@ -238,9 +337,29 @@ export default {
   },
   computed: {
     // 计算属性
-    ...mapGetters(["device"]),
+    ...mapGetters(["device", "homeData"]),
   },
   methods: {
+    getClass(item) {
+      return {
+        labelBox: true, // 始终应用的类
+        firstReduct: item.name == this.highlightName, // 根据条件动态添加
+        alsoReduct: item.name == this.highlightName, // 根据条件动态添加
+      };
+    },
+    requestProductChange(val) {
+      if (
+        this.outlineListDialog.product == "开题报告" ||
+        this.outlineListDialog.product == "任务书"
+      ) {
+        this.outlineListDialog.word_count = 0;
+      }
+    },
+    sendList(row) {
+      LLog(row, "ssddd");
+      this.original_item = row.original_item;
+      this.generated_items = row.generated_items;
+    },
     downLoadLine(row) {
       let requestForm = {
         title: row.title,
@@ -448,8 +567,7 @@ export default {
 // @import "@/styles/mediaMain.scss";
 // @import './index.scss';
 .recentListBox {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* 两列，每列占用相等的空间 */
+  display: flex;
   grid-gap: 10px; /* 格子间隔 */
   .outlineListClass {
     margin-bottom: 0px;
@@ -457,6 +575,7 @@ export default {
 }
 .outlineListClass {
   margin-bottom: 10px;
+  width: 50%;
   .ordersList {
     --border: 1px solid #0000001f;
     --border-bottom: 1px solid #0000001f;
@@ -552,7 +671,12 @@ export default {
     line-height: 1.5em;
     min-height: 1.5em;
   }
-
+  .stpe0Outline {
+    display: flex;
+    height: 30px;
+    align-items: center;
+    justify-content: space-between;
+  }
   .handleRow:not(:last-child) {
     border-bottom: var(--border-bottom);
     margin-bottom: 10px;
@@ -582,5 +706,103 @@ export default {
 }
 .orderTextImport {
   margin-bottom: 0px !important;
+}
+.orderText {
+  height: 28px;
+}
+.titleOrder {
+  display: inline-block; /* 确保元素是块级或具有块级特性 */
+  width: calc(100% - 180px); /* 设置固定宽度 */
+  overflow: hidden; /* 隐藏超出部分 */
+  white-space: nowrap; /* 禁止换行 */
+  text-overflow: ellipsis; /* 溢出时显示省略号 */
+}
+.firstItem {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  .formItem {
+    margin-top: 0px;
+  }
+  .formItemCon {
+    width: 100% !important;
+    & > div {
+      width: 100%;
+    }
+  }
+  .firstItem {
+    flex-grow: 1;
+    padding-right: 40px;
+  }
+}
+.mobile {
+  .formItem {
+    margin-top: 10px !important;
+
+    .formItemLabel {
+      font-size: 16px;
+    }
+
+    .formItemCon {
+      margin-top: 10px;
+
+      &::v-deep .el-radio {
+        margin-right: 10px;
+        margin-bottom: 10px;
+        height: 30px;
+        line-height: 28px;
+      }
+
+      &.phoneFlex {
+        padding-right: 20px;
+      }
+    }
+  }
+}
+::v-deep label.el-radio {
+  width: auto;
+  height: 40px;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #cccccc;
+  line-height: 40px;
+  padding-left: 14px;
+  padding-right: 16px;
+  margin-bottom: 22px;
+
+  &.is-checked {
+    background: #3355ff;
+    border-color: #3355ff;
+  }
+
+  .el-radio__input.is-checked + .el-radio__label {
+    color: #fff !important;
+  }
+
+  .el-radio__input {
+    display: none;
+  }
+
+  .el-radio__label {
+    padding-left: 0px;
+  }
+}
+// 重置论文类型单选样式
+.labelBox {
+  font-size: 16px;
+
+  > div {
+    display: inline-block;
+
+    &.right {
+      padding-left: 5px;
+    }
+
+    .home-icon {
+      width: 18px;
+      height: 18px;
+      transform: translateY(3px);
+    }
+  }
 }
 </style>
