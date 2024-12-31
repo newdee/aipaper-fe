@@ -449,6 +449,9 @@ export default {
         key: this.currentOrder.key,
         items: this.currentOrder.items,
         coupon_code: this.coupon_code,
+        product: this.currentOrder.product, // 大纲的key
+        type: this.currentOrder.type, // 大纲的key
+        word_count: this.currentOrder.word_count, // 大纲的key
       };
       getOrder(data)
         .then((res) => {
