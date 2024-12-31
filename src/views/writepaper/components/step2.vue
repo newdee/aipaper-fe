@@ -1503,6 +1503,7 @@ export default {
                 pay_type: data.pay_type,
                 payment_method: data.payment_method,
                 key: data.key,
+                order_type: res.result.order_type, // 判断是否能切换
                 items: data.items,
                 discounted_price: res.result.discounted_price, // 优惠金额
                 is_discount: res.result.is_discount, // 优惠金额

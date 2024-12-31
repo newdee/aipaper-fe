@@ -49,14 +49,14 @@
                   </el-button>
                 </div>
                 <div>
-                  <el-button
+                  <!-- <el-button
                     @click="downLoadLine(orderObj)"
                     icon="el-icon-edit"
                     :disabled="orderObj.status != '生成成功'"
                     type="text"
                   >
                     根据此大纲继续生成正文,任务书等
-                  </el-button>
+                  </el-button> -->
                 </div>
               </div>
             </div>

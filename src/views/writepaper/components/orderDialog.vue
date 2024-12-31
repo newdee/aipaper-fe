@@ -248,11 +248,11 @@ export default {
               "PAPER_FINAL_STAGES",
             ];
             // 请求成功, 激活tab3
-            if (wordTypeList.includes(order.order_type)) {
+            if (wordTypeList.includes(orderData.order_type)) {
               // word
               this.$store.dispatch("paper/setPollingStatus", false);
               // 保存数据， 用于step3下载
-              this.$store.dispatch("app/toggleCurrentOrder", order);
+              this.$store.dispatch("app/toggleCurrentOrder", orderData);
               this.ownPayStatus = false;
               // 下载word
               paperPack({ out_trade_no: order.out_trade_no }).then((res) => {
