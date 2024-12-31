@@ -487,11 +487,21 @@ export default {
       this.$refs.exampleDia.showDia();
     },
     requestProductChange(val) {
+      console.log("name----", val);
       if (
         this.requestForm.product == "开题报告" ||
         this.requestForm.product == "任务书"
       ) {
         this.requestForm.word_count = 0;
+      } else if (val == "文献综述" || val == "结课论文") {
+        let item = this.homeData.category_product_list.find(
+          (item) => item.name == val
+        );
+        this.requestForm.word_count = item.min_word_num;
+        this.minCount = item.min_word_num;
+        this.maxCount = item.max_word_num;
+      } else {
+        this.paperTypeChange(this.requestForm.type);
       }
     },
     paperTypeChange(val) {
@@ -499,19 +509,20 @@ export default {
         (item) => item.name == val
       );
       this.$log("论文类型", selectItem);
-      selectItem.min_word_num && (this.minCount = selectItem.min_word_num);
-      selectItem.max_word_num && (this.maxCount = selectItem.max_word_num);
-      if (val == "专科") {
-        this.requestForm.word_count = 8000;
-      }
-      if (val == "本科") {
-        this.requestForm.word_count = 12000;
-      }
-      if (val == "研究生") {
-        this.requestForm.word_count = 20000;
-      }
-      if (val == "结课论文") {
-        this.requestForm.word_count = 3000;
+
+      if (this.requestForm.product == "毕业论文") {
+        if (val == "专科") {
+          this.requestForm.word_count = 8000;
+        }
+        if (val == "本科") {
+          this.requestForm.word_count = 12000;
+        }
+        if (val == "研究生") {
+          this.requestForm.word_count = 20000;
+        }
+        if (val == "结课论文") {
+          this.requestForm.word_count = 3000;
+        }
       }
     },
     setFormData(data) {

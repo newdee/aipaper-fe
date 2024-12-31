@@ -257,12 +257,7 @@ export default {
         this.$store.dispatch("paper/setPollingStatus", true);
         this.orderId = this.requestKey;
         this.getDetail();
-        if (this.currentOrder.payment_status) {
-          this.$log(this.currentOrder.payment_status);
-          this.orderPayDisabled = true;
-        } else {
-          this.orderPayDisabled = false;
-        }
+        this.setCanDis();
       },
     },
   },
@@ -292,6 +287,28 @@ export default {
   },
 
   methods: {
+    setCanDis() {
+      this.$log(this.currentOrder);
+
+      if (this.currentOrder.payment_status) {
+        this.$log(this.currentOrder.payment_status);
+        this.orderPayDisabled = true;
+      } else {
+        this.orderPayDisabled = false;
+      }
+      // 判断是否是word的几个内容
+      let wordTypeList = [
+        "EXTRA_PROPOSAL",
+        "EXTRA_TASK_ASSIGNMENT",
+        "PAPER_FINAL_STAGES",
+      ];
+      // 请求成功, 激活tab3
+      if (wordTypeList.includes(order.order_type)) {
+        this.orderPayDisabled = true;
+      } else {
+        this.orderPayDisabled = false;
+      }
+    },
     useCoupon() {
       if (!this.coupon_code) {
         this.$message({

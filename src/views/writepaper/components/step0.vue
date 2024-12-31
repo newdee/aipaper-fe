@@ -303,9 +303,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="submitSelect">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -340,6 +338,7 @@ export default {
       },
       original_item: {},
       generated_items: [],
+      currentDialogRow: {},
     };
   },
   components: {
@@ -366,6 +365,18 @@ export default {
     ...mapGetters(["device", "homeData"]),
   },
   methods: {
+    submitSelect() {
+      if (!this.outlineListDialog.product) {
+        this.$message({
+          type: "warning",
+          message: "请选择您要生成的类型",
+        });
+        return false;
+      }
+
+      this.currentDialogRow.product = this.outlineListDialog.product;
+      this.jumpStep2(this.currentDialogRow);
+    },
     getClass(currentName) {
       return {
         labelBox: true, // 始终应用的类
@@ -383,6 +394,7 @@ export default {
     },
     sendList(row) {
       LLog(row, "ssddd");
+      this.currentDialogRow = row;
       LLog(row.generated_items, "ssddd");
       this.original_item = row.original_item ? row.original_item : {};
       this.generated_items = row.generated_items ? row.generated_items : [];
@@ -445,6 +457,7 @@ export default {
       }
     }, 300),
     jumpStep2(row) {
+      this.dialogVisible = false;
       this.$log("row", row);
       zhuge.track(`用户查看大纲`, {
         大纲标题: row.title,

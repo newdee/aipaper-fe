@@ -19,7 +19,7 @@
             payStatusObject[payTitleStatus]
           }}</span>
         </p>
-        <p>{{ currentOrder }}</p>
+        <!-- <button @click="clickffff">sssdd</button> -->
         <!-- 订单支付成功展示页面 -->
         <div
           v-if="
@@ -59,7 +59,7 @@
 // import { sms } from "@/api/login";
 // import webinfo from "@/components/webinfo.vue";
 import eventBus from "@/utils/eventBus";
-import { getOrder, orderDetailById } from "@/api/user";
+import { paperPack, orderDetailById } from "@/api/user";
 import { mapGetters } from "vuex";
 
 export default {
@@ -143,6 +143,9 @@ export default {
   },
 
   methods: {
+    clickffff() {
+      console.log(this.currentOrder);
+    },
     handleClose(done) {
       if (
         this.payTitleStatus == "TRADE_SUCCESS" ||
@@ -219,7 +222,7 @@ export default {
             }
           }
           // 判断论文生成状态
-          const { order_item_response, order } = res.result;
+          const { order_item_response, order, outline } = res.result;
           let caseStatus = true;
           if (order_item_response.length > 0) {
             this.$log("case", order_item_response[0].case.paper_case.stage);
@@ -239,20 +242,53 @@ export default {
               _this.getList(data, delay, maxRetries, currentRetry);
             }, delay);
           } else {
+            let wordTypeList = [
+              "EXTRA_PROPOSAL",
+              "EXTRA_TASK_ASSIGNMENT",
+              "PAPER_FINAL_STAGES",
+            ];
             // 请求成功, 激活tab3
+            if (wordTypeList.includes(order.order_type)) {
+              // word
+              this.$store.dispatch("paper/setPollingStatus", false);
+              // 保存数据， 用于step3下载
+              this.$store.dispatch("app/toggleCurrentOrder", order);
+              this.ownPayStatus = false;
+              // 下载word
+              paperPack({ out_trade_no: order.out_trade_no }).then((res) => {
+                // window.open(res.result.zip_url, "_blank");
+                // Create a temporary link element
+                const link = document.createElement("a");
+                link.href = res.result.zip_url;
 
+                // Set the download attribute to suggest a filename
+                link.download = outline.title + ".zip"; // Change 'filename.zip' to the desired file name
+
+                // Append the link to the body
+                document.body.appendChild(link);
+
+                // Programmatically click the link to trigger the download
+                link.click();
+
+                // Remove the link from the document
+                document.body.removeChild(link);
+              });
+              // 结束
+            } else {
+              // pdf
+              let pdfUrl2 = order_item_response[0].case.file_urls.pdf;
+              let realUrl = pdfUrl2 ? pdfUrl2 : "";
+              this.$log("realUrl", realUrl);
+
+              // 满足停止轮询的条件，更新数据并结束轮询
+              this.listData = order_item_response; // 假设这里是你想更新的数据
+              this.$store.dispatch("paper/setPollingStatus", false);
+              // 保存数据， 用于step3下载
+              this.$store.dispatch("app/toggleCurrentOrder", order);
+              this.ownPayStatus = false;
+              eventBus.emit("pdfSuccessClick", realUrl); // 发布事件
+            }
             // let pdfUrl = "https://file.mixpaper.cn/pdf/third_output.pdf";
-            let pdfUrl2 = order_item_response[0].case.file_urls.pdf;
-            let realUrl = pdfUrl2 ? pdfUrl2 : "";
-            this.$log("realUrl", realUrl);
-
-            // 满足停止轮询的条件，更新数据并结束轮询
-            this.listData = order_item_response; // 假设这里是你想更新的数据
-            this.$store.dispatch("paper/setPollingStatus", false);
-            // 保存数据， 用于step3下载
-            this.$store.dispatch("app/toggleCurrentOrder", order);
-            this.ownPayStatus = false;
-            eventBus.emit("pdfSuccessClick", realUrl); // 发布事件
 
             // this.$nextTick(() => {
             //   this.$store.dispatch("app/togglePDFUrl", realUrl);

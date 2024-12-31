@@ -5,7 +5,7 @@
       <div class="markBox">
         <img src="@/assets/images/mark.png" alt="" />
       </div>
-      {{ requestForm }}
+      <!-- {{ requestForm }} -->
       <p class="fuTitle">继续生成全文,您将获得以下权益</p>
       <div class="maintxt">
         <div class="borderBox">
@@ -27,25 +27,9 @@
               {{ requestForm.field ? requestForm.field[1] : "暂无" }}
               <span>含在线编辑</span>
             </p> -->
-            <p
-              v-if="
-                requestForm.product == '毕业论文' ||
-                requestForm.product ==
-                  '结课论文                                                       '
-              "
-              class="alertTxt"
-            >
-              真实数据来源
-            </p>
-            <p v-else class="alertTxt">{{ requestForm.product }}</p>
-            <p
-              v-if="
-                requestForm.product == '毕业论文' ||
-                requestForm.product ==
-                  '结课论文                                                       '
-              "
-              class="include"
-            >
+            <p v-if="wordShow" class="alertTxt">真实数据来源</p>
+            <p v-if="!wordShow" class="alertTxt">{{ requestForm.product }}</p>
+            <p v-if="wordShow" class="include">
               摘要 | 大纲目录 | 正文 | 参考文献
             </p>
             <p v-else class="include">{{ requestForm.product }}</p>
@@ -238,7 +222,10 @@
           <span> 预估费用: </span>
           <b class="danger"> {{ defaultPrice }}</b>
         </p>
-        <p style="text-align: center; color: #606266; font-size: 14px">
+        <p
+          v-if="wordShow"
+          style="text-align: center; color: #606266; font-size: 14px"
+        >
           担心生成后不满意?
           <span class="red" style="font-weight: bold; font-size: 20px">
             19.9
@@ -247,7 +234,7 @@
         </p>
       </div>
 
-      <div style="padding-bottom: 40px">
+      <div v-if="wordShow" style="padding-bottom: 40px">
         <el-popover placement="top" width="800" trigger="hover">
           <el-table
             header-row-class-name="bgTable"
@@ -407,6 +394,12 @@ export default {
   },
   computed: {
     ...mapGetters(["requestForm", "homeData"]),
+    wordShow() {
+      return (
+        this.requestForm.product == "毕业论文" ||
+        this.requestForm.product == "结课论文"
+      );
+    },
   },
   methods: {
     getDefaultPrice() {
