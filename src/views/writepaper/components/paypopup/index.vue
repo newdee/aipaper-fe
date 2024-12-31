@@ -303,7 +303,7 @@ export default {
         "PAPER_FINAL_STAGES",
       ];
       // 请求成功, 激活tab3
-      if (wordTypeList.includes(order.order_type)) {
+      if (wordTypeList.includes(this.currentOrder.order_type)) {
         this.orderPayDisabled = true;
       } else {
         this.orderPayDisabled = false;
