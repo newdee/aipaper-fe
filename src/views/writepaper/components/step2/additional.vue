@@ -371,15 +371,32 @@ export default {
     // webinfo,
   },
   watch: {
-    "requestForm.key": {
+    requestForm: {
       handler(newVal, oldVal) {
-        console.log(`requestForm.key changed from ${oldVal} to ${newVal}`);
-        // 在这里可以执行你希望在 requestForm.key 变化时进行的操作
-        this.getDefaultPrice();
+        // 检查是否为初始化调用
+        if (oldVal === undefined) {
+          console.log("初始化调用");
+          this.getDefaultPrice(); // 如果需要在初始化时调用
+          return false;
+        }
+        // 检查具体的字段是否发生变化
+        if (
+          newVal.key !== oldVal.key ||
+          newVal.word_count !== oldVal.word_count ||
+          newVal.product !== oldVal.product
+        ) {
+          console.log(
+            "requestForm 的 key, word_count, 或 product 之一发生变化"
+          );
+          // 在这里执行你的操作
+          this.getDefaultPrice();
+        }
       },
+      deep: true, // 启用深度监听
       immediate: true,
     },
   },
+
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
     // 页面初始化
