@@ -511,6 +511,8 @@ export default {
       this.$log("论文类型", selectItem);
 
       if (this.requestForm.product == "毕业论文") {
+        selectItem.min_word_num && (this.minCount = selectItem.min_word_num);
+        selectItem.max_word_num && (this.maxCount = selectItem.max_word_num);
         if (val == "专科") {
           this.requestForm.word_count = 8000;
         }

@@ -245,7 +245,7 @@ export default {
             let wordTypeList = [
               "EXTRA_PROPOSAL",
               "EXTRA_TASK_ASSIGNMENT",
-              "PAPER_FINAL_STAGES",
+              "EXTRA_JOURNAL_REVIEWED",
             ];
             // 请求成功, 激活tab3
             if (wordTypeList.includes(orderData.order_type)) {
