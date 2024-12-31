@@ -95,11 +95,20 @@
               :key="'case3' + index"
             >
               <div class="left">
-                生成状态：
-                {{
-                  orderObj.order_item_response[0].case.paper_case.stage
-                    | orderStatusFormatter
-                }}
+                <span>
+                  生成状态：
+                  {{
+                    orderObj.order_item_response[0].case.paper_case.stage
+                      | orderStatusFormatter
+                  }}
+                </span>
+                <span style="margin-left: 10px">
+                  论文类型:{{
+                    orderObj.order.order_type
+                      ? orderTypes[orderObj.order.order_type]
+                      : "正文"
+                  }}
+                </span>
               </div>
               <div class="right">
                 <el-button
@@ -158,7 +167,16 @@
               class="orderText rowBetween handleRow"
               :key="'case3' + index"
             >
-              <div class="left">生成状态：未生成</div>
+              <div class="left">
+                生成状态：未生成
+                <span style="margin-left: 10px">
+                  论文类型:{{
+                    orderObj.order.order_type
+                      ? orderTypes[orderObj.order.order_type]
+                      : "正文"
+                  }}
+                </span>
+              </div>
               <div class="right">
                 <el-button
                   size="mini"
@@ -225,7 +243,7 @@
           </div>
           <div
             v-show="generated_items.length > 0"
-            style="display: flex; align-items: center"
+            style="display: flex; align-items: center; margin-top: 8px"
           >
             <p>已经生成过的内容:</p>
 
@@ -300,6 +318,28 @@
             </div>
           </div>
         </div>
+        <!-- 字数 -->
+        <div
+          v-if="
+            !(
+              outlineListDialog.product == '开题报告' ||
+              outlineListDialog.product == '任务书'
+            )
+          "
+        >
+          <p class="formItemLabel">论文字数</p>
+          <div class="formItemCon">
+            <el-slider
+              style="margin: 50px"
+              v-model="outlineListDialog.word_count"
+              :min="minCount"
+              :max="maxCount"
+              :marks="marks"
+              :step="1000"
+            >
+            </el-slider>
+          </div>
+        </div>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
@@ -322,11 +362,14 @@ import {
 } from "@/api/user";
 import { throttle } from "lodash";
 import { getToken } from "@/utils/auth"; //
+import OrderType from "@/utils/orderTypes.js";
 
 export default {
   name: "step0",
   data() {
     return {
+      orderTypes: OrderType,
+
       dialogVisible: false,
       // 定义变量
       outlinesList: [], // 大纲列表
@@ -336,9 +379,31 @@ export default {
         product: "",
         word_count: 0,
       },
+      minCount: 3000,
+      maxCount: 30000,
       original_item: {},
       generated_items: [],
       currentDialogRow: {},
+      marks: {
+        3000: "3千",
+        5000: "5千",
+        8000: "8千",
+        10000: "10000",
+        15000: "15000",
+        20000: {
+          style: {
+            color: "#1989FA",
+          },
+          label: this.$createElement("strong", "两万"),
+        },
+
+        30000: {
+          style: {
+            color: "#E6A23C",
+          },
+          label: this.$createElement("strong", "30000"),
+        },
+      },
     };
   },
   components: {
@@ -362,7 +427,7 @@ export default {
   },
   computed: {
     // 计算属性
-    ...mapGetters(["device", "homeData"]),
+    ...mapGetters(["device", "homeData", "requestForm"]),
   },
   methods: {
     submitSelect() {
@@ -375,6 +440,7 @@ export default {
       }
 
       this.currentDialogRow.product = this.outlineListDialog.product;
+      this.currentDialogRow.word_count = this.outlineListDialog.word_count;
       this.jumpStep2(this.currentDialogRow);
     },
     getClass(currentName) {
@@ -390,6 +456,20 @@ export default {
         this.outlineListDialog.product == "任务书"
       ) {
         this.outlineListDialog.word_count = 0;
+      } else if (val == "文献综述" || val == "结课论文") {
+        let item = this.homeData.category_product_list.find(
+          (item) => item.name == val
+        );
+        this.outlineListDialog.word_count = item.min_word_num;
+        this.minCount = item.min_word_num;
+        this.maxCount = item.max_word_num;
+      } else {
+        let selectItem = this.homeData.category_list.find(
+          (item) => item.name == this.currentDialogRow.type
+        );
+        console.log("addd");
+        selectItem.max_word_num && (this.maxCount = selectItem.max_word_num);
+        selectItem.max_word_num && (this.maxCount = selectItem.max_word_num);
       }
     },
     sendList(row) {

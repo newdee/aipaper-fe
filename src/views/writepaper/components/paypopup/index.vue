@@ -295,19 +295,19 @@ export default {
         this.orderPayDisabled = true;
       } else {
         this.orderPayDisabled = false;
+        let wordTypeList = [
+          "EXTRA_PROPOSAL",
+          "EXTRA_TASK_ASSIGNMENT",
+          "EXTRA_JOURNAL_REVIEWED",
+        ];
+        // 请求成功, 激活tab3
+        if (wordTypeList.includes(this.currentOrder.order_type)) {
+          this.orderPayDisabled = true;
+        } else {
+          this.orderPayDisabled = false;
+        }
       }
       // 判断是否是word的几个内容
-      let wordTypeList = [
-        "EXTRA_PROPOSAL",
-        "EXTRA_TASK_ASSIGNMENT",
-        "EXTRA_JOURNAL_REVIEWED",
-      ];
-      // 请求成功, 激活tab3
-      if (wordTypeList.includes(this.currentOrder.order_type)) {
-        this.orderPayDisabled = true;
-      } else {
-        this.orderPayDisabled = false;
-      }
     },
     useCoupon() {
       if (!this.coupon_code) {
