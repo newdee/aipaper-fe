@@ -185,14 +185,13 @@ export default {
     getList() {
       let data = { ...this.searchForm };
       coupon_list(data).then((res) => {
-        LLog("coupon_list", res);
         this.tableData = res.result.coupon_list;
         this.total = res.result.total;
       });
     },
     handleSearch() {
       // 在这里添加搜索逻辑，使用 searchForm 中的字段进行请求
-      console.log("搜索条件", this.searchForm);
+      Ming("搜索条件", this.searchForm);
 
       // 示例：调用 API 进行搜索
       // this.fetchData(this.searchForm).then(response => {
@@ -218,24 +217,19 @@ export default {
 
     toChildPage() {
       // 跳转到子集详情页面
-      console.log("跳转到子集详情页面");
     },
 
     viewUser(row) {
       // 查看用户逻辑
-      console.log("查看用户", row);
     },
     editUser(row) {
       // 编辑用户逻辑
-      console.log("编辑用户", row);
     },
     deleteUser(row) {
       // 删除用户逻辑
-      console.log("删除用户", row);
     },
     handlePageChange(page) {
       // 分页改变逻辑
-      console.log("当前页:", page);
       this.searchForm.page_num = page;
       this.getList();
     },

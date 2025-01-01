@@ -85,7 +85,8 @@ import logPlugin from "@/utils/loggerPlugin";
 // 使用 Logger 插件
 Vue.use(logPlugin);
 import TextareaAutosize from "vue-textarea-autosize";
-
+import orderTypeMixin from "@/mixins/orderTypeMixin";
+Vue.mixin(orderTypeMixin);
 Vue.use(TextareaAutosize);
 new Vue({
   el: "#app",

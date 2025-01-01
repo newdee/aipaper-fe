@@ -214,9 +214,6 @@ export default {
     // this.getSubdomain();
     const url = window.location.href;
     this.getBdVid(url);
-    // console.log("getDomain", getDomain());
-    // console.log("location", window.location);
-    // console.log("hostname", window.location.hostname);
   },
   methods: {
     getBdVid(url) {
@@ -228,7 +225,6 @@ export default {
       let bdVid = match ? decodeURIComponent(match[1]) : null;
       this.bd_vid = bdVid;
       this.$store.dispatch("paper/setBdVid", bdVid);
-      console.log("bd_vid:", bdVid);
     },
     // 重新获取验证码
     repeatCode() {
@@ -304,17 +300,17 @@ export default {
     },
     vaildPhone() {
       if (this.phoneNum.trim() == "") {
-        console.log("178---无输入内容", this.phoneNum);
+        Ming("178---无输入内容", this.phoneNum);
         this.butNoPhoneNum = true;
         this.vailStatus = true;
         this.rightPhoneNum = true;
       } else {
-        console.log("189--有输入内容");
+        Ming("189--有输入内容");
         this.butNoPhoneNum = true;
         this.rightPhoneNum = this.checkPhoneNum(this.phoneNum);
 
         if (this.rightPhoneNum) {
-          console.log("191--有输入内容且正确", this.rightPhoneNum);
+          Ming("191--有输入内容且正确", this.rightPhoneNum);
           this.vailStatus = false;
           this.butNoPhoneNum = false;
         } else {
@@ -325,11 +321,11 @@ export default {
 
     loginOrRegister: throttle(function (phoneNum) {
       if (phoneNum.trim() == "") {
-        console.log("178---无输入内容", phoneNum);
+        Ming("178---无输入内容", phoneNum);
         this.butNoPhoneNum = true;
         this.rightPhoneNum = true;
       } else {
-        console.log("189--有输入内容");
+        Ming("189--有输入内容");
         this.butNoPhoneNum = true;
         this.rightPhoneNum = this.checkPhoneNum(phoneNum);
 
@@ -346,7 +342,7 @@ export default {
           let param = "inv_code";
 
           // Log the window location to ensure it's being accessed correctly
-          console.log("Current URL:", window.location.href);
+          Ming("Current URL:", window.location.href);
 
           // Retrieve the hash fragment (everything after #)
           const hash = window.location.hash;
@@ -354,8 +350,8 @@ export default {
           // Check if the hash contains the query parameters
           const regex = new RegExp(`[?&]${param}=([^&]*)`);
           const match = hash.match(regex);
-          console.log("hash", hash);
-          console.log("match", hash);
+          Ming("hash", hash);
+          Ming("match", hash);
 
           let inv_code = match ? decodeURIComponent(match[1]) : "";
           if (inv_code) {
@@ -363,7 +359,7 @@ export default {
           }
           let bd_vid = this.bd_vid;
           data.bd_vid = bd_vid ? bd_vid : "";
-          console.log("data", data);
+          Ming("data", data);
           // return
           this.$store.dispatch("user/login", data).then(() => {
             window.zhuge.track("登录", {
@@ -376,7 +372,7 @@ export default {
             if (getDomain() === "www") {
               setTimeout(() => {
                 eventBus.emit("showGift"); // 发布事件
-                console.log("登录成功setTImeout");
+                Ming("登录成功setTImeout");
               }, 1500);
             }
             this.$router.push({ path: "/" });
@@ -392,9 +388,9 @@ export default {
         //   phone: this.phoneNum,
         //   // phone: "13164661907",
         // };
-        //  console.log("this.data", data);
+        //  Ming("this.data", data);
         // sms(data).then((res) => {
-        //    console.log("res", res);
+        //    Ming("res", res);
         this.repeatCode();
         // });
       }

@@ -108,7 +108,6 @@ export default {
   watch: {
     payStatus: {
       handler(newVal, oldVal) {
-        this.$log("支付状态发生变化", "新值:", newVal, "旧值:", oldVal);
         // 在这里执行你需要的操作
         this.ownPayStatus = true;
         this.$store.dispatch("paper/setPollingStatus", true);
@@ -117,7 +116,6 @@ export default {
     },
     paperPercent: {
       handler(newVal, oldVal) {
-        this.$log("进度条百分比", "新值:", newVal, "旧值:", oldVal);
         // 在这里执行你需要的操作
         this.currentNumber = newVal;
       },
@@ -143,9 +141,7 @@ export default {
   },
 
   methods: {
-    clickffff() {
-      console.log(this.currentOrder);
-    },
+    clickffff() {},
     handleClose(done) {
       if (
         this.payTitleStatus == "TRADE_SUCCESS" ||
@@ -196,8 +192,7 @@ export default {
       maxRetries = 5,
       currentRetry = 0
     ) {
-      this.$log("执行一次");
-
+      Ming("执行一次");
       if (this.pollingStatus) {
         console.warn("轮询正在进行中...");
       } else {
@@ -254,26 +249,42 @@ export default {
               // 保存数据， 用于step3下载
               this.$store.dispatch("app/toggleCurrentOrder", orderData);
               this.ownPayStatus = false;
-              // 下载word
-              paperPack({ out_trade_no: order.out_trade_no }).then((res) => {
-                // window.open(res.result.zip_url, "_blank");
-                // Create a temporary link element
-                const link = document.createElement("a");
-                link.href = res.result.zip_url;
+              // 提示用户下载
+              this.$confirm("文件已生成, 是否下载?", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning",
+              })
+                .then(() => {
+                  // 下载word
+                  paperPack({ out_trade_no: order.out_trade_no }).then(
+                    (res) => {
+                      // window.open(res.result.zip_url, "_blank");
+                      // Create a temporary link element
+                      const link = document.createElement("a");
+                      link.href = res.result.zip_url;
 
-                // Set the download attribute to suggest a filename
-                link.download = outline.title + ".zip"; // Change 'filename.zip' to the desired file name
+                      // Set the download attribute to suggest a filename
+                      link.download = outline.title + ".zip"; // Change 'filename.zip' to the desired file name
 
-                // Append the link to the body
-                document.body.appendChild(link);
+                      // Append the link to the body
+                      document.body.appendChild(link);
 
-                // Programmatically click the link to trigger the download
-                link.click();
+                      // Programmatically click the link to trigger the download
+                      link.click();
 
-                // Remove the link from the document
-                document.body.removeChild(link);
-              });
-              // 结束
+                      // Remove the link from the document
+                      document.body.removeChild(link);
+                    }
+                  );
+                  // 结束
+                })
+                .catch(() => {
+                  this.$message({
+                    type: "info",
+                    message: "我的订单可下载已生成文件!",
+                  });
+                });
             } else {
               // pdf
               let pdfUrl2 = order_item_response[0].case.file_urls.pdf;

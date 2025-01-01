@@ -90,8 +90,6 @@ export default {
 
   watch: {
     step3PdfUrl(newValue, oldValue) {
-      console.log("step3PdfUrl 发生了变化");
-      console.log("旧值:", this.currentOrder.payment_status);
       this.dialogVisible = false;
 
       // 在这里执行你需要的逻辑
@@ -114,10 +112,7 @@ export default {
     pdfUrl: {
       handler(newVal, oldVal) {
         this.pdfUrl = newVal;
-        console.log(
-          "this.currentOrder.payment_status",
-          this.currentOrder.payment_status
-        );
+
         if (this.currentOrder.payment_status == "TRADE_SUCCESS") {
           this.dialogVisible = true;
         } else {
@@ -150,7 +145,6 @@ export default {
       });
       paperPack({ out_trade_no: this.currentOrder.out_trade_no }).then(
         (res) => {
-          console.log("ad", res.result.zip_url);
           this.downStatus = false;
           // window.open(res.result.zip_url, "_blank");
           // Create a temporary link element
@@ -162,10 +156,8 @@ export default {
 
           match + ".zip"; // Change 'filename.zip' to the desired file name
           if (match && match[1]) {
-            console.log(match[1]); // 输出: 民主制度下的少数群体权利保障
             link.download = match[1] + ".zip";
           } else {
-            console.log("未找到匹配项");
             link.download = "论文" + ".zip";
           }
           // Append the link to the body

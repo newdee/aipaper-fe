@@ -960,7 +960,6 @@ export default {
   },
   methods: {
     downLoadLine() {
-      console.log("requestForm", this.requestForm);
       eventBus.emit("showDownOutline", this.requestForm);
       // let data = {
       //   key1: this.requestForm.key,
@@ -994,10 +993,6 @@ export default {
     // 先保存再调用AI更新
     updateParentHeight() {
       // 获取元素高度
-      console.log(
-        "dddddd-------------------------------------------------------------------",
-        "sssss"
-      );
 
       this.$nextTick(() => {
         if (this.$refs.outlineParent) {
@@ -1024,9 +1019,6 @@ export default {
         });
     },
     saveOutline(status) {
-      //  console.log("this.", this.requestForm);
-      //  console.log("this.", JSON.stringify(this.outline));
-
       //关不字数选择弹窗
       this.sliderStatus = false;
       let data = {
@@ -1036,14 +1028,12 @@ export default {
           outline: this.outline,
         },
       };
-      //  console.log("this.ddddddddd", data);
       if (status == "aitype") {
         data.aitype = true;
       } else {
         data.aitype = false;
       }
       editLine(data).then((res) => {
-        console.log("res", res);
         // this.$message({
         //   type: "success",
         //   message: "保存大纲成功!",
@@ -1061,10 +1051,8 @@ export default {
       });
     },
     getList() {
-      console.log("daaaaaaaaaaaaaaaaaaaddd");
       polling({ key: this.requestForm.key })
         .then((res) => {
-          console.log("polling--ddddd", res);
           if (res == "生成失败") {
             this.$message({
               type: "error",
@@ -1079,7 +1067,6 @@ export default {
         })
         .catch((error) => {
           this.loading = false;
-          console.log(error, "eeeeeerrrror");
           this.$message({
             type: "error",
             message: "AI帮写已超时,请稍后再试!",
@@ -1110,7 +1097,7 @@ export default {
       });
     },
     showImgF(item) {
-      console.log("item", item);
+      Ming("item", item);
       this.imgExcelSetStatus = true;
       this.currentRow = item;
     },
@@ -1182,7 +1169,7 @@ export default {
       // return draggingNode.data.apiGroupName.indexOf('三级 3-2-2') === -1
     },
     updateApiGroup(data) {
-      console.log("1014---当前大纲对象:", data);
+      Ming("1014---当前大纲对象:", data);
       this.saveOutline();
       this.generateIndexes(this.outline);
     },
@@ -1207,7 +1194,7 @@ export default {
       this.numberValidateForm = { ...numberValidateForm };
     },
     appendShowSibling(node, data) {
-      //  console.log("1030---node和data:", node, data, data.index);
+      //  Ming("1030---node和data:", node, data, data.index);
 
       this.appendLevel = data.level;
       if (data.level == 1) {
@@ -1348,11 +1335,7 @@ export default {
     },
 
     submitEdit(node, data) {
-      console.log(node, data, "-----------------");
-      console.log(data.title, this.newlabel, "-----------------");
-
       if (data.title == this.newlabel) {
-        console.log("没有修改");
         this.newlabel = "";
         this.$set(data, "isEdit", 0);
       } else {
@@ -1487,13 +1470,9 @@ export default {
           );
           this.$log(result, result.total_price);
           data.total_amount = result.total_price;
-          console.log("requestForm", this.requestForm);
-          console.log("generateForm-data", JSON.stringify(data));
-          console.log("generateForm-data", data);
           // this.getDetail(34);
           getOrder(data)
             .then((res) => {
-              console.log("res", res);
               //  保存订单信息 用于下载展示
               let order = {
                 out_trade_no: res.result.out_trade_no,
@@ -1549,22 +1528,22 @@ export default {
       // 接下来弹出付款二维码,走付款流程
     },
     handleDragStart(node, ev) {
-      console.log("drag start");
+      Ming("drag start");
     },
     handleDragEnter(draggingNode, dropNode, ev) {
-      console.log("tree drag enter: ", dropNode.label);
+      Ming("tree drag enter: ", dropNode.label);
     },
     handleDragLeave(draggingNode, dropNode, ev) {
-      console.log("tree drag leave: ", dropNode.label);
+      Ming("tree drag leave: ", dropNode.label);
     },
     handleDragOver(draggingNode, dropNode, ev) {
-      console.log("tree drag over: ", dropNode.label);
+      Ming("tree drag over: ", dropNode.label);
     },
     handleDragEnd(draggingNode, dropNode, dropType, ev) {
-      console.log("tree drag end: ", dropNode && dropNode.label, dropType);
+      Ming("tree drag end: ", dropNode && dropNode.label, dropType);
     },
     handleDrop(draggingNode, dropNode, dropType, ev) {
-      console.log("tree drop: ", dropNode.label, dropType);
+      Ming("tree drop: ", dropNode.label, dropType);
       this.generateIndexes(this.outline);
     },
     allowDrop(draggingNode, dropNode, type) {
@@ -1615,7 +1594,7 @@ export default {
       return result;
     },
     allowDrag(draggingNode) {
-      console.log(draggingNode.data);
+      Ming(draggingNode.data);
       return draggingNode.data.title.indexOf("hahah") === -1;
     },
     resetForm(formName) {

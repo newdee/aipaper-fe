@@ -209,7 +209,6 @@ export default {
     "userInfo.sub_domain": {
       handler(newPermission, oldPermission) {
         // 在这里你可以执行需要的操作，比如更新界面或触发其他逻辑
-        console.log("user111111", this.userInfo);
         if (!newPermission) {
           this.dialogVisible = true;
         } else {
@@ -228,7 +227,6 @@ export default {
       }
       var regex = /^[a-z]+$/;
       setTimeout(() => {
-        console.log("regex.test(value)", regex.test(value), value, "");
         if (!regex.test(value)) {
           callback(new Error("域名前缀仅支持小写字母"));
         } else {
@@ -268,7 +266,6 @@ export default {
         ...this.chartFrom,
       };
       agentInfo().then((res) => {
-        console.log("res", res);
         this.agentData = res.result;
       });
     },
@@ -301,7 +298,6 @@ export default {
             this.dialogVisible = false;
           });
         } else {
-          console.log("error submit!!");
           return false;
         }
       });

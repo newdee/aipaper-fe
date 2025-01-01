@@ -121,7 +121,7 @@ export default {
       this.getList();
     },
     getList() {
-      console.log(this.requestForm);
+      Ming(this.requestForm);
       let data = {
         language: this.requestForm.language,
         field: this.requestForm.field[0],
@@ -132,7 +132,7 @@ export default {
       title_recommend(data)
         .then((res) => {
           this.loading = false;
-          console.log(res);
+          Ming(res);
           this.recommendations = res.result;
         })
         .catch((err) => {});

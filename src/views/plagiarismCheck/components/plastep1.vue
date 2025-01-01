@@ -250,7 +250,7 @@ export default {
       };
       passOrder(data)
         .then((res) => {
-          console.log("res", res);
+          Ming("res", res);
           if (res.result.api_file_parse_status == 0) {
             clearInterval(this.intervalId);
             this.$message.success("上传成功");
@@ -304,10 +304,10 @@ export default {
     },
     successUpload(response, file, fileList) {
       this.fileList = fileList.slice(-1); // Keep only the last uploaded file
-      console.log("Uploaded file:", this.fileList);
+      Ming("Uploaded file:", this.fileList);
     },
     customUploadRequest({ file }) {
-      console.log("response, file, fileList", file);
+      Ming("response, file, fileList", file);
       this.fileLoading = true;
       const formData = new FormData();
       formData.append("file", file);
@@ -315,7 +315,7 @@ export default {
 
       pre_create(formData)
         .then((response) => {
-          console.log(response);
+          Ming(response);
           this.fileBackKey = response.result;
           this.$store.dispatch("paper/setPreviewId", this.fileBackKey);
           this.fileList = [file];
@@ -390,7 +390,7 @@ export default {
 
           this.$emit("stepNext", 2, step2ShowListData);
         } else {
-          console.log("error submit!!");
+          Ming("error submit!!");
           return false;
         }
       });

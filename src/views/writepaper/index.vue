@@ -185,8 +185,6 @@ export default {
     eventBus.on("pdfSuccessClick", this.showIndex3); // 订阅事件
     eventBus.on("showDownOutline", this.showDownOutline); // 订阅事件
 
-    LLog("getDomain", getDomain());
-
     // eventBus.on("sendOutline", this.addE); // 订阅事件
     zhuge.track(`访问域名`, {
       domain: getDomain(),

@@ -230,12 +230,9 @@
     >
       <div>
         <div style="margin-bottom: 20px">
-          <div
-            v-show="original_item.product"
-            style="display: flex; align-items: center"
-          >
+          <div v-show="original_item.product" class="outlineDiaTItleP">
             <p>第一次所选内容:</p>
-            <el-tag>
+            <el-tag style="margin-left: 8px">
               <span>
                 {{ original_item.product }}
               </span>
@@ -243,10 +240,10 @@
           </div>
           <div
             v-show="generated_items.length > 0"
+            class="outlineDiaTItleP"
             style="display: flex; align-items: center; margin-top: 8px"
           >
             <p>已经生成过的内容:</p>
-
             <el-tag
               style="margin-left: 8px"
               v-for="(item, index) in generated_items"
@@ -260,12 +257,19 @@
           </div>
         </div>
         <!-- 论文类型 -->
+        <p
+          class="formItemLabel"
+          style="margin-left: 40px; margin-top: 10px; margin-bottom: 15px"
+        >
+          论文类型
+        </p>
         <div
           :class="[
             'firstItem',
             'secondItem',
             device == 'mobile' ? 'mobilebox' : '',
           ]"
+          style="padding: 0 40px"
         >
           <div class="selectLang formItem">
             <div class="formItemCon">
@@ -327,10 +331,12 @@
             )
           "
         >
-          <p class="formItemLabel">论文字数</p>
+          <p class="formItemLabel" style="margin-left: 40px; margin-top: 10px">
+            论文字数
+          </p>
           <div class="formItemCon">
             <el-slider
-              style="margin: 50px"
+              style="margin: 8px 50px"
               v-model="outlineListDialog.word_count"
               :min="minCount"
               :max="maxCount"
@@ -385,21 +391,22 @@ export default {
       generated_items: [],
       currentDialogRow: {},
       marks: {
-        3000: "3千",
-        5000: "5千",
-        8000: "8千",
+        3000: "3000",
+        5000: "5000",
+        8000: "8000",
         10000: "10000",
         15000: "15000",
         20000: {
           style: {
             color: "#1989FA",
           },
-          label: this.$createElement("strong", "两万"),
+          label: this.$createElement("strong", "20000"),
         },
 
         30000: {
           style: {
             color: "#E6A23C",
+            width: "90px",
           },
           label: this.$createElement("strong", "30000"),
         },
@@ -467,18 +474,14 @@ export default {
         let selectItem = this.homeData.category_list.find(
           (item) => item.name == this.currentDialogRow.type
         );
-        console.log("addd");
         selectItem.max_word_num && (this.maxCount = selectItem.max_word_num);
         selectItem.max_word_num && (this.maxCount = selectItem.max_word_num);
       }
     },
     sendList(row) {
-      LLog(row, "ssddd");
       this.currentDialogRow = row;
-      LLog(row.generated_items, "ssddd");
       this.original_item = row.original_item ? row.original_item : {};
       this.generated_items = row.generated_items ? row.generated_items : [];
-      LLog(this.generated_items, "this.generated_items");
 
       let _this = this;
       _this.dialogVisible = true;
@@ -935,5 +938,23 @@ export default {
 }
 .alsoRe {
   background: green;
+}
+.outlineDiaTItleP {
+  display: flex;
+  align-items: center;
+  & > p {
+    width: 160px;
+    text-align: right;
+  }
+}
+.formItemLabel {
+  font-family: PingFangSC, PingFang SC;
+  font-weight: 600;
+  font-size: 18px;
+  color: #000000;
+  display: flex;
+  line-height: 25px;
+  text-align: left;
+  font-style: normal;
 }
 </style>

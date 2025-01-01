@@ -133,7 +133,7 @@ export default {
   methods: {
     getList() {
       channels().then((res) => {
-        console.log("res", res);
+        Ming("res", res);
         this.channels = res.result;
       });
     },
@@ -146,7 +146,7 @@ export default {
         if (valid) {
           batch_create(this.couponForm).then((res) => {
             this.$message.success("优惠券添加成功");
-            console.log("优惠券添加成功", res.result);
+            Ming("优惠券添加成功", res.result);
             this.codeList = res.result.join(",");
             this.$emit("add-coupon");
           });

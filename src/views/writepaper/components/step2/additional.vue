@@ -375,7 +375,6 @@ export default {
       handler(newVal, oldVal) {
         // 检查是否为初始化调用
         if (oldVal === undefined) {
-          console.log("初始化调用");
           this.getDefaultPrice(); // 如果需要在初始化时调用
           return false;
         }
@@ -385,9 +384,6 @@ export default {
           newVal.word_count !== oldVal.word_count ||
           newVal.product !== oldVal.product
         ) {
-          console.log(
-            "requestForm 的 key, word_count, 或 product 之一发生变化"
-          );
           // 在这里执行你的操作
           this.getDefaultPrice();
         }
@@ -428,7 +424,6 @@ export default {
         word_count: this.requestForm.word_count,
       };
       predict_price(data).then((res) => {
-        LLog("res-----------------", res);
         this.defaultPrice = res.result.predict_price;
       });
     },

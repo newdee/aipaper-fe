@@ -321,7 +321,6 @@ export default {
     this.chatId = this.generateUniqueId();
     let listData = JSON.parse(localStorage.getItem("chatList"));
     this.localChatList = listData ? listData : [];
-    LLog("listData", listData);
   },
   mounted() {
     this.getChatInfo();
@@ -341,14 +340,12 @@ export default {
     },
     addChatItem() {
       // 添加新对话逻辑
-      LLog("dddd", this.leftChatListStatus);
       this.setNewDialog();
     },
     reloadChatList() {
       // this.setNewDialog();
       this.chatId = this.generateUniqueId();
       let listData = JSON.parse(localStorage.getItem("chatList"));
-      LLog("papapapaapap", listData);
       this.localChatList = listData ? listData : [];
     },
     handleSelectChat(index, id) {
@@ -357,9 +354,7 @@ export default {
       } else {
         this.closeSSE();
       }
-      LLog(`Selected chat index: ${index}, id: ${id}`);
       let currentItem = this.localChatList.find((item) => item.id == id);
-      LLog("currentItem", currentItem);
       this.modelName = currentItem.model;
       this.temperature = currentItem.temperature;
       this.modelName = currentItem.model;
@@ -370,7 +365,7 @@ export default {
     },
     closeSSE() {
       closeSession().then((res) => {
-        LLog("关闭会话成功");
+        Ming("关闭会话成功");
       });
     },
     // 存储数据， 新建对话
@@ -387,8 +382,8 @@ export default {
       this.chatMessages = [];
     },
     changeFile(fileInfo) {
-      LLog("文件名:", fileInfo.fileName);
-      LLog("返回结果:", fileInfo.result);
+      Ming("文件名:", fileInfo.fileName);
+      Ming("返回结果:", fileInfo.result);
       this.imgBoxList = [];
       let data = {
         type: "file",
@@ -409,7 +404,7 @@ export default {
     },
 
     getFile() {
-      LLog("chatMessages", this.chatMessages);
+      Ming("chatMessages", this.chatMessages);
       this.leftChatListStatus = !this.leftChatListStatus;
     },
     onFileChange(event) {
@@ -455,7 +450,7 @@ export default {
       chatAllInfo({ token: this.token }).then((response) => {
         this.model_list = response.result.model_list;
         this.temperature = response.result.temperature;
-        LLog(response, "sssreposne", this.model_list);
+        Ming(response, "sssreposne", this.model_list);
       });
     },
     renderMarkdown(text) {
@@ -593,7 +588,7 @@ export default {
       };
       // 判断 SSE 连接是否成功建立
       this.sseSource.onopen = () => {
-        LLog("SSE connection established.");
+        Ming("SSE connection established.");
         // 你可以在这里执行其他初始化逻辑
         if (!this.inputMessage.trim()) {
           return false;
@@ -653,7 +648,7 @@ export default {
       this.setChatData();
       chatApi(data)
         .then((response) => {
-          LLog("Message sent successfully:", response);
+          Ming("Message sent successfully:", response);
         })
         .catch((error) => {
           console.error("Error sending message:", error);

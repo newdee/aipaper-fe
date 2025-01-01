@@ -270,12 +270,12 @@ export default {
     sampleTitle(newVal, oldVal) {
       // this.pdfUrl = require("@/assets/samples/2.pdf");
       // 在这里执行其他操作
-      console.log("273----", newVal, this.titleSamplesMap[newVal]);
+      Ming("273----", newVal, this.titleSamplesMap[newVal]);
 
       this.pdfUrl = this.titleSamplesMap[newVal];
     },
     sampleMaterial(newVal, oldVal) {
-      console.log("278---", newVal, this.materialsSamplesMap[newVal]);
+      Ming("278---", newVal, this.materialsSamplesMap[newVal]);
 
       // 在这里执行其他操作
       if (newVal == 1) {

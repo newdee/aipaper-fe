@@ -121,7 +121,7 @@ export default {
       immediate: true,
       handler(val) {
         this.orderText = val;
-        console.log("preViewIdddd", val);
+        Ming("preViewIdddd", val);
       },
     },
   },
@@ -177,7 +177,7 @@ export default {
         out_trade_no: this.orderText,
       };
       passReport(data).then((res) => {
-        console.log("dsssssdd", res);
+        Ming("dsssssdd", res);
         if (res.result.status < 5) {
           this.resultStatus = true;
           this.reportResult = { ...res.result };

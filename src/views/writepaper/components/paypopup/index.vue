@@ -140,17 +140,25 @@
 
             <div class="payFrom">
               <div class="formitem">
+                <span>论文类型:</span>
+                <b>{{ getOrderTypeName(currentOrder.order_type) }}</b>
+              </div>
+              <div class="formitem">
                 <span>学业类型:</span>
                 <b>{{ requestForm.type }}</b>
               </div>
-              <div class="formitem">
+              <div
+                v-show="requestForm.word_count && requestForm.word_count > 0"
+                class="formitem"
+              >
                 <span>字数:</span>
                 <b>{{ requestForm.word_count }}</b>
               </div>
               <div class="formitem">
                 <span>说明:</span>
                 <b
-                  >预览版可以查看约全文50%内容，若满意可支付剩余费用，解锁全文。</b
+                  >预览版可以查看约全文50%内容，若满意可支付剩余费用，解锁并下载全文。<br />
+                  开题报告，任务书，文献综述都不支持预览。</b
                 >
               </div>
               <div class="formitem">
@@ -330,7 +338,6 @@ export default {
           } else {
             this.handleClick();
           }
-          console.log("currentOrder", this.currentOrder);
         })
         .catch(() => {
           this.$message({
@@ -455,7 +462,6 @@ export default {
       };
       getOrder(data)
         .then((res) => {
-          console.log("切换后订单", res);
           this.resetForm();
           let order = {
             ...this.currentOrder,
@@ -571,7 +577,6 @@ export default {
           if (orderData.payment_status) {
             this.payTitleStatus = orderData.payment_status;
             if (this.currentOrder.returnStatus) {
-              console.log(this.payTitleStatus);
               if (
                 this.currentOrder.returnStatus == "付尾款" &&
                 this.payTitleStatus == "TRADE_SUCCESS"
@@ -624,7 +629,6 @@ export default {
     },
     paySend() {
       this.$bdSave();
-      LLog("陈宫支付", this.currentOrder, this.requestForm);
       window.zhuge.track("用户成功付款", {
         价格: this.currentOrder.pay_amount,
         语言: this.requestForm.language,

@@ -52,7 +52,8 @@ const GlobalMethodsPlugin = {
           type: outLineData.type,
           field: ["哲学", outLineData.field],
           key: outLineData.key1,
-          word_count: outLineData.word_count,
+          product: outLineData.product,
+          word_count: res.result.word_count,
         };
         store.dispatch("app/setRequestForm", requestForm);
 
@@ -60,11 +61,14 @@ const GlobalMethodsPlugin = {
           out_trade_no: res.result.out_trade_no,
           pay_amount: res.result.pay_amount,
           pay_link: res.result.pay_link,
+          type: outLineData.type,
           original_price: res.result.original_amount,
           pay_type: currentOrder.pay_type,
           payment_status: currentOrder.payment_status,
           returnStatus: status,
           order_type: res.result.order_type,
+          word_count: res.result.word_count,
+          product: outLineData.product,
           discounted_price: res.result.discounted_price, // 优惠金额
           is_discount: res.result.is_discount, // 优惠金额
         };

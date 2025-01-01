@@ -299,7 +299,7 @@ export default {
       // location.reload();
     },
     uploadImg() {
-      console.log("91---", "上传图片");
+      Ming("91---", "上传图片");
     },
     handleSuccess(res, file) {
       this.$message.success("上传成功!");

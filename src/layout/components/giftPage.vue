@@ -73,7 +73,6 @@ export default {
     showInit() {
       this.dialogVisible = true;
       // inviteFetch().then((res) => {
-      //   console.log("linkres", res);
       //   this.inv_code_url = res.result.inv_code_url;
       // });
     },

@@ -408,7 +408,6 @@ export default {
       this.advantageStatus = true;
     },
     scrollToSection(sectionId) {
-      console.log(this.$refs, "refs");
       const container = document.querySelector(".el-dialog__body .main-txt");
       const targetElement = document.querySelector(
         `.el-dialog__body #${sectionId}`

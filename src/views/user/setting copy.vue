@@ -235,7 +235,6 @@ export default {
   methods: {
     handleSearch() {
       // 搜索功能逻辑
-      console.log("搜索", this.searchForm);
     },
     handleReset() {
       // 重置搜索条件
@@ -243,39 +242,30 @@ export default {
     },
     addUser() {
       // 新增用户逻辑
-      console.log("新增用户");
     },
     batchAddUser() {
       // 批量添加用户逻辑
-      console.log("批量添加用户");
     },
     exportUserData() {
       // 导出用户数据逻辑
-      console.log("导出用户数据");
     },
     toChildPage() {
       // 跳转到子集详情页面
-      console.log("跳转到子集详情页面");
     },
     batchDeleteUser() {
       // 批量删除用户逻辑
-      console.log("批量删除用户");
     },
     viewUser(row) {
       // 查看用户逻辑
-      console.log("查看用户", row);
     },
     editUser(row) {
       // 编辑用户逻辑
-      console.log("编辑用户", row);
     },
     deleteUser(row) {
       // 删除用户逻辑
-      console.log("删除用户", row);
     },
     handlePageChange(page) {
       // 分页改变逻辑
-      console.log("当前页:", page);
     },
   },
 };

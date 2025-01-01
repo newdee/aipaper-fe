@@ -24,8 +24,8 @@ const logPlugin = {
     Vue.prototype.$error = logger.error;
 
     // 定义全局函数
-    window.LLog = logger.log;
-    window.WLong = logger.warn;
+    window.Ming = logger.log;
+    window.Warn = logger.warn;
     window.ELog = logger.error;
   },
 };

@@ -414,19 +414,21 @@ export default {
       requestKey: "是是是",
       word_count: 3000,
       marks: {
-        3000: "3千",
-        5000: "5千",
-        8000: "8千",
+        3000: "3000",
+        5000: "5000",
+        8000: "8000",
         10000: "10000",
         15000: "15000",
         20000: {
           style: {
             color: "#1989FA",
           },
-          label: this.$createElement("strong", "两万"),
+          label: this.$createElement("strong", "20000"),
         },
+
         30000: {
           style: {
+            width: "90px",
             color: "#E6A23C",
           },
           label: this.$createElement("strong", "30000"),
@@ -487,7 +489,6 @@ export default {
       this.$refs.exampleDia.showDia();
     },
     requestProductChange(val) {
-      console.log("name----", val);
       if (
         this.requestForm.product == "开题报告" ||
         this.requestForm.product == "任务书"
@@ -846,7 +847,6 @@ export default {
   line-height: 40px;
   padding-left: 14px;
   padding-right: 16px;
-  margin-bottom: 22px;
 
   &.is-checked {
     background: #3355ff;
