@@ -1,13 +1,13 @@
 <template>
   <div class="chatMain">
-    <SidebarChatList
+    <!-- <SidebarChatList
       :leftChatListStatus="leftChatListStatus"
       :localChatList="localChatList"
       @update:leftChatListStatus="updateLeftChatListStatus"
       @refresh-item="reloadChatList"
       @select-chat="handleSelectChat"
       @add-chat="addChatItem"
-    />
+    /> -->
     <div class="chat-container">
       <!-- <div class="navChat">
       <el-button>清屏</el-button>

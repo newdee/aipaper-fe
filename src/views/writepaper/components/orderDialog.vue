@@ -198,7 +198,6 @@ export default {
       } else {
         return false;
       }
-
       orderDetailById(data)
         .then((res) => {
           this.$log("res", res.result);
