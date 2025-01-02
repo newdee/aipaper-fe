@@ -49,64 +49,65 @@ router.beforeEach(async (to, from, next) => {
     next(false); // 阻止导航
     return;
   }
+
+  // 如果没有 token 且目标路由在白名单中，直接放行
+  let hasToken = getToken();
+  if (!hasToken && whiteList.indexOf(to.path) !== -1) {
+    next();
+    NProgress.done();
+    return; // 直接返回，不再继续后续逻辑
+  }
+
   // set page title
   document.title = getPageTitle(to.meta.title);
 
   // determine whether the user has logged in
-  // const hasToken = getToken() ? getToken() : setToken("editor-token");
   let loginId = localStorage.getItem("loginID");
-
-  let hasToken = getToken();
   const sub_domain = getDomain();
   if (sub_domain && !store.getters.sub_domain) {
     store.dispatch("user/setSubDomain", sub_domain);
   }
-  // console.log("loginId111", loginId);
-  // console.log("hasToken222", hasToken);
-  if (!hasToken) {
-    if (loginId) {
-      setToken(loginId);
-      store.dispatch("user/setStoreToken", loginId);
-      hasToken = loginId;
-    }
-  }
-  if (hasToken) {
-    if (to.path === "/login" && hasToken == "editor-token") {
-      // if is logged in, redirect to the home page
-      next();
-      NProgress.done();
-    } else {
-      const hasGetUserInfo = store.getters.name;
 
-      if (hasGetUserInfo) {
+  if (!hasToken && loginId) {
+    setToken(loginId);
+    store.dispatch("user/setStoreToken", loginId);
+    hasToken = loginId;
+  }
+
+  if (hasToken) {
+    try {
+      // 在这里调用一个 API 来验证 token 是否有效
+      // await store.dispatch("user/getInfo"); // 假设这个 action 会验证 token
+      if (to.path === "/login" && hasToken === "editor-token") {
         next();
       } else {
-        try {
-          // get user info
-          store.dispatch("user/getInfo");
-
+        const hasGetUserInfo = store.getters.name;
+        if (hasGetUserInfo) {
           next();
-        } catch (error) {
-          // remove token and go to login page to re-login
-          Message.error(error || "Has Error");
-          next(`/login`);
-          NProgress.done();
+        } else {
+          try {
+            await store.dispatch("user/getInfo");
+            next();
+          } catch (error) {
+            Message.error(error || "Has Error");
+            next(`/login`);
+            NProgress.done();
+          }
         }
       }
-    }
-  } else {
-    /* has no token*/
-
-    if (whiteList.indexOf(to.path) !== -1) {
-      // in the free login whitelist, go directly
-      next();
-    } else {
-      // other pages that do not have permission to access are redirected to the login page.
+    } catch (error) {
+      // token 无效，重定向到登录页
+      Message.error("Token 已过期，请重新登录");
       next(`/login?redirect=${to.path}`);
       NProgress.done();
     }
+  } else {
+    // 如果没有 token 且不在白名单，需要登录
+    next(`/login?redirect=${to.path}`);
+    NProgress.done();
   }
 });
+
 
 router.afterEach(() => {
   // finish progress bar

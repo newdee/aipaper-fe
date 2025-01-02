@@ -428,9 +428,11 @@ export default {
   },
   created() {
     eventBus.on("step0Reload", this.handleCurrentChange); // 订阅事件
+    eventBus.on("outlineGen", this.sendList); // 订阅事件
   },
   beforeDestroy() {
     eventBus.off("step0Reload", this.handleCurrentChange); // 移除事件监听
+    eventBus.off("outlineGen", this.sendList); // 移除事件监听
   },
   computed: {
     // 计算属性
@@ -479,6 +481,7 @@ export default {
       }
     },
     sendList(row) {
+      Ming("ddd", row);
       this.currentDialogRow = row;
       this.original_item = row.original_item ? row.original_item : {};
       this.generated_items = row.generated_items ? row.generated_items : [];
@@ -956,5 +959,10 @@ export default {
   line-height: 25px;
   text-align: left;
   font-style: normal;
+}
+
+::v-deep .el-slider__marks-text {
+  width: 40px; /* 调整宽度 */
+  text-align: center; /* 居中对齐 */
 }
 </style>

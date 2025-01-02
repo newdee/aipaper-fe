@@ -49,14 +49,14 @@
                   </el-button>
                 </div>
                 <div>
-                  <!-- <el-button
-                    @click="downLoadLine(orderObj)"
+                  <el-button
+                    @click="clickShowDia(orderObj)"
                     icon="el-icon-edit"
                     :disabled="orderObj.status != '生成成功'"
                     type="text"
                   >
                     根据此大纲继续生成正文,任务书等
-                  </el-button> -->
+                  </el-button>
                 </div>
               </div>
             </div>
@@ -146,6 +146,23 @@ export default {
     // 计算属性
   },
   methods: {
+    clickShowDia(row) {
+      Ming("sddd", this.$route.path);
+      // 关闭弹窗
+      eventBus.emit("orderDialogChange", false);
+      const navigateAndEmit = () => {
+        // 使用 $nextTick 确保 DOM 更新完成后再触发事件
+        this.$nextTick(() => {
+          // 展示大纲弹窗
+          eventBus.emit("outlineGen", row);
+        });
+      };
+      if (this.$route.path !== "/main/writepaper") {
+        this.$router.push({ path: "/main/writepaper" }, navigateAndEmit);
+      } else {
+        navigateAndEmit();
+      }
+    },
     downLoadLine(row) {
       let requestForm = {
         title: row.title,

@@ -8,7 +8,7 @@
       :close-on-click-modal="false"
       title="订单查询"
       :visible.sync="ownPayStatus"
-      :width="device == 'mobile' ? '90%' : '40%'"
+      :width="device == 'mobile' ? '90%' : '45%'"
       class="order-dialog"
       :before-close="handleClose"
     >
@@ -19,6 +19,7 @@
             payStatusObject[payTitleStatus]
           }}</span>
         </p>
+
         <!-- <button @click="clickffff">sssdd</button> -->
         <!-- 订单支付成功展示页面 -->
         <div
@@ -34,17 +35,32 @@
             ></el-progress>
           </div>
           <p class="dialog-text">
-            正在调取大量
+            正在拼命查询, 学习大量
             <span style="font-weight: bold" class="primary">真实文献</span
-            >，加速生成正文中，
+            >。。。
           </p>
           <p class="dialog-text">
-            预计需要<span class="primary"> 30分钟 </span>，请耐心等待
+            预计
+            <span
+              v-if="
+                currentOrder.product == '文献综述' ||
+                currentOrder.product == '任务书' ||
+                currentOrder.product == '结课论文' ||
+                currentOrder.product == '开题报告'
+              "
+              class="primary"
+            >
+              10分钟
+            </span>
+            <span v-else class="primary"> 30分钟 </span>左右完成 ，请耐心等待
           </p>
+          <p class="dialog-text">如果您有事离开, 此弹窗可以放心关闭</p>
           <p class="dialog-text">
-            如您关闭此弹窗,请在
-            <span class="dialog_pay_text">我的订单</span>
-            页面, 查看您生成的正文
+            成功后,在
+            <span class="dialog_pay_text">近期订单</span>
+            或点击
+            <span class="dialog_pay_text">我的头像-订单管理列表</span>
+            查看页面, 查看您生成的正文
           </p>
         </div>
       </div>
@@ -72,8 +88,8 @@ export default {
       intervalId: "",
       payTitleStatus: "PRE_CREATE",
       payStatusObject: {
-        TRADE_DEPOSIT_SUCCESS: "您已成功支付预付款, 论文生成中",
-        TRADE_SUCCESS: "您已成功支付订单, 论文生成中",
+        TRADE_DEPOSIT_SUCCESS: "您已成功支付预付款, 正文生成中",
+        TRADE_SUCCESS: "您已成功支付订单, 正文生成中",
         WAIT_BUYER_PAY: "未付款交易超时关闭，或支付完成后全额退款",
         PRE_CREATE: "交易创建，等待买家付款",
         TRADE_FINISHED: "交易结束!",
