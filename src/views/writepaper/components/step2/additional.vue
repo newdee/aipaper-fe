@@ -234,7 +234,7 @@
         </p>
       </div>
 
-      <div v-if="wordShow" style="padding-bottom: 40px">
+      <div style="padding-bottom: 40px">
         <el-popover placement="top" width="800" trigger="hover">
           <el-table
             header-row-class-name="bgTable"
@@ -242,6 +242,7 @@
             stripe
             :data="tableData"
             style="width: 100%"
+            :span-method="cellSpanMethod"
           >
             <el-table-column
               prop="wordCount"
@@ -268,7 +269,38 @@
               align="center"
               label="结课论文"
             ></el-table-column>
+            <el-table-column align="center" label="开题报告">
+              <template slot-scope="scope">
+                <div
+                  v-if="scope.$index === 0"
+                  style="text-align: center; line-height: 100px"
+                >
+                  {{ tableData[0].openingReport }}
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column align="center" label="任务书">
+              <template slot-scope="scope">
+                <div
+                  v-if="scope.$index === 0"
+                  style="text-align: center; line-height: 100px"
+                >
+                  {{ tableData[0].taskBook }}
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column align="center" label="文献综述">
+              <template slot-scope="scope">
+                <div
+                  v-if="scope.$index === 0"
+                  style="text-align: center; line-height: 100px"
+                >
+                  {{ tableData[0].literatureReview }}
+                </div>
+              </template>
+            </el-table-column>
           </el-table>
+
           <p class="priceLine" slot="reference">
             如果价格有疑问，参考价格体系说明。（鼠标移入查看价格图）
           </p>
@@ -326,6 +358,9 @@ export default {
           undergraduate: 96,
           master: 136,
           finalPaper: 38,
+          openingReport: 29,
+          taskBook: 29,
+          literatureReview: 29,
         },
         {
           wordCount: "6000-8000",
@@ -333,6 +368,9 @@ export default {
           undergraduate: 96,
           master: 136,
           finalPaper: 48,
+          openingReport: 29,
+          taskBook: 29,
+          literatureReview: 29,
         },
         {
           wordCount: "9000-10000",
@@ -340,6 +378,9 @@ export default {
           undergraduate: 136,
           master: 176,
           finalPaper: 48,
+          openingReport: 29,
+          taskBook: 29,
+          literatureReview: 29,
         },
         {
           wordCount: "10000 - 15000",
@@ -347,6 +388,9 @@ export default {
           undergraduate: 136,
           master: 176,
           finalPaper: "-",
+          openingReport: 29,
+          taskBook: 29,
+          literatureReview: 29,
         },
         {
           wordCount: "16000 - 20000",
@@ -354,6 +398,9 @@ export default {
           undergraduate: 176,
           master: 216,
           finalPaper: "-",
+          openingReport: 29,
+          taskBook: 29,
+          literatureReview: 29,
         },
         {
           wordCount: "21000 - 30000",
@@ -361,6 +408,9 @@ export default {
           undergraduate: 216,
           master: 256,
           finalPaper: "-",
+          openingReport: 29,
+          taskBook: 29,
+          literatureReview: 29,
         },
       ],
       defaultPrice: "",
@@ -415,6 +465,16 @@ export default {
     },
   },
   methods: {
+    cellSpanMethod({ row, column, rowIndex, columnIndex }) {
+      if (columnIndex >= 5) {
+        // 合并最后三列的单元格
+        if (rowIndex === 0) {
+          return [this.tableData.length, 1];
+        } else {
+          return [0, 0];
+        }
+      }
+    },
     getDefaultPrice() {
       // 获取预估价格
       let data = {

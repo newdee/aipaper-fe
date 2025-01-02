@@ -256,21 +256,21 @@ export const constantRoutes = [
       //   },
       // },
       // 我的钱包
-      {
-        path: "orderList",
-        name: "orderList",
-        hidden: true,
-        component: () => import("@/views/user/order.vue"),
-        meta: {
-          keepAlive: true,
-          title: "aiTools",
-          // title: "AI工具",
-          describe: "智能工具支持，提升学术效率。",
-          icon: "el-icon-set-up",
-          id: "5-7",
-          parentId: "5",
-        },
-      },
+      // {
+      //   path: "orderList",
+      //   name: "orderList",
+      //   hidden: true,
+      //   component: () => import("@/views/user/order.vue"),
+      //   meta: {
+      //     keepAlive: true,
+      //     title: "aiTools",
+      //     // title: "AI工具",
+      //     describe: "智能工具支持，提升学术效率。",
+      //     icon: "el-icon-set-up",
+      //     id: "5-7",
+      //     parentId: "5",
+      //   },
+      // },
     ],
   },
   {
