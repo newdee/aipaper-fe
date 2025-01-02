@@ -29,17 +29,24 @@ for BRANCH in "${BRANCHES[@]}"; do
   echo "切换到分支 $BRANCH..."
   git checkout $BRANCH || { echo "错误: 切换到分支 $BRANCH 失败。"; exit 1; }
 
-  # 暂存当前更改
-  echo "暂存当前更改..."
-  git stash || { echo "错误: 暂存更改失败。"; exit 1; }
+  # 检查是否有未提交的更改
+  if ! git diff --quiet || ! git diff --cached --quiet; then
+    # 暂存当前更改
+    echo "暂存当前更改..."
+    git stash || { echo "错误: 暂存更改失败。"; exit 1; }
 
-  # 拉取最新的远程更改
-  echo "从远程仓库拉取最新更改..."
-  git pull $REMOTE $BRANCH || { echo "错误: 拉取远程更改失败。"; exit 1; }
+    # 拉取最新的远程更改
+    echo "从远程仓库拉取最新更改..."
+    git pull $REMOTE $BRANCH || { echo "错误: 拉取远程更改失败。"; exit 1; }
 
-  # 恢复暂存的更改
-  echo "恢复暂存的更改..."
-  git stash pop || { echo "错误: 恢复暂存更改失败。"; exit 1; }
+    # 恢复暂存的更改
+    echo "恢复暂存的更改..."
+    git stash pop || { echo "错误: 恢复暂存更改失败。"; exit 1; }
+  else
+    # 直接拉取最新的远程更改
+    echo "从远程仓库拉取最新更改..."
+    git pull $REMOTE $BRANCH || { echo "错误: 拉取远程更改失败。"; exit 1; }
+  fi
 
   # 添加所有更改
   echo "添加所有更改到分支 $BRANCH..."
