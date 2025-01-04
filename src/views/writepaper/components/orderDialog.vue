@@ -172,6 +172,8 @@ export default {
           })
           .catch((_) => {});
       } else {
+        eventBus.emit("step0Reload", true); // 发布事件
+
         done();
       }
     },

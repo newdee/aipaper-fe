@@ -501,6 +501,8 @@ export default {
       this.$refs.exampleDia.showDia();
     },
     handleClose(done) {
+      eventBus.emit("step0Reload", true); // 发布事件
+
       if (this.payTitleStatus == "TRADE_SUCCESS") {
         window.zhuge.track("用户成功付款", {
           价格: this.currentOrder.pay_amount,

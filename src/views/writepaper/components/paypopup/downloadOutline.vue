@@ -206,6 +206,9 @@ export default {
       } else {
         zhuge.track(`用户取消支付`, {});
       }
+      // 刷新列表
+      eventBus.emit("step0Reload", true); // 发布事件
+
       this.$store.dispatch("paper/setPollingStatus", false);
       done();
       // if (this.payTitleStatus == "TRADE_SUCCESS") {

@@ -93,7 +93,7 @@
         :class="[isScrollActive ? 'fixed' : '']"
       ></step3>
     </div>
-    <!-- <question-list></question-list> -->
+    <question-list></question-list>
     <!-- 论文查询生辰弹窗 -->
     <order-dialog
       :requestKey="requestKey"
@@ -212,16 +212,13 @@ export default {
         }
       },
     },
-    // activeIndex: {
-    //   handler(val) {
-    //     this.$log("activeIndexval", val);
-    //     if (val == 0) {
-    //       this.$nextTick(() => {
-    //         this.$refs.step0.handleCurrentChange();
-    //       });
-    //     }
-    //   },
-    // },
+    activeIndex: {
+      handler(val) {
+        this.$log("activeIndexval", val);
+        // 更新首页大纲列表
+        eventBus.emit("step0Reload", true); // 发布事件
+      },
+    },
   },
   computed: {
     // 计算属性
