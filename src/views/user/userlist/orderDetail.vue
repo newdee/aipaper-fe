@@ -227,7 +227,7 @@ export default {
       const params = {
         page_num: this.currentPage,
         page_size: this.pageSize,
-        phone: this.$route.query.phone, // Assuming phone is passed as query parameter
+        phone: this.filters.phone,
         out_trade_no: this.filters.out_trade_no,
         payment_method: this.filters.payment_method,
         pay_type: this.filters.pay_type,

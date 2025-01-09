@@ -134,7 +134,8 @@ export default {
 
   methods: {
     viewDetails(row) {
-      // 传递手机号到订单详情组件并打开弹窗
+      // 传递手机号到订单详情组件并打开弹窗\
+      console.log("row", row);
       this.$refs.orderDetailsDialog.openDialog(row.phone);
     },
     getList() {
