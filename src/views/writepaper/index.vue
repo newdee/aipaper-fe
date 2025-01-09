@@ -74,7 +74,7 @@
           <div class="tabIcon">
             <span></span>
           </div>
-          <p class="tabIntro">查收正文 <span>无限改稿</span></p>
+          <p class="tabIntro">查收正文 <span>下载初稿</span></p>
         </div>
       </div>
     </div>

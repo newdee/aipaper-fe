@@ -153,7 +153,7 @@ export default {
   },
   computed: {
     // 计算属性
-    ...mapGetters(["pollingStatus", "device", "currentOrder"]),
+    ...mapGetters(["pollingStatus", "device", "currentOrder", "requestForm"]),
   },
 
   methods: {
@@ -292,6 +292,15 @@ export default {
 
                       // Remove the link from the document
                       document.body.removeChild(link);
+                      // let _this = this;
+                      // setTimeout(() => {
+                      //   _this.$message({
+                      //     type: "success",
+                      //     message: "已开始下载文件!",
+                      //   });
+                      //   _this.$store.dispatch("app/setActiveIndex", 0);
+                      //   eventBus.emit("outlineGen", this.requestForm);
+                      // }, 1000);
                     }
                   );
                   // 结束

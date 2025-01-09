@@ -14,6 +14,22 @@ export function product() {
     method: "get",
   });
 }
+// 我的推广获取用户列表
+export function user_info(params) {
+  return request({
+    url: baseUrl + "/api/ai-paper/agent/user_info",
+    method: "get",
+    params,
+  });
+}
+// 我的推广获取订单列表
+export function order_info(params) {
+  return request({
+    url: baseUrl + "/api/ai-paper/agent/order_info",
+    method: "get",
+    params,
+  });
+}
 export function inviteFetch() {
   return request({
     url: baseUrl + "/api/ai-paper/user/invite/fetch",

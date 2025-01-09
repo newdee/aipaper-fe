@@ -7,6 +7,7 @@ const state = {
   preViewId: "", // 报告查询ID
   bdVid: "",
   orderStatus: "", //支付时判断支付状态
+  selector_item: {},
 };
 
 const mutations = {
@@ -18,6 +19,9 @@ const mutations = {
   },
   SAVE_VID: (state, bdVid) => {
     state.bdVid = bdVid;
+  },
+  SET_SELECT: (state, selector_item) => {
+    state.selector_item = selector_item;
   },
   SET_ORDERS: (state, orderStatus) => {
     state.orderStatus = orderStatus;
@@ -42,6 +46,9 @@ const actions = {
   },
   setOrderStatus({ commit }, orderStatus) {
     commit("SET_ORDERS", orderStatus);
+  },
+  setSelectorItem({ commit }, selector_item) {
+    commit("SET_SELECT", selector_item);
   },
   setPollingStatus({ commit }, pollingStatus) {
     commit("TOGGLE_POLLING", pollingStatus);

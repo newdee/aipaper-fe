@@ -53,8 +53,8 @@ const actions = {
           commit("SET_TOKEN", result.token);
           setToken(result.token);
           localStorage.setItem("loginID", result.token);
+          localStorage.setItem("expired_timestamp", result.expired_timestamp);
           commit("SET_DOMAIN", sub_domain);
-
           resolve();
         })
         .catch((error) => {

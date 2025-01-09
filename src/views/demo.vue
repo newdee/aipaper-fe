@@ -17,7 +17,8 @@ export default {
     };
   },
   computed: {
-    //
+    // 计算属性
+    // ...mapGetters(["activeIndex", "device", "requestForm"]),
   },
   methods: {
     // 定义方法

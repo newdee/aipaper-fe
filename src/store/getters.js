@@ -21,5 +21,6 @@ const getters = {
   preViewId: (state) => state.paper.preViewId,
   bdVid: (state) => state.paper.bdVid,
   orderStatus: (state) => state.paper.orderStatus,
+  selector_item: (state) => state.paper.selector_item,
 };
 export default getters;

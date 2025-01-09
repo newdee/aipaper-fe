@@ -569,6 +569,8 @@ export default {
             key: row.key1,
             word_count: row.word_count ? row.word_count : 0,
             product: row.product,
+            original_item: row.original_item ? row.original_item : {},
+            generated_items: row.generated_items ? row.generated_items : [],
           };
           this.$store.dispatch("app/setRequestForm", requestForm);
           eventBus.emit("setFormData", requestForm); // 发布事件

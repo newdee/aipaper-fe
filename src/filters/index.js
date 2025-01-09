@@ -90,6 +90,14 @@ export function dateFormatter(dateString) {
   // 返回格式化的日期字符串
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+export function translatePaymentMethod(key, methodList) {
+  // 解析 ISO8601 格式的日期字符串
+  if (!key || !Array.isArray(methodList)) {
+    return "未知";
+  }
+  const method = methodList.find((item) => item.key === key);
+  return method ? method.value : "未知";
+}
 
 export function orderStatusFormatter(status) {
   // 解析 ISO8601 格式的日期字符串

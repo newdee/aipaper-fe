@@ -49,7 +49,11 @@ router.beforeEach(async (to, from, next) => {
     next(false); // 阻止导航
     return;
   }
-
+  if (to.path == "/login") {
+    next();
+    NProgress.done();
+    return;
+  }
   // 如果没有 token 且目标路由在白名单中，直接放行
   let hasToken = getToken();
   if (!hasToken && whiteList.indexOf(to.path) !== -1) {
@@ -62,22 +66,34 @@ router.beforeEach(async (to, from, next) => {
   document.title = getPageTitle(to.meta.title);
 
   // determine whether the user has logged in
-  let loginId = localStorage.getItem("loginID");
   const sub_domain = getDomain();
   if (sub_domain && !store.getters.sub_domain) {
     store.dispatch("user/setSubDomain", sub_domain);
   }
+  let loginId = localStorage.getItem("loginID");
+
+  // 获取当前时间的十位数时间戳
 
   if (!hasToken && loginId) {
     setToken(loginId);
     store.dispatch("user/setStoreToken", loginId);
     hasToken = loginId;
   }
-
+  console.log("d-0ddd", hasToken, to);
   if (hasToken) {
     try {
       // 在这里调用一个 API 来验证 token 是否有效
       // await store.dispatch("user/getInfo"); // 假设这个 action 会验证 token
+      let expiredTimestamp = localStorage.getItem("expired_timestamp");
+      let currentTimestamp = Math.floor(Date.now() / 1000);
+
+      // 检查 token 是否过期
+      console.log("expiredTimestamp", expiredTimestamp);
+      if (expiredTimestamp && currentTimestamp > expiredTimestamp) {
+        localStorage.removeItem("expired_timestamp");
+        localStorage.removeItem("loginID");
+        throw new Error("Token 已过期");
+      }
       if (to.path === "/login" && hasToken === "editor-token") {
         next();
       } else {
@@ -107,7 +123,6 @@ router.beforeEach(async (to, from, next) => {
     NProgress.done();
   }
 });
-
 
 router.afterEach(() => {
   // finish progress bar
