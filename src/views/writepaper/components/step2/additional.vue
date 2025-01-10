@@ -50,7 +50,7 @@
         "
         class="att"
       >
-        <div class="borderBox">
+        <!-- <div class="borderBox">
           <div class="left">
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-zhengwenmoban"></use>
@@ -68,8 +68,8 @@
               </svg>
             </p>
           </div>
-        </div>
-        <div class="borderBox">
+        </div> -->
+        <!-- <div class="borderBox">
           <div class="left">
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-wenxianzongshu18"></use>
@@ -87,7 +87,7 @@
               </svg>
             </p>
           </div>
-        </div>
+        </div> -->
         <div class="borderBox">
           <div class="left">
             <svg class="icon svg-icon" aria-hidden="true">
@@ -127,7 +127,7 @@
           </div>
         </div>
         <!-- 学术创新 -->
-        <div class="borderBox">
+        <!-- <div class="borderBox">
           <div class="left">
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-chuangxinfuwu"></use>
@@ -145,7 +145,7 @@
               </svg>
             </p>
           </div>
-        </div>
+        </div> -->
 
         <!-- 论文正文(PDF版本) -->
         <div class="borderBox">

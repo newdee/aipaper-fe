@@ -12,19 +12,31 @@
       <div class="popup-overlay">
         <div class="popup-container">
           <div class="popup-left">
-            <div class="popConTitle">免费领取论文资料大礼包</div>
+            <div class="popConTitle">免费参加活动, 优惠享不停</div>
 
             <div class="test2Box">
-              <img src="@/assets/images/bg/text2.png" alt="" />
-            </div>
-            <div class="countImg">送 <span>10000字</span> 论文查重券</div>
-            <div class="content">
-              <h4>资料：</h4>
-              <p>选题参考、开题报告、写作技巧、写作雷区、答辩攻略</p>
-              <h4>模板：</h4>
               <p>
-                实习报告 200+、简历模板 400+、答辩PPT 400+、格式模板、表格模板
+                参加
+                <span>
+                  <i><b>B站 / </b></i>
+                  <i><b>小红书</b></i>
+                </span>
+                专属活动
               </p>
+              <p style="font-size: 16px; margin-top: 20px; padding-right: 40px">
+                享折扣券、免费生成券、论文查重券等各种福利
+              </p>
+              <!-- <img src="@/assets/images/bg/text2.png" alt="" /> -->
+            </div>
+
+            <!-- <div class="countImg">送 <span>10000字</span> 论文查重券</div> -->
+            <div class="content">
+              <h4>小红书专属福利：</h4>
+              <p>-- 点赞、收藏+关注，享8折优惠券</p>
+              <p>-- +转发笔记，享7折优惠券</p>
+              <h4>B站专属福利：</h4>
+              <p>-- 一键三连 享8折优惠券</p>
+              <p>-- +转发视频，享7折优惠券</p>
             </div>
           </div>
           <div class="popup-right">
@@ -225,8 +237,9 @@ h4 {
   display: none;
 }
 .test2Box {
-  width: 247px;
+  width: 397px;
   height: 84px;
+  font-size: 28px;
   img {
     width: 100%;
     height: 100%;

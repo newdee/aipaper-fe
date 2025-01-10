@@ -74,8 +74,8 @@
             v-if="sub_domain == 'www'"
             @click="showGift"
           >
-            <i class="el-icon-present"></i>
-            <span>免费大礼包 </span>
+            <span class="icoSpan"> HOT </span>
+            <span class="giftSpanMain">最新活动 </span>
           </div>
           <el-tooltip
             class="item"
@@ -863,27 +863,36 @@ export default {
   }
 
   .giftBtn {
-    background-color: rgba(51, 85, 255, 0.3);
     box-sizing: border-box;
+    position: relative;
     border-radius: 5px;
-    height: 36px;
     padding: 0px 10px;
     line-height: 36px;
-    font-size: 20px;
+    font-size: 16px;
     cursor: pointer;
     user-select: none;
-    color: #3355ff;
     display: flex;
     align-items: center;
-    span {
+    .giftSpanMain {
       display: inline-block; /* 将span设置为行内块级元素 */
       width: 75px; /* 设置固定宽度，具体宽度可根据需要调整 */
-      color: blue;
-      font-size: 15px;
       margin-left: 5px;
       overflow: hidden; /* 隐藏超出内容 */
       white-space: nowrap; /* 强制文本在一行中显示 */
       text-overflow: ellipsis; /* 添加省略号 */
+    }
+    .icoSpan {
+      height: 12px;
+      border-radius: 5px;
+      border: 1px solid #e20000;
+      color: #e20000;
+      font-size: 10px;
+      line-height: 11px;
+      padding: 0 3px;
+      position: absolute;
+      right: -4px;
+      top: -3px;
+      border-bottom-left-radius: 0px;
     }
   }
 }
