@@ -181,10 +181,12 @@
 
       <!-- 分页 -->
       <el-pagination
-        layout="prev, pager, next"
+        layout="total, sizes,prev, pager, next"
         :total="total"
+        :page-sizes="[5, 10, 20, 50]"
         :page-size="pageSize"
         :current-page.sync="currentPage"
+        @size-change="handleSizeChange"
         @current-change="handlePageChange"
         style="margin-top: 20px; text-align: right"
       />
@@ -203,7 +205,7 @@ export default {
       orderData: [],
       total: 0,
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 5,
       filters: {
         phone: "", // 添加phone作为筛选字段
         out_trade_no: "",
@@ -218,6 +220,11 @@ export default {
     ...mapGetters(["selector_item"]),
   },
   methods: {
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.pageSize = val;
+      this.getList();
+    },
     openDialog(phone) {
       this.filters.phone = phone; // 接收并设置手机号
       this.dialogVisible = true;

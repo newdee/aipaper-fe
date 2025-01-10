@@ -18,14 +18,7 @@
     </el-select>
 
     <!-- 表格 -->
-    <el-table
-      border
-      stripe
-      :data="
-        tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
-      "
-      style="width: 100%"
-    >
+    <el-table border stripe :data="tableData" style="width: 100%">
       <el-table-column align="center" prop="id" label="用户ID" width="80" />
       <el-table-column
         align="center"
@@ -98,11 +91,13 @@
 
     <!-- 分页 -->
     <el-pagination
-      layout="prev, pager, next"
+      layout="total, sizes,prev, pager, next"
       :total="total"
+      :page-sizes="[5, 10, 20, 50]"
       :page-size="pageSize"
       :current-page.sync="currentPage"
       @current-change="handlePageChange"
+      @size-change="handleSizeChange"
       style="margin-top: 20px; text-align: right"
     />
     <!-- 引入订单详情弹窗组件 -->
@@ -133,6 +128,11 @@ export default {
   },
 
   methods: {
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.pageSize = val;
+      this.getList();
+    },
     viewDetails(row) {
       // 传递手机号到订单详情组件并打开弹窗\
       console.log("row", row);
