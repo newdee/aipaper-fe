@@ -5,23 +5,13 @@
       <div class="col col_1">
         <img src="@/assets/images/MIXPAPERwxxz.png" alt="" />
         <div class="linkListBox">
-          <div class="linkbox">
-            <div class="linkImg">
-              <img :src="agent_image.wx_qrcode" alt="" />
-            </div>
-            <p class="linktext">公众号</p>
-          </div>
-          <div class="linkbox">
-            <div class="linkImg">
-              <img :src="agent_image.xhs_qrcode" alt="" />
-            </div>
-            <p class="linktext">B站</p>
-          </div>
-          <div class="linkbox">
-            <div class="linkImg">
-              <img :src="agent_image.bili_qrcode" alt="" />
-            </div>
-            <p class="linktext">微信群</p>
+          <div class="linkbox" v-for="image in agent_image" :key="image.id">
+            <template v-if="display_ids.includes(image.id)">
+              <div class="linkImg">
+                <img :src="image.image_url" :alt="image.name" />
+              </div>
+              <p class="linktext">{{ image.name }}</p>
+            </template>
           </div>
         </div>
       </div>
@@ -112,7 +102,7 @@
         <div>
           <el-popover placement="left" width="150" trigger="hover">
             <div class="qywxBox">
-              <img :src="agent_image.service_qrcode" alt="" />
+              <img :src="contactService.image_url" alt="" />
             </div>
             <p>扫描二维码，<br />联系售前/售后客服</p>
             <el-button slot="reference">
@@ -120,7 +110,7 @@
                 <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-ai-service"></use>
                 </svg>
-                <p>联系客服</p>
+                <p>{{ contactService.name }}</p>
               </div>
             </el-button>
           </el-popover>
@@ -192,6 +182,7 @@ export default {
   data() {
     return {
       // 定义变量
+      display_ids: [2, 3, 4], // 需要展示的image id
     };
   },
   components: {
@@ -221,6 +212,9 @@ export default {
 
   computed: {
     ...mapGetters(["agent_image"]),
+    contactService() {
+      return this.agent_image.find((image) => image.id === 5);
+    },
   },
   methods: {
     // 定义方法

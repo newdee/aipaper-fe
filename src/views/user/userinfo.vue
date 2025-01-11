@@ -60,115 +60,224 @@
         v-if="
           userInfo.permission == 'AGENT' || userInfo.permission == 'SUPER_ADMIN'
         "
-        class="userUploadBox"
+        class=""
       >
-        <!-- 公众号二维码 -->
-        <div class="uploadLi">
-          <el-upload
-            class="imgUploader"
-            action="https://api.mixpaper.cn/api/ai-paper/user/edit"
-            :data="{ image: 2 }"
-            :show-file-list="false"
-            :on-success="handleSuccess"
-            :on-error="handleError"
-            :before-upload="beforeAvatarUpload"
-            :http-request="handleHttpRequest"
-          >
-            <img
-              v-if="agent_image.wx_qrcode"
-              :src="agent_image.wx_qrcode"
-              class="avatar"
-            />
-            <i v-else class="el-icon-plus liImgLi"></i>
-          </el-upload>
-          <p>公众号二维码</p>
-        </div>
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>底部栏三张图片</span>
+          </div>
+          <div class="cardMain userUploadBox">
+            <!-- 公众号二维码 -->
+            <div class="uploadLi">
+              <el-upload
+                class="imgUploader"
+                action="https://api.mixpaper.cn/api/ai-paper/user/edit"
+                :data="{ image: 2, image_name: imgId2.name }"
+                :show-file-list="false"
+                :on-success="handleSuccess"
+                :on-error="handleError"
+                :before-upload="beforeAvatarUpload"
+                :http-request="handleHttpRequest"
+              >
+                <img
+                  v-if="imgId2.image_url"
+                  :src="imgId2.image_url"
+                  class="avatar"
+                />
+                <i v-else class="el-icon-plus liImgLi"></i>
+              </el-upload>
+              <p>
+                <el-input
+                  v-model="imgId2.name"
+                  placeholder="请输入内容"
+                  style="width: 120px"
+                  @blur="saveInput(2)"
+                ></el-input>
+              </p>
+            </div>
 
-        <!-- 小红书 -->
-        <div class="uploadLi">
-          <el-upload
-            class="imgUploader"
-            action="https://api.mixpaper.cn/api/ai-paper/user/edit"
-            :data="{ image: 3 }"
-            :show-file-list="false"
-            :on-success="handleSuccess"
-            :on-error="handleError"
-            :before-upload="beforeAvatarUpload"
-            :http-request="handleHttpRequest"
-          >
-            <img
-              v-if="agent_image.xhs_qrcode"
-              :src="agent_image.xhs_qrcode"
-              class="avatar"
-            />
-            <i v-else class="el-icon-plus liImgLi"></i>
-          </el-upload>
-          <p>B站</p>
-        </div>
-        <!-- B站 -->
-        <div class="uploadLi">
-          <el-upload
-            class="imgUploader"
-            action="https://api.mixpaper.cn/api/ai-paper/user/edit"
-            :data="{ image: 4 }"
-            :show-file-list="false"
-            :on-success="handleSuccess"
-            :on-error="handleError"
-            :before-upload="beforeAvatarUpload"
-            :http-request="handleHttpRequest"
-          >
-            <img
-              v-if="agent_image.bili_qrcode"
-              :src="agent_image.bili_qrcode"
-              class="avatar"
-            />
-            <i v-else class="el-icon-plus liImgLi"></i>
-          </el-upload>
-          <p>微信群</p>
-        </div>
+            <!-- 小红书 -->
+            <div class="uploadLi">
+              <el-upload
+                class="imgUploader"
+                action="https://api.mixpaper.cn/api/ai-paper/user/edit"
+                :data="{ image: 3, image_name: imgId3.name }"
+                :show-file-list="false"
+                :on-success="handleSuccess"
+                :on-error="handleError"
+                :before-upload="beforeAvatarUpload"
+                :http-request="handleHttpRequest"
+              >
+                <img
+                  v-if="imgId3.image_url"
+                  :src="imgId3.image_url"
+                  class="avatar"
+                />
+                <i v-else class="el-icon-plus liImgLi"></i>
+              </el-upload>
+              <p>
+                <el-input
+                  v-model="imgId3.name"
+                  placeholder="请输入内容"
+                  style="width: 120px"
+                  @blur="saveInput(3)"
+                ></el-input>
+              </p>
+            </div>
+            <!-- B站 -->
+            <div class="uploadLi">
+              <el-upload
+                class="imgUploader"
+                action="https://api.mixpaper.cn/api/ai-paper/user/edit"
+                :data="{ image: 4, image_name: imgId4.name }"
+                :show-file-list="false"
+                :on-success="handleSuccess"
+                :on-error="handleError"
+                :before-upload="beforeAvatarUpload"
+                :http-request="handleHttpRequest"
+              >
+                <img
+                  v-if="imgId4.image_url"
+                  :src="imgId4.image_url"
+                  class="avatar"
+                />
+                <i v-else class="el-icon-plus liImgLi"></i>
+              </el-upload>
+              <p>
+                <el-input
+                  v-model="imgId4.name"
+                  placeholder="请输入内容"
+                  style="width: 120px"
+                  @blur="saveInput(4)"
+                ></el-input>
+              </p>
+            </div>
+          </div>
+        </el-card>
         <!-- 联系客服 -->
-
-        <div class="uploadLi">
-          <el-upload
-            class="imgUploader"
-            action="https://api.mixpaper.cn/api/ai-paper/user/edit"
-            :data="{ image: 5 }"
-            :show-file-list="false"
-            :on-success="handleSuccess"
-            :on-error="handleError"
-            :before-upload="beforeAvatarUpload"
-            :http-request="handleHttpRequest"
-          >
-            <img
-              v-if="agent_image.service_qrcode"
-              :src="agent_image.service_qrcode"
-              class="avatar"
-            />
-            <i v-else class="el-icon-plus liImgLi"></i>
-          </el-upload>
-          <p>联系客服</p>
-        </div>
-        <!-- 代理加盟 -->
-        <div class="uploadLi">
-          <el-upload
-            class="imgUploader"
-            action="https://api.mixpaper.cn/api/ai-paper/user/edit"
-            :data="{ image: 6 }"
-            :show-file-list="false"
-            :on-success="handleSuccess"
-            :on-error="handleError"
-            :before-upload="beforeAvatarUpload"
-            :http-request="handleHttpRequest"
-          >
-            <img
-              v-if="agent_image.business_qrcode"
-              :src="agent_image.business_qrcode"
-              class="avatar"
-            />
-            <i v-else class="el-icon-plus liImgLi"></i>
-          </el-upload>
-          <p>代理加盟</p>
-        </div>
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>右侧悬浮窗图片</span>
+          </div>
+          <div class="cardMain userUploadBox">
+            <div class="uploadLi">
+              <el-upload
+                class="imgUploader"
+                action="https://api.mixpaper.cn/api/ai-paper/user/edit"
+                :data="{ image: 5, image_name: imgId5.name }"
+                :show-file-list="false"
+                :on-success="handleSuccess"
+                :on-error="handleError"
+                :before-upload="beforeAvatarUpload"
+                :http-request="handleHttpRequest"
+              >
+                <img
+                  v-if="imgId5.image_url"
+                  :src="imgId5.image_url"
+                  class="avatar"
+                />
+                <i v-else class="el-icon-plus liImgLi"></i>
+              </el-upload>
+              <p>
+                <el-input
+                  v-model="imgId5.name"
+                  placeholder="请输入内容"
+                  style="width: 120px"
+                  @blur="saveInput(5)"
+                ></el-input>
+              </p>
+            </div>
+            <!-- 代理加盟 -->
+            <div class="uploadLi">
+              <el-upload
+                class="imgUploader"
+                action="https://api.mixpaper.cn/api/ai-paper/user/edit"
+                :data="{ image: 6, image_name: imgId6.name }"
+                :show-file-list="false"
+                :on-success="handleSuccess"
+                :on-error="handleError"
+                :before-upload="beforeAvatarUpload"
+                :http-request="handleHttpRequest"
+              >
+                <img
+                  v-if="imgId6.image_url"
+                  :src="imgId6.image_url"
+                  class="avatar"
+                />
+                <i v-else class="el-icon-plus liImgLi"></i>
+              </el-upload>
+              <p>
+                <el-input
+                  v-model="imgId6.name"
+                  placeholder="请输入内容"
+                  style="width: 120px"
+                  @blur="saveInput(6)"
+                ></el-input>
+              </p>
+            </div>
+          </div>
+        </el-card>
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>支付弹窗图片及活动弹窗图片</span>
+          </div>
+          <div class="cardMain userUploadBox">
+            <div class="uploadLi">
+              <el-upload
+                class="imgUploader"
+                action="https://api.mixpaper.cn/api/ai-paper/user/edit"
+                :data="{ image: 7, image_name: imgId7.name }"
+                :show-file-list="false"
+                :on-success="handleSuccess"
+                :on-error="handleError"
+                :before-upload="beforeAvatarUpload"
+                :http-request="handleHttpRequest"
+              >
+                <img
+                  v-if="imgId7.image_url"
+                  :src="imgId7.image_url"
+                  class="avatar"
+                />
+                <i v-else class="el-icon-plus liImgLi"></i>
+              </el-upload>
+              <p>
+                <el-input
+                  v-model="imgId7.name"
+                  placeholder="请输入内容"
+                  style="width: 120px"
+                  @blur="saveInput(7)"
+                ></el-input>
+              </p>
+            </div>
+            <div class="uploadLi">
+              <el-upload
+                class="imgUploader"
+                action="https://api.mixpaper.cn/api/ai-paper/user/edit"
+                :data="{ image: 8, image_name: imgId8.name }"
+                :show-file-list="false"
+                :on-success="handleSuccess"
+                :on-error="handleError"
+                :before-upload="beforeAvatarUpload"
+                :http-request="handleHttpRequest"
+              >
+                <img
+                  v-if="imgId8.image_url"
+                  :src="imgId8.image_url"
+                  class="avatar"
+                />
+                <i v-else class="el-icon-plus liImgLi"></i>
+              </el-upload>
+              <p>
+                <el-input
+                  v-model="imgId8.name"
+                  placeholder="请输入内容"
+                  style="width: 120px"
+                  @blur="saveInput(8)"
+                ></el-input>
+              </p>
+            </div>
+          </div>
+        </el-card>
       </div>
       <div class="info">
         <el-button @click="loginOut">退出登录</el-button>
@@ -247,10 +356,39 @@ export default {
   },
   mounted() {
     // 页面初始化
+    // this.getList();
   },
 
   computed: {
-    ...mapGetters(["avatar", "name", "userInfo", "agent_image", "device"]),
+    ...mapGetters([
+      "avatar",
+      "name",
+      "userInfo",
+      "agent_image",
+      "device",
+      "sub_domain",
+    ]),
+    imgId2() {
+      return this.agent_image.find((image) => image.id === 2);
+    },
+    imgId3() {
+      return this.agent_image.find((image) => image.id === 3);
+    },
+    imgId4() {
+      return this.agent_image.find((image) => image.id === 4);
+    },
+    imgId5() {
+      return this.agent_image.find((image) => image.id === 5);
+    },
+    imgId6() {
+      return this.agent_image.find((image) => image.id === 6);
+    },
+    imgId7() {
+      return this.agent_image.find((image) => image.id === 7);
+    },
+    imgId8() {
+      return this.agent_image.find((image) => image.id === 8);
+    },
   },
   methods: {
     setFormData() {
@@ -275,10 +413,12 @@ export default {
     openModal() {
       this.$refs.globalModal.open();
     },
+
     handleHttpRequest({ file, data, onSuccess, onError }) {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("image", data.image);
+      formData.append("image_name", data.image_name);
 
       userEdit(formData)
         .then((response) => {
@@ -287,6 +427,25 @@ export default {
         .catch((error) => {
           onError(error);
         });
+    },
+    saveInput(index) {
+      let imgData = this.agent_image.find((image) => image.id == index);
+      const formData = new FormData();
+      formData.append("image", index);
+      formData.append("file", "");
+      formData.append("image_name", imgData.name);
+      Ming(
+        "currentName",
+        this.agent_image.find((image) => image.id == index)
+      );
+      userEdit(formData)
+        .then((response) => {
+          this.$message({
+            type: "success",
+            message: "保存成功!",
+          });
+        })
+        .catch((error) => {});
     },
     // 定义方法
     goBack() {
@@ -427,7 +586,9 @@ export default {
 .upload {
   flex: none;
 }
-
+.box-card {
+  margin-top: 10px;
+}
 .avatar-uploader {
   display: inline-block;
   width: 300px;
@@ -450,7 +611,6 @@ export default {
   text-align: center;
 }
 .userUploadBox {
-  margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
 }

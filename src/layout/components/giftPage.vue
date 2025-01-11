@@ -51,8 +51,7 @@
               万象写作
             </div>
             <div class="qywxBox">
-              <!-- <img :src="agent_image.service_qrcode" alt="" /> -->
-              <img src="@/assets/images/qywx.png" alt="" />
+              <img :src="imgData.image_url" alt="" />
             </div>
             <div class="popupBottom">
               <p>添加客服微信 <span class="red">免费</span> 领礼包</p>
@@ -80,6 +79,9 @@ export default {
   },
   computed: {
     ...mapGetters(["agent_image"]),
+    imgData() {
+      return this.agent_image.find((image) => image.id === 5);
+    },
   },
   methods: {
     showInit() {

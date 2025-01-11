@@ -190,7 +190,7 @@
         <!-- 二维码展示 -->
         <div class="code1V1">
           <div>
-            <img src="@/assets/images/bg/1v1img.png" alt="" />
+            <img :src="imgData.image_url" alt="" />
           </div>
           <p>1v1人工服务，全程售后无忧</p>
         </div>
@@ -290,8 +290,12 @@ export default {
       "device",
       "currentOrder",
       "requestForm",
+      "agent_image",
       // "additionalList",
     ]),
+    imgData() {
+      return this.agent_image.find((image) => image.id === 5);
+    },
   },
 
   methods: {
