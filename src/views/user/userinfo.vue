@@ -249,7 +249,7 @@
                 ></el-input>
               </p>
             </div>
-            <div class="uploadLi">
+            <div v-if="sub_domain == 'www'" class="uploadLi">
               <el-upload
                 class="imgUploader"
                 action="https://api.mixpaper.cn/api/ai-paper/user/edit"
