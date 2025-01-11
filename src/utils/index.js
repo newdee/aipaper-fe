@@ -160,7 +160,7 @@ export function getDomain(func, wait, immediate) {
 
   let sub_domain = hostname.replace(".mixpaper.cn", "");
   if (sub_domain == "localhost" || sub_domain == "mixpaper.cn") {
-    sub_domain = "gao";
+    sub_domain = "www";
   }
 
   if (sub_domain == "") {
