@@ -1029,8 +1029,20 @@ export default {
         },
       };
       if (status == "aitype") {
+        zhuge.track(`AI帮写`, {
+          大纲key: this.requestForm.key,
+          所选学历: this.requestForm.type,
+          大纲字数: this.requestForm.word_count,
+          大纲类型: this.requestForm.product,
+        });
         data.aitype = true;
       } else {
+        zhuge.track(`编辑大纲`, {
+          大纲key: this.requestForm.key,
+          所选学历: this.requestForm.type,
+          大纲字数: this.requestForm.word_count,
+          大纲类型: this.requestForm.product,
+        });
         data.aitype = false;
       }
       editLine(data).then((res) => {
@@ -1359,6 +1371,12 @@ export default {
           outline: this.outline,
         },
       };
+      zhuge.track(`编辑大纲`, {
+        大纲key: this.requestForm.key,
+        所选学历: this.requestForm.type,
+        大纲字数: this.requestForm.word_count,
+        大纲类型: this.requestForm.product,
+      });
       editLine(data)
         .then((res) => {})
         .catch((err) => {
