@@ -16,7 +16,15 @@
         :value="item"
       />
     </el-select>
-
+    <el-input
+      v-model="phoneNum"
+      style="margin-left: 20px; width: 260px"
+      placeholder="请输入手机号码"
+      clearable
+    ></el-input>
+    <el-button type="primary" style="margin-left: 20px" plain @click="getList"
+      >搜索</el-button
+    >
     <!-- 表格 -->
     <el-table border stripe :data="tableData" style="width: 100%">
       <el-table-column align="center" prop="id" label="用户ID" width="80" />
@@ -116,6 +124,7 @@ export default {
   data() {
     return {
       selectedDomain: "",
+      phoneNum: "",
       tableData: [],
       currentPage: 1,
       pageSize: 5, // 每页显示的条数
@@ -143,6 +152,7 @@ export default {
         page_num: this.currentPage,
         page_size: this.pageSize,
         sub_domain: this.selectedDomain,
+        phone: this.phoneNum,
       };
       !this.selectedDomain && delete params.sub_domain;
       user_info(params).then((res) => {

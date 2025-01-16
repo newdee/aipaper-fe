@@ -51,9 +51,9 @@
     </el-descriptions>
     <!-- <panel-group @handleSetLineChartData="handleSetLineChartData" /> -->
 
-    <div class="mgt">
+    <el-card class="mgt">
       <userlist />
-    </div>
+    </el-card>
     <div class="mgt">
       <line-chart />
     </div>
