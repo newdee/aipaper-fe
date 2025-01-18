@@ -1,13 +1,16 @@
 <template>
   <div class="dataStatisticsContent">
     <!-- 页面名称 -->
-    <div class="datastaItem">
-      <p>今日大纲</p>
-      <p>{{ primaryNumber }}</p>
-    </div>
-    <div class="datastaItem">
-      <p>今日正文</p>
-      <p>{{ secondaryNumber }}</p>
+    <p class="dataName">今日万象</p>
+    <div class="dataMain">
+      <div class="datastaItem">
+        <p>大纲:</p>
+        <p>{{ primaryNumber }}</p>
+      </div>
+      <div class="datastaItem" style="margin-left: 20px">
+        <p>正文:</p>
+        <p>{{ secondaryNumber }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -92,16 +95,27 @@ export default {
 // @media only screen and (max-width: 768px) {
 // }
 .dataStatisticsContent {
-  background-color: #0000001a;
-  display: flex;
-  align-items: center;
-  padding: 8px 16px;
-  border-radius: 5px;
-  .datastaItem {
+  height: 80px;
+  background: #ffffff80;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 20px;
+  padding-right: 20px;
+  color: #1b2126;
+  .dataName {
+    font-weight: bold;
+  }
+  .dataMain {
     display: flex;
-    width: 60px;
-    flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
+    font-size: 16px;
+    margin-top: 5px;
+  }
+  .datastaItem {
+    align-items: center;
+    display: flex;
     p:first-child {
       color: #000;
     }
@@ -109,6 +123,7 @@ export default {
       color: #35f;
       font-weight: bold;
       font-size: 20px;
+      margin-left: 8px;
     }
   }
 }

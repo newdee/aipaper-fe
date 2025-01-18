@@ -4,35 +4,32 @@
     <!-- 公告管理 -->
     <!-- <announcement></announcement> -->
     <!-- 页面名称 -->
-    <div class="carouselBox" v-if="carouseStatus">
-      <div class="carouselCon">
-        <el-carousel height="44px" direction="vertical" :autoplay="true">
-          <el-carousel-item v-for="item in 3" :key="item">
-            <p class="homeSwiper">
-              <img
-                src="https://mixpaper.cn/static/img/MIXPAPER.d3c7dfc9.png"
-                alt=""
-              />
-              热烈庆祝万象写作获得RRE 300万美金风投！
-            </p>
-          </el-carousel-item>
-        </el-carousel>
-      </div>
-    </div>
+
     <!-- <el-button type="success" @click="jump2">跳转详情页</el-button> -->
     <search-paper class="searchPaper"></search-paper>
-
     <div class="swiperBg">
-      <input-main class="swiper swiper1"></input-main>
-      <div class="swiperBg swiperNews pwrapper">
-        <p class="swiper swiperListTitle1">
-          <span> 用户心声</span>
-        </p>
+      <advantage class="swiper swiper3"></advantage>
+    </div>
+
+    <div class="swiperBg swiperBg2" style="padding-top: 40px">
+      <!-- <input-main class="swiper swiper1"></input-main> -->
+      <div class="swiperNews pwrapper">
+        <div class="swiperListTitle">
+          <p>
+            <span> 用户心声</span>
+            <span class="rightIcon">
+              <img src="@/assets/images/index/home_title_bg.png" alt="" />
+            </span>
+          </p>
+        </div>
       </div>
       <swiper-three class="swiper swiper2"></swiper-three>
     </div>
     <!-- 优势页面 -->
-    <advantage class="swiper swiper3"></advantage>
+    <div class="swiperBg">
+      <corelist class="swiper swiper3"></corelist>
+    </div>
+
     <!-- <el-button @click="getList">点击</el-button> -->
   </div>
 </template>
@@ -43,6 +40,7 @@
 import inputMain from "./components/inputMain.vue";
 import swiperThree from "./components/swiperThree.vue";
 import advantage from "./components/advantage.vue";
+import corelist from "./components/corelist.vue";
 import searchPaper from "./components/searchPaper.vue";
 // import eventBus from "@/utils/eventBus";
 import { getDomain } from "@/utils/index.js";
@@ -60,7 +58,7 @@ export default {
     advantage,
     searchPaper,
     swiperThree,
-    // announcement,
+    corelist,
   },
   mounted() {
     // eventBus.emit("sendOutline", 5); // 发布事件
@@ -104,56 +102,20 @@ export default {
 <style lang="scss" scoped>
 // 引入scss
 // @import "@/styles/variables.scss";
-@import "./index.scss";
+@import "./components/index.scss";
 
 .swiperBg {
   background: #fff;
   padding-bottom: 40px;
 }
-
-.pwrapper {
-  padding-bottom: 0px;
-  // margin-top: 60px;
-  .swiperListTitle1 {
-    text-align: left;
-    padding-top: 22px;
-
-    span {
-      display: inline-block;
-      text-align: center;
-      background: rgb(19, 34, 122);
-      border-radius: 30px;
-      line-height: 60px;
-      font-size: 30px;
-      color: #fff;
-      padding: 0 1.7em;
-    }
-  }
+.swiperBg2 {
+  background: #f7f7f7;
+  padding-bottom: 40px;
+}
+.swiper {
+  max-width: 1100px;
+  margin: 0 auto;
+  border-top: 1px solid transparent; // 防止margin塌陷
 }
 // ddd
-
-.carouselBox {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f7f7f7;
-  .carouselCon {
-    width: 1100px;
-  }
-}
-.homeSwiper {
-  font-size: 14px;
-  line-height: 44px;
-  text-align: center;
-  color: #1d1d1f;
-  background-color: #f7f7f7;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  img {
-    width: 115px;
-    height: 19px;
-    margin-right: 10px;
-  }
-}
 </style>

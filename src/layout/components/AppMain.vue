@@ -25,8 +25,7 @@ export default {
   // min-height: calc(100vh - 80px);
   width: 100%;
   position: relative;
-  background-color: #f5f8ff;
-
+  background-color: #f7f7f7;
   overflow: hidden;
 }
 

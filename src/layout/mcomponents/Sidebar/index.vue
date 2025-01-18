@@ -168,7 +168,7 @@ export default {
 }
 
 .sidebar-container {
-  background: #f5f8ff;
+  background: #f7f7f7;
   color: #000;
   font-size: 14px !important;
 

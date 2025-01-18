@@ -8,9 +8,9 @@
             class="grid-content nav_left flex items-center"
           >
             <div class="logo-box">
-              <div class="logoR">
+              <!-- <div class="logoR">
                 <img :src="logoMax" alt="" title="logo" />
-              </div>
+              </div> -->
               <div class="logoL">
                 <!-- <p>万象学术</p> -->
                 <img :src="logo" alt="" title="logo" />
@@ -58,8 +58,28 @@
           </div>
         </div>
       </div>
+      <!-- 风投轮播 -->
+      <div class="carouselBox" v-if="carouseStatus">
+        <div class="carouselCon">
+          <el-carousel
+            height="44px"
+            direction="vertical"
+            indicator-position="none"
+            :autoplay="true"
+          >
+            <el-carousel-item v-for="item in 3" :key="item">
+              <p class="homeSwiper">
+                <img
+                  src="@/assets/images/index/home_nav_banner_02.png"
+                  alt=""
+                />
+              </p>
+            </el-carousel-item>
+          </el-carousel>
+        </div>
+      </div>
       <!-- 礼包 -->
-      <div class="giftBox hidden-xs-only">
+      <div v-if="!showContent" class="giftBox hidden-xs-only">
         <img src="../../assets/images/bg/giftbox.png" alt="" />
         <p>全场限时 <b>折扣</b>，喜迎 <b>2025</b> 年！</p>
       </div>
@@ -300,6 +320,8 @@ export default {
   data() {
     return {
       listId: 0,
+      carouseStatus: true,
+
       logo: require("@/assets/images/MIXPAPER.png"),
       logoMax: require("@/assets/images/logoMax.png"),
 
@@ -636,7 +658,7 @@ export default {
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
   &.grayBg {
-    background: #f5f8ff;
+    background: #f7f7f7;
   }
 
   .hamburger-container {
@@ -777,6 +799,7 @@ export default {
 
   .navItem {
     padding: 0 10px;
+    color: #777777;
 
     &.gray {
       color: #777777d5;
@@ -918,5 +941,22 @@ export default {
   }
   font-size: 18px;
   color: #e20000;
+}
+.carouselBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f7f7;
+  .carouselCon {
+    width: 280px;
+  }
+}
+.homeSwiper {
+  width: 280px;
+  height: 40px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

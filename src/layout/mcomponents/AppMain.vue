@@ -27,7 +27,7 @@ export default {
 
 .app-main {
   padding-left: $sideBarWidth;
-  background-color: #f5f8ff;
+  background-color: #f7f7f7;
   width: 100%;
   position: relative;
   overflow: hidden;

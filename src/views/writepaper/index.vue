@@ -378,8 +378,7 @@ export default {
 }
 
 .mainContentSec {
-  // background-color: #f5f8ff;
-  overflow: hidden;
+  // background-color:  #F7F7F7;  overflow: hidden;
 }
 
 .tabsListWrapper {

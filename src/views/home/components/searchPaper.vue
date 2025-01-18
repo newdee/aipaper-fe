@@ -33,16 +33,10 @@
         </div>
       </div> -->
       <div class="inputDesc g_poin" @click="$jumpUrl('/main/writepaper')">
-        <p>
-          让天下没有难做的学术
-          <span>拒绝学术垃圾 只做学术精品</span>
-        </p>
-        <div>
-          <p>
-            开始智能写作
-            <i class="el-icon-caret-right"></i>
-          </p>
-        </div>
+        <p>让天下没有难做的学术</p>
+      </div>
+      <div class="inputBtn" @click="$jumpUrl('/main/writepaper')">
+        <img src="@/assets/images/index/home_banner01_btn_pc.png" alt="" />
       </div>
     </div>
   </div>
@@ -50,7 +44,7 @@
 <script>
 // import { mapGetters } from "vuex";
 // import { sms } from "@/api/login";
-import dataStatistics from "@/components//DataStatistics/index.vue";
+import dataStatistics from "@/components/DataStatistics/index.vue";
 // import eventBus from "@/utils/eventBus";
 
 export default {
@@ -104,9 +98,12 @@ export default {
 // 媒体查询
 // @media only screen and (max-width: 939px) {
 // }
+
 .mainBackground {
-  background: url("../../../assets/images/newspaper.png") no-repeat 0 0;
-  background-size: cover;
+  background: url("../../../assets/images/index/home_banner01_01_pc.png")
+    no-repeat center center; // 将背景居中
+  background-size: cover; // 确保背景图片覆盖整个容器
+  height: 360px;
 }
 
 @import "./index.scss";
@@ -115,5 +112,15 @@ export default {
   z-index: 3;
   top: 100px;
   left: 20px;
+}
+.inputBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  img {
+    width: 178px;
+    height: 44px;
+  }
 }
 </style>
