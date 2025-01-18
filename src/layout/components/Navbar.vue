@@ -59,7 +59,7 @@
         </div>
       </div>
       <!-- 风投轮播 -->
-      <div class="carouselBox" v-if="carouseStatus">
+      <div class="carouselBox" v-if="showContent">
         <div class="carouselCon">
           <el-carousel
             height="44px"
@@ -474,6 +474,7 @@ export default {
   height: 100%;
   margin: 0 auto;
   justify-content: space-between;
+  background: #fff;
 }
 
 .operation_box {

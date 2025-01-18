@@ -291,11 +291,12 @@ export default {
   padding-left: 36px;
   // width: 176px;
   height: 80px;
-  margin-right: 20px;
+  padding-right: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   .logoR {
     width: 48px;
     height: 40px;
