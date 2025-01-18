@@ -231,6 +231,7 @@ export default {
 
 .footer {
   padding-left: $sideBarWidth !important;
+  background: #f1f1f1;
 }
 
 .footer.isHome {
@@ -290,7 +291,7 @@ export default {
 }
 
 .footerP {
-  background: rgba(241, 241, 241, 0.93);
+  background: #fff;
   padding: 24px 0;
   text-align: center;
   font-size: 12px;
