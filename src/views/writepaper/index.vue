@@ -93,7 +93,7 @@
         :class="[isScrollActive ? 'fixed' : '']"
       ></step3>
     </div>
-    <question-list></question-list>
+    <!-- <question-list></question-list> -->
     <!-- 论文查询生辰弹窗 -->
     <order-dialog
       :requestKey="requestKey"

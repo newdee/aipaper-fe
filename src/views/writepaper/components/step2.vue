@@ -238,7 +238,8 @@
     </div>
     <div class="warningP generateSpan">
       <!-- <span class="g_poin" @click="showSlider">生成全文</span> -->
-      <span class="g_poin" @click="saveOutline('reduce')">生成全文</span>
+      <!-- <span class="g_poin" @click="saveOutline('reduce')">生成全文</span> -->
+      <span class="g_poin" @click="reloadSave('reduce')">生成全文</span>
       <!-- <span class="g_poin" @click="textF">生成全文</span> -->
     </div>
     <div class="wxContentMessage">
@@ -1543,6 +1544,7 @@ export default {
       this.statementDialogVisible = false;
       // 勾选"我已阅读并同意...."
       this.checked = true;
+      this.reloadSave("reduce");
       // 接下来弹出付款二维码,走付款流程
     },
     handleDragStart(node, ev) {

@@ -26,19 +26,19 @@
         :active="'home' == $route.name"
         class="mItemWrapper"
       >
-        <el-tooltip
+        <!-- <el-tooltip
           class="item"
           effect="dark"
-          content="你对我的强大一无所知"
+          content=""
           placement="right"
-        >
-          <div class="mSliderItem">
-            <div class="left">
-              <span class="imgIcon"></span>{{ $t("route.homePage") }}
-            </div>
-            <span class="right imgIcon"></span>
+        > -->
+        <div class="mSliderItem">
+          <div class="left">
+            <span class="imgIcon"></span>{{ $t("route.homePage") }}
           </div>
-        </el-tooltip>
+          <span class="right imgIcon"></span>
+        </div>
+        <!-- </el-tooltip> -->
       </div>
       <template v-for="(route, i) in routerList">
         <div
@@ -48,23 +48,23 @@
           :active="route.name == $route.name"
           @click="$jumpUrl('/main/' + route.path)"
         >
-          <el-tooltip
+          <!-- <el-tooltip
             class="item"
             effect="dark"
             :content="route.meta.describe"
             placement="right"
-          >
-            <div class="mSliderItem">
-              <div class="left">
-                <!-- <span class="imgIcon"></span> -->
-                <span class="imgIconBg">
-                  <i :class="route.meta.icon"></i>
-                </span>
-                {{ generateTitle(route.meta.title) }}
-              </div>
-              <span class="right imgIcon"></span>
+          > -->
+          <div class="mSliderItem">
+            <div class="left">
+              <!-- <span class="imgIcon"></span> -->
+              <span class="imgIconBg">
+                <i :class="route.meta.icon"></i>
+              </span>
+              {{ generateTitle(route.meta.title) }}
             </div>
-          </el-tooltip>
+            <span class="right imgIcon"></span>
+          </div>
+          <!-- </el-tooltip> -->
         </div>
       </template>
     </div>
