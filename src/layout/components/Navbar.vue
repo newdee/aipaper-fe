@@ -43,9 +43,9 @@
           class="logo-box phoneLogo"
           @click="$jumpUrl('/home/home')"
         >
-          <div class="logoR phoneRLogo">
+          <!-- <div class="logoR phoneRLogo">
             <img :src="logoMax" alt="" title="logo" />
-          </div>
+          </div> -->
           <div class="logoL phoneLLogo">
             <!-- <p>万象学术</p> -->
             <img :src="logo" alt="" title="logo" />
@@ -81,7 +81,7 @@
       <!-- 礼包 -->
       <div v-if="!showContent" class="giftBox hidden-xs-only">
         <img src="../../assets/images/bg/giftbox.png" alt="" />
-        <p>全场限时 <b>折扣</b>，喜迎 <b>2025</b> 年！</p>
+        <p>全场限时 <b>折扣</b>，喜迎 <b>2025</b> ！</p>
       </div>
       <!-- 礼包结束 -->
       <div :class="[showContent ? '' : 'leftNavbarPosition']">
@@ -935,12 +935,18 @@ export default {
 .giftBox {
   display: flex;
   align-items: center;
+  height: 40px;
+  background: #ffefe7;
+  border: 1px solid #ffd1b9;
+  border-radius: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
   img {
     width: 26px;
     margin-right: 8px;
     height: 26px;
   }
-  font-size: 18px;
+  font-size: 14px;
   color: #e20000;
 }
 .carouselBox {

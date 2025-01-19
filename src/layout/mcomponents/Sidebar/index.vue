@@ -5,9 +5,9 @@
       class="grid-content nav_left flex items-center"
     >
       <div class="logo-box2">
-        <div class="logoR">
+        <!-- <div class="logoR">
           <img :src="logoMax" alt="" title="logo" />
-        </div>
+        </div> -->
         <div class="logoL">
           <!-- <p>万象学术</p> -->
           <img :src="logo" alt="" title="logo" />

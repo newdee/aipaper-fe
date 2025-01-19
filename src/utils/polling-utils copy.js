@@ -22,7 +22,6 @@ export default function polling(
     const poll = () => {
       outlineStatus(data)
         .then((res) => {
-          console.log("res", res.result);
           if (res.result.status === "生成中") {
             store.dispatch("app/setProStatus", true);
 
@@ -40,7 +39,6 @@ export default function polling(
           }
         })
         .catch((error) => {
-          console.error("Error:", error);
           if (currentRetry + 1 < maxRetries) {
             store.dispatch("app/setProStatus", true);
 

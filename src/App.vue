@@ -79,7 +79,7 @@ export default {
   justify-content: center;
   height: 100vh;
   text-align: center;
-  background-color: #f1f1f1;
+  background-color: #f7f7f7;
   color: #333;
   padding: 20px;
 

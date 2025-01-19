@@ -21,7 +21,7 @@
         <tips :parentHeight="parentHeight"></tips>
       </div>
       <!-- <p class="tips">拖拽章节,可实现章节排序</p> -->
-      <p class="tips">当您编辑大纲时,会自动保存</p>
+      <!-- <p class="tips">当您编辑大纲时,会自动保存</p> -->
 
       <div class="tipOutline">
         <el-tooltip class="item" effect="dark" placement="top">
@@ -54,6 +54,7 @@
             付费下载大纲
           </el-button>
         </el-tooltip>
+        <p class="detailText">点击文字即可编辑，当您编辑大纲时将自动保存</p>
       </div>
       <!-- draggable // 支持用户拖拽-->
       <el-tree
@@ -72,7 +73,9 @@
         :allow-drag="allowDrag"
       >
         <div class="slotContentBox" slot-scope="{ node, data }">
-          <div class="custom-tree-node">
+          <div
+            :class="['custom-tree-node', { 'dynamic-class': data.level === 1 }]"
+          >
             <div class="inputBoxMain">
               <!-- 如果是编辑状态 -->
               <div class="pageSource">
@@ -100,7 +103,7 @@
               ></span>
             </div>
 
-            <div class="iconRight">
+            <div :class="['iconRight', { titleRight: data.level === 1 }]">
               <div>
                 <el-tooltip
                   v-if="data.level >= maxLevel"
@@ -108,8 +111,8 @@
                   content="插入图表配置"
                 >
                   <span class="insetImgSpan" @click="showImgF(data)">
-                    <i style="color: #909399" class="el-icon-edit-outline"></i>
-                    <span style="color: #67c23a">插入图表</span>
+                    <i class="el-icon-edit-outline"></i>
+                    <span>插入图表</span>
                   </span>
                 </el-tooltip>
                 <!-- 新增 -->
@@ -132,10 +135,13 @@
                   content="在当前小节后新增一个小节"
                   placement="top"
                 >
-                  <i
+                  <span
+                    class="insetImgSpan"
                     @click="() => appendShowSibling(node, data)"
-                    class="el-icon-circle-plus-outline g_poin"
-                  ></i>
+                  >
+                    <i class="el-icon-circle-plus-outline g_poin"></i>
+                    <span>新增小节</span>
+                  </span>
                 </el-tooltip>
                 <!-- 删除 -->
                 <el-tooltip
@@ -144,10 +150,13 @@
                   content="删除本章/本小节"
                   placement="top"
                 >
-                  <i
+                  <span
+                    class="insetImgSpan g_danger"
                     @click="() => remove(node, data)"
-                    class="el-icon-delete g_poin"
-                  ></i>
+                  >
+                    <i class="el-icon-delete g_poin"></i>
+                    <span>删除</span>
+                  </span>
                 </el-tooltip>
               </div>
               <div v-if="data.level >= maxLevel" class="rightbottom">
@@ -1645,5 +1654,8 @@ export default {
 }
 .el-loading-spinner {
   top: 20% !important;
+}
+::v-deep .el-tree-node__children {
+  background: #f7f9fa;
 }
 </style>

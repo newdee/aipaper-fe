@@ -2,6 +2,7 @@
   <div
     id="fixedCard"
     :class="{ tipContain: isFixed, fixedCard: true, fixed: isFixed }"
+    ref="fixedCard"
   >
     <!-- tip1 -->
     <div class="tipBox">
@@ -53,6 +54,7 @@ export default {
     return {
       isFixed: false,
       offsetTop: 0,
+      windowWidth: window.innerWidth, //
     };
   },
   props: {
@@ -66,7 +68,7 @@ export default {
       // 使用示例
       const element = document.querySelector("#fixedCard");
       this.offsetTop = this.getElementOffsetTop(element) - 10;
-
+      window.addEventListener("resize", this.handleResize);
       // 初始化位置
       window.addEventListener("scroll", this.handleScroll);
     });
@@ -78,8 +80,32 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("resize", this.handleResize);
   },
   methods: {
+    handleResize() {
+      this.windowWidth = window.innerWidth;
+      this.updateCardPosition();
+    },
+    updateCardPosition() {
+      const element = this.$refs.fixedCard;
+      if (element) {
+        let newLeft = this.windowWidth - 880;
+        if (this.windowWidth > 1450) {
+          if (this.isFixed) {
+            newLeft = 1226;
+            element.style.left = `${newLeft}px`;
+            element.style.right = `auto !important`;
+          } else {
+            element.style.left = `auto`;
+            element.style.right = `-201px !important`;
+          }
+        } else {
+          element.style.left = `auto `;
+          element.style.right = `20px !important`;
+        }
+      }
+    },
     getElementOffsetTop(element) {
       if (!element) return null;
 
@@ -106,6 +132,7 @@ export default {
       } else {
         this.isFixed = false;
       }
+      this.updateCardPosition();
     },
     jumpUrl() {
       this.$scrollTo("#reduceId", 500, { offset: -100 });
@@ -118,13 +145,13 @@ export default {
 .tipContain {
   position: fixed !important;
   top: 62px !important;
-  left: 1136px !important;
+  right: 20px !important;
   z-index: 1000;
 }
 .fixedCard {
   position: absolute;
-  left: 880px;
   top: 0px;
+  right: -201px;
 }
 
 .tipBox {

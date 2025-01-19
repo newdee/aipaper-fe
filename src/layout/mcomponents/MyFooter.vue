@@ -231,7 +231,7 @@ export default {
 
 .footer {
   padding-left: $sideBarWidth !important;
-  background: #f1f1f1;
+  background: #f7f7f7;
 }
 
 .footer.isHome {

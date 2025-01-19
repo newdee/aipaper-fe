@@ -138,7 +138,6 @@ const GlobalMethodsPlugin = {
       //   }
       // }
       // window.addEventListener('resize', function () {
-      //   console.log('ddd', window.innerWidth)
       //   if (window.innerWidth < Vue.prototype.$minWidth) {
       //     // window.resizeTo(Vue.prototype.$minWidth, window.innerHeight);
       //     // window.innerWidth = 500
@@ -152,16 +151,11 @@ const GlobalMethodsPlugin = {
       // 提示用户最小窗口大小要求
     };
     Vue.prototype.$bdSave = function (name) {
-      // console.log('Global method called!');
       // let data = {
       //   out_trade_no: store.getters.currentOrder.out_trade_no,
       //   bd_vid: store.getters.bdVid,
       // };
-      // console.log("currentOrder", store.getters.currentOrder);
-      // console.log("currentObd_vidrder", store.getters.bdVid);
-      // console.log("data", data);
       // bd_convert(data).then((res) => {
-      //   console.log("--------", res);
       // });
       // this.$msgbox(options)
       // 执行你需要的操作
