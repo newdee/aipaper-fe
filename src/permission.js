@@ -41,6 +41,7 @@ const whiteList = [
 router.beforeEach(async (to, from, next) => {
   // start progress bar
   NProgress.start();
+  Ming(loginId, "loginId1");
 
   if (to.meta.inDevelopment) {
     // 弹出提示并阻止导航
@@ -54,26 +55,31 @@ router.beforeEach(async (to, from, next) => {
     NProgress.done();
     return;
   }
+  let loginId = localStorage.getItem("loginID");
+
   // 如果没有 token 且目标路由在白名单中，直接放行
   let hasToken = getToken();
-  if (!hasToken && whiteList.indexOf(to.path) !== -1) {
-    next();
-    NProgress.done();
-    return; // 直接返回，不再继续后续逻辑
+  Ming(hasToken, "loginId2");
+  if (!loginId) {
+    if (!hasToken && whiteList.indexOf(to.path) !== -1) {
+      next();
+      NProgress.done();
+      return; // 直接返回，不再继续后续逻辑
+    }
   }
 
   // set page title
   document.title = getPageTitle(to.meta.title);
+  Ming(loginId, "loginId3");
 
   // determine whether the user has logged in
   const sub_domain = getDomain();
   if (sub_domain && !store.getters.sub_domain) {
     store.dispatch("user/setSubDomain", sub_domain);
   }
-  let loginId = localStorage.getItem("loginID");
 
   // 获取当前时间的十位数时间戳
-
+  Ming(loginId, "loginId4");
   if (!hasToken && loginId) {
     setToken(loginId);
     store.dispatch("user/setStoreToken", loginId);
