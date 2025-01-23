@@ -464,6 +464,15 @@ export default {
         type: this.currentOrder.type, // 大纲的key
         word_count: this.currentOrder.word_count, // 大纲的key
       };
+      if (data.pay_type == "PAY_STAGES") {
+        data.items = [
+          {
+            product_id: "1", //正文id
+            quantity: 1, // 数量
+            price: 149.85, //价格
+          },
+        ];
+      }
       getOrder(data)
         .then((res) => {
           this.resetForm();

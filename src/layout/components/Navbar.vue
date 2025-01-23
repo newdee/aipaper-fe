@@ -79,10 +79,10 @@
         </div>
       </div>
       <!-- 礼包 -->
-      <div v-if="!showContent" class="giftBox hidden-xs-only">
+      <!-- <div v-if="!showContent" class="giftBox hidden-xs-only">
         <img src="../../assets/images/bg/giftbox.png" alt="" />
         <p>全场限时 <b>折扣</b>，喜迎 <b>2025</b> ！</p>
-      </div>
+      </div> -->
       <!-- 礼包结束 -->
       <div :class="[showContent ? '' : 'leftNavbarPosition']">
         <div class="flex navBarRight">

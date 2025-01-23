@@ -1430,18 +1430,6 @@ export default {
             quantity: 1, // 数量
             price: 149.85, //价格
           },
-          itemKai,
-          itemRen,
-          {
-            id: "9",
-            product_id: "9",
-            intro: "",
-            quantity: 1, // 数量
-            is_supported: false,
-            name: "调查问卷",
-            now_Price: 0,
-            price: 4.9,
-          },
         ];
       }
       if (ownProduct == "开题报告") {
@@ -1498,6 +1486,15 @@ export default {
           );
           this.$log(result, result.total_price);
           data.total_amount = result.total_price;
+          if (data.pay_type == "PAY_STAGES") {
+            data.items = [
+              {
+                product_id: "1", //正文id
+                quantity: 1, // 数量
+                price: 149.85, //价格
+              },
+            ];
+          }
           // this.getDetail(34);
           getOrder(data)
             .then((res) => {

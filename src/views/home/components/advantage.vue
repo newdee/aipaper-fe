@@ -29,7 +29,7 @@ export default {
     return {
       advantageList: [
         {
-          title: "免费体验GPT",
+          title: "免费降重/降AIGC",
           description: "全网首家",
           imageUrl: require("@/assets/images/index/home_banner02_01_pc@2x.png"),
         },
