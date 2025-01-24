@@ -80,6 +80,7 @@
           <div class="payRightPrice">
             <!-- left code -->
             <!-- 付费下载大纲不展示 -->
+            {{ currentOrder }}
             <div
               v-show="
                 currentOrder.order_type !== 'OUTLINE_DOWNLOAD' &&

@@ -73,6 +73,7 @@
                     <div class="codeLeft g_poin">
                       <span v-show="codeTimeStatus"> {{ secondsLeft }} </span>
                       <span
+                        :class="{ statusDisabled: sendCodeStatus }"
                         v-show="!codeTimeStatus && index == 0"
                         @click="getCode"
                       >
@@ -193,6 +194,7 @@ export default {
   data() {
     return {
       index: 0,
+      sendCodeStatus: false,
       vailStatus: false,
       secondsLeft: 60,
       codeTimeStatus: false,
@@ -229,7 +231,7 @@ export default {
     // 重新获取验证码
     repeatCode() {
       if (this.codeTimeStatus) return; // 如果已经在倒计时，不重复开始
-
+      this.sendCodeStatus = true;
       // 模拟发送请求，可以替换为实际的API请求
       let data = {
         phone: this.phoneNum,
@@ -237,6 +239,8 @@ export default {
 
       sms(data)
         .then((res) => {
+          this.sendCodeStatus = false;
+
           this.index++;
           this.codeTimeStatus = true;
           this.secondsLeft = 60; // 重置倒计时为60秒
@@ -251,6 +255,7 @@ export default {
           }, 1000);
         })
         .catch((error) => {
+          this.sendCodeStatus = false;
           console.error("发送验证码失败", error);
           // 可以在这里显示错误提示信息
         });
@@ -383,6 +388,9 @@ export default {
     getCode() {
       this.vaildPhone();
       if (!this.vailStatus) {
+        if (!this.sendCodeStatus) {
+          this.repeatCode();
+        }
         // 获取验证码
         // let data = {
         //   phone: this.phoneNum,
@@ -391,7 +399,6 @@ export default {
         //  Ming("this.data", data);
         // sms(data).then((res) => {
         //    Ming("res", res);
-        this.repeatCode();
         // });
       }
     },
@@ -835,7 +842,12 @@ export default {
   margin: 0;
   background-color: #fff5f5;
 }
-
+.statusDisabled {
+  color: #ccc;
+  &:hover {
+    cursor: not-allowed;
+  }
+}
 .tips {
   display: block;
   color: #ea4f3d;
