@@ -27,6 +27,7 @@
               >
                 <p class="overHidden">
                   订单号: {{ orderObj.order.out_trade_no }}
+                  <!-- 订单修改 -->
                 </p>
               </el-tooltip>
             </div>
