@@ -112,7 +112,7 @@
                 >
                   <span class="insetImgSpan" @click="showImgF(data)">
                     <i class="el-icon-edit-outline"></i>
-                    <span>插入图表</span>
+                    <span v-show="device !== 'mobile'">插入图表</span>
                   </span>
                 </el-tooltip>
                 <!-- 新增 -->
@@ -140,7 +140,7 @@
                     @click="() => appendShowSibling(node, data)"
                   >
                     <i class="el-icon-circle-plus-outline g_poin"></i>
-                    <span>新增小节</span>
+                    <span v-show="device !== 'mobile'">新增小节</span>
                   </span>
                 </el-tooltip>
                 <!-- 删除 -->
@@ -155,7 +155,7 @@
                     @click="() => remove(node, data)"
                   >
                     <i class="el-icon-delete g_poin"></i>
-                    <span>删除</span>
+                    <span v-show="device !== 'mobile'">删除</span>
                   </span>
                 </el-tooltip>
               </div>

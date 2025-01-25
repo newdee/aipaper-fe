@@ -8,8 +8,12 @@
         </span>
       </p>
     </div>
-    <div class="adBox">
-      <div class="card" v-for="(card, index) in advantageList" :key="index">
+    <div class="adBox phoneTop">
+      <div
+        class="card topLiCard"
+        v-for="(card, index) in advantageList"
+        :key="index"
+      >
         <div class="image-container">
           <img :src="card.imageUrl" alt="" />
         </div>
@@ -99,7 +103,6 @@ export default {
   width: 160px;
   height: 160px;
   margin-top: -80px;
-  border: 1px dashed #afb0b2;
   img {
     width: 100%;
     height: 100%;

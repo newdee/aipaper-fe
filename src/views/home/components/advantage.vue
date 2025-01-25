@@ -78,7 +78,9 @@ export default {
   width: calc((100% - 40px) / 3);
   margin-bottom: 20px;
   box-sizing: border-box;
-  border: 1px dashed #ddd; // 添加边框，类似示例
+  border-radius: 8px;
+  overflow: hidden;
+  // border: 1px dashed #ddd; // 添加边框，类似示例
   background-image: linear-gradient(
     269deg,
     #ffffff 0%,
