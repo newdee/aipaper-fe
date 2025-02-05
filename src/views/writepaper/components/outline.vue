@@ -111,13 +111,10 @@
                   </template>
                   <div class="labelBox">
                     <div class="left">
-                      <!-- <svg class="icon svg-icon" aria-hidden="true">
-                    <use xlink:href="#icon-tubiaozoushitu"></use>
-                  </svg> -->
                       <img
                         v-if="requestForm.type == item.name"
                         class="home-icon"
-                        src="@/assets/images/bank-white.png"
+                        src="@/assets/images/index/icon_24_xylx_selected@2x.png"
                         alt=""
                       />
                       <img
@@ -131,17 +128,11 @@
                         >({{ item.description }})</span
                       >
                     </div>
-                    <div class="right">
-                      <svg
-                        v-if="requestForm.type == item.name"
-                        class="icon svg-icon"
-                        aria-hidden="true"
-                      >
-                        <use xlink:href="#icon-duigou-cu"></use>
-                      </svg>
-                      <svg v-else class="icon svg-icon" aria-hidden="true">
-                        <use xlink:href="#icon-fangkuang"></use>
-                      </svg>
+                    <div class="rightIcon">
+                      <img
+                        src="@/assets/images/index/icon_option_selected@2x.png"
+                        alt=""
+                      />
                     </div>
                   </div>
                 </el-tooltip>
@@ -149,84 +140,8 @@
             </el-radio-group>
           </div>
         </div>
-      </div>
-      <!-- 论文类型 -->
-      <div
-        :class="[
-          'firstItem',
-          'secondItem',
-          device == 'mobile' ? 'mobilebox' : '',
-        ]"
-      >
-        <div class="selectLang formItem">
-          <p class="formItemLabel">论文类型</p>
-          <div class="formItemCon">
-            <el-radio-group
-              @change="requestProductChange"
-              v-model="requestForm.product"
-            >
-              <el-radio
-                v-for="item in homeData.category_product_list"
-                :key="item.name"
-                :label="item.name"
-                :value="item.name"
-              >
-                <!-- <el-tooltip class="item" effect="dark" placement="top"> -->
-                <template slot="content">
-                  <p style="width: 200px; line-height: 20px">
-                    {{ typeTips[item.name] }}
-                  </p>
-                </template>
-                <div class="labelBox">
-                  <div class="left">
-                    <!-- <svg class="icon svg-icon" aria-hidden="true">
-                    <use xlink:href="#icon-tubiaozoushitu"></use>
-                  </svg> -->
-                    <img
-                      v-if="requestForm.product == item.name"
-                      class="home-icon"
-                      src="@/assets/images/bank-white.png"
-                      alt=""
-                    />
-                    <img
-                      v-else
-                      class="home-icon"
-                      src="@/assets/images/bank-dark.png"
-                      alt=""
-                    />
-                    {{ item.name }}
-                    <span v-show="item.description"
-                      >({{ item.description }})</span
-                    >
-                  </div>
-                  <div class="right">
-                    <svg
-                      v-if="requestForm.product == item.name"
-                      class="icon svg-icon"
-                      aria-hidden="true"
-                    >
-                      <use xlink:href="#icon-duigou-cu"></use>
-                    </svg>
-                    <svg v-else class="icon svg-icon" aria-hidden="true">
-                      <use xlink:href="#icon-fangkuang"></use>
-                    </svg>
-                  </div>
-                </div>
-                <!-- </el-tooltip> -->
-              </el-radio>
-            </el-radio-group>
-          </div>
-        </div>
-      </div>
-      <div
-        :class="[
-          'firstItem',
-          'secondItem',
-          device == 'mobile' ? 'mobilebox' : '',
-        ]"
-      >
         <!-- 论文水平 -->
-        <div class="selectLang formItem">
+        <div class="selectLang formItem leftType">
           <p class="formItemLabel">论文水平</p>
           <div class="formItemCon">
             <el-radio-group v-model="requestForm.paper_level">
@@ -251,29 +166,25 @@
                       <img
                         v-if="requestForm.paper_level == item.name"
                         class="home-icon"
-                        src="@/assets/images/bank-white.png"
+                        src="@/assets/images/index/icon_24_lwsp_selected.png"
                         alt=""
                       />
                       <img
                         v-else
                         class="home-icon"
-                        src="@/assets/images/bank-dark.png"
+                        src="@/assets/images/index/icon_24_lwsp_default@2x.png"
                         alt=""
                       />
-                      {{ item.name }}
+                      <span style="margin-left: 10px">
+                        {{ item.name }}
+                      </span>
                       <!-- <span v-show="item.description"></span> -->
                     </div>
-                    <div class="right">
-                      <svg
-                        v-if="requestForm.paper_level == item.name"
-                        class="icon svg-icon"
-                        aria-hidden="true"
-                      >
-                        <use xlink:href="#icon-duigou-cu"></use>
-                      </svg>
-                      <svg v-else class="icon svg-icon" aria-hidden="true">
-                        <use xlink:href="#icon-fangkuang"></use>
-                      </svg>
+                    <div class="rightIcon">
+                      <img
+                        src="@/assets/images/index/icon_option_selected@2x.png"
+                        alt=""
+                      />
                     </div>
                   </div>
                 </el-tooltip>
@@ -281,6 +192,81 @@
             </el-radio-group>
           </div>
         </div>
+      </div>
+      <!-- 论文类型 -->
+      <div
+        :class="[
+          'firstItem',
+          'secondItem',
+          device == 'mobile' ? 'mobilebox' : '',
+        ]"
+      >
+        <div class="selectLang formItem">
+          <p class="formItemLabel">论文类型</p>
+          <div class="formItemCon">
+            <el-radio-group
+              @change="requestProductChange"
+              v-model="requestForm.product"
+            >
+              <el-radio
+                class="onlyCyc"
+                v-for="item in homeData.category_product_list"
+                :key="item.name"
+                :label="item.name"
+                :value="item.name"
+              >
+                <!-- <el-tooltip class="item" effect="dark" placement="top"> -->
+                <template slot="content">
+                  <p style="width: 200px; line-height: 20px">
+                    {{ typeTips[item.name] }}
+                  </p>
+                </template>
+                <div class="labelBox">
+                  <div class="left">
+                    <!-- <svg class="icon svg-icon" aria-hidden="true">
+                    <use xlink:href="#icon-tubiaozoushitu"></use>
+                  </svg> -->
+
+                    <img
+                      v-if="requestForm.product == item.name"
+                      class="home-icon"
+                      src="@/assets/images/index/icon_24_xylx_selected@2x.png"
+                      alt=""
+                    />
+                    <img
+                      v-else
+                      class="home-icon"
+                      src="@/assets/images/bank-dark.png"
+                      alt=""
+                    />
+                    {{ item.name }}
+                    <span v-show="item.description"
+                      >({{ item.description }})</span
+                    >
+                  </div>
+                  <div
+                    v-if="requestForm.product == item.name"
+                    class="rightIcon2"
+                  >
+                    <img
+                      src="@/assets/images/index/radios_checked@2x.png"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <!-- </el-tooltip> -->
+              </el-radio>
+            </el-radio-group>
+          </div>
+        </div>
+      </div>
+      <div
+        :class="[
+          'firstItem',
+          'secondItem',
+          device == 'mobile' ? 'mobilebox' : '',
+        ]"
+      >
         <!-- 论文字数 -->
         <div
           v-if="
@@ -289,10 +275,10 @@
               requestForm.product == '任务书'
             )
           "
-          class="selectLang formItem wordItem firstItem"
+          class="selectLang formItem firstItem"
         >
           <p class="formItemLabel">论文字数</p>
-          <div class="formItemCon">
+          <div class="formItemCon wordItem">
             <el-slider
               v-model="requestForm.word_count"
               :min="minCount"
@@ -753,12 +739,11 @@ export default {
 
   .contrast {
     margin-right: 10px;
-    height: 40px;
     background: #fff;
-    border-color: #3355ff;
-    color: #3355ff;
+    border-color: #d8dfe6;
     border-width: 1px;
     border-style: solid;
+    color: #1b2126;
   }
 }
 
@@ -781,7 +766,7 @@ export default {
   }
 
   .formItemCon {
-    margin-top: 25px;
+    margin-top: 15px;
     display: flex;
     width: 100%;
     align-items: center;
@@ -818,21 +803,40 @@ export default {
   color: #ffffff;
   margin-left: 40px;
 }
+.rightIcon {
+  position: absolute;
+  bottom: 0;
+  right: -2000px;
+  width: 20px;
+  height: 20px;
+  line-height: 0px;
 
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.rightIcon2 {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  position: relative;
+  top: 4px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
 // 重置论文类型单选样式
 .labelBox {
   font-size: 16px;
 
-  > div {
+  & > div {
     display: inline-block;
 
-    &.right {
-      padding-left: 5px;
-    }
-
     .home-icon {
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
       transform: translateY(3px);
     }
   }
@@ -847,14 +851,23 @@ export default {
   line-height: 40px;
   padding-left: 14px;
   padding-right: 16px;
-
+  width: 106px;
+  height: 40px;
+  background-image: linear-gradient(180deg, #f4f5f7 0%, #f4f5f7b3 100%);
+  border-radius: 4px;
   &.is-checked {
-    background: #3355ff;
-    border-color: #3355ff;
+    border: 1px solid #0066ff;
+    background-image: linear-gradient(180deg, #d3e4ff 0%, #e5efff 100%);
+    .rightIcon {
+      right: 0px;
+    }
+  }
+  &.is-checked.onlyCyc {
+    border: 1px solid #0066ff !important;
   }
 
   .el-radio__input.is-checked + .el-radio__label {
-    color: #fff !important;
+    color: #0066ff !important;
   }
 
   .el-radio__input {
@@ -866,6 +879,18 @@ export default {
   }
 }
 
+.onlyCyc {
+  width: 160px !important;
+  height: 40px !important;
+  border-radius: 24px !important;
+  padding-left: 22px !important;
+  font-size: 14px !important;
+  background: #ffffff !important;
+  border: 1px solid #d8dfe6 !important;
+  border-radius: 24px;
+}
+label.el-radio.is-checked {
+}
 .mobile {
   .formItem {
     margin-top: 10px !important;
@@ -907,6 +932,7 @@ export default {
     width: 100% !important;
     & > div {
       width: 100%;
+      display: flex;
     }
   }
   .firstItem {
@@ -936,9 +962,14 @@ export default {
   border-color: #3355ff;
 }
 .leftType {
-  margin-left: 60px;
+  margin-left: 20px;
 }
 .wordItem {
-  margin-left: 32px;
+  margin-left: 19px;
+  margin-top: 25px !important;
+}
+::v-deep .el-slider__marks-text {
+  top: -40px !important;
+  color: #000;
 }
 </style>
