@@ -6,9 +6,9 @@
         <span>不知道怎么选题？只需要输入要求，点击AI推荐题目！</span>
       </div>
       <div @click="toggleDropdown" class="recomBtn" icon="el-icon-guide">
-        <svg class="icon g-svg-icon" aria-hidden="true">
-          <use xlink:href="#icon-youhua1"></use>
-        </svg>
+        <span class="starSpan">
+          <img src="@/assets/images/index/icon_32_star.png" alt="" />
+        </span>
         AI推荐论文题目
       </div>
       <el-input
@@ -319,25 +319,40 @@ export default {
 }
 .recomBtn {
   position: absolute;
-  width: 136px;
-  height: 30px;
+  width: 135px;
+  height: 32px;
   background: #f4f4fe;
   border-radius: 6px 6px 6px 6px;
   text-align: center;
-  line-height: 30px;
+  line-height: 32px;
   font-weight: 400;
-  font-size: 13px;
-  color: #3355ff;
+  color: #fff;
   right: 3px;
   z-index: 2;
   top: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  font-family: PingFangSC-SNaNpxibold;
+  font-weight: 600;
+  font-size: 13px;
+  color: #ffffff;
+  letter-spacing: 0;
+  background: url("../../../../assets/images/index/btn_aiznmt.png") no-repeat 0
+    0 / 100% 100%;
   cursor: pointer;
+
+  .starSpan {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
   &:hover {
-    background-color: #3355ff;
-    color: #fff;
     .g-svg-icon {
       color: #fff;
     }
