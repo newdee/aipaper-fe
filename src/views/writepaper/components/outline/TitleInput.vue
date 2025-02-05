@@ -1,6 +1,10 @@
 <template>
   <div class="title-input-wrapper" @click.stop>
     <div style="position: relative">
+      <div class="titleTip">
+        <i class="el-icon-warning"></i>
+        <span>不知道怎么选题？只需要输入要求，点击AI推荐题目！</span>
+      </div>
       <div @click="toggleDropdown" class="recomBtn" icon="el-icon-guide">
         <svg class="icon g-svg-icon" aria-hidden="true">
           <use xlink:href="#icon-youhua1"></use>
@@ -343,5 +347,23 @@ export default {
   font-size: 20x;
   color: #3355ff;
   margin-right: 5px;
+}
+.titleTip {
+  width: 340px;
+  height: 32px;
+  background: #0066ff1a;
+  border-radius: 8px 12px 0 8px;
+  position: absolute;
+  top: -32px;
+  left: 0px;
+  padding-left: 10px;
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  color: #0066ff;
+  line-height: 32px;
+  span {
+    font-size: 12px;
+    margin-left: 8px;
+  }
 }
 </style>
