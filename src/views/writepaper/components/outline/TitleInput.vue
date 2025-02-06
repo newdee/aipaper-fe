@@ -9,76 +9,70 @@
         <span class="starSpan">
           <img src="@/assets/images/index/icon_32_star.png" alt="" />
         </span>
-        AI推荐论文题目
+        AI推荐题目
       </div>
       <el-input
+        class="elipt"
         v-model="innerValue"
         maxlength="60"
-        placeholder="输入5~50字论文题目，如果不知道写什么，可以填写想法关键词后，使用AI推荐哦~"
+        placeholder="请输入5-50字论文题目，或输入关键词使用AI只能选题！"
         @focus="showDropdown = true"
       >
       </el-input>
     </div>
 
     <div v-if="showDropdown" class="title-dropdown" @click.stop>
-      <div class="info-section">
-        <div class="sectionTitle">
-          <img
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAV5JREFUOE9jZMAELAwMDO0MDAwKDAwMNQwMDDexqIELMWKRjAiwE17ubSPEkNp2ewMDA0MgqQYk1KfIzU/wFmdQDDx9gIGBwXFADXjBwMCwA+oCEL0S3TXoYcDBwMBQXZ8iV1MaKc5w9CxIPwMDExsXQ8WMpwxnb3zZw8DAMIOBgWEtzCBkAzhYmBjO22kyaLjbyzEUhIkzfPv0CayOi4+P4enTtwx333IxpLXf/nP/+U9VBgaGByA5ZANsrNUZDs9MZWAQlpFjkFCQZ/j37x/EBUxMDF8/fmDg5hdgSGy+ybBg6ytQwIICGMUAHnYWhtuz0xkkQC4Qk5PHGvj4DABp0OBmZ9i/sUVOwtmWPAPAhvByMe3f1q8jYaPPj+EKQi6AaQAbsmuSroSFDh+KIcQaANLk4GEhuH/7BB2yDVBwMOK/v3+aHtkGyDAwMBzGkQ8iGRgYTqBHI748g1MOAOOTdRF13MzUAAAAAElFTkSuQmCC"
-            alt=""
-          />
-          输入内容后再点击推荐，结果更精准哦~
-        </div>
-        <div class="info-item">
-          <div class="info-title">选择科目</div>
-          <div class="info-title">选择论文语言</div>
-          <div class="info-title">选择论文类型</div>
-        </div>
-        <div class="arrow">
-          <i class="el-icon-right"></i>
-        </div>
-        <div class="info-item">
-          <div class="info-title">题目相关信息</div>
-          <div class="info-content">
-            <div>输入您的想法关键词</div>
-          </div>
-        </div>
-        <div class="arrow">
-          <i class="el-icon-right"></i>
-        </div>
-        <div class="info-item">
-          <div class="info-title">生成题目</div>
-          <div class="info-content">
-            <div>趋势贴合度分析<br />500亿文献对比</div>
-          </div>
-        </div>
-      </div>
-      <div class="recommendation-section">
-        <div class="recommendation-header">
-          智能推荐标题
-          <p><i class="el-icon-warning-outline"></i>点击题目确认</p>
-        </div>
-        <div v-loading="loading" class="recommendation-content">
-          <div
-            v-for="(recommendation, index) in recommendations"
-            :key="index"
-            type="primary"
-            class="recommendation-item"
-            @click="selectRecommendation(recommendation)"
-          >
-            <div class="itemParen">
-              {{ recommendation }}
+      <div class="inner-stroke inner-dropdown-box">
+        <div class="recommendation-section">
+          <div class="recommendation-header">
+            <div class="header-title">
+              <span class="starSpan">
+                <img
+                  src="@/assets/images/index/icon_32_star.png"
+                  alt="" /></span
+              >AI推荐标题
             </div>
-            <div class="itemBtn">
-              <i class="el-icon-circle-plus-outline"></i>
-              <span style="margin-left: 3px">采纳</span>
+            <p @click="getList"><i class="el-icon-refresh-right"></i>换一换</p>
+          </div>
+          <div v-loading="loading" class="recommendation-content">
+            <div
+              v-for="(recommendation, index) in recommendations"
+              :key="index"
+              type="primary"
+              class="recommendation-item"
+              @click="selectRecommendation(recommendation)"
+            >
+              <div class="itemParen">
+                {{ recommendation }}
+              </div>
+              <div class="itemBtn">
+                <span style="margin-left: 3px">采纳</span>
+              </div>
             </div>
           </div>
+          <!-- <div class="generate-button">
+            <el-button type="text" size="mini" @click="getList"
+              >不满意? 换一组</el-button
+            >
+          </div> -->
         </div>
-        <div class="generate-button">
-          <el-button type="text" size="mini" @click="getList"
-            >不满意? 换一组</el-button
-          >
+        <div class="info-section">
+          <div class="sectionTitle">使用提示</div>
+          <div class="info-item">
+            <div class="info-title"><span>1.</span>选择科目</div>
+          </div>
+          <div class="arrow">
+            <i class="el-icon-caret-right"></i>
+          </div>
+          <div class="info-item">
+            <div class="info-title"><span>2.</span>输入标题关键词</div>
+          </div>
+          <div class="arrow">
+            <i class="el-icon-caret-right"></i>
+          </div>
+          <div class="info-item">
+            <div class="info-title"><span>3.</span>选择推荐题目</div>
+          </div>
         </div>
       </div>
     </div>
@@ -162,8 +156,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.inner-stroke {
+  position: relative;
+  padding: 10px;
+  background: white;
+}
+
+.inner-stroke::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, #e0b0ff, #7bb0ff);
+  z-index: -1;
+  margin: -1px;
+}
 .title-input-wrapper {
   position: relative;
+  width: 600px;
 }
 
 .title-dropdown {
@@ -172,55 +184,55 @@ export default {
   left: 0;
   width: 100%;
   background-color: white;
-  border: 1px solid #dcdfe6;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   z-index: 10000;
   border-radius: 5px;
-  padding: 20px;
+  margin-top: 10px;
+  padding: 1px;
+  overflow: hidden;
+}
+.inner-dropdown-box {
+  padding: 16px;
+  border-radius: 5px;
+  background-image: linear-gradient(180deg, #017eff33 1%, #017eff00 12%);
+  padding-top: 0px;
 }
 
 .info-section {
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  background: linear-gradient(#f0f8ff, #f2f2ff);
-  padding: 10px 30px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  padding-top: 60px;
-  padding-bottom: 20px;
+  // background: linear-gradient(#f0f8ff, #f2f2ff);
+  background-image: url("../../../../assets/images/tips_bg.png");
+  background-size: 100% 100%;
+  padding: 22px 0;
   position: relative;
   .sectionTitle {
     position: absolute;
     font-size: 13px;
     font-weight: bold;
-    top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+    top: 0px;
+    left: 0px;
+    background: #0067ff;
+    border-radius: 4px 0 4px 0;
+    padding: 4px 4px 2px 4px;
+    color: #fff;
   }
 }
 
 .info-item {
   text-align: center;
   width: 25%;
-  padding: 10px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .info-title {
   font-weight: bold;
-  margin-bottom: 5px;
-  background: linear-gradient(
-    270deg,
-    rgba(84, 125, 255, 0),
-    #eaefff 34%,
-    #eaefff 68%,
-    rgba(84, 125, 255, 0)
-  );
+  color: #1b2126;
+  font-size: 15px;
+  span {
+    color: #0066ff;
+  }
 }
 
 .info-content {
@@ -231,11 +243,7 @@ export default {
   /* background-color: #dcdfe6; */
   font-size: 18px;
   margin: 0 10px;
-  color: #999;
-}
-
-.recommendation-section {
-  padding: 10px;
+  color: #0066ff;
 }
 
 .recommendation-header {
@@ -247,11 +255,25 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  .header-title {
+    display: flex;
+    align-items: center;
+    color: #0066ff;
+    font-size: 16px;
+  }
   p {
-    color: #909399;
+    cursor: pointer;
+    color: #1b2126;
     font-weight: 200;
-    font-size: 12px;
+    font-size: 14px;
     left: 100px;
+    display: flex;
+    align-items: center;
+    i {
+      font-size: 1.4em;
+      margin-right: 2px;
+      transform: rotate(90deg);
+    }
   }
 }
 
@@ -261,30 +283,30 @@ export default {
 }
 
 .recommendation-item {
-  padding: 5px 0;
+  padding: 16px;
   cursor: pointer;
-  color: #606266;
+  color: #1b2126;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #f6f7f7;
-  width: 66%;
-  height: 30px;
-  padding-right: 10px;
-  margin-bottom: 5px;
-  border-radius: 5px;
+  background: #f4f5f7;
+  margin-bottom: 10px;
+  border-radius: 4px;
   .itemBtn {
     font-size: 13px;
     color: #547dff;
     margin-left: 6px;
-    display: none;
+    background: rgba(0, 102, 255, 0.1);
+    padding: 3px 10px;
+    border-radius: 4px;
+    height: 24px;
+    line-height: 20px;
   }
   .itemParen {
     // flex: 1;
     width: calc(100% - 63px);
   }
   .itemParen {
-    height: 28px;
     padding: 0 14px;
     width: 380px;
     color: #2b2f36;
@@ -293,22 +315,17 @@ export default {
     line-height: 30px;
     color: #547dff;
     margin-left: 6px;
-    // display: none;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
     font-size: 13px;
     color: #2b2f36;
     cursor: pointer;
   }
   &:hover {
     cursor: pointer;
-    // color: #409eff;
-    // background-color: #409eff;
     background-color: rgba(64, 158, 255, 0.1);
-    // color: #fff;
+    color: #0066ff;
     .itemBtn {
-      display: block;
+      background: #0066ff;
+      color: #fff;
     }
   }
 }
@@ -329,7 +346,7 @@ export default {
   color: #fff;
   right: 3px;
   z-index: 2;
-  top: 3px;
+  top: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
