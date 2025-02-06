@@ -92,6 +92,11 @@ const GlobalMethodsPlugin = {
 
       paymentMethod(data).then((res) => {
         processResponse(res, row.order, status);
+      }).catch(() => {
+        this.$message({
+          type: 'warning',
+          message: '接口超时,请稍后重试!'
+        })
       });
     };
 

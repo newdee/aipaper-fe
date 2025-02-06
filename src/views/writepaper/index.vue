@@ -3,7 +3,7 @@
     <!-- 页面名称 -->
 
     <div class="carouselBox stepTips">
-      <div class="carouselCon">
+      <!-- <div class="carouselCon">
         <el-carousel
           height="44px"
           direction="vertical"
@@ -41,7 +41,7 @@
             </p>
           </el-carousel-item>
         </el-carousel>
-      </div>
+      </div> -->
     </div>
     <!-- <div style="padding: 0 10px">
       <swiper-one class="topSwiper"></swiper-one>
@@ -385,7 +385,7 @@ export default {
   // : 1200px;
   width: 100%;
   max-width: 1200px;
-  padding-top: 16px;
+  // padding-top: 16px;
 }
 
 .tabsList {

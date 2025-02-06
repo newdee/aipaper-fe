@@ -335,4 +335,7 @@ export default {
     transform: rotateX(45deg) scaleX(1.2);
   }
 }
+.mSiderBar {
+  padding-top: 10px;
+}
 </stlyle>
