@@ -158,6 +158,7 @@ export default {
   height: 500px;
   background-color: #fff;
   max-width: 1200px;
+  margin-top: 20px;
 }
 
 .progressBox {

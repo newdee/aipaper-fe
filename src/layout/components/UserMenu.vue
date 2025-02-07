@@ -169,11 +169,13 @@ export default {
   created() {
     // step2点击重新生成大纲
     eventBus.on("showEmitList", this.showPhoneOrderList); // 订阅事件
+    eventBus.on("showOrderList", this.showPcOrderList); // 订阅事件
     eventBus.on("orderDialogChange", this.closeDialog); // 订阅事件
   },
   beforeDestroy() {
     eventBus.off("showEmitList", this.showPhoneOrderList); // 移除事件监听
     eventBus.off("orderDialogChange", this.closeDialog); // 移除事件监听
+    eventBus.off("showOrderList", this.showPcOrderList); // 移除事件监听
   },
   computed: {
     // 计算属性

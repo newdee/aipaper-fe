@@ -128,10 +128,14 @@
               </span>
             </div>
           </el-tooltip>
+
+          <div class="navOrderBtn" @click="navClickOrder">
+            <span> 我的订单 </span>
+          </div>
           <!-- 登录按钮 -->
           <template>
             <div
-              v-if="!hasLogin"
+              v-if="!avatar"
               @click="pushLogin"
               class="login_box hidden-xs-only"
             >
@@ -280,6 +284,7 @@
 
     <!-- 分享页面 -->
     <gift-page ref="giftRef"></gift-page>
+    <login-page ref="loginRef"></login-page>
     <share-link ref="linkRef"></share-link>
   </div>
 </template>
@@ -290,6 +295,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 import UserMenu from "./UserMenu.vue";
 import giftPage from "./giftPage.vue";
+import loginPage from "./loginPage.vue";
 import shareLink from "./shareLink.vue";
 
 import UserOrders from "./UserOrders.vue";
@@ -309,6 +315,7 @@ export default {
     UserOutlines,
     dataStatistics,
     giftPage,
+    loginPage,
     shareLink,
   },
   props: {
@@ -364,6 +371,7 @@ export default {
     //   this.showGift();
     // }
   },
+
   methods: {
     showLink() {
       this.$refs.linkRef.showInit();
@@ -416,7 +424,8 @@ export default {
       //     });
     },
     pushLogin() {
-      this.$router.push("/login");
+      // this.$router.push("/login");
+      this.$refs.loginRef.showInit();
     },
     showDraw() {
       this.drawerStatus = true;
@@ -438,12 +447,17 @@ export default {
       // this.$router.push("/");
       location.reload();
     },
+    navClickOrder() {
+      eventBus.emit("showOrderList", 1);
+    },
   },
   created() {
     eventBus.on("showGift", this.showGift); // 订阅事件
+    eventBus.on("showLogin", this.pushLogin); // 订阅事件
   },
   beforeDestroy() {
     eventBus.off("showGift", this.showGift); // 移除事件监听
+    eventBus.off("showLogin", this.pushLogin); // 移除事件监听
   },
 };
 </script>
@@ -859,6 +873,17 @@ export default {
   &:hover {
     cursor: pointer;
   }
+}
+.navOrderBtn {
+  width: 88px;
+  height: 32px;
+  background: #0066ff1a;
+  border-radius: 4px;
+  color: #0066ff;
+  line-height: 32px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
 }
 .navBarRight {
   height: 100%;

@@ -1,137 +1,115 @@
 <template>
-  <div class="login_main">
-    <div class="login_cont">
-      <div class="left_width">
-        <div class="grid-content app-left">
-          <img
-            data-v-5eb08d16=""
-            class="left-bg"
-            src="https://sso-cdn.lanhuapp.com/ssoweb/img/left.a267cc0b.svg"
-            loading="lazy"
-          />
-          <img
-            data-v-5eb08d16=""
-            class="logo white"
-            src="https://sso-cdn.lanhuapp.com/ssoweb/img/logo.ac863f07.svg"
-            loading="lazy"
-          />
-
-          <div class="left_content">
-            <p>让天下没有难做的学术</p>
-          </div>
-          <div data-v-5eb08d16="" class="name-box">
-            <!-- <img
+  <div>
+    <el-dialog
+      append-to-body
+      :visible.sync="outDialogVisible"
+      :before-close="handleClose"
+      class="custom-dialog"
+    >
+      <div class="login_main">
+        <div class="login_cont">
+          <div class="app-right">
+            <img
               data-v-5eb08d16=""
-              class="avatar"
-              src="https://sso-cdn.lanhuapp.com/ssoweb/img/liugaozheng.b6e3f007.png"
-            /> -->
-            <div data-v-5eb08d16="" class="text-name">
-              <!-- <div data-v-5eb08d16="" class="name">乔布斯</div>
-              <div data-v-5eb08d16="" class="signature">APPLE · 设计负责人</div> -->
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="app-right">
-        <img
-          data-v-5eb08d16=""
-          class="logo blue"
-          src="https://sso-cdn.lanhuapp.com/ssoweb/img/logo_blue.771c60ce.svg"
-          loading="lazy"
-        />
+              class="logo blue"
+              src="https://sso-cdn.lanhuapp.com/ssoweb/img/logo_blue.771c60ce.svg"
+              loading="lazy"
+            />
 
-        <div class="home app_router">
-          <div class="loginView mainContent">
-            <div>
-              <div class="loginTitle">欢迎来到mixpaper</div>
-              <div class="passView">
-                <div class="inputTitle">
-                  手机号登录
-                  <i style="font-size: 10px"
-                    >验证即登录，未注册将自动创建账号</i
-                  >
-                </div>
-                <div class="">
-                  <div>
-                    <input
-                      @change="vaildPhone"
-                      :class="['phoneView', butNoPhoneNum ? 'warning' : '']"
-                      v-model="phoneNum"
-                      placeholder="请输入手机号"
-                      autocomplete="on"
-                      name="username"
-                      type="text"
-                      style="margin-bottom: 4px"
-                    />
-                  </div>
-                  <div class="codeInput">
-                    <input
-                      type="text"
-                      v-model="sms_code"
-                      placeholder="验证码"
-                    />
-                    <div class="codeLeft g_poin">
-                      <span v-show="codeTimeStatus"> {{ secondsLeft }} </span>
-                      <span
-                        :class="{ statusDisabled: sendCodeStatus }"
-                        v-show="!codeTimeStatus && index == 0"
-                        @click="getCode"
+            <div class="home app_router">
+              <div class="loginView mainContent">
+                <div>
+                  <div class="loginTitle">欢迎来到mixpaper</div>
+                  <div class="passView">
+                    <div class="inputTitle">
+                      手机号登录
+                      <i style="font-size: 10px"
+                        >验证即登录，未注册将自动创建账号</i
                       >
-                        发送验证码
-                      </span>
-                      <span
-                        v-show="!codeTimeStatus && index != 0"
-                        @click="repeatCode"
-                      >
-                        重新发送
-                      </span>
+                    </div>
+                    <div class="">
+                      <div>
+                        <input
+                          @change="vaildPhone"
+                          :class="['phoneView', butNoPhoneNum ? 'warning' : '']"
+                          v-model="phoneNum"
+                          placeholder="请输入手机号"
+                          autocomplete="on"
+                          name="username"
+                          type="text"
+                          style="margin-bottom: 4px"
+                        />
+                      </div>
+                      <div class="codeInput">
+                        <input
+                          type="text"
+                          v-model="sms_code"
+                          placeholder="验证码"
+                        />
+                        <div class="codeLeft g_poin">
+                          <span v-show="codeTimeStatus">
+                            {{ secondsLeft }}
+                          </span>
+                          <span
+                            :class="{ statusDisabled: sendCodeStatus }"
+                            v-show="!codeTimeStatus && index == 0"
+                            @click="getCode"
+                          >
+                            发送验证码
+                          </span>
+                          <span
+                            v-show="!codeTimeStatus && index != 0"
+                            @click="repeatCode"
+                          >
+                            重新发送
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div v-if="vailStatus" class="tips">
+                      <p v-if="!rightPhoneNum">这看起来不是一个有效的手机号</p>
+                      <p v-if="rightPhoneNum">你需要输入一个手机号</p>
                     </div>
                   </div>
-                </div>
-                <div v-if="vailStatus" class="tips">
-                  <p v-if="!rightPhoneNum">这看起来不是一个有效的手机号</p>
-                  <p v-if="rightPhoneNum">你需要输入一个手机号</p>
-                </div>
-              </div>
-              <el-button
-                :disabled="!agreeStatus"
-                class="loginButton registerButton center"
-                @click="loginOrRegister(phoneNum)"
-              >
-                登录
-              </el-button>
-              <div class="agreement lanhuText">
-                <div data-v-688ca5dc="" class="checkBox" @click="canClick">
-                  <img
-                    data-v-688ca5dc=""
-                    src="https://sso-cdn.lanhuapp.com/ssoweb/img/checked.eb4ff298.svg"
-                    alt=""
-                    v-show="agreeStatus"
-                  />
-                  <img
-                    v-show="!agreeStatus"
-                    data-v-688ca5dc=""
-                    src="https://sso-cdn.lanhuapp.com/ssoweb/img/uncheck.b1534115.svg"
-                    alt=""
-                  />
-                </div>
-                <span class="lanhuParent">
-                  <span class="canClick">我已阅读并同意</span>
-                  <span class="lanhu" @click="openNewWindow">服务协议</span>
-                  <span>和</span>
-                  <span class="lanhu canClick" @click="openNewWindowYinsi"
-                    >隐私协议</span
+                  <el-button
+                    :disabled="!agreeStatus"
+                    class="loginButton registerButton center"
+                    @click="loginOrRegister(phoneNum)"
                   >
-                </span>
-              </div>
-              <div class="thirdLogin center">
-                <!-- <div class="center" style="width: 100%; height: 100%">
+                    登录
+                  </el-button>
+                  <div class="agreement lanhuText">
+                    <div data-v-688ca5dc="" class="checkBox" @click="canClick">
+                      <img
+                        data-v-688ca5dc=""
+                        src="https://sso-cdn.lanhuapp.com/ssoweb/img/checked.eb4ff298.svg"
+                        alt=""
+                        v-show="agreeStatus"
+                      />
+                      <img
+                        v-show="!agreeStatus"
+                        data-v-688ca5dc=""
+                        src="https://sso-cdn.lanhuapp.com/ssoweb/img/uncheck.b1534115.svg"
+                        alt=""
+                      />
+                    </div>
+                    <span class="lanhuParent">
+                      <span class="canClick">我已阅读并同意</span>
+                      <span class="lanhu" @click="openNewWindow">服务协议</span>
+                      <span>和</span>
+                      <span class="lanhu canClick" @click="openNewWindowYinsi"
+                        >隐私协议</span
+                      >
+                    </span>
+                  </div>
+                  <div class="thirdLogin center">
+                    <!-- <div class="center" style="width: 100%; height: 100%">
                   <div class="line"></div>
                   <div class="text center">或</div>
                 </div> -->
-              </div>
-              <div @click="openLogin" class="open_wx_btn center login-btn">
-                <!-- <div class="wx-box center">
+                  </div>
+                  <div @click="openLogin" class="open_wx_btn center login-btn">
+                    <!-- <div class="wx-box center">
                   <el-tooltip
                     class="item"
                     effect="dark"
@@ -160,31 +138,19 @@
                     </svg>
                   </el-tooltip>
                 </div> -->
+                  </div>
+                </div>
               </div>
+              <div class="wx_code_box" style="display: none"></div>
             </div>
           </div>
-          <div class="wx_code_box" style="display: none"></div>
         </div>
       </div>
-    </div>
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="40%">
-      <span class="lanhuParent">
-        <span class="canClick">点击确定表示您已阅读并同意</span>
-        <span class="lanhu" @click="openNewWindow">服务协议</span>
-        <span>和</span>
-        <span class="lanhu canClick" @click="openNewWindowYinsi">隐私协议</span>
-      </span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="setAgreeF">确 定</el-button>
-      </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import inputCode from "./components/inputCode.vue";
-
 import { sms } from "@/api/login";
 import { throttle } from "lodash";
 import { getDomain } from "@/utils/index.js";
@@ -193,6 +159,7 @@ import eventBus from "@/utils/eventBus";
 export default {
   data() {
     return {
+      outDialogVisible: false,
       index: 0,
       sendCodeStatus: false,
       vailStatus: false,
@@ -202,7 +169,6 @@ export default {
       codeEndStatus: false,
       codeSuccess: false,
       agreeStatus: false,
-      dialogVisible: false,
       phoneNum: "",
       butNoPhoneNum: false,
       rightPhoneNum: true,
@@ -211,13 +177,27 @@ export default {
       bd_vid: "", //百度id
     };
   },
-  components: { inputCode },
   mounted() {
     // this.getSubdomain();
     const url = window.location.href;
     this.getBdVid(url);
   },
+  created() {
+    eventBus.on("closeLogin", this.closeDialog); // 订阅事件
+  },
+  beforeDestroy() {
+    eventBus.off("closeLogin", this.closeDialog); // 移除事件监听
+  },
   methods: {
+    showInit() {
+      this.outDialogVisible = true;
+      // inviteFetch().then((res) => {
+      //   this.inv_code_url = res.result.inv_code_url;
+      // });
+    },
+    closeDialog() {
+      this.outDialogVisible = false;
+    },
     getBdVid(url) {
       // 定义正则表达式来匹配 bd_vid 的值
       const regex = /[?&]bd_vid=([^&#]*)/;
@@ -285,7 +265,6 @@ export default {
     backInputPhone() {},
     setAgreeF() {
       this.agreeStatus = true;
-      this.dialogVisible = false;
       this.getCode();
     },
     openNewWindow() {
@@ -367,19 +346,23 @@ export default {
           Ming("data", data);
           // return
           this.$store.dispatch("user/login", data).then(() => {
+            this.closeDialog();
             window.zhuge.track("登录", {
               phone: this.phoneNum,
             });
+
             this.$message({
               type: "success",
               message: "登录成功！",
             });
+            this.$store.dispatch("user/getInfo");
             if (getDomain() === "www") {
               setTimeout(() => {
-                eventBus.emit("showGift"); // 发布事件
+                // eventBus.emit("showGift"); // 发布事件
                 Ming("登录成功setTImeout");
               }, 1500);
             }
+
             this.$router.push({ path: "/" });
           });
         }
@@ -521,7 +504,6 @@ export default {
   width: 100%;
   flex-grow: 1;
   position: relative;
-  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -589,9 +571,9 @@ export default {
   font-weight: 500;
 }
 
-::v-deep .el-dialog {
-  margin-top: 35vh !important;
-}
+// ::v-deep .el-dialog {
+//   margin-top: 35vh !important;
+// }
 
 .center {
   display: flex;
@@ -664,12 +646,10 @@ export default {
 }
 
 .login_main {
-  height: 100vh;
   overflow: hidden;
 }
 
 .app-left {
-  height: 100vh;
   width: 560px;
   background: #216bee;
   flex-grow: 0;

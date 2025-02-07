@@ -610,7 +610,7 @@ export default {
       } else {
         this.$store.dispatch("app/setProStatus", false);
         this.$confirm(
-          "生成大纲需要登录, 是否跳转到登录页?<br>登录联系客服有好礼哟!",
+          "生成大纲需要登录, 是否登录?<br>登录联系客服有好礼哟!",
           "提示",
           {
             confirmButtonText: "确定",
@@ -637,7 +637,8 @@ export default {
       // 获取用户数据
       this.$log("ssss", this.requestForm);
       localStorage.setItem("userInput", JSON.stringify(this.requestForm));
-      this.$router.push("/login");
+      // this.$router.push("/login");
+      eventBus.emit("showLogin"); // 发布事件
     },
     addE() {},
     // 定义方法

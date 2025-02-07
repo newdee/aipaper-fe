@@ -185,7 +185,7 @@ export default {
   width: 100%;
   background-color: white;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  z-index: 10000;
+  z-index: 10;
   border-radius: 5px;
   margin-top: 10px;
   padding: 1px;
