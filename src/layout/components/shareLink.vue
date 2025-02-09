@@ -65,8 +65,8 @@ export default {
   },
   methods: {
     showInit() {
-      this.dialogVisible = true;
       inviteFetch().then((res) => {
+        this.dialogVisible = true;
         this.inv_code_url = res.result.inv_code_url;
       });
     },

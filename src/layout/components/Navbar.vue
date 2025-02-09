@@ -129,10 +129,18 @@
             </div>
           </el-tooltip>
 
-          <div class="navOrderBtn g_hover" @click="navClickOrder(1)">
+          <div
+            v-if="avatar"
+            class="navOrderBtn g_hover"
+            @click="navClickOrder(1)"
+          >
             <span> 我的订单 </span>
           </div>
-          <div class="navOrderBtn g_hover" @click="navClickOrder(2)">
+          <div
+            v-if="avatar"
+            class="navOrderBtn g_hover"
+            @click="navClickOrder(2)"
+          >
             <span> 我的大纲 </span>
           </div>
           <!-- 登录按钮 -->
@@ -403,7 +411,9 @@ export default {
           center: true,
         })
           .then(() => {
-            this.$router.push("/login");
+            // 跳转登录页
+            // this.$router.push("/login");
+            eventBus.emit("showLogin"); // 发布事件
           })
           .catch(() => {
             this.$message({

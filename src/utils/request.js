@@ -3,6 +3,7 @@ import { MessageBox, Message } from "element-ui";
 import store from "@/store";
 import { getToken } from "@/utils/auth";
 import router from "../router/index";
+import eventBus from "@/utils/eventBus";
 
 // create an axios instance
 const service = axios.create({
@@ -54,7 +55,8 @@ service.interceptors.response.use(
           duration: 5 * 1000,
         });
         store.dispatch("user/resetToken").then(() => {
-          router.push("/login");
+          // router.push("/login");
+          eventBus.emit("showLogin"); // 发布事件
         });
       } else {
         Message({
@@ -94,7 +96,8 @@ service.interceptors.response.use(
         duration: 5 * 1000,
       });
       store.dispatch("user/resetToken").then(() => {
-        router.push("/login");
+        // router.push("/login");
+        eventBus.emit("showLogin"); // 发布事件
       });
     } else {
       // 请求已发出，但是不在2xx的范围

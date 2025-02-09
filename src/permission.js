@@ -8,6 +8,7 @@ import { getToken, setToken } from "@/utils/auth"; // get token from cookie
 import getPageTitle from "@/utils/get-page-title";
 import { getDomain } from "@/utils/index.js";
 import { login } from "./api/user";
+import eventBus from "@/utils/eventBus";
 
 NProgress.configure({
   showSpinner: false,
@@ -125,7 +126,9 @@ router.beforeEach(async (to, from, next) => {
     }
   } else {
     // 如果没有 token 且不在白名单，需要登录
-    next(`/login?redirect=${to.path}`);
+    // next(`/login?redirect=${to.path}`);
+    eventBus.emit("showLogin"); // 发布事件
+
     NProgress.done();
   }
 });
