@@ -3,7 +3,6 @@
     <el-dialog
       append-to-body
       :visible.sync="outDialogVisible"
-      :before-close="handleClose"
       class="custom-dialog"
     >
       <div class="login_main">

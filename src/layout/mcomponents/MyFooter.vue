@@ -125,9 +125,9 @@
               <p>我要推广</p>
             </div>
           </el-button> -->
-          <!-- <el-popover placement="left" width="150" trigger="hover">
+          <el-popover placement="left" width="150" trigger="hover">
             <div class="qywxBox">
-              <img :src="agent_image.business_qrcode" alt="" />
+              <img :src="reflectService.image_url" alt="" />
             </div>
             <p>扫描二维码，<br />联系加盟客服</p>
             <el-button slot="reference">
@@ -135,10 +135,10 @@
                 <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-jiaruwomen"></use>
                 </svg>
-                <p>代理加盟</p>
+                <p>{{ reflectService.name }}</p>
               </div>
             </el-button>
-          </el-popover> -->
+          </el-popover>
         </div>
       </div>
     </div>
@@ -214,6 +214,9 @@ export default {
     ...mapGetters(["agent_image"]),
     contactService() {
       return this.agent_image.find((image) => image.id === 5);
+    },
+    reflectService() {
+      return this.agent_image.find((image) => image.id === 6);
     },
   },
   methods: {

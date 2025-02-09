@@ -84,7 +84,7 @@
     </div>
 
     <div class="stepContent">
-      <step0 ref="step0" v-if="activeIndex != 3"></step0>
+      <!-- <step0 ref="step0" v-if="activeIndex != 3"></step0> -->
 
       <step1 v-if="activeIndex == 1"></step1>
       <step2 :outlineData="outlineData" v-if="activeIndex == 2"></step2>
@@ -113,7 +113,7 @@ import { mapGetters } from "vuex";
 
 import swiperOne from "./components/swiperOne.vue";
 // import eventBus from "@/utils/eventBus";
-import step0 from "./components/step0.vue";
+// import step0 from "./components/step0.vue";
 import questionList from "./components/questionList/index.vue";
 import step1 from "./components/step1.vue";
 import step2 from "./components/step2.vue";
@@ -151,7 +151,7 @@ export default {
     step3,
     step2,
     step1,
-    step0,
+    // step0,
     orderDialog,
     paypopup,
     questionList,

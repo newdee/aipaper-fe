@@ -82,7 +82,7 @@
       <!-- <div v-if="!showContent" class="giftBox hidden-xs-only">
         <img src="../../assets/images/bg/giftbox.png" alt="" />
         <p>全场限时 <b>折扣</b>，喜迎 <b>2025</b> ！</p>
-      </div> 
+      </div>
       ssss
       -->
 
@@ -129,8 +129,11 @@
             </div>
           </el-tooltip>
 
-          <div class="navOrderBtn" @click="navClickOrder">
+          <div class="navOrderBtn g_hover" @click="navClickOrder(1)">
             <span> 我的订单 </span>
+          </div>
+          <div class="navOrderBtn g_hover" @click="navClickOrder(2)">
+            <span> 我的大纲 </span>
           </div>
           <!-- 登录按钮 -->
           <template>
@@ -447,8 +450,8 @@ export default {
       // this.$router.push("/");
       location.reload();
     },
-    navClickOrder() {
-      eventBus.emit("showOrderList", 1);
+    navClickOrder(status) {
+      eventBus.emit("showOrderList", status);
     },
   },
   created() {

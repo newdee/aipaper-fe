@@ -223,10 +223,13 @@ export default {
       this.showOrderList(status);
     },
     showPcOrderList(status) {
+      Ming("dss", status);
       this.isPhone = false;
       this.showOrderList(status);
     },
     showOrderList(status) {
+      Ming("ds2222s", status);
+
       this.orderTabs = status;
       // 本菜单仅在用户已登录状态可见,所以这里在查看订单前不再校验用户是否已登录
       this.listId = new Date().getTime();
