@@ -106,6 +106,7 @@ import { getList } from "@/api/table";
 import { getOutlineList } from "@/api/user";
 import { throttle } from "lodash";
 import eventBus from "@/utils/eventBus";
+import { product } from "@/api/gpt";
 
 export default {
   name: "UserOrders",
@@ -200,6 +201,7 @@ export default {
               type: row.type,
               field: ["哲学", row.field],
               key: row.key1,
+              product: row.product,
               word_count: row.word_count,
             };
             this.$store.dispatch("app/setRequestForm", requestForm);

@@ -451,7 +451,7 @@ export default {
       this.$router.push(`/login?redirect=${this.$route.fullPath}`);
     },
     toView(index, path) {
-      if (index != 0) this.$store.dispatch("app/setActiveSidebar", index);
+      this.$store.dispatch("app/setActiveSidebar", 1);
       this.$jumpUrl(path);
     },
     loginOut() {

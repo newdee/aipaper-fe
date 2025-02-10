@@ -203,6 +203,10 @@ export default {
     window.removeEventListener("scroll", this.handleScroll);
   },
   watch: {
+    // $route(to, from) {
+    //   // 手动处理更新逻辑
+    //   this.fetchDataBasedOnRoute(to);
+    // },
     device: {
       deep: true,
       immediate: true,
@@ -225,6 +229,9 @@ export default {
     ...mapGetters(["activeIndex", "device", "requestForm"]),
   },
   methods: {
+    fetchDataBasedOnRoute(to) {
+      this.$log("tototototo---------", to);
+    },
     getBdVidFromUrl() {
       // 获取当前页面的 URL
       let bdVid = "";
@@ -334,11 +341,41 @@ export default {
       }
     },
   },
+  beforeRouteEnter(to, from, next) {
+    // 在路由进入前调用
+    if (to.query.key1) {
+      let data = {
+        key: to.query.key1,
+      };
+      outlineStatus(data)
+        .then((res) => {
+          // 使用 next 的回调函数来访问组件实例
+          next((vm) => {
+            vm.showOutLine(res.result.outline.outline);
+            console.log("dddd", res);
+            // 复现大纲接口
+            // let data = {
+            //   ...vm.requestForm,
+            //   predict_price: res.result.predict_price,
+            // };
 
+            // 保存大纲输入信息
+            // vm.$store.dispatch("app/setRequestForm", data);
+            // 填充大纲列表数据
+          });
+        })
+        .catch((error) => {
+          console.error("Error fetching outline status:", error);
+          // 处理错误，比如显示一个通知或提示信息
+          next(); // 确保在发生错误时仍然导航到组件
+        });
+    } else {
+      next(); // 如果没有 key1，直接继续导航
+    }
+  },
   beforeRouteUpdate(to, from, next) {
     // 当路由的查询参数发生变化时，这个方法会被调用
     // this.activeIndex = to.query.activeIndex || 0;
-
     if (to.query.key1) {
       let data = {
         key: to.query.key1,

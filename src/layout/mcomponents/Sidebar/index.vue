@@ -22,7 +22,7 @@
     </div> -->
     <div class="mSiderBar">
       <div
-        @click="$jumpUrl('/home/home')"
+        @click="toView(0, '/home/home')"
         :active="'home' == $route.name"
         class="mItemWrapper"
       >
@@ -152,6 +152,10 @@ export default {
   },
   methods: {
     generateTitle,
+    toView(index, path) {
+      this.$store.dispatch("app/setActiveIndex", 0);
+      this.$jumpUrl(path);
+    },
   },
 };
 </script>
