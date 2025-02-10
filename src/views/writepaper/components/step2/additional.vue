@@ -1,342 +1,92 @@
 <template>
   <div>
     <!-- 页面名称 -->
-    <div class="spendingBox">
+    <div class="newCard">
       <div class="markBox">
         <img src="@/assets/images/mark.png" alt="" />
       </div>
       <!-- {{ requestForm }} -->
-      <p class="fuTitle">继续生成全文,您将获得以下权益</p>
-      <div class="maintxt">
-        <div class="borderBox">
-          <div class="left">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-wj-zw"></use>
-            </svg>
-          </div>
-          <div class="right">
-            <p>
-              [中文]{{ requestForm.title }}
-              <span class="add">x1</span>
-              <span class="wordage"
-                >{{ requestForm.type }} | {{ requestForm.language }}</span
-              >
-            </p>
-            <!-- {{ requestForm }}  -->
-            <!-- <p>
-              {{ requestForm.field ? requestForm.field[1] : "暂无" }}
-              <span>含在线编辑</span>
-            </p> -->
-            <p v-if="wordShow" class="alertTxt">真实数据来源</p>
-            <p v-if="!wordShow" class="alertTxt">{{ requestForm.product }}</p>
-            <p v-if="wordShow" class="include">
-              摘要 | 大纲目录 | 正文 | 参考文献
-            </p>
-            <p v-else class="include">{{ requestForm.product }}</p>
-            <p class="alignR">
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-checkmark"></use>
-              </svg>
-            </p>
-          </div>
-        </div>
-      </div>
-      <!-- 附件部分 -->
-      <div
-        v-show="
-          requestForm.product == '毕业论文' ||
-          requestForm.product ==
-            '结课论文                                                       '
-        "
-        class="att"
-      >
-        <!-- <div class="borderBox">
-          <div class="left">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-zhengwenmoban"></use>
-            </svg>
-          </div>
-          <div class="right">
-            <p>
-              [开题报告]
-              <span class="add">x1</span>
-            </p>
-            <p class="include">引言 | 主体 | 结论</p>
-            <p class="alignR">
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-checkmark"></use>
-              </svg>
-            </p>
-          </div>
-        </div> -->
-        <!-- <div class="borderBox">
-          <div class="left">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-wenxianzongshu18"></use>
-            </svg>
-          </div>
-          <div class="right">
-            <p>
-              [文献综述]
-              <span class="add">x1</span>
-            </p>
-            <p class="include">提供背景 | 展示现状</p>
-            <p class="alignR">
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-checkmark"></use>
-              </svg>
-            </p>
-          </div>
-        </div> -->
-        <div class="borderBox">
-          <div class="left">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-zhongyingwenyingwen"></use>
-            </svg>
-          </div>
-          <div class="right">
-            <p>
-              [中英文摘要]
-              <span class="add">x1</span>
-            </p>
-            <p class="include">中英文翻译 | 简洁扼要</p>
-            <p class="alignR">
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-checkmark"></use>
-              </svg>
-            </p>
-          </div>
-        </div>
-        <div class="borderBox">
-          <div class="left">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-icon-cankaowenxian"></use>
-            </svg>
-          </div>
-          <div class="right">
-            <p>
-              [中英文参考文献]
-              <span class="add"> </span>
-            </p>
-            <p class="include">提供依据 | 支撑论证</p>
-            <p class="alignR">
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-checkmark"></use>
-              </svg>
-            </p>
-          </div>
-        </div>
-        <!-- 学术创新 -->
-        <!-- <div class="borderBox">
-          <div class="left">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-chuangxinfuwu"></use>
-            </svg>
-          </div>
-          <div class="right">
-            <p>
-              [任务书]
-              <span class="add">x1</span>
-            </p>
-            <p class="include">提出新观点 | 贡献新知识</p>
-            <p class="alignR">
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-checkmark"></use>
-              </svg>
-            </p>
-          </div>
-        </div> -->
+      <p class="requestTitle">
+        {{ requestForm.product }}
+      </p>
+      <!-- 支付卡片 -->
+      <div class="payCard">
+        <!-- 正式版 -->
 
-        <!-- 论文正文(PDF版本) -->
-        <div class="borderBox">
-          <div class="left">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-pdf"></use>
-            </svg>
-          </div>
-          <div class="right">
-            <p>
-              论文正文(PDF版本)
-              <span class="add">x1</span>
-            </p>
-            <p class="alignR">
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-checkmark"></use>
-              </svg>
-            </p>
-          </div>
-        </div>
-        <!-- 论文正文(LEXTEX版本) -->
-        <div class="borderBox">
-          <div class="left">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-template"></use>
-            </svg>
-          </div>
-          <div class="right">
-            <p>
-              论文正文(Latex版本)
-              <span class="add">x1</span>
-            </p>
-            <p class="alignR">
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-checkmark"></use>
-              </svg>
-            </p>
-          </div>
-        </div>
-        <!-- 论文正文(WORD版本) -->
-        <div class="borderBox">
-          <div class="left">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-file-word-fill"></use>
-            </svg>
-          </div>
-          <div class="right">
-            <p>
-              论文正文(Word版本)
-              <span class="add">x1</span>
-            </p>
-            <p class="alignR">
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-checkmark"></use>
-              </svg>
-            </p>
-          </div>
-        </div>
-        <div style="width: 175px"></div>
-      </div>
-      <!-- <p class="fuTitle">增值附加服务</p> -->
-      <p class="fuTitle">价格预估</p>
-      <!-- {{ requestForm }} -->
-      <div class="priceList">
-        <p>
-          <span> 学科: </span>
-          {{ requestForm.type }}
-        </p>
-        <p>
-          <span> 字数: </span>
-          {{ requestForm.word_count ? requestForm.word_count : "暂无" }}
-        </p>
-        <p>
-          <span> 预估费用: </span>
-          <b class="danger"> {{ defaultPrice }}</b>
-        </p>
-        <p
-          v-if="wordShow"
-          style="text-align: center; color: #606266; font-size: 14px"
+        <div
+          class="cardLeft"
+          :class="{ selected: internalValue === 'left' }"
+          @click="selectCard('left')"
         >
-          担心生成后不满意?
-          <span class="red" style="font-weight: bold; font-size: 20px">
-            19.9
-          </span>
-          元生成预览版,满意再付款
-        </p>
-        <p style="text-align: center; color: #606266; font-size: 12px">
-          PS: 点击生成全文,在支付页可选择正式版(全款) / 预览版(19.9元)
-        </p>
-      </div>
-
-      <div style="padding-bottom: 40px">
-        <el-popover placement="top" width="800" trigger="hover">
-          <el-table
-            header-row-class-name="bgTable"
-            border
-            stripe
-            :data="tableData"
-            style="width: 100%"
-            :span-method="cellSpanMethod"
-          >
-            <el-table-column
-              prop="wordCount"
-              align="center"
-              label="字数"
-            ></el-table-column>
-            <el-table-column
-              prop="vocational"
-              align="center"
-              label="专科"
-            ></el-table-column>
-            <el-table-column
-              prop="undergraduate"
-              align="center"
-              label="本科"
-            ></el-table-column>
-            <el-table-column
-              prop="master"
-              align="center"
-              label="研究生"
-            ></el-table-column>
-            <el-table-column
-              prop="finalPaper"
-              align="center"
-              label="结课论文"
-            ></el-table-column>
-            <el-table-column align="center" label="开题报告">
-              <template slot-scope="scope">
-                <div
-                  v-if="scope.$index === 0"
-                  style="text-align: center; line-height: 100px"
-                >
-                  {{ tableData[0].openingReport }}
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column align="center" label="任务书">
-              <template slot-scope="scope">
-                <div
-                  v-if="scope.$index === 0"
-                  style="text-align: center; line-height: 100px"
-                >
-                  {{ tableData[0].taskBook }}
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column align="center" label="文献综述">
-              <template slot-scope="scope">
-                <div
-                  v-if="scope.$index === 0"
-                  style="text-align: center; line-height: 100px"
-                >
-                  {{ tableData[0].literatureReview }}
-                </div>
-              </template>
-            </el-table-column>
-          </el-table>
-
-          <p class="priceLine" slot="reference">
-            如果价格有疑问，参考价格体系说明。（鼠标移入查看价格图）
+          <p>正式版</p>
+          <p>
+            {{ requestForm.title }}
           </p>
-        </el-popover>
-      </div>
-
-      <!-- <el-checkbox-group
-          class="addService "
-          v-model="checkboxGroup1"
-          @change="fuChange"
-          size="small"
+          <p>总价: {{ defaultPrice }}</p>
+          <div class="cardChildList">
+            <p>
+              {{ requestForm.type }}
+            </p>
+            <p>
+              {{ requestForm.word_count ? requestForm.word_count : "暂无" }}
+            </p>
+            <p>
+              {{ requestForm.language }}
+            </p>
+            <p>
+              {{ requestForm.field[1] }}
+            </p>
+          </div>
+          <!-- 写死正式版的内容 -->
+          <div>
+            <p>中英文摘要</p>
+            <p>中英文参考文献</p>
+            <p>论文正文(PDF版)</p>
+            <p>论文正文(Latex版)</p>
+            <p>论文正文(Word版)</p>
+          </div>
+          <div>
+            <p>承诺知网维普查重率低于20%，超过退款！</p>
+          </div>
+        </div>
+        <!-- 预览版 -->
+        <div
+          class="cardRight"
+          :class="{ selected: internalValue === 'right' }"
+          @click="selectCard('right')"
         >
-          <el-checkbox
-            v-for="(item, index) in homeData.additional_service"
-            :label="item.id"
-            :key="index + 'fu'"
-            :disabled="item.is_supported"
-            border
-          >
-            <div class="cusLabel">
-              <p class="topIntro" v-show="item.intro">{{ item.intro }}</p>
-              <p class="addName">{{ item.name }}</p>
-              <div class="price">
-                <span>0.0元</span>
-                <span>{{ item.price }}元</span>
-              </div>
-            </div>
-          </el-checkbox>
-        </el-checkbox-group> -->
-
-      <!-- <p class="tips" @click="reduceAIGC">
-          AIGC率知网超25%<span>包退费</span>
-        </p> -->
+          <p>正式版</p>
+          <p>
+            {{ requestForm.title }}
+          </p>
+          <p>总价: {{ defaultPrice }}</p>
+          <div class="cardChildList">
+            <p>
+              {{ requestForm.type }}
+            </p>
+            <p>
+              {{ requestForm.word_count ? requestForm.word_count : "暂无" }}
+            </p>
+            <p>
+              {{ requestForm.language }}
+            </p>
+            <p>
+              {{ requestForm.field[1] }}
+            </p>
+          </div>
+          <!-- 写死正式版的内容 -->
+          <div>
+            <p>查看正式版50%内容</p>
+            <p>预览满意后再解锁全文</p>
+            <p>开题报告不支持预览</p>
+            <p>任务书不支持预览</p>
+            <p>文件综述不支持预览</p>
+          </div>
+          <div>
+            <p>承诺知网维普查重率低于20%，超过退款！</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -351,6 +101,7 @@ export default {
   name: "additional",
   data() {
     return {
+      selectedCard: "left", // 用于跟踪选中的卡片
       // 定义变量
       checkboxGroup1: ["6", "7", "10", "11", "12", "13", "14", "15"],
       supportedProducts: [],
@@ -420,6 +171,12 @@ export default {
       model: false,
     };
   },
+  props: {
+    value: {
+      type: String,
+      default: null,
+    },
+  },
   components: {
     // webinfo,
   },
@@ -459,6 +216,14 @@ export default {
     // eventBus.off("sendOutline", this.addE); // 移除事件监听
   },
   computed: {
+    internalValue: {
+      get() {
+        return this.value;
+      },
+      set(newValue) {
+        this.$emit("input", newValue);
+      },
+    },
     ...mapGetters(["requestForm", "homeData"]),
     wordShow() {
       return (
@@ -468,6 +233,9 @@ export default {
     },
   },
   methods: {
+    selectCard(card) {
+      this.internalValue = card;
+    },
     cellSpanMethod({ row, column, rowIndex, columnIndex }) {
       if (columnIndex >= 5) {
         // 合并最后三列的单元格
@@ -561,97 +329,23 @@ export default {
 // }
 // @media only screen and (max-width: 768px) {
 // }
-
-.floorBox {
-  font-size: 16px;
-  width: 150px;
-  height: 40px;
-  background: #ffffff;
-  border-radius: 24px;
-  border: 1px solid #cccccc;
-  line-height: 40px;
-  padding-left: 14px;
-  padding-right: 16px;
-  margin-bottom: 22px;
-  background: #3355ff;
-  color: #fff;
-  border-color: #3355ff;
-  > div {
-    display: inline-block;
-
-    &.right {
-      padding-left: 5px;
-    }
-
-    .home-icon {
-      width: 18px;
-      height: 18px;
-      transform: translateY(3px);
-    }
-  }
-  .left {
-    flex: none;
-
-    svg.icon {
-      width: 33px;
-      height: 33px;
-    }
-  }
-
-  .right {
-    flex-grow: 1;
-    position: relative;
-    padding-left: 5px;
-
-    .alignR {
-      text-align: right;
-      position: absolute;
-      right: 0;
-      bottom: -8px;
-
-      svg.icon {
-        width: 14px;
-        height: 14px;
-        color: #018417;
-      }
-    }
-
-    p {
-      margin: 0;
-      line-height: 1.5em;
-    }
-
-    p:first-child {
-      padding: 5px 0;
-    }
-  }
+.payCard {
+  display: flex;
+}
+.cardLeft {
+  background: skyblue;
+}
+.cardChildList {
+  display: flex;
+}
+.cardLeft,
+.cardRight {
+  border: 1px solid #ccc;
+  padding: 10px;
+  cursor: pointer;
 }
 
-.activeClass {
-  background: #fff !important;
-  color: #606266 !important;
-}
-.floorBox {
-  &:hover {
-    cursor: pointer;
-  }
-}
-.priceList {
-  padding-left: 20px;
-  line-height: 30px;
-  font-size: 16px;
-}
-
-.priceLine {
-  width: 350px;
-  margin: 0 auto;
-  margin-top: 40px;
-  text-decoration: underline;
-  &:hover {
-    cursor: pointer;
-  }
-}
-.bgTable {
-  background: red;
+.selected {
+  border-color: blue;
 }
 </style>

@@ -100,7 +100,7 @@ export const constantRoutes = [
         name: "writepaper",
         component: () => import("@/views/writepaper/index"),
         meta: {
-          keepAlive: true,
+          keepAlive: false,
           // title: "写论文",
           title: "writePaper",
           icon: "el-icon-edit",
@@ -117,7 +117,7 @@ export const constantRoutes = [
         name: "reduceRepetition",
         component: () => import("@/views/reduceRepetition/index.vue"),
         meta: {
-          keepAlive: true,
+          keepAlive: false,
           title: "reduceRepetition",
           // title: "降重/降AIGC率",
           icon: "el-icon-tickets",
@@ -133,7 +133,7 @@ export const constantRoutes = [
         name: "chat",
         component: () => import("@/views/chat/index.vue"),
         meta: {
-          keepAlive: true,
+          keepAlive: false,
           title: "chat",
           // title: "降重/降AIGC率",
           icon: "el-icon-chat-dot-round",

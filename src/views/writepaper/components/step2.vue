@@ -238,8 +238,8 @@
     <!-- 付费项选择 -->
     <div id="reduceId"></div>
 
-    <additional></additional>
-
+    <additional v-model="selectValue"></additional>
+    <p>当前选中的值是：{{ selectValue }}</p>
     <div class="warningP agreeText">
       <el-checkbox v-model="checked">
         我已阅读并同意：平台所生成的全文为范文，仅用作参考，不用作毕业论文、发表刊物等
@@ -551,6 +551,7 @@ export default {
   name: "step2",
   data() {
     return {
+      selectValue: "left", // 初始状态未选中任何卡片
       title: "艺术批评的时间作用及发展历程",
       descri: "1201 艺术学理论类",
       newlabel: "",
@@ -1473,7 +1474,7 @@ export default {
             user_id: 1, // 固定传一
             payment_method: "alipay", // 支付方式
             total_amount: 149.85, // 总价
-            pay_type: "PAY_ALL",
+            pay_type: this.selectValue == "left" ? "PAY_ALL" : "PAY_STAGES",
             key: this.requestForm.key, // 大纲的key
             product: this.requestForm.product, // 大纲的key
             type: this.requestForm.type, // 大纲的key
