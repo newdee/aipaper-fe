@@ -480,18 +480,15 @@ export default {
     },
     getDefaultPrice() {
       // 获取预估价格
-      console.log("预估价格", this.requestForm);
-      if (this.requestForm.key) {
-        let data = {
-          key: this.requestForm.key,
-          type: this.requestForm.type,
-          product: this.requestForm.product,
-          word_count: this.requestForm.word_count,
-        };
-        predict_price(data).then((res) => {
-          this.defaultPrice = res.result.predict_price;
-        });
-      }
+      let data = {
+        key: this.requestForm.key,
+        type: this.requestForm.type,
+        product: this.requestForm.product,
+        word_count: this.requestForm.word_count,
+      };
+      predict_price(data).then((res) => {
+        this.defaultPrice = res.result.predict_price;
+      });
     },
     getPrice(educationLevel, wordCount) {
       const levelMap = {
