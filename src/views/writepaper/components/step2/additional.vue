@@ -14,7 +14,7 @@
         <!-- 正式版 -->
 
         <div
-          class="cardLeft"
+          class="cardClidOnly cardLeft"
           :class="{ selected: internalValue === 'left' }"
           @click="selectCard('left')"
         >
@@ -51,7 +51,7 @@
         </div>
         <!-- 预览版 -->
         <div
-          class="cardRight"
+          class="cardClidOnly cardRight"
           :class="{ selected: internalValue === 'right' }"
           @click="selectCard('right')"
         >
@@ -347,5 +347,27 @@ export default {
 
 .selected {
   border-color: blue;
+}
+.newCard {
+  padding-left: 40px;
+}
+.requestTitle {
+  width: 72px;
+  height: 25px;
+  font-family: PingFangSC-SNaNpxibold;
+  font-weight: 600;
+  font-size: 18px;
+  color: #000000;
+  letter-spacing: 0;
+}
+.cardClidOnly {
+  width: 360px;
+  height: 420px;
+  background: #ffffff;
+  border: 2px solid #d8dfe6;
+  border-radius: 4px;
+}
+.cardRight {
+  margin-left: 20px;
 }
 </style>

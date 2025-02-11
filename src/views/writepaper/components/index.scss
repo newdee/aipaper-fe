@@ -3,28 +3,29 @@
 }
 
 .outlineRepeat {
-  text-align: center;
+  text-align: left;
   margin-top: 50px;
   margin-bottom: 64px;
-
-  p {
-    display: inline-block;
-    padding: 0 18px;
-    line-height: 40px;
-    height: 40px;
-    background: #f4f5f7;
-    border: 1px solid #d8dfe6;
-    border-radius: 20px;
-    font-size: 14px;
-    color: #1b2126;
-    &:hover {
-      color: rgba(51, 85, 255, 1);
-      border: 1px solid rgba(51, 85, 255, 1);
-      cursor: pointer;
-    }
+  padding-left: 40px;
+}
+.btnDefault {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  padding: 0 18px;
+  line-height: 40px;
+  height: 40px;
+  background: #f4f5f7;
+  border: 1px solid #d8dfe6;
+  border-radius: 20px;
+  font-size: 14px;
+  color: #1b2126;
+  &:hover {
+    border: 1px solid rgba(51, 85, 255, 1);
+    cursor: pointer;
   }
 }
-
 .spendingBox {
   max-width: 788px;
   width: 100%;

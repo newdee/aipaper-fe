@@ -30,14 +30,13 @@
               当新增章节但是没有描述插入内容，或者当选择开启图表、代码、Latex公式等但没有提供详细说明，可以点击AI帮写，AI会帮你补充细节
             </p>
           </template>
-          <el-button
-            type="primary"
-            size="mini"
-            @click="saveOutlineTwo()"
-            icon="el-icon-circle-plus-outline"
-          >
+
+          <p class="g_poin btnDefault btnStarBorder" @click="saveOutlineTwo()">
+            <span class="btnStarDe">
+              <img src="@/assets/images/index/icon_32_star.png" alt="" />
+            </span>
             AI帮写
-          </el-button>
+          </p>
         </el-tooltip>
         <el-tooltip
           class="item"
@@ -45,14 +44,10 @@
           content="付费下载大纲"
           placement="top"
         >
-          <el-button
-            type="success"
-            @click="downLoadLine"
-            size="mini"
-            icon="el-icon-download"
-          >
+          <p class="g_poin btnDefault bgDeBtn" @click="downLoadLine">
+            <i class="el-icon-download"></i>
             付费下载大纲
-          </el-button>
+          </p>
         </el-tooltip>
         <p class="detailText">点击文字即可编辑，当您编辑大纲时将自动保存</p>
       </div>
@@ -229,10 +224,20 @@
         </div>
       </el-tree>
     </div>
-    <div class="outlineRepeat g_poin">
-      <p @click="reloadOutline">
-        大纲不满意? 重新生成
+    <div class="btnList outlineRepeat">
+      <p class="g_poin btnDefault" @click="reloadOutline">
         <i class="el-icon-refresh"></i>
+        重新生成
+      </p>
+      <p class="g_poin btnDefault btnStarBorder" @click="saveOutlineTwo()">
+        <span class="btnStarDe">
+          <img src="@/assets/images/index/icon_32_star.png" alt="" />
+        </span>
+        AI帮写
+      </p>
+      <p class="g_poin btnDefault bgDeBtn" @click="downLoadLine">
+        <i class="el-icon-download"></i>
+        付费下载大纲
       </p>
     </div>
     <!-- 付费项选择 -->
@@ -1655,5 +1660,37 @@ export default {
 }
 ::v-deep .el-tree-node__children {
   background: #f7f9fa;
+}
+.btnList {
+  display: flex;
+}
+.btnStarDe {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: -6px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.btnStarBorder {
+  color: #0066ff;
+  background: linear-gradient(#fff, #fff) padding-box,
+    /* 背景 */ linear-gradient(45deg, #e0b0ff, #00feff, #90ff7b, #e0b0ff)
+      border-box; /* 边框 */
+  border: 2px solid transparent; /* 透明边框 */
+  border-radius: 30px; /* 圆角 */
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+}
+.bgDeBtn {
+  background-image: linear-gradient(180deg, #009fff 11%, #0066ff 89%);
+  box-shadow: inset 0 2px 4px 0 #6cb6ff, inset 0 6px 5px 0 #ffffffa6,
+    inset 0 -2px 3px 0 #7eb2ff, inset 0 -3px 6px 0 #0052cc;
+  border-radius: 20px;
+  color: #fff;
+  font-weight: bold;
 }
 </style>
