@@ -244,7 +244,7 @@
     <div id="reduceId"></div>
 
     <additional v-model="selectValue"></additional>
-    <p>当前选中的值是：{{ selectValue }}</p>
+    <!-- <p>当前选中的值是：{{ selectValue }}</p> -->
     <div class="warningP agreeText">
       <el-checkbox v-model="checked">
         我已阅读并同意：平台所生成的全文为范文，仅用作参考，不用作毕业论文、发表刊物等
@@ -954,6 +954,8 @@ export default {
       handler(val) {
         this.outline = val;
         this.generateIndexes(this.outline);
+
+        this.selectValue = "left"; // 初始状态未选中任何卡片
       },
     },
     loading: {

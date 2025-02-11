@@ -18,11 +18,13 @@
           :class="{ selected: internalValue === 'left' }"
           @click="selectCard('left')"
         >
-          <p>正式版</p>
-          <p>
+          <p class="cardIntro">正式版</p>
+          <p class="cardIntroTitle">
             {{ requestForm.title }}
           </p>
-          <p>总价: {{ defaultPrice }}</p>
+          <p class="cardPrice">
+            总价: <span>{{ defaultPrice }}元</span>
+          </p>
           <div class="cardChildList">
             <p>
               {{ requestForm.type }}
@@ -38,28 +40,70 @@
             </p>
           </div>
           <!-- 写死正式版的内容 -->
-          <div>
-            <p>中英文摘要</p>
-            <p>中英文参考文献</p>
-            <p>论文正文(PDF版)</p>
-            <p>论文正文(Latex版)</p>
-            <p>论文正文(Word版)</p>
+          <div
+            v-show="
+              requestForm.product == '毕业论文' ||
+              requestForm.product ==
+                '结课论文                                                       '
+            "
+            class="cardAdditions"
+          >
+            <p>
+              <img src="@/assets/images/step/icon_24_qy@2x(1).png" alt="" />
+              中英文摘要
+            </p>
+            <p>
+              <img
+                src="@/assets/images/step/icon_24_qy@2x(1).png"
+                alt=""
+              />中英文参考文献
+            </p>
+            <p>
+              <img
+                src="@/assets/images/step/icon_24_qy@2x(1).png"
+                alt=""
+              />论文正文(PDF版)
+            </p>
+            <p>
+              <img
+                src="@/assets/images/step/icon_24_qy@2x(1).png"
+                alt=""
+              />论文正文(Latex版)
+            </p>
+            <p>
+              <img
+                src="@/assets/images/step/icon_24_qy@2x(1).png"
+                alt=""
+              />论文正文(Word版)
+            </p>
           </div>
-          <div>
+          <div class="cardPress">
+            <img src="@/assets/images/step/icon_24_bz@2x.png" alt="" />
             <p>承诺知网维普查重率低于20%，超过退款！</p>
+          </div>
+          <div class="selectImg">
+            <img src="@/assets/images/step/icon_option_selected.png" alt="" />
           </div>
         </div>
         <!-- 预览版 -->
         <div
+          v-show="
+            requestForm.product == '毕业论文' ||
+            requestForm.product ==
+              '结课论文                                                       '
+          "
           class="cardClidOnly cardRight"
           :class="{ selected: internalValue === 'right' }"
           @click="selectCard('right')"
         >
-          <p>正式版</p>
-          <p>
+          <div class="selectImg">
+            <img src="@/assets/images/step/icon_option_selected.png" alt="" />
+          </div>
+          <p class="cardIntro">预览版</p>
+          <p class="cardIntroTitle">
             {{ requestForm.title }}
           </p>
-          <p>总价: {{ defaultPrice }}</p>
+          <p class="cardPrice">总价: <span>19.9元</span></p>
           <div class="cardChildList">
             <p>
               {{ requestForm.type }}
@@ -75,16 +119,107 @@
             </p>
           </div>
           <!-- 写死正式版的内容 -->
-          <div>
-            <p>查看正式版50%内容</p>
-            <p>预览满意后再解锁全文</p>
-            <p>开题报告不支持预览</p>
-            <p>任务书不支持预览</p>
-            <p>文件综述不支持预览</p>
+          <div class="cardAdditions">
+            <p>
+              <img src="@/assets/images/step/icon_24_qy@2x(1).png" alt="" />
+              查看正式版50%内容
+            </p>
+            <p>
+              <img src="@/assets/images/step/icon_24_qy@2x(1).png" alt="" />
+              预览满意后再解锁全文
+            </p>
+            <p>
+              <img src="@/assets/images/step/icon_24_qy.png" alt="" />
+              开题报告不支持预览
+            </p>
+            <p>
+              <img src="@/assets/images/step/icon_24_qy.png" alt="" />
+
+              任务书不支持预览
+            </p>
+            <p>
+              <img src="@/assets/images/step/icon_24_qy.png" alt="" />
+
+              文件综述不支持预览
+            </p>
           </div>
-          <div>
-            <p>承诺知网维普查重率低于20%，超过退款！</p>
-          </div>
+        </div>
+      </div>
+
+      <!-- 说明部分 -->
+      <div class="introList">
+        <p>说明:</p>
+        <p>1. 预览版不可退费；</p>
+
+        <div>
+          <el-popover placement="right" width="800" trigger="hover">
+            <el-table
+              header-row-class-name="bgTable"
+              border
+              stripe
+              :data="tableData"
+              style="width: 100%"
+              :span-method="cellSpanMethod"
+            >
+              <el-table-column
+                prop="wordCount"
+                align="center"
+                label="字数"
+              ></el-table-column>
+              <el-table-column
+                prop="vocational"
+                align="center"
+                label="专科"
+              ></el-table-column>
+              <el-table-column
+                prop="undergraduate"
+                align="center"
+                label="本科"
+              ></el-table-column>
+              <el-table-column
+                prop="master"
+                align="center"
+                label="研究生"
+              ></el-table-column>
+              <el-table-column
+                prop="finalPaper"
+                align="center"
+                label="结课论文"
+              ></el-table-column>
+              <el-table-column align="center" label="开题报告">
+                <template slot-scope="scope">
+                  <div
+                    v-if="scope.$index === 0"
+                    style="text-align: center; line-height: 100px"
+                  >
+                    {{ tableData[0].openingReport }}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column align="center" label="任务书">
+                <template slot-scope="scope">
+                  <div
+                    v-if="scope.$index === 0"
+                    style="text-align: center; line-height: 100px"
+                  >
+                    {{ tableData[0].taskBook }}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column align="center" label="文献综述">
+                <template slot-scope="scope">
+                  <div
+                    v-if="scope.$index === 0"
+                    style="text-align: center; line-height: 100px"
+                  >
+                    {{ tableData[0].literatureReview }}
+                  </div>
+                </template>
+              </el-table-column>
+            </el-table>
+
+            <p slot="reference" class="priceIntro">2. 价格体系说明；</p>
+          </el-popover>
         </div>
       </div>
     </div>
@@ -331,6 +466,7 @@ export default {
 // }
 .payCard {
   display: flex;
+  overflow: hidden;
 }
 .cardLeft {
   background: skyblue;
@@ -346,7 +482,8 @@ export default {
 }
 
 .selected {
-  border-color: blue;
+  background: #ffffff;
+  border: 2px solid #0066ff !important;
 }
 .newCard {
   padding-left: 40px;
@@ -359,15 +496,128 @@ export default {
   font-size: 18px;
   color: #000000;
   letter-spacing: 0;
+  margin-bottom: 20px;
 }
 .cardClidOnly {
   width: 360px;
-  height: 420px;
+  padding: 20px;
   background: #ffffff;
   border: 2px solid #d8dfe6;
   border-radius: 4px;
+  position: relative;
 }
 .cardRight {
   margin-left: 20px;
+}
+.selectImg {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  display: none;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.selected {
+  .selectImg {
+    display: block;
+  }
+}
+.cardIntro {
+  font-family: PingFangSC-SNaNpxibold;
+  font-weight: 600;
+  font-size: 14px;
+  color: #0066ff;
+  line-height: 18px;
+}
+.cardIntroTitle {
+  font-family: PingFangSC-SNaNpxibold;
+  font-weight: 600;
+  font-size: 18px;
+  color: #000000;
+  margin-top: 10px;
+}
+.cardPrice {
+  font-family: PingFangSC-SNaNpxibold;
+  font-weight: 600;
+  margin-top: 10px;
+  font-size: 18px;
+  color: #000000;
+  span {
+    color: #f53f3f;
+  }
+}
+.cardChildList {
+  margin-top: 14px;
+  p {
+    height: 24px;
+    line-height: 24px;
+    background: #fff7e8;
+    border: 1px solid #ff7d00;
+    border-radius: 2px;
+    padding: 0px 8px;
+    color: #ff7d00;
+    font-weight: bold;
+    font-size: 12px;
+    margin-right: 10px;
+  }
+}
+.cardAdditions {
+  margin-top: 20px;
+  font-family: PingFangSC-Regular;
+  font-weight: bold;
+  font-size: 14px;
+  color: #1b2126;
+  img {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+  }
+  p {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+  }
+}
+.cardPress {
+  font-family: PingFangSC-Medium;
+  font-weight: 500;
+  font-size: 14px;
+  color: #00b42a;
+  letter-spacing: 0;
+  line-height: 18px;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  img {
+    margin-right: 8px;
+    width: 24px;
+    height: 24px;
+  }
+}
+.introList {
+  margin-top: 20px;
+  line-height: 20px;
+  color: #1b2126;
+  font-size: 14px;
+  font-face: PingFangSC;
+  font-weight: 400;
+  text-align: left;
+}
+
+.priceIntro {
+  color: #0066ff;
+  font-size: 14px;
+  width: 120px;
+  font-weight: 400;
+  text-align: left;
+  text-decoration: underline;
+  &:hover {
+    cursor: pointer;
+  }
 }
 </style>

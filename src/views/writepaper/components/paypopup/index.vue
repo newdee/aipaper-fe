@@ -14,13 +14,7 @@
     >
       <template slot="title">
         <div class="titleHeader">
-          <p class="dialogTitleP">支付订单</p>
-          <div class="titleRight">
-            <p style="font-size: 15px">看样例，质量我放心。</p>
-            <div @click="showExample" class="g_poin btnExample">
-              <p>范文样例</p>
-            </div>
-          </div>
+          <p class="dialogTitleP">订单支付</p>
         </div>
       </template>
       <div

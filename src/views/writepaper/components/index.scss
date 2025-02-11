@@ -225,7 +225,10 @@
   /* 隐藏超出的内容 */
   text-overflow: ellipsis;
 }
-
+::v-deep .agreeText .el-checkbox__label {
+  color: #1b2126;
+  font-weight: bold;
+}
 // @import "@/index.scss";
 .warningText {
   color: #ffa500;
@@ -265,16 +268,17 @@
 
   span {
     display: inline-block;
-    height: 40px;
-    width: 160px;
-    line-height: 40px;
-    border-radius: 20px;
+    width: 240px;
+    height: 44px;
+    background: #0066ff;
+    border-radius: 24px;
+    line-height: 44px;
     font-size: 15px;
     font-weight: bold;
     padding: 0 22px;
     color: #fff;
     transition: all 0.3s linear;
-    background-color: rgba(51, 85, 255, 0.7);
+    background-color: #0066ff;
     &:hover {
       background-color: rgba(51, 85, 255, 1);
     }
