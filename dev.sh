@@ -16,13 +16,15 @@ if [ ! -d .git ]; then
 fi
 
 # 设置变量
-REMOTE="origin"
-# BRANCHES=("dev" "main")
-BRANCHES=("dev" )
+REMOTE1="origin"
+REMOTE2="github"
+BRANCHES=("dev")
 
 # 更新所有分支前先 fetch 最新的远程仓库信息
-echo "Fetching latest from remote '$REMOTE'..."
-git fetch $REMOTE || { echo "错误: Fetch 失败，请检查远程仓库连接。"; exit 1; }
+echo "Fetching latest from remote '$REMOTE1'..."
+git fetch $REMOTE1 || { echo "错误: Fetch 失败，请检查远程仓库连接。"; exit 1; }
+echo "Fetching latest from remote '$REMOTE2'..."
+git fetch $REMOTE2 || { echo "错误: Fetch 失败，请检查远程仓库连接。"; exit 1; }
 
 # 遍历每个分支
 for BRANCH in "${BRANCHES[@]}"; do
@@ -38,7 +40,7 @@ for BRANCH in "${BRANCHES[@]}"; do
 
     # 拉取最新的远程更改
     echo "从远程仓库拉取最新更改..."
-    git pull $REMOTE $BRANCH || { echo "错误: 拉取远程更改失败。"; exit 1; }
+    git pull $REMOTE1 $BRANCH || { echo "错误: 拉取远程更改失败。"; exit 1; }
 
     # 恢复暂存的更改
     echo "恢复暂存的更改..."
@@ -46,7 +48,7 @@ for BRANCH in "${BRANCHES[@]}"; do
   else
     # 直接拉取最新的远程更改
     echo "从远程仓库拉取最新更改..."
-    git pull $REMOTE $BRANCH || { echo "错误: 拉取远程更改失败。"; exit 1; }
+    git pull $REMOTE1 $BRANCH || { echo "错误: 拉取远程更改失败。"; exit 1; }
   fi
 
   # 添加所有更改
@@ -62,14 +64,13 @@ for BRANCH in "${BRANCHES[@]}"; do
     git commit -m "$COMMIT_MESSAGE" || { echo "错误: 提交到分支 $BRANCH 失败。"; exit 1; }
 
     # 推送到远程仓库
-    echo "推送分支 $BRANCH 到远程仓库..."
-    git push $REMOTE $BRANCH || { echo "错误: 推送分支 $BRANCH 失败。"; exit 1; }
+    echo "推送分支 $BRANCH 到远程仓库 $REMOTE1..."
+    git push $REMOTE1 $BRANCH || { echo "错误: 推送分支 $BRANCH 失败。"; exit 1; }
+
+    echo "推送分支 $BRANCH 到远程仓库 $REMOTE2..."
+    git push $REMOTE2 $BRANCH || { echo "错误: 推送分支 $BRANCH 失败。"; exit 1; }
   fi
 done
-
-
-
-
 
 # 切换回 dev 分支
 echo "切换回 dev 分支..."
