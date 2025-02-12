@@ -1,22 +1,15 @@
 <template>
   <div>
     <!-- 页面名称 -->
-    <div class="newCard">
-      <div class="markBox">
-        <img src="@/assets/images/mark.png" alt="" />
-      </div>
-      <!-- {{ requestForm }} -->
-      <p class="requestTitle">
-        {{ requestForm.product }}
-      </p>
+    <div style="margin-top: 10px" class="newCard">
       <!-- 支付卡片 -->
       <div class="payCard">
         <!-- 正式版 -->
 
         <div
           class="cardClidOnly cardLeft"
-          :class="{ selected: internalValue === 'left' }"
-          @click="selectCard('left')"
+          :class="{ selected: internalValue === 'PAY_ALL' }"
+          @click="selectCard('PAY_ALL')"
         >
           <p class="cardIntro">正式版</p>
           <p class="cardIntroTitle">
@@ -93,8 +86,8 @@
               '结课论文                                                       '
           "
           class="cardClidOnly cardRight"
-          :class="{ selected: internalValue === 'right' }"
-          @click="selectCard('right')"
+          :class="{ selected: internalValue === 'PAY_STAGES' }"
+          @click="selectCard('PAY_STAGES')"
         >
           <div class="selectImg">
             <img src="@/assets/images/step/icon_option_selected.png" alt="" />
@@ -236,7 +229,6 @@ export default {
   name: "additional",
   data() {
     return {
-      selectedCard: "left", // 用于跟踪选中的卡片
       // 定义变量
       checkboxGroup1: ["6", "7", "10", "11", "12", "13", "14", "15"],
       supportedProducts: [],
@@ -311,6 +303,10 @@ export default {
       type: String,
       default: null,
     },
+    orderPayDisabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
     // webinfo,
@@ -369,7 +365,15 @@ export default {
   },
   methods: {
     selectCard(card) {
+      if (this.orderPayDisabled) {
+        this.$message({
+          type: "warning",
+          message: "该订单不支持切换支付方式!",
+        });
+        return false;
+      }
       this.internalValue = card;
+      this.$emit("changeCard", this.internalValue);
     },
     cellSpanMethod({ row, column, rowIndex, columnIndex }) {
       if (columnIndex >= 5) {
@@ -499,9 +503,7 @@ export default {
   background: #ffffff;
   border: 2px solid #0066ff !important;
 }
-.newCard {
-  padding-left: 40px;
-}
+
 .requestTitle {
   width: 72px;
   height: 25px;
@@ -513,7 +515,7 @@ export default {
   margin-bottom: 20px;
 }
 .cardClidOnly {
-  width: 360px;
+  width: 320px;
   padding: 20px;
   background: #ffffff;
   border: 2px solid #d8dfe6;

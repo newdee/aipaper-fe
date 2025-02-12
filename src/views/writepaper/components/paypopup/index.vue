@@ -8,7 +8,7 @@
       :close-on-click-modal="false"
       title="支付订单"
       :visible.sync="popupStatus"
-      :width="device == 'mobile' ? '90%' : '60%'"
+      :width="device == 'mobile' ? '90%' : '70%'"
       class="order-dialog"
       :before-close="handleClose"
     >
@@ -23,9 +23,6 @@
         element-loading-spinner="el-icon-loading"
         class="dialog-content"
       >
-        <div class="markBox">
-          <img src="@/assets/images/mark.png" alt="" />
-        </div>
         <!-- <p class="dialog-text">
           当前订单状态:
           <span class="dialog_pay_text">{{
@@ -34,137 +31,49 @@
         </p> -->
 
         <div class="payCodeBox">
-          <div class="payLeftCode">
-            <el-tabs type="border-card">
-              <el-tab-pane>
-                <span slot="label"
-                  ><svg class="icon svg-icon" aria-hidden="true">
-                    <use xlink:href="#icon-zhifubaozhifu"></use>
-                  </svg>
-                  支付宝支付</span
-                >
-                <div class="tabsBox">
-                  <iframe
-                    v-if="pollingStatus"
-                    :src="currentOrder.pay_link"
-                    height="205"
-                    width="205"
-                    frameborder="0"
-                  ></iframe>
-                  <p class="codeIntro">
-                    支持使用
-                    <b style="color: #00a1e9">“花呗”</b>
-                    支付
-                  </p>
-                </div>
-              </el-tab-pane>
-              <!-- <el-tab-pane :disabled="true">
-                <span slot="label">
-                  <svg class="icon svg-icon" aria-hidden="true">
-                    <use xlink:href="#icon-weixin"></use>
-                  </svg>
-                  微信支付
-                </span>
-
-              </el-tab-pane> -->
-              <!-- <el-tab-pane label="消息中心">消息中心</el-tab-pane> -->
-            </el-tabs>
-            <!-- left code -->
-          </div>
           <div class="payRightPrice">
+            <div class="markBox">
+              <img src="@/assets/images/mark.png" alt="" />
+            </div>
             <!-- left code -->
             <!-- 付费下载大纲不展示 -->
             <!-- {{ currentOrder }} -->
-            <div
-              v-show="
-                currentOrder.order_type !== 'OUTLINE_DOWNLOAD' &&
-                currentOrder.order_type !== 'EXTRA_PROPOSAL' &&
-                currentOrder.order_type !== 'EXTRA_TASK_ASSIGNMENT' &&
-                currentOrder.order_type !== 'EXTRA_SURVEY' &&
-                currentOrder.order_type !== 'EXTRA_JOURNAL_REVIEWED' &&
-                currentOrder.is_discount == 1
-              "
-              style="margin-top: -20px; margin-bottom: 15px"
-            >
-              <span>使用优惠卷: </span>
-              <el-input
-                style="width: 300px"
-                size="small"
-                placeholder="请输入优惠卷编号"
-                v-model="coupon_code"
-              >
-              </el-input>
-              <el-button size="mini" type="primary" plain @click="useCoupon"
-                >兑换</el-button
-              >
+            <div class="reduceCard">
+              <p>{{ requestForm.title }}</p>
+              <div class="cardChildList">
+                <p>
+                  {{ requestForm.type }}
+                </p>
+                <p>
+                  {{ requestForm.word_count ? requestForm.word_count : "暂无" }}
+                </p>
+                <p>
+                  {{ requestForm.language }}
+                </p>
+                <p>
+                  {{ requestForm.field[1] }}
+                </p>
+              </div>
             </div>
-            <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+            <!-- <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
               <el-tab-pane
                 :disabled="orderPayDisabled"
                 label="正式版"
                 name="PAY_ALL"
-              ></el-tab-pane>
+              >
+              </el-tab-pane>
               <el-tab-pane
                 :disabled="orderPayDisabled"
                 label="预览版"
                 name="PAY_STAGES"
-              ></el-tab-pane>
-            </el-tabs>
-
-            <p class="payTitle">
-              支付金额:
-              <span>
-                <b>{{ currentOrder.pay_amount }}</b>
-                元</span
               >
-              <!-- {{ currentOrder.returnStatus }} -->
-              <span
-                v-if="currentOrder.discounted_price > 0"
-                class="discountedPrice"
-              >
-                优惠金额: {{ currentOrder.discounted_price }} 元
-              </span>
-              <span
-                style="
-                  margin-left: 20px;
-                  color: #999;
-                  text-decoration-line: line-through;
-                "
-              >
-                原价:
-                {{ currentOrder.original_price }}
-                元
-              </span>
-            </p>
-
-            <div class="payFrom">
-              <div class="formitem">
-                <span>论文类型:</span>
-                <b>{{ getOrderTypeName(currentOrder.order_type) }}</b>
-              </div>
-              <div class="formitem">
-                <span>学业类型:</span>
-                <b>{{ requestForm.type }}</b>
-              </div>
-              <div
-                v-show="requestForm.word_count && requestForm.word_count > 0"
-                class="formitem"
-              >
-                <span>字数:</span>
-                <b>{{ requestForm.word_count }}</b>
-              </div>
-              <div class="formitem">
-                <span>说明:</span>
-                <b
-                  >预览版可以查看约全文50%内容，若满意可支付剩余费用，解锁并下载全文。<br />
-                  开题报告，任务书，文献综述都不支持预览。</b
-                >
-              </div>
-              <div class="formitem">
-                <span>备注:</span>
-                <b>预览版不可退费</b>
-              </div>
-            </div>
+              </el-tab-pane>
+            </el-tabs> -->
+            <payadditional
+              :orderPayDisabled="orderPayDisabled"
+              v-model="activeName"
+              @changeCard="handleClick"
+            ></payadditional>
             <!-- <p class="popupSpan">
               您选择了 <span>{{ additionalList.length }}</span>
               项增值服务(仅限单次生成)
@@ -185,16 +94,98 @@
               </div>
             </div> -->
           </div>
+          <div class="payLeftCode">
+            <p class="plTitle">支付信息</p>
+            <div class="newLeftBox">
+              <div>
+                <el-tabs type="border-card">
+                  <el-tab-pane>
+                    <span slot="label"
+                      ><svg class="icon svg-icon" aria-hidden="true">
+                        <use xlink:href="#icon-zhifubaozhifu"></use>
+                      </svg>
+                      支付宝支付</span
+                    >
+                    <div class="tabsBox">
+                      <iframe
+                        v-if="pollingStatus"
+                        :src="currentOrder.pay_link"
+                        height="205"
+                        width="205"
+                        frameborder="0"
+                      ></iframe>
+                      <p class="codeIntro">
+                        支持使用
+                        <b style="color: #00a1e9">“花呗”</b>
+                        支付
+                      </p>
+                    </div>
+                  </el-tab-pane>
+                  <!-- <el-tab-pane :disabled="true">
+                <span slot="label">
+                  <svg class="icon svg-icon" aria-hidden="true">
+                    <use xlink:href="#icon-weixin"></use>
+                  </svg>
+                  微信支付
+                </span>
+
+              </el-tab-pane> -->
+                  <!-- <el-tab-pane label="消息中心">消息中心</el-tab-pane> -->
+                </el-tabs>
+              </div>
+              <!-- 优惠卷 -->
+              <div
+                v-show="
+                  currentOrder.order_type !== 'OUTLINE_DOWNLOAD' &&
+                  currentOrder.order_type !== 'EXTRA_PROPOSAL' &&
+                  currentOrder.order_type !== 'EXTRA_TASK_ASSIGNMENT' &&
+                  currentOrder.order_type !== 'EXTRA_SURVEY' &&
+                  currentOrder.order_type !== 'EXTRA_JOURNAL_REVIEWED' &&
+                  currentOrder.is_discount == 1
+                "
+                class="newJuan"
+                style="margin-top: 10px; margin-bottom: 10px"
+              >
+                <span>优惠卷: </span>
+
+                <input
+                  type="text"
+                  placeholder="请输入优惠卷编号"
+                  v-model="coupon_code"
+                  @blur="useCoupon"
+                />
+                <!-- <el-button size="mini" type="primary" plain
+                  >兑换</el-button
+                > -->
+              </div>
+              <!-- 价格展示 -->
+              <div class="newPriceBox">
+                <p>
+                  <span>原价:</span>
+                  <span>¥ {{ currentOrder.original_price }}</span>
+                </p>
+                <p v-if="currentOrder.discounted_price > 0">
+                  <span>优惠金额：</span>
+                  <span>¥{{ currentOrder.discounted_price }}</span>
+                </p>
+                <div class="newPriceBottom">
+                  <span>支付金额:</span>
+                  <span>¥{{ currentOrder.pay_amount }}</span>
+                </div>
+              </div>
+            </div>
+            <!-- left code -->
+          </div>
         </div>
         <!-- 二维码展示 -->
-        <div class="code1V1">
+        <!-- <div class="code1V1">
           <div>
             <img :src="imgData.image_url" alt="" />
           </div>
           <p>1v1人工服务，全程售后无忧</p>
-        </div>
+        </div> -->
       </div>
-      <example ref="exampleDia"></example>
+      <!-- <example ref="exampleDia"></example> -->
     </el-dialog>
   </div>
 </template>
@@ -209,7 +200,7 @@ import {
   balance_pay,
 } from "@/api/user";
 import { mapGetters } from "vuex";
-import example from "../example/index.vue";
+import payadditional from "./payadditional.vue";
 import OrderType from "@/utils/orderTypes";
 
 export default {
@@ -217,6 +208,8 @@ export default {
   data() {
     return {
       // 定义变量
+      selectValue: "left", // 初始状态未选中任何卡片
+
       indexNum: 5,
       activeName: "PAY_ALL", // 支付类型：PAY_ALL-正式版，PAY_STAGES-预览版
       popupStatus: false,
@@ -269,7 +262,7 @@ export default {
     },
   },
   components: {
-    example,
+    payadditional,
     // webinfo,
   },
   mounted() {
@@ -322,10 +315,6 @@ export default {
     },
     useCoupon() {
       if (!this.coupon_code) {
-        this.$message({
-          type: "warning",
-          message: "请输入优惠卷！",
-        });
         return false;
       }
       this.$confirm("优惠卷兑换后，无法退回, 是否继续?", "提示", {
@@ -705,8 +694,10 @@ export default {
     position: relative;
     padding-bottom: 50px;
     .markBox {
+      width: 130px;
+      height: 130px;
       right: 10px;
-      top: 50px;
+      top: 0px;
       z-index: 10;
     }
   }
@@ -774,42 +765,121 @@ export default {
   display: flex;
   justify-content: space-between;
   min-height: 300px;
+  margin-top: -30px;
+  padding-top: 20px;
   width: 100%;
+  border-top: 1px solid #ccc;
   padding-bottom: 30px;
 }
+.newLeftBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+.newJuan {
+  display: flex;
+  align-items: center;
+  color: #1b2126;
+  width: 240px;
+  height: 41px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding-left: 8px;
+  &:hover {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  input {
+    border: none;
+    outline: none;
+    height: 99%;
+    width: 180px;
+    padding-left: 5px;
+  }
+}
+.newPriceBox {
+  width: 240px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 0 8px;
+  p {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    font-size: 14px;
+    color: #959da6;
+    line-height: 18px;
+    margin-top: 10px;
+    & > span:first-child {
+      display: inline-block;
+      width: 90px;
+      text-align: left;
+    }
+  }
+  .newPriceBottom {
+    height: 44px;
+    line-height: 44px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    & > span:last-child {
+      color: #f53f3f;
+      font-size: 16px;
+    }
+  }
+}
+.reduceCard {
+  font-family: PingFangSC-SNaNpxibold;
+  font-weight: 600;
+  font-size: 18px;
+  color: #000000;
+}
+.cardChildList {
+  display: flex;
+  margin-top: 10px;
+  p {
+    height: 24px;
+    line-height: 22px;
+    background: #fff7e8;
+    border: 1px solid #ff7d00;
+    border-radius: 2px;
+    padding: 0px 8px;
+    color: #ff7d00;
+    font-weight: bold;
+    font-size: 12px;
+    margin-right: 10px;
+  }
+}
 .payLeftCode {
-  max-width: 287px;
+  width: 307px;
+  padding: 20px 30px;
+  margin-top: -20px;
+  background: #f4f5f7;
   // height: 230px;
   // border: 1px solid #ccc;
-  border-radius: 10px;
   position: relative;
   .codeIntro {
     text-align: center;
     width: 100%;
     margin-top: 5px;
   }
+  .plTitle {
+    font-family: PingFangSC-SNaNpxibold;
+    font-weight: 600;
+    font-size: 18px;
+    color: #000000;
+  }
 }
 .payRightPrice {
-  padding-left: 20px;
-  flex: 1;
-  .payTitle {
-    display: flex;
-    align-items: center;
-    color: #000;
-    position: relative;
-    .discountedPrice {
-      position: absolute;
-      left: 0px;
-      top: 30px;
-    }
-    span {
-      color: rgb(252, 106, 0);
-      margin-left: 5px;
-    }
-    b {
-      font-size: 24px;
-    }
-  }
+  position: relative;
+  flex-grow: 1;
+
   .popupSpan {
     margin-top: 20px;
     color: #000;

@@ -6,67 +6,108 @@
       :append-to-body="true"
       :lock-scroll="false"
       :close-on-click-modal="false"
-      title="订单查询"
+      title="订单支付"
       :visible.sync="ownPayStatus"
-      :width="device == 'mobile' ? '90%' : '45%'"
-      class="order-dialog"
+      :width="device == 'mobile' ? '90%' : '55%'"
       :before-close="handleClose"
     >
-      <div class="dialog-content">
-        <p class="dialog-text">
-          订单状态:
-          <span class="dialog_pay_text">{{
-            payStatusObject[payTitleStatus]
-          }}</span>
-        </p>
-
-        <!-- <button @click="clickffff">sssdd</button> -->
-        <!-- 订单支付成功展示页面 -->
-        <div
-          v-if="
-            payTitleStatus == 'TRADE_SUCCESS' ||
-            this.payTitleStatus == 'TRADE_DEPOSIT_SUCCESS'
-          "
-        >
-          <div class="paperProgress">
-            <el-progress
-              type="circle"
-              :percentage="currentNumber"
-            ></el-progress>
+      <div class="reduceBox">
+        <div class="boxLeft">
+          <div class="reduceCard">
+            <p>{{ requestForm.title }}</p>
+            <div class="cardChildList">
+              <p>
+                {{ requestForm.type }}
+              </p>
+              <p>
+                {{ requestForm.word_count ? requestForm.word_count : "暂无" }}
+              </p>
+              <p>
+                {{ requestForm.language }}
+              </p>
+              <p>
+                {{ requestForm.field[1] }}
+              </p>
+            </div>
           </div>
-          <p class="dialog-text">
-            正在拼命查询, 学习大量
-            <span style="font-weight: bold" class="primary">真实文献</span
-            >。。。
-          </p>
-          <p class="dialog-text">
-            预计
-            <span
+          <div class="dialog-content">
+            <!-- <button @click="clickffff">sssdd</button> -->
+            <!-- 订单支付成功展示页面 -->
+            <!-- <div
               v-if="
-                currentOrder.product == '文献综述' ||
-                currentOrder.product == '任务书' ||
-                currentOrder.product == '结课论文' ||
-                currentOrder.product == '开题报告'
+                payTitleStatus == 'TRADE_SUCCESS' ||
+                this.payTitleStatus == 'TRADE_DEPOSIT_SUCCESS'
               "
-              class="primary"
-            >
-              10分钟
+            > -->
+            <div class="paperProgress">
+              <el-progress
+                type="circle"
+                :percentage="currentNumber"
+              ></el-progress>
+            </div>
+            <p class="reduceP1">努力生成中</p>
+            <p class="reduceP2">
+              正在拼命查询, 学习大量
+              <span style="font-weight: bold" class="primary">真实文献</span>
+            </p>
+            <p class="dialog-text">
+              预计
+              <span
+                v-if="
+                  currentOrder.product == '文献综述' ||
+                  currentOrder.product == '任务书' ||
+                  currentOrder.product == '结课论文' ||
+                  currentOrder.product == '开题报告'
+                "
+                class="primary"
+              >
+                10分钟
+              </span>
+              <span v-else class="primary"> 30分钟 </span>左右完成 ，请耐心等待
+            </p>
+            <p class="dialog-text">如果您有事离开, 此弹窗可以放心关闭</p>
+            <p class="dialog-text">
+              后续,在
+              <span style="color: #1b2126">顶部栏 - 订单管理</span>
+              , 查看您的正文
+            </p>
+          </div>
+        </div>
+        <!-- 右边开始 -->
+        <div class="boxRight">
+          <p class="brTitle">支付信息</p>
+          <p class="boxRightCon">
+            <span class="imgbox">
+              <img
+                v-if="
+                  payTitleStatus == 'TRADE_DEPOSIT_SUCCESS' ||
+                  payTitleStatus == 'TRADE_SUCCESS'
+                "
+                src="@/assets/images/dialog/icon_64_zfcg@2x.png"
+                alt=""
+              />
+              <img
+                v-if="payTitleStatus == 'PRE_CREATE'"
+                src="@/assets/images/dialog/icon_64_dzf@2x.png"
+                alt=""
+              />
+              <img
+                v-if="payTitleStatus == 'WAIT_BUYER_PAY'"
+                src="@/assets/images/dialog/icon_64_qetk@2x.png"
+                alt=""
+              />
+              <img
+                v-if="payTitleStatus == 'TRADE_FINISHED'"
+                src="@/assets/images/dialog/icon_64_zfygb@2x.png"
+                alt=""
+              />
             </span>
-            <span v-else class="primary"> 30分钟 </span>左右完成 ，请耐心等待
-          </p>
-          <p class="dialog-text">如果您有事离开, 此弹窗可以放心关闭</p>
-          <p class="dialog-text">
-            成功后,在
-            <span class="dialog_pay_text">近期订单</span>
-            或点击
-            <span class="dialog_pay_text">我的头像-订单管理列表</span>
-            查看页面, 查看您生成的正文
+            <span class="brp">{{ payStatusObject[payTitleStatus] }}</span>
           </p>
         </div>
       </div>
-
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="jumpStep">确定</el-button>
+        <el-button type="primary" @click="jumpStep">关闭</el-button>
       </span>
     </el-dialog>
   </div>
@@ -88,10 +129,10 @@ export default {
       intervalId: "",
       payTitleStatus: "PRE_CREATE",
       payStatusObject: {
-        TRADE_DEPOSIT_SUCCESS: "您已成功支付预付款, 正文生成中",
-        TRADE_SUCCESS: "您已成功支付订单, 正文生成中",
-        WAIT_BUYER_PAY: "未付款交易超时关闭，或支付完成后全额退款",
-        PRE_CREATE: "交易创建，等待买家付款",
+        TRADE_DEPOSIT_SUCCESS: "支付成功",
+        TRADE_SUCCESS: "支付成功",
+        WAIT_BUYER_PAY: "交易关闭或完成",
+        PRE_CREATE: "待支付",
         TRADE_FINISHED: "交易结束!",
       },
       listData: [], // 存储请求返回的数据
@@ -400,48 +441,47 @@ export default {
 // @media only screen and (max-width: 768px) {
 // }
 
-.order-dialog {
-  .el-dialog__header {
-    text-align: center;
-    font-size: 1.2rem;
-    padding: 20px;
-    background-color: #f8f8f8;
-    border-bottom: 1px solid #ddd;
-  }
-
-  .el-dialog__body {
-    padding: 20px;
-    text-align: center;
-  }
-
-  .dialog-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .dialog-text {
-    font-size: 1rem;
-    margin: 10px 0;
-    text-align: center;
-    color: #555;
-  }
-
-  .paperProgress {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 30px 0;
-  }
-
-  .el-button {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 1rem;
-  }
+.el-dialog__header {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ddd;
 }
 
+.el-dialog__body {
+  padding: 0px;
+  text-align: center;
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.paperProgress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+  margin-top: 30px;
+}
+
+.el-button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+}
+.dialog-text {
+  margin: 2px 0;
+  text-align: center;
+  color: #959da6;
+  font-size: 14px;
+  font-face: PingFangSC;
+  font-weight: 400;
+}
 // 响应式设计
 @media only screen and (max-width: 768px) {
   .order-dialog {
@@ -455,13 +495,7 @@ export default {
     }
 
     .el-dialog__body {
-      padding: 15px;
-    }
-
-    .dialog-text {
-      font-size: 0.9rem;
-      margin: 10px 0;
-      text-align: center;
+      padding: 5px;
     }
 
     .paperProgress {
@@ -481,5 +515,95 @@ export default {
 }
 .dialog_pay_text {
   color: #409eff;
+}
+
+.cardChildList {
+  display: flex;
+  margin-top: 10px;
+  p {
+    height: 24px;
+    line-height: 22px;
+    background: #fff7e8;
+    border: 1px solid #ff7d00;
+    border-radius: 2px;
+    padding: 0px 8px;
+    color: #ff7d00;
+    font-weight: bold;
+    font-size: 12px;
+    margin-right: 10px;
+  }
+}
+.reduceCard {
+  font-family: PingFangSC-SNaNpxibold;
+  font-weight: 600;
+  font-size: 18px;
+  color: #000000;
+}
+.reduceBox {
+  margin-top: -30px;
+  display: flex; /* 使用flex布局 */
+  border-top: 1px solid #ccc;
+}
+
+.boxLeft {
+  flex-grow: 1; /* 让左边的盒子自适应宽度 */
+  /* 你可以根据需要添加其他样式 */
+  padding: 20px 5px;
+}
+
+.boxRight {
+  padding: 20px 40px;
+  width: 200px; /* 固定宽度200px */
+  background: #f4f5f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  .brTitle {
+    font-family: PingFangSC-SNaNpxibold;
+    font-weight: 600;
+    font-size: 18px;
+    color: #000000;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
+  .imgbox {
+    width: 64px;
+    height: 64px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .boxRightCon {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .brp {
+      font-family: PingFangSC-SNaNpxibold;
+      font-weight: 600;
+      font-size: 18px;
+      color: #1b2126;
+      text-align: center;
+    }
+  }
+}
+.reduceP1 {
+  font-family: PingFangSC-SNaNpxibold;
+  font-weight: 600;
+  font-size: 16px;
+  color: #1b2126;
+  text-align: center;
+}
+.reduceP2 {
+  color: #1b2126;
+  font-size: 16px;
+  font-face: PingFangSC;
+  font-weight: 600;
+  margin-top: 10px;
+  margin-bottom: 25px;
 }
 </style>
