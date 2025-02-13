@@ -4,7 +4,7 @@
     <el-dialog
       append-to-body
       :visible.sync="dialogVisible"
-      width="800px"
+      :width="device == 'mobile' ? '90%' : '800px'"
       :before-close="handleClose"
       class="custom-dialog"
       :show-close="false"
@@ -78,7 +78,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["agent_image"]),
+    ...mapGetters(["agent_image", "device"]),
     imgData() {
       return this.agent_image.find((image) => image.id === 5);
     },

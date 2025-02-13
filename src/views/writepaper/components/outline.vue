@@ -882,7 +882,6 @@ export default {
 
 .onlyCyc {
   width: 160px !important;
-  height: 40px !important;
   border-radius: 24px !important;
   padding-left: 22px !important;
   font-size: 14px !important;
@@ -895,7 +894,7 @@ label.el-radio.is-checked {
 .mobile {
   .formItem {
     margin-top: 10px !important;
-
+    width: 100% !important;
     .formItemLabel {
       font-size: 16px;
     }

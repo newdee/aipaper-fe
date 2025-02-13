@@ -134,13 +134,33 @@
       }
     }
   }
+  .recommendation-item .itemParen {
+    line-height: 16px !important;
+  }
+  .recommendation-item {
+    padding: 10px 0 !important;
+  }
+  .secondItem {
+    margin-top: 0px !important;
+  }
+
+  .info-title {
+    font-size: 12px !important;
+    width: auto !important;
+  }
+  .firstItem .formItemCon > div {
+    flex-wrap: wrap;
+  }
   .uesrInputBox {
     .formItem {
       margin-top: 20px !important;
       padding-left: 20px !important;
       .userInputCon {
         margin-left: 0px !important;
-        margin-top: 5px;
+        margin-top: 40px;
+      }
+      .title-input-wrapper {
+        width: auto;
       }
     }
     .outlineBtn {
@@ -343,5 +363,62 @@
   }
   .showSpan {
     width: calc(100% - 120px) !important;
+  }
+  .formItemCon .onlyCyc {
+    height: auto !important;
+  }
+}
+// 活动弹窗
+@media screen and (max-width: 768px) {
+  .popup-container {
+    flex-direction: column;
+  }
+  .popup-left {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+  .popupHeader {
+    margin-bottom: 0px !important;
+  }
+  .popConTitle {
+    margin-bottom: 10px !important;
+  }
+  .qywxBox {
+    height: 250px !important;
+  }
+  .test2Box {
+    height: 70px !important;
+  }
+}
+// 范文样例
+@media screen and (max-width: 768px) {
+  .drafr-example-pager__catalogue {
+    display: none !important;
+  }
+  .tipOutline {
+    flex-wrap: wrap;
+  }
+  .detailText {
+    margin-top: 5px;
+  }
+  .outlineRepeat {
+    padding-left: 0px !important;
+  }
+  .btnList {
+    justify-content: space-between;
+  }
+  .outlineRepeat {
+    margin-top: 30px !important;
+    margin-bottom: 30px !important;
+  }
+  .payCard {
+    flex-wrap: wrap !important;
+  }
+  .cardRight {
+    margin-left: 0 !important;
+    margin-top: 10px;
+  }
+  .newCard {
+    padding-left: 10px !important;
   }
 }

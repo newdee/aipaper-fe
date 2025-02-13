@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     open() {
-      this.dialogVisible = true;
+      // this.dialogVisible = true;
     },
     close() {
       this.dialogVisible = false;
