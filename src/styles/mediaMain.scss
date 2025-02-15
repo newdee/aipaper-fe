@@ -115,7 +115,7 @@
   .mainContentSec {
     .tabsList {
       .tabLi {
-        height: 70px;
+        height: 80px;
       }
       .tabIntro {
         font-size: 12px;
@@ -384,7 +384,7 @@
     margin-bottom: 10px !important;
   }
   .qywxBox {
-    height: 250px !important;
+    // height: 250px !important;
   }
   .test2Box {
     height: 70px !important;
@@ -420,5 +420,48 @@
   }
   .newCard {
     padding-left: 10px !important;
+  }
+
+  // 我的订单
+  .rowBetween .right {
+    align-items: flex-end !important;
+    width: 100% !important;
+  }
+  .rowBetween {
+    flex-wrap: wrap !important;
+  }
+  .home .mainContent {
+    min-height: auto !important;
+  }
+  // 支付弹窗
+  .payCodeBox {
+    flex-wrap: wrap;
+  }
+  .payLeftCode {
+    margin-top: 30px !important;
+  }
+  .reduceBox {
+    flex-wrap: wrap;
+  }
+  .boxRight .boxRightCon {
+    margin-top: 0px !important;
+  }
+  .boxRight {
+    width: 100% !important;
+  }
+  .reduceRepetiton {
+    padding: 0 20px;
+  }
+  .plaStepCon {
+    padding: 10px 10px !important;
+  }
+  .plaCheckHeader {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .reportCon .inputWidth {
+    width: 220px !important;
   }
 }

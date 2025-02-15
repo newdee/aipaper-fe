@@ -41,7 +41,7 @@
           </div>
         </div>
       </div>
-      <iframe :src="step3PdfUrl" style="width: 100%; height: 100%"></iframe>
+      <iframe :src="step3PdfUrl" style="width: 100vw; height: 100%"></iframe>
     </div>
     <!-- <div class="pdfBox">
       <PdfViewer :pdfUrl="step3PdfUrl" ref="pdfViewer" />

@@ -1117,8 +1117,9 @@ export default {
           // 生成全文
           if (this.device === "mobile") {
             this.$message({
-              type: "error",
-              message: "手机端暂不支持生成正文!",
+              type: "warning",
+              // message: "手机端暂不支持生成正文!",
+              message: "推荐您使用电脑生成全文！",
             });
             // return false;
           }

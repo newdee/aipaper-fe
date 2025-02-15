@@ -2,6 +2,7 @@
   <div>
     <el-dialog
       append-to-body
+      :width="device == 'mobile' ? '90%' : '800px'"
       :visible.sync="outDialogVisible"
       class="custom-dialog"
     >
@@ -154,6 +155,7 @@ import { sms } from "@/api/login";
 import { throttle } from "lodash";
 import { getDomain } from "@/utils/index.js";
 import eventBus from "@/utils/eventBus";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
@@ -175,6 +177,9 @@ export default {
       sms_code: "",
       bd_vid: "", //百度id
     };
+  },
+  computed: {
+    ...mapGetters(["device"]),
   },
   mounted() {
     // this.getSubdomain();

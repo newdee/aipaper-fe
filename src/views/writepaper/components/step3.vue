@@ -46,7 +46,11 @@
     <!-- <div class="pdfBox">
       <PdfViewer :pdfUrl="step3PdfUrl" ref="pdfViewer" />
     </div> -->
-    <el-dialog title="温馨提示" :visible.sync="dialogVisible" width="30%">
+    <el-dialog
+      title="温馨提示"
+      :visible.sync="dialogVisible"
+      :width="device == 'mobile' ? '90%' : '30%'"
+    >
       <p style="line-height: 24px">
         注意：此为预览版，只展示全文的50%。若满意请支付尾款，解锁全文并支持下载，下载有更多的惊喜哟~
       </p>
@@ -85,7 +89,7 @@ export default {
   },
   computed: {
     // 计算属性
-    ...mapGetters(["step3PdfUrl", "currentOrder"]),
+    ...mapGetters(["step3PdfUrl", "currentOrder", "device"]),
   },
 
   watch: {
