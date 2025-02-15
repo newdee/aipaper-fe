@@ -598,8 +598,16 @@
 .tipsCon {
   margin-bottom: 30px;
   line-height: 20px;
-  margin-top: -20px;
-  font-size: 12px;
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+  margin-top: -25px;
+
+  font-size: 14px;
+  color: #959da6;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  font-size: 14px;
+  color: #959da6;
   p {
     display: flex;
     align-items: center;

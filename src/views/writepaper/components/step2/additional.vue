@@ -152,7 +152,11 @@
         <p>1. 预览版不可退费；</p>
 
         <div>
-          <el-popover placement="right" width="800" trigger="hover">
+          <el-popover
+            :width="device == 'mobile' ? '350' : ''"
+            placement="right"
+            trigger="hover"
+          >
             <el-table
               header-row-class-name="bgTable"
               border
@@ -359,7 +363,7 @@ export default {
         this.$emit("input", newValue);
       },
     },
-    ...mapGetters(["requestForm", "homeData"]),
+    ...mapGetters(["requestForm", "homeData", "device"]),
     wordShow() {
       return (
         this.requestForm.product == "毕业论文" ||

@@ -284,7 +284,7 @@
       :append-to-body="true"
       :lock-scroll="false"
       :visible.sync="statementDialogVisible"
-      width="30%"
+      :width="device == 'mobile' ? '90%' : '30%'"
     >
       <span
         >平台所生成的全文为范文，仅用作参考，不用做毕业论文、发表刊物等</span
@@ -360,59 +360,67 @@
       :lock-scroll="false"
       title="插入图表"
       :visible.sync="imgExcelSetStatus"
-      width="40%"
+      :width="device == 'mobile' ? '90%' : '60%'"
       label-width="130px"
     >
       <div class="tipsCon">
+        <p>操作说明：</p>
         <p>
-          <span class="tipsCro"></span
-          >可以点击左边的开关，开启代表想在本小节添加对应的内容，关闭代表不添加；
+          <span>第一步：</span>
+          可以点击左边的开关，开启代表想在本小节添加对应的内容，关闭代表不添加；
         </p>
         <p>
-          <span class="tipsCro"></span
-          >右侧的内容说明如果不想写可以留空，等最后点击【AI帮写】，AI会自动补充合适的内容。
+          <span>第二步：</span>
+
+          右侧的内容说明如果不想写可以留空，等最后点击【AI帮写】，AI会自动补充合适的内容。
         </p>
       </div>
       <el-form
         :model="numberValidateForm"
         ref="numberValidateForm"
-        label-width="140px"
+        label-width="0px"
         class="demo-ruleForm"
       >
-        <el-form-item prop="appendValue">
-          <div class="leftLabel" slot="label">
-            <el-switch
-              v-model="currentRow.insert_table.status"
-              active-color="#13ce66"
-            >
-            </el-switch>
-            <span class="labelSpan">插入数据表</span>
+        <el-form-item>
+          <div class="newItemBox">
+            <div class="leftLabel" slot="label">
+              <el-switch
+                v-model="currentRow.insert_table.status"
+                active-color="#13ce66"
+              >
+              </el-switch>
+              <span class="labelSpan">插入数据表</span>
+            </div>
+            <el-input
+              type="textarea"
+              autosize
+              :disabled="!currentRow.insert_table.status"
+              placeholder="请用自然语言描述您要插入数据表的信息"
+              v-model="currentRow.insert_table.content"
+              autocomplete="off"
+            ></el-input>
           </div>
-          <el-input
-            type="textarea"
-            autosize
-            placeholder="请用自然语言描述您要插入数据表的信息"
-            v-model="currentRow.insert_table.content"
-            autocomplete="off"
-          ></el-input>
         </el-form-item>
         <!-- 插入图 -->
         <el-form-item prop="appendValue">
-          <div class="leftLabel" slot="label">
-            <el-switch
-              v-model="currentRow.insert_plot.status"
-              active-color="#13ce66"
-            >
-            </el-switch>
-            <span class="labelSpan">插入图形</span>
+          <div class="newItemBox">
+            <div class="leftLabel" slot="label">
+              <el-switch
+                v-model="currentRow.insert_plot.status"
+                active-color="#13ce66"
+              >
+              </el-switch>
+              <span class="labelSpan">插入图形</span>
+            </div>
+            <el-input
+              type="textarea"
+              autosize
+              :disabled="!currentRow.insert_plot.status"
+              placeholder="请用自然语言描述 图形 的相关信息"
+              v-model="currentRow.insert_plot.content"
+              autocomplete="off"
+            ></el-input>
           </div>
-          <el-input
-            type="textarea"
-            autosize
-            placeholder="请用自然语言描述 图形 的相关信息"
-            v-model="currentRow.insert_plot.content"
-            autocomplete="off"
-          ></el-input>
         </el-form-item>
         <!-- <el-form-item prop="appendValue">
           <div class="leftLabel" slot="label">
@@ -432,68 +440,74 @@
           ></el-input>
         </el-form-item> -->
         <el-form-item prop="appendValue">
-          <div class="leftLabel" slot="label">
-            <el-switch
-              v-model="currentRow.insert_latex_formula.status"
-              active-color="#13ce66"
-            >
-            </el-switch>
-            <span class="labelSpan">请用自然语言描述 插入公式</span>
-          </div>
-          <el-input
-            type="textarea"
-            autosize
-            placeholder="请输入插入公式"
-            v-model="currentRow.insert_latex_formula.content"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item prop="appendValue">
-          <div class="leftLabel" slot="label">
-            <el-switch
-              v-model="currentRow.insert_code.status"
-              active-color="#13ce66"
-            >
-            </el-switch>
-            <span class="labelSpan">插入代码段</span>
-          </div>
-          <div class="codeSelectInfo">
+          <div class="newItemBox">
+            <div class="leftLabel" slot="label">
+              <el-switch
+                v-model="currentRow.insert_latex_formula.status"
+                active-color="#13ce66"
+              >
+              </el-switch>
+              <span class="labelSpan">请用自然语言描述 插入公式</span>
+            </div>
             <el-input
               type="textarea"
+              :disabled="!currentRow.insert_latex_formula.status"
               autosize
-              placeholder="请输入插入代码段"
-              v-model="currentRow.insert_code.content"
+              placeholder="请输入插入公式"
+              v-model="currentRow.insert_latex_formula.content"
               autocomplete="off"
             ></el-input>
-            <el-select
-              v-model="currentRow.insert_code.code_language"
-              placeholder="请选择"
-            >
-              <el-option tag="q1" label="Python" value="Python"> </el-option>
-              <el-option tag="q2" label="Java" value="Java"> </el-option>
-              <el-option tag="q3" label="JavaScript" value="JavaScript">
-              </el-option>
-              <el-option tag="q4" label="C++" value="C++"> </el-option>
-              <el-option tag="q5" label="C#" value="C#"> </el-option>
-              <el-option tag="q5" label="PHP" value="PHP"> </el-option>
-              <el-option tag="q5" label="Go" value="Go"> </el-option>
-              <el-option tag="q5" label="Dart" value="Dart"> </el-option>
-              <el-option tag="Rust" label="Rust" value="Rust"> </el-option>
-              <el-option tag="SQL" label="SQL" value="SQL"> </el-option>
-              <el-option tag="LaTeX" label="LaTeX" value="LaTeX"> </el-option>
-              <el-option tag="Markdown" label="Markdown" value="Markdown">
-              </el-option>
-              <el-option tag="Swift" label="Swift" value="Swift"> </el-option>
-              <el-option tag="Ruby" label="Ruby" value="Ruby"> </el-option>
-              <el-option tag="Erlang" label="Erlang" value="Erlang">
-              </el-option>
-              <el-option tag="Erlang" label="Erlang" value="Erlang">
-              </el-option>
-              <el-option tag="Perl" label="Perl" value="Perl"> </el-option>
-              <el-option tag="Kotlin" label="Kotlin" value="Kotlin">
-              </el-option>
-              <el-option tag="Swift" label="Swift" value="Swift"> </el-option>
-            </el-select>
+          </div>
+        </el-form-item>
+        <el-form-item prop="appendValue">
+          <div class="newItemBox">
+            <div class="leftLabel" slot="label">
+              <el-switch
+                v-model="currentRow.insert_code.status"
+                active-color="#13ce66"
+              >
+              </el-switch>
+              <span class="labelSpan">插入代码段</span>
+            </div>
+            <div class="codeSelectInfo">
+              <el-input
+                type="textarea"
+                autosize
+                :disabled="!currentRow.insert_code.status"
+                placeholder="请输入插入代码段"
+                v-model="currentRow.insert_code.content"
+                autocomplete="off"
+              ></el-input>
+              <!-- <el-select
+                v-model="currentRow.insert_code.code_language"
+                placeholder="请选择"
+              >
+                <el-option tag="q1" label="Python" value="Python"> </el-option>
+                <el-option tag="q2" label="Java" value="Java"> </el-option>
+                <el-option tag="q3" label="JavaScript" value="JavaScript">
+                </el-option>
+                <el-option tag="q4" label="C++" value="C++"> </el-option>
+                <el-option tag="q5" label="C#" value="C#"> </el-option>
+                <el-option tag="q5" label="PHP" value="PHP"> </el-option>
+                <el-option tag="q5" label="Go" value="Go"> </el-option>
+                <el-option tag="q5" label="Dart" value="Dart"> </el-option>
+                <el-option tag="Rust" label="Rust" value="Rust"> </el-option>
+                <el-option tag="SQL" label="SQL" value="SQL"> </el-option>
+                <el-option tag="LaTeX" label="LaTeX" value="LaTeX"> </el-option>
+                <el-option tag="Markdown" label="Markdown" value="Markdown">
+                </el-option>
+                <el-option tag="Swift" label="Swift" value="Swift"> </el-option>
+                <el-option tag="Ruby" label="Ruby" value="Ruby"> </el-option>
+                <el-option tag="Erlang" label="Erlang" value="Erlang">
+                </el-option>
+                <el-option tag="Erlang" label="Erlang" value="Erlang">
+                </el-option>
+                <el-option tag="Perl" label="Perl" value="Perl"> </el-option>
+                <el-option tag="Kotlin" label="Kotlin" value="Kotlin">
+                </el-option>
+                <el-option tag="Swift" label="Swift" value="Swift"> </el-option>
+              </el-select> -->
+            </div>
           </div>
         </el-form-item>
       </el-form>
