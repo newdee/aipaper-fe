@@ -40,12 +40,7 @@
   .wxContentMessage {
     width: 100% !important;
   }
-  .markBox {
-    top: 3px !important;
-    right: 0px !important;
-    width: 84px !important;
-    height: 84px !important;
-  }
+
   // 大纲结束
   .navDataLine {
     display: none;
@@ -151,7 +146,13 @@
   .firstItem .formItemCon > div {
     flex-wrap: wrap;
   }
+  label.el-radio {
+    margin-top: 10px !important;
+    justify-content: center;
+    display: flex;
+  }
   .uesrInputBox {
+    padding-bottom: 20px !important;
     .formItem {
       margin-top: 20px !important;
       padding-left: 20px !important;
@@ -221,6 +222,10 @@
   }
   .step2Box {
     padding: 20px 10px !important;
+    padding-top: 10px !important;
+  }
+  .oulineTitlePaper {
+    margin-top: 10px !important;
   }
   // 大纲
   .iconRight {
@@ -232,6 +237,7 @@
     margin-right: 0px !important;
     margin-left: 0px !important;
     padding-left: 0px !important;
+    margin-top: 0px !important;
     .ownInput {
       padding: 0px;
     }
@@ -364,8 +370,13 @@
   .showSpan {
     width: calc(100% - 120px) !important;
   }
-  .formItemCon .onlyCyc {
+  .onlyCyc {
     height: auto !important;
+
+    padding-left: 0px !important;
+    padding-right: 10px !important;
+    width: 150px !important;
+    padding: 0 5px !important;
   }
 }
 // 活动弹窗
@@ -405,10 +416,14 @@
     padding-left: 0px !important;
   }
   .btnList {
-    justify-content: space-between;
+    justify-content: center !important;
+    flex-wrap: wrap;
+  }
+  .btnDefault {
+    margin-top: 10px !important;
   }
   .outlineRepeat {
-    margin-top: 30px !important;
+    margin-top: 0px !important;
     margin-bottom: 30px !important;
   }
   .payCard {
@@ -419,7 +434,7 @@
     margin-top: 10px;
   }
   .newCard {
-    padding-left: 10px !important;
+    padding-left: 0px !important;
   }
 
   // 我的订单
@@ -436,9 +451,19 @@
   // 支付弹窗
   .payCodeBox {
     flex-wrap: wrap;
+    padding-top: 10px !important;
   }
+
+  .reduceCard {
+    font-size: 15px !important;
+  }
+
   .payLeftCode {
-    margin-top: 30px !important;
+    margin-top: 15px !important;
+    padding: 10px 15px !important;
+  }
+  .payLeftCode .plTitle {
+    font-size: 14px !important;
   }
   .reduceBox {
     flex-wrap: wrap;
@@ -471,5 +496,55 @@
     margin-top: 10px !important;
     margin-left: 0px !important;
     margin-right: 0px !important;
+  }
+  // nav按钮
+  .navOrderBtn {
+    width: 55px !important;
+    font-size: 10px !important;
+    height: 25px !important;
+    line-height: 25px !important;
+  }
+  .shareBtn {
+    font-size: 16px !important;
+  }
+  .navBarRight > div {
+    margin: 0 5px !important;
+  }
+  .cardClidOnly {
+    width: 100% !important;
+    padding: 10px 20px !important;
+  }
+  .cardAdditions p {
+    margin-bottom: 0px !important;
+  }
+  .cardAdditions {
+    margin-top: 10px !important;
+  }
+  .cardPress {
+    margin-top: 10px !important;
+  }
+  .cardIntroTitle {
+    font-size: 16px !important;
+  }
+  .cardChildList {
+    margin-top: 8px !important;
+  }
+  .cardPrice {
+    font-size: 15px !important;
+    margin-top: 8px !important;
+  }
+  .recomBtn .starSpan {
+    display: none !important;
+  }
+  .recomBtn {
+    padding: 0 10px !important;
+    width: auto !important;
+    font-size: 12px !important;
+  }
+  .langBox {
+    padding-right: 16px !important;
+  }
+  .title-dropdown {
+    margin-top: 0px !important;
   }
 }

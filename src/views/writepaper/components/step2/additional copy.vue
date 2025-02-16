@@ -2,9 +2,9 @@
   <div>
     <!-- 页面名称 -->
     <div class="spendingBox">
-      <div class="markBox">
+      <!-- <div class="markBox">
         <img src="@/assets/images/mark.png" alt="" />
-      </div>
+      </div> -->
       <!-- {{ requestForm }} -->
       <p class="fuTitle">继续生成全文,您将获得以下权益</p>
       <div class="maintxt">

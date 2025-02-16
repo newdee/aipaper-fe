@@ -32,9 +32,9 @@
 
         <div class="payCodeBox">
           <div class="payRightPrice">
-            <div class="markBox">
+            <!-- <div class="markBox">
               <img src="@/assets/images/mark.png" alt="" />
-            </div>
+            </div> -->
             <!-- left code -->
             <!-- 付费下载大纲不展示 -->
             <!-- {{ currentOrder }} -->
@@ -693,13 +693,6 @@ export default {
     justify-content: center;
     position: relative;
     padding-bottom: 50px;
-    .markBox {
-      width: 130px;
-      height: 130px;
-      right: 10px;
-      top: 0px;
-      z-index: 10;
-    }
   }
 
   .dialog-text {

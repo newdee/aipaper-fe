@@ -383,10 +383,6 @@ export default {
     align-items: center;
     justify-content: center;
     position: relative;
-    .markBox {
-      right: 20px;
-      top: -80px;
-    }
   }
 
   .dialog-text {

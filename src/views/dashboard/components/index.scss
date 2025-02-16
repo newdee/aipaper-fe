@@ -1,17 +1,16 @@
-@import '@/styles/variables.scss';
-
+@import "@/styles/variables.scss";
 
 @media only screen and (max-width: 768px) {
   .inputBox {
     display: block !important;
-    }
-    .inputLeft {
-      margin-bottom: 10px;
-    }
-    .TitleH1 {
-      font-size: 28px !important;
-      line-height: 0;
-    }
+  }
+  .inputLeft {
+    margin-bottom: 10px;
+  }
+  .TitleH1 {
+    font-size: 28px !important;
+    line-height: 0;
+  }
 }
 .radioGroup {
   padding: 0 16px;
@@ -21,9 +20,9 @@
   // line-height: 20px;
   .el-radio {
     margin-top: 10px;
-  color: #333639;
-  font-size: 14px !important;
-  margin-right: 25px;
+    color: #333639;
+    font-size: 14px !important;
+    margin-right: 25px;
   }
   .el-radio:last-child {
     margin-right: 0px;
@@ -32,7 +31,12 @@
 .mainCon {
   width: 100%;
 
-  background-image: radial-gradient(circle at top left, $mainBgColor, #fff 50%, #fff);
+  background-image: radial-gradient(
+    circle at top left,
+    $mainBgColor,
+    #fff 50%,
+    #fff
+  );
   padding-top: 48px;
   .titleMain {
     margin-top: 64px;
@@ -42,9 +46,7 @@
     flex-direction: column;
   }
   .titlep {
-    
     position: relative;
-    
   }
   .TitleH1 {
     font-size: 48px;
@@ -63,7 +65,7 @@
       background-color: #d75300;
       position: absolute;
       right: -17px;
-    top: -14px;
+      top: -14px;
       color: #fff;
       border-radius: 50%;
       font-size: 11px;
@@ -94,16 +96,14 @@
     flex-grow: 1;
     // background-color: red;
     position: relative;
-
   }
   .rightLink {
     position: absolute;
-      right: 0;
-      top: -26px;
-      color: $textColor4;
-      font-size: 14px;
+    right: 0;
+    top: -26px;
+    color: $textColor4;
+    font-size: 14px;
   }
-
 }
 // 提交按钮
 .submitBtn {

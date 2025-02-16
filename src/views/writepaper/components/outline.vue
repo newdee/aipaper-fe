@@ -77,7 +77,7 @@
         <!-- 论文语言 -->
         <div class="selectLang formItem">
           <p class="formItemLabel">论文语言</p>
-          <div class="formItemCon">
+          <div class="formItemCon langBox">
             <el-select v-model="requestForm.language" placeholder="请选择">
               <el-option
                 v-for="item in homeData.language_list"
@@ -98,6 +98,7 @@
               v-model="requestForm.type"
             >
               <el-radio
+                class="radioSmall"
                 v-for="item in homeData.category_list"
                 :key="item.name"
                 :label="item.name"
@@ -146,6 +147,7 @@
           <div class="formItemCon">
             <el-radio-group v-model="requestForm.paper_level">
               <el-radio
+                class="radioSmall"
                 v-for="item in paper_levelList"
                 :key="item.name"
                 :label="item.name"
@@ -844,16 +846,14 @@ export default {
 }
 
 ::v-deep label.el-radio {
-  width: auto;
   height: 40px;
   background: #ffffff;
   border-radius: 24px;
   border: 1px solid #cccccc;
   line-height: 40px;
-  padding-left: 14px;
   padding-right: 16px;
-  width: 106px;
   height: 40px;
+  margin-right: 10px;
   background-image: linear-gradient(180deg, #f4f5f7 0%, #f4f5f7b3 100%);
   border-radius: 4px;
   &.is-checked {
@@ -879,15 +879,18 @@ export default {
     padding-left: 0px;
   }
 }
-
+.radioSmall {
+  width: 106px;
+  padding-left: 14px;
+}
 .onlyCyc {
-  width: 160px !important;
-  border-radius: 24px !important;
-  padding-left: 22px !important;
-  font-size: 14px !important;
-  background: #ffffff !important;
-  border: 1px solid #d8dfe6 !important;
+  width: 160px;
   border-radius: 24px;
+  padding-left: 22px;
+  font-size: 14px;
+  background: #ffffff;
+  border: 1px solid #d8dfe6;
+  border-radius: 24px !important;
 }
 label.el-radio.is-checked {
 }
@@ -900,18 +903,7 @@ label.el-radio.is-checked {
     }
 
     .formItemCon {
-      margin-top: 10px;
-
-      &::v-deep .el-radio {
-        margin-right: 10px;
-        margin-bottom: 10px;
-        height: 30px;
-        line-height: 28px;
-      }
-
-      &.phoneFlex {
-        padding-right: 20px;
-      }
+      margin-top: 0px;
     }
   }
 }
@@ -949,7 +941,8 @@ label.el-radio.is-checked {
   .wordItem {
     width: 100%;
     padding-bottom: 10px;
-    padding-right: 50px;
+    padding-right: 25px;
+    margin-left: 0px !important;
     ::v-deep .el-slider__marks-text {
       transform: rotate(45deg);
     }

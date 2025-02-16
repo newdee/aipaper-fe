@@ -470,6 +470,7 @@ export default {
 // }
 .payCard {
   display: flex;
+  justify-content: center;
   overflow: hidden;
 }
 .cardLeft {

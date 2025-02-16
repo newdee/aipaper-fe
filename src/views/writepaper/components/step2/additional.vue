@@ -2,9 +2,9 @@
   <div>
     <!-- 页面名称 -->
     <div class="newCard">
-      <div class="markBox">
+      <!-- <div class="markBox">
         <img src="@/assets/images/mark.png" alt="" />
-      </div>
+      </div> -->
       <!-- {{ requestForm }} -->
       <p class="requestTitle">
         {{ requestForm.product }}
@@ -470,6 +470,7 @@ export default {
 // }
 .payCard {
   display: flex;
+  justify-content: center;
   overflow: hidden;
 }
 .cardLeft {

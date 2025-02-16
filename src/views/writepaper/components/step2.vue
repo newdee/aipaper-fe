@@ -225,10 +225,6 @@
       </el-tree>
     </div>
     <div class="btnList outlineRepeat">
-      <p class="g_poin btnDefault" @click="reloadOutline">
-        <i class="el-icon-refresh"></i>
-        重新生成
-      </p>
       <p class="g_poin btnDefault btnStarBorder" @click="saveOutlineTwo()">
         <span class="btnStarDe">
           <img src="@/assets/images/index/icon_32_star.png" alt="" />
@@ -238,6 +234,10 @@
       <p class="g_poin btnDefault bgDeBtn" @click="downLoadLine">
         <i class="el-icon-download"></i>
         付费下载大纲
+      </p>
+      <p class="g_poin btnDefault" @click="reloadOutline">
+        <i class="el-icon-refresh"></i>
+        大纲不满意? 重新生成
       </p>
     </div>
     <!-- 付费项选择 -->

@@ -885,10 +885,6 @@ export default {
         height: 30px;
         line-height: 28px;
       }
-
-      &.phoneFlex {
-        padding-right: 20px;
-      }
     }
   }
 }

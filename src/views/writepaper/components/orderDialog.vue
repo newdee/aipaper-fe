@@ -68,7 +68,7 @@
             <p class="dialog-text">如果您有事离开, 此弹窗可以放心关闭</p>
             <p class="dialog-text">
               后续,在
-              <span style="color: #1b2126">顶部栏 - 订单管理</span>
+              <span style="color: #1b2126">顶部栏 - 我的订单</span>
               , 查看您的正文
             </p>
           </div>
