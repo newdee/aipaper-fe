@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 最近创建的大纲 最近生成的论文 -->
-    <div :class="[device == 'desktop' ? 'recentListBox' : '']">
+    <!-- <div :class="[device == 'desktop' ? 'recentListBox' : '']">
       <div class="outlineListClass" v-if="outlinesList.length > 0">
         <div class="lineNav">
           <p>最近创建的大纲</p>
@@ -65,13 +65,7 @@
                   orderObj.updated_at | dateFormatter
                 }}</span>
               </div>
-              <!-- <span class="price">￥: 0.01元</span> -->
-              <!-- <span
-                class="handle"
-                v-if="orderObj.order.payment_status == 'WAIT_BUYER_PAY'"
-                style="color: crimson"
-                >去支付</span
-              > -->
+              
             </div>
           </div>
         </div>
@@ -221,7 +215,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- 弹窗 -->
     <el-dialog
       title="选择生成的论文类型"

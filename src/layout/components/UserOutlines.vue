@@ -151,17 +151,22 @@ export default {
       Ming("sddd", this.$route.path);
       // 关闭弹窗
       eventBus.emit("orderDialogChange", false);
-      const navigateAndEmit = () => {
-        // 使用 $nextTick 确保 DOM 更新完成后再触发事件
+
+      if (this.$route.path !== "/main/writepaper") {
+        this.$router.push({ path: "/main/writepaper" }, function () {
+          this.$nextTick(() => {
+            console.log("点击展示大纲弹窗");
+            // 展示大纲弹窗
+            eventBus.emit("outlineGen", row);
+          });
+        });
+      } else {
         this.$nextTick(() => {
           // 展示大纲弹窗
+          console.log("点击展示大纲弹窗2222233");
+
           eventBus.emit("outlineGen", row);
         });
-      };
-      if (this.$route.path !== "/main/writepaper") {
-        this.$router.push({ path: "/main/writepaper" }, navigateAndEmit);
-      } else {
-        navigateAndEmit();
       }
     },
     downLoadLine(row) {
