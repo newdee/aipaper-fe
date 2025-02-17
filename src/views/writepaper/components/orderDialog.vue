@@ -124,6 +124,7 @@ export default {
   data() {
     return {
       // 定义变量
+      // ownPayStatus: true,
       ownPayStatus: false,
       currentNumber: 0,
       intervalId: "",
