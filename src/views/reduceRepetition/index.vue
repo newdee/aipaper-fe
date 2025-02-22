@@ -30,7 +30,7 @@
     </div>
     <div
       v-loading="sendStatus"
-      element-loading-text="升级为DeepSeek(R1),正在加载中..."
+      element-loading-text="使用高级推理AI润色中..."
       element-loading-spinner="el-icon-loading"
       element-loading-background="rgba(0, 0, 0, 0.8)"
     >
@@ -347,5 +347,8 @@ export default {
 }
 .edit-1 {
   font-size: bold;
+}
+::v-deep .el-loading-spinner .el-loading-text {
+  font-size: 14px !important;
 }
 </style>
