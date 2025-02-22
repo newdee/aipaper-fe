@@ -46,11 +46,8 @@ module.exports = {
     proxy: {
       // 配置跨域处理, 设置代理
       "/dev-api": {
-        //  target: `http://localhost:8090/`,
-        // target: `http://175.178.88.172:8090/`,
-        // target: `http://43.143.210.214:8090/`,
-        // target: `http://124.222.112.40:3000/`,
-        target: `https://api.mixpaper.cn/`,
+        // target: `https://api.mixpaper.cn/`, //正式环境
+        target: `https://devapi.mixpaper.cn/`, //测试环境
         // target: `https://web-proxy.apifox.cn:3000/`,
         changeOrigin: true,
         pathRewrite: {

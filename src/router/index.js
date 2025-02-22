@@ -364,6 +364,25 @@ export const constantRoutes = [
     ],
     hidden: true,
   },
+  {
+    path: "/wallet",
+    component: Layout,
+    children: [
+      {
+        path: "recharge",
+        name: "recharge",
+        component: () => import("@/views/wallet/index.vue"),
+
+        meta: {
+          title: "充值",
+          icon: "dashboard",
+          inDevelopment: false,
+          describe: "",
+        },
+      },
+    ],
+    hidden: true,
+  },
 ];
 
 const createRouter = () =>
