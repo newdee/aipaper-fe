@@ -1,9 +1,5 @@
 <template>
   <div class="side-menu">
-    <!-- <div class="logo">
-      <img src="logo.png" alt="logo" />
-      <span>亲亲虫</span>
-    </div> -->
     <ul>
       <li
         v-for="item in menuItems"
@@ -41,13 +37,13 @@ export default {
     return {
       menuItems: [
         { name: "Recharge", label: "账号充值", icon: "el-icon-house" },
-        { name: "redemption", label: "兑换码", icon: "el-icon-edit" },
-        { name: "mydetails", label: "钱包明细", icon: "el-icon-magic-stick" },
-        { name: "vouchers", label: "我的卡卷", icon: "el-icon-document" },
+        { name: "redemption", label: "兑换码", icon: "el-icon-present" },
+        { name: "mydetails", label: "钱包明细", icon: "el-icon-tickets" },
+        { name: "vouchers", label: "权益中心", icon: "el-icon-bank-card" },
         {
           name: "history",
           label: "购买记录",
-          icon: "el-icon-data-analysis",
+          icon: "el-icon-coin",
         },
       ],
     };

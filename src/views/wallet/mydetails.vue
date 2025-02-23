@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import { find_recharge_details } from "@/api/wallet";
 export default {
   data() {
     return {
@@ -83,6 +84,10 @@ export default {
       ],
       currentPage: 1,
       pageSize: 3,
+      paramsList: {
+        page_num: 1,
+        page_size: 10,
+      },
     };
   },
   computed: {
@@ -92,7 +97,15 @@ export default {
       return this.records.slice(start, end);
     },
   },
+  mounted() {
+    this.getList();
+  },
   methods: {
+    getList() {
+      find_recharge_details(this.paramsList).then((res) => {
+        this.$log(res);
+      });
+    },
     handlePageChange(page) {
       this.currentPage = page;
     },

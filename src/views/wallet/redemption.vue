@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { exchange_coupon } from "@/api/wallet";
 export default {
   name: "ExchangeComponent",
   data() {
@@ -33,8 +34,21 @@ export default {
   methods: {
     exchangeCodeRequest() {
       // 模拟请求接口
-      alert(`兑换码：${this.exchangeCode} 已提交！`);
       // 这里可以使用 axios 或者 fetch 来请求接口
+      if (!this.exchangeCode) {
+        this.$message({
+          type: "warning",
+          message: "请输入兑换码",
+        });
+
+        return false;
+      }
+      let data = {
+        coupon_code: this.exchangeCode,
+      };
+      exchange_coupon(data).then((res) => {
+        console.log("res", res);
+      });
     },
   },
 };

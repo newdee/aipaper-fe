@@ -114,20 +114,6 @@
               </span>
             </div>
           </el-tooltip>
-          <!-- 钱包 -->
-          <el-tooltip
-            class="item"
-            effect="dark"
-            content="我的钱包"
-            placement="top"
-            v-if="false"
-          >
-            <div class="walletBox" @click="$jumpUrl('/main/orderList')">
-              <span>
-                <i class="el-icon-wallet"></i>
-              </span>
-            </div>
-          </el-tooltip>
 
           <div
             v-if="avatar"
@@ -143,6 +129,23 @@
           >
             <span> 我的大纲 </span>
           </div>
+          <!-- 钱包 -->
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="我的钱包"
+            placement="top"
+          >
+            <div
+              v-if="avatar"
+              class="navOrderBtn g_hover"
+              @click="$jumpUrl('/wallet/recharge')"
+            >
+              <i class="el-icon-wallet"></i>
+              <span> 钱包 </span>
+            </div>
+          </el-tooltip>
+
           <!-- 登录按钮 -->
           <template>
             <div
@@ -888,7 +891,8 @@ export default {
   }
 }
 .navOrderBtn {
-  width: 88px;
+  // width: 88px;
+  padding: 0px 10px;
   height: 32px;
   background: #0066ff1a;
   border-radius: 4px;
@@ -903,7 +907,7 @@ export default {
   align-items: center;
 
   > div {
-    margin: 0 10px;
+    margin: 0 5px;
   }
 
   .gift {

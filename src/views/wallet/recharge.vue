@@ -13,10 +13,10 @@
     <div class="reBoxContainer">
       <div
         class="reBox"
-        v-for="item in recharge_list"
+        v-for="item in homeData.recharge_list"
         :key="item.index"
         :class="{ selected: selectedIndex === item.index }"
-        @click="selectItem(item.index)"
+        @click="selectItem(item)"
       >
         <!-- 如果选中的是最后一个选项，展示输入框 -->
         <input
@@ -30,23 +30,30 @@
           "
           v-model="formData.recharge_amount"
           @blur="validateInteger"
-          placeholder="请输入自定义金额"
+          placeholder="输入自定义金额"
         />
         <div v-else>
           <p class="giftPoints" v-if="item.gift_points > 0">
             送{{ item.gift_points }}
           </p>
           <p class="fixLeftCenter">{{ item.description }}</p>
-          <p class="rePrice">¥ {{ item.price.toFixed(2) }}</p>
+          <p
+            class="rePrice"
+            v-if="selectedIndex === item.index && item.index === 6"
+          >
+            ¥ {{ item.price.toFixed(2) }}
+          </p>
           <div v-if="selectedIndex === item.index" class="selectionCheck">
             <i class="el-icon-check"></i>
           </div>
         </div>
       </div>
     </div>
-    <button :disabled="isSubmitDisabled" class="buyNow" @click="submit">
-      立即购买
-    </button>
+    <div class="btnCenterCtrl">
+      <button :disabled="isSubmitDisabled" class="buyNow" @click="submit">
+        立即购买
+      </button>
+    </div>
     <div class="reminder">
       <p>温馨提示：</p>
       <ol>
@@ -56,16 +63,21 @@
         <li>该产品为虚拟产品，一旦充值不退费。</li>
       </ol>
     </div>
+    <payment-dialog :payStatus="payStatus" />
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import SideMenu from "./components/SideMenu.vue";
-import { find_user_balance } from "@/api/wallet";
+import paymentDialog from "./components/paymentDialog.vue";
+import { find_user_balance, recharge } from "@/api/wallet";
 export default {
   name: "demo",
   data() {
     return {
+      payStatus: 0,
+      isDialogVisible: true,
       activeIndex: "账号充值", // 默认选中项
       balance: 0,
       selectedIndex: null,
@@ -74,18 +86,19 @@ export default {
         recharge_amount: "", // 初始为空字符串
         payment_method: "alipay",
       },
-      recharge_list: [
-        { index: 1, description: "10积分", price: 10, gift_points: 0 },
-        { index: 2, description: "50积分", price: 50, gift_points: 0 },
-        { index: 3, description: "100积分", price: 100, gift_points: 10 },
-        { index: 4, description: "500积分", price: 500, gift_points: 50 },
-        { index: 5, description: "1000积分", price: 1000, gift_points: 200 },
-        { index: 6, description: "自定义金额", price: 0, gift_points: 0 },
-      ],
+      // recharge_list: [
+      //   { index: 1, description: "10积分", price: 10, gift_points: 0 },
+      //   { index: 2, description: "50积分", price: 50, gift_points: 0 },
+      //   { index: 3, description: "100积分", price: 100, gift_points: 10 },
+      //   { index: 4, description: "500积分", price: 500, gift_points: 50 },
+      //   { index: 5, description: "1000积分", price: 1000, gift_points: 200 },
+      //   { index: 6, description: "自定义金额", price: 0, gift_points: 0 },
+      // ],
     };
   },
   components: {
     SideMenu,
+    paymentDialog,
   },
   mounted() {
     find_user_balance().then((res) => {
@@ -99,18 +112,24 @@ export default {
         !this.formData.recharge_amount || this.formData.recharge_amount < 1
       );
     },
+    ...mapGetters(["homeData"]),
   },
   methods: {
-    selectItem(index) {
-      this.selectedIndex = index;
-      this.formData.recharge_index = index;
-      if (index !== 6) {
-        this.formData.recharge_amount = this.recharge_list.find(
-          (item) => item.index === index
-        ).price;
-      } else {
-        this.formData.recharge_amount = ""; // 选择自定义金额时清空输入
+    handleClose(done) {
+      done();
+    },
+    selectItem(item) {
+      this.selectedIndex = item.index;
+
+      if (this.formData.recharge_index == "6" && item.index == 6) {
+        return false;
       }
+      if (item.index == 6) {
+        this.formData.recharge_amount = "";
+      } else {
+        this.formData.recharge_amount = item.price;
+      }
+      this.formData.recharge_index = item.index;
     },
     validateInteger() {
       let value = this.formData.recharge_amount;
@@ -145,9 +164,37 @@ export default {
         alert("请输入有效的自定义金额");
         return;
       }
+      this.payStatus = new Date().getTime();
+      this.$log(" this.payStatus", this.payStatus);
+
       // 提交逻辑
-      console.log(this.formData);
-      alert("提交成功");
+      recharge(this.formData).then((res) => {
+        this.$log("this.formdata", this.formData, res);
+        this.isDialogVisible = true;
+        this.payStatus = new Date().getTime();
+
+        // 订单存储
+        // let order = {
+        //   //
+        //   key: data.key,
+        //   out_trade_no: res.result.out_trade_no,
+        //   pay_amount: res.result.pay_amount,
+        //   pay_link: res.result.pay_link,
+        //   original_price: res.result.original_amount
+        //     ? res.result.original_amount
+        //     : res.result.pay_amount,
+        //   payment_method: res.result.payment_method,
+        // };
+        // // 弹窗里的附加信息
+        // let addList = res.result.additional_service
+        //   ? res.result.additional_service
+        //   : [];
+
+        // this.$store.dispatch("paper/setAdditionList", addList);
+        // this.$store.dispatch("app/toggleCurrentOrder", order);
+        // this.requestKeyLine = res.result.out_trade_no;
+        // this.popupStatusLine = Date.now();
+      });
     },
   },
 };
@@ -158,7 +205,7 @@ export default {
   padding-top: 60px;
   max-width: 650px;
   margin: 0 auto;
-  text-align: center;
+  text-align: left;
   font-family: Arial, sans-serif;
   .header {
     margin-bottom: 20px;
@@ -273,13 +320,19 @@ export default {
     }
   }
 }
+.btnCenterCtrl {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
 .buyNow {
-  margin-top: 20px;
+  margin-top: 60px;
   padding: 10px 20px;
   background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 4px;
+  text-align: center;
   cursor: pointer;
   font-size: 16px;
   &:hover {
@@ -289,5 +342,63 @@ export default {
     background-color: #ccc;
     cursor: not-allowed;
   }
+}
+.purchase-points {
+  margin-bottom: 12px;
+}
+
+.points {
+  color: green;
+}
+
+.points-box {
+  border: 1px solid #eee;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  width: 100%;
+  background: #fbfbfb;
+}
+
+.points-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.points-info {
+  display: flex;
+  align-items: center;
+}
+
+.wallet-icon {
+  color: green;
+  margin-right: 8px;
+}
+
+.qr-code-container {
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-code {
+  width: 120px;
+  height: 120px;
+  background: #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.amount {
+  color: red;
+  font-size: 24px;
+  margin: 10px 0;
 }
 </style>
