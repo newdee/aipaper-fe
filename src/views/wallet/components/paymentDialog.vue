@@ -15,6 +15,7 @@
         </div>
       </template>
       <div class="dialog-content">
+        <button @click="generateQRCode">生成二维码</button>
         <div class="payCodeBox">
           <div class="payLeftCode">
             <el-tabs type="border-card">
@@ -26,13 +27,14 @@
                   支付宝支付</span
                 >
                 <div class="tabsBox">
-                  <iframe
+                  <!-- <iframe
                     v-if="pollingStatus"
                     :src="currentOrder.pay_link"
                     height="205"
                     width="205"
                     frameborder="0"
-                  ></iframe>
+                  ></iframe> -->
+                  <img :src="qrCodeImage" alt="" />
                   <p class="codeIntro">
                     支持使用
                     <b style="color: #00a1e9">“花呗”</b>
@@ -114,13 +116,13 @@ import { getOrder, orderDetailById } from "@/api/user";
 import { down_url } from "@/api/paper";
 import { mapGetters } from "vuex";
 import { downloadFile } from "@/utils/index";
-
+import QRCode from "qrcode";
 export default {
   name: "myFooter",
   data() {
     return {
       // 定义变量
-      popupStatus: false,
+      popupStatus: true,
       intervalId: "",
       payTitleStatus: "PRE_CREATE",
       payStatusObject: {
@@ -132,6 +134,8 @@ export default {
       listData: [], // 存储请求返回的数据
       pollingInterval: 1500, // 轮询间隔时间，单位毫秒
       successIndex: 0,
+      paymentLink: "https://web.chatboxai.app/",
+      qrCodeImage: "",
     };
   },
   components: {
@@ -192,6 +196,22 @@ export default {
   },
 
   methods: {
+    async generateQRCode() {
+      try {
+        // 获取支付链接
+
+        // 生成二维码
+        QRCode.toDataURL(this.paymentLink, (err, url) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+          this.qrCodeImage = url;
+        });
+      } catch (error) {
+        console.error("Error generating QR Code:", error);
+      }
+    },
     showExample() {
       this.$refs.exampleDia.showDia();
     },
