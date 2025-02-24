@@ -160,21 +160,21 @@ export const constantRoutes = [
           inDevelopment: false,
         },
       },
-      // {
-      //   path: "explore",
-      //   name: "explore",
-      //   component: () => import("@/views/explore/index"),
-      //   meta: {
-      //     keepAlive: true,
-      //     title: "searchPaper",
-      //     // title: "搜论文",
-      //     icon: "el-icon-download",
-      //     describe: "我的脑袋里有十亿亿篇文献",
-      //     id: "5-2",
-      //     parentId: "5",
-      //     inDevelopment: false,
-      //   },
-      // },
+      {
+        path: "explore",
+        name: "explore",
+        component: () => import("@/views/explore/index"),
+        meta: {
+          keepAlive: true,
+          title: "searchPaper",
+          // title: "搜论文",
+          icon: "el-icon-download",
+          describe: "我的脑袋里有十亿亿篇文献",
+          id: "5-2",
+          parentId: "5",
+          inDevelopment: false,
+        },
+      },
       // 读论文
       // {
       //   path: "readpaper",

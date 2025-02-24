@@ -2,7 +2,7 @@
   <div class="main-component">
     <SideMenu v-model="activeIndex" />
     <div class="content">
-      {{ activeIndex }}
+      <!-- {{ activeIndex }} -->
       <component :is="currentComponent" />
     </div>
   </div>
