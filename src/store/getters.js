@@ -9,6 +9,7 @@ const getters = {
   sub_domain: (state) => state.user.sub_domain,
   userInfo: (state) => state.user.userInfo,
   agent_image: (state) => state.user.agent_image,
+  walletsOrder: (state) => state.user.walletsOrder,
   homeData: (state) => state.app.homeData,
   lineTitle: (state) => state.app.lineTitle,
   requestForm: (state) => state.app.requestForm,

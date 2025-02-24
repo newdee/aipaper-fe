@@ -2,7 +2,7 @@ export default {
   route: {
     homePage: "HomePage",
     writePaper: "WritePaper",
-    searchPaper: "SearchPaper",
+    searchPaper: "PaperRepositoryDownload",
     readPaper: "ReadPaper",
     amendPaper: "AmendPaper",
     integratedServices: "IntegratedServices",

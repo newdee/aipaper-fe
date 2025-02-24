@@ -15,11 +15,10 @@
         </div>
       </template>
       <div class="dialog-content">
-        <button @click="generateQRCode">生成二维码</button>
         <div class="payCodeBox">
           <div class="payLeftCode">
             <el-tabs type="border-card">
-              <el-tab-pane>
+              <!-- <el-tab-pane>
                 <span slot="label"
                   ><svg class="icon svg-icon" aria-hidden="true">
                     <use xlink:href="#icon-zhifubaozhifu"></use>
@@ -27,30 +26,33 @@
                   支付宝支付</span
                 >
                 <div class="tabsBox">
-                  <!-- <iframe
+                 <iframe
                     v-if="pollingStatus"
                     :src="currentOrder.pay_link"
                     height="205"
                     width="205"
                     frameborder="0"
-                  ></iframe> -->
-                  <img :src="qrCodeImage" alt="" />
+                  ></iframe>
                   <p class="codeIntro">
                     支持使用
                     <b style="color: #00a1e9">“花呗”</b>
                     支付
                   </p>
                 </div>
-              </el-tab-pane>
-              <!-- <el-tab-pane :disabled="true">
+              </el-tab-pane> -->
+              <el-tab-pane>
                 <span slot="label">
                   <svg class="icon svg-icon" aria-hidden="true">
                     <use xlink:href="#icon-weixin"></use>
                   </svg>
                   微信支付
                 </span>
-
-              </el-tab-pane> -->
+                <img
+                  style="width: 200px; height: 200px"
+                  :src="qrCodeImage"
+                  alt=""
+                />
+              </el-tab-pane>
               <!-- <el-tab-pane label="消息中心">消息中心</el-tab-pane> -->
             </el-tabs>
             <!-- left code -->
@@ -61,7 +63,12 @@
 
             <div>
               <div class="purchase-points">
-                购买积分：<span class="points">10积分</span>
+                购买积分：<span class="points"
+                  >{{ walletsOrder.recharge_amount }} 积分</span
+                >
+                <i style="margin-left: 10px"
+                  >赠送:{{ walletsOrder.gift_amount }} 积分
+                </i>
               </div>
               <div class="points-box">
                 <div class="points-header">
@@ -69,7 +76,16 @@
                     <i class="el-icon-wallet wallet-icon"></i>
                     <span>积&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分</span>
                   </div>
-                  <span>10分</span>
+                  <span>{{ walletsOrder.recharge_amount }} 分</span>
+                </div>
+              </div>
+              <div v-show="walletsOrder.gift_amount > 0" class="points-box">
+                <div class="points-header">
+                  <div class="points-info">
+                    <i class="el-icon-wallet wallet-icon"></i>
+                    <span>获赠积分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  </div>
+                  <span>{{ walletsOrder.gift_amount }} 分</span>
                 </div>
               </div>
               <!-- 二维码 -->
@@ -84,7 +100,19 @@
                   </p>
                   <div class="payment-method">
                     <span>支付方式: </span>
-                    <div
+                    <div class="wechat-button">
+                      <div class="icon">
+                        <svg
+                          class="svg-icon"
+                          style="width: 40px; height: 40px; color: rgb(0, 0, 0)"
+                        >
+                          <use xlink:href="#icon-weixin" fill="#000"></use>
+                        </svg>
+                      </div>
+                      <span class="text">微信支付</span>
+                    </div>
+
+                    <!-- <div
                       type="success"
                       icon="el-icon-wechat"
                       class="alipay-button"
@@ -95,9 +123,8 @@
                       />
                       <span>
                         支付宝<br />
-                        <!-- <span class="sub-text">ALIPAY</span> -->
                       </span>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -122,7 +149,7 @@ export default {
   data() {
     return {
       // 定义变量
-      popupStatus: true,
+      popupStatus: false,
       intervalId: "",
       payTitleStatus: "PRE_CREATE",
       payStatusObject: {
@@ -134,7 +161,6 @@ export default {
       listData: [], // 存储请求返回的数据
       pollingInterval: 1500, // 轮询间隔时间，单位毫秒
       successIndex: 0,
-      paymentLink: "https://web.chatboxai.app/",
       qrCodeImage: "",
     };
   },
@@ -164,8 +190,10 @@ export default {
         this.$log("支付状态发生变化", "新值:", newVal, "旧值:", oldVal);
         // 在这里执行你需要的操作
         this.popupStatus = true;
+
         this.$store.dispatch("paper/setPollingStatus", true);
         this.getDetail();
+        this.generateQRCode();
       },
     },
   },
@@ -182,17 +210,7 @@ export default {
   },
   computed: {
     // 计算属性
-    ...mapGetters([
-      "pollingStatus",
-      "device",
-      "currentOrder",
-      "requestForm",
-      "additionalList",
-      "agent_image",
-    ]),
-    imgData() {
-      return this.agent_image.find((image) => image.id === 5);
-    },
+    ...mapGetters(["pollingStatus", "device", "currentOrder", "walletsOrder"]),
   },
 
   methods: {
@@ -201,7 +219,7 @@ export default {
         // 获取支付链接
 
         // 生成二维码
-        QRCode.toDataURL(this.paymentLink, (err, url) => {
+        QRCode.toDataURL(this.walletsOrder.pay_link, (err, url) => {
           if (err) {
             console.error(err);
             return;
@@ -277,12 +295,9 @@ export default {
           if (orderData.payment_status) {
             this.payTitleStatus = orderData.payment_status;
             if (this.payTitleStatus == "TRADE_SUCCESS") {
-              // eventBus.emit("showEmitPaperDialog", {
-              //   requestKey: this.currentOrder.out_trade_no,
-              //   payStatus: 2,
-              //   paperPercent: 0,
-              // });
-              alert("支付成功!");
+              this.popupStatus = false;
+              this.$store.dispatch("paper/setPollingStatus", false);
+              this.$emit("getList", 1);
             } else {
               let _this = this;
               setTimeout(() => {
@@ -309,6 +324,7 @@ export default {
     },
     getDetail() {
       this.$log("d1111", this.requestKey);
+      this.requestKey = this.walletsOrder.out_trade_no;
       if (this.requestKey) {
         this.getList({ key: this.requestKey }, 10000);
       } else {
@@ -615,7 +631,7 @@ export default {
   border: 1px solid #eee;
   padding: 20px;
   border-radius: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   width: 300px;
   background: #fbfbfb;
 }
@@ -640,6 +656,7 @@ export default {
   text-align: left;
   margin-bottom: 20px;
   display: flex;
+  margin-top: 20px;
   align-items: center;
   justify-content: flex-start;
 }
@@ -654,5 +671,81 @@ export default {
     width: 100%;
     height: 100%;
   }
+}
+/* 按钮整体样式 */
+.wechat-button {
+  position: relative;
+  margin-left: 10px;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border: 1px solid #00c800;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 14px;
+  color: #000;
+  cursor: pointer;
+  overflow: hidden;
+  transition: box-shadow 0.3s;
+}
+
+/* 图标部分 */
+.wechat-button .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.wechat-button .icon img {
+  width: 100%;
+  height: 100%;
+}
+
+/* 文字部分 */
+.wechat-button .text {
+  line-height: 20px;
+  font-size: 14px;
+  color: #000;
+}
+
+/* 右下角三角形区域 */
+.wechat-button .corner {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+}
+
+.wechat-button .corner::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 30px 30px 0 0;
+  border-color: #00c800 transparent transparent transparent;
+}
+
+/* 对勾样式 */
+.wechat-button .corner-check {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  width: 8px;
+  height: 12px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+::v-deep .el-tabs--border-card > .el-tabs__content {
+  padding: 0;
 }
 </style>

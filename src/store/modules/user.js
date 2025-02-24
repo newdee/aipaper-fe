@@ -11,6 +11,7 @@ const getDefaultState = () => {
     avatar: "",
     userInfo: {},
     agent_image: {},
+    walletsOrder: {},
   };
 };
 
@@ -25,6 +26,9 @@ const mutations = {
   },
   SET_NAME: (state, name) => {
     state.name = name;
+  },
+  SET_WALLETS: (state, walletsOrder) => {
+    state.walletsOrder = walletsOrder;
   },
   SET_USER: (state, userInfo) => {
     state.userInfo = userInfo;
@@ -121,6 +125,9 @@ const actions = {
   },
   setAgentImage({ commit }, agent_image) {
     commit("SET_AGENT", agent_image);
+  },
+  setWalletsOrder({ commit }, walletsOrder) {
+    commit("SET_WALLETS", walletsOrder);
   },
   setSubDomain({ commit }, sub_domain) {
     commit("SET_DOMAIN", sub_domain);

@@ -63,7 +63,7 @@
         <li>该产品为虚拟产品，一旦充值不退费。</li>
       </ol>
     </div>
-    <payment-dialog :payStatus="payStatus" />
+    <payment-dialog @getList="getList" :payStatus="payStatus" />
   </div>
 </template>
 
@@ -84,7 +84,7 @@ export default {
       formData: {
         recharge_index: null,
         recharge_amount: "", // 初始为空字符串
-        payment_method: "alipay",
+        payment_method: "wechatpay",
       },
       // recharge_list: [
       //   { index: 1, description: "10积分", price: 10, gift_points: 0 },
@@ -101,10 +101,7 @@ export default {
     paymentDialog,
   },
   mounted() {
-    find_user_balance().then((res) => {
-      console.log("resdddddd", res);
-      this.balance = res.result.balance;
-    });
+    this.getList();
   },
   computed: {
     isSubmitDisabled() {
@@ -115,6 +112,12 @@ export default {
     ...mapGetters(["homeData"]),
   },
   methods: {
+    getList() {
+      find_user_balance().then((res) => {
+        console.log("resdddddd", res);
+        this.balance = res.result.balance;
+      });
+    },
     handleClose(done) {
       done();
     },
@@ -174,24 +177,17 @@ export default {
         this.payStatus = new Date().getTime();
 
         // 订单存储
-        // let order = {
-        //   //
-        //   key: data.key,
-        //   out_trade_no: res.result.out_trade_no,
-        //   pay_amount: res.result.pay_amount,
-        //   pay_link: res.result.pay_link,
-        //   original_price: res.result.original_amount
-        //     ? res.result.original_amount
-        //     : res.result.pay_amount,
-        //   payment_method: res.result.payment_method,
-        // };
+        let order = {
+          //
+          ...res.result,
+        };
         // // 弹窗里的附加信息
         // let addList = res.result.additional_service
         //   ? res.result.additional_service
         //   : [];
 
         // this.$store.dispatch("paper/setAdditionList", addList);
-        // this.$store.dispatch("app/toggleCurrentOrder", order);
+        this.$store.dispatch("user/setWalletsOrder", order);
         // this.requestKeyLine = res.result.out_trade_no;
         // this.popupStatusLine = Date.now();
       });

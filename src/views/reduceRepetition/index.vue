@@ -30,7 +30,7 @@
     </div>
     <div
       v-loading="sendStatus"
-      element-loading-text="使用高级推理AI润色中..."
+      element-loading-text="使用高级推理AI, 润色中..."
       element-loading-spinner="el-icon-loading"
       element-loading-background="rgba(0, 0, 0, 0.8)"
     >
@@ -40,11 +40,11 @@
             type="textarea"
             :rows="20"
             :placeholder="placeText[activeIndex - 1]"
-            maxlength="1000"
+            maxlength="5000"
             show-word-limit
             v-model="original_paragraph"
             resize="false"
-            :autosize="{ minRows: 15 }"
+            :autosize="{ minRows: 15, maxRows: 20 }"
           >
           </el-input>
         </div>
@@ -70,11 +70,11 @@
             :rows="20"
             readonly
             :placeholder="reduceText[activeIndex - 1]"
-            maxlength="1000"
+            maxlength="5000"
             show-word-limit
             v-model="textareaOut"
             resize="false"
-            :autosize="{ minRows: 15 }"
+            :autosize="{ minRows: 15, maxRows: 20 }"
           >
           </el-input>
           <div class="btns">
