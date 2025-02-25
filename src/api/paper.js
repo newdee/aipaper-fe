@@ -22,6 +22,13 @@ export function user_info(params) {
     params,
   });
 }
+export function references(params) {
+  return request({
+    url: baseUrl + "/api/ai-paper/paper/references",
+    method: "get",
+    params,
+  });
+}
 // 我的推广获取订单列表
 export function order_info(params) {
   return request({

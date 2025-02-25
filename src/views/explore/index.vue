@@ -1,292 +1,175 @@
 <template>
-  <div class="exploreWrapper mainContentSec">
-    <!-- AI论文快查 -->
-    <div :class="['mainInput', { moved: moved }]" ref="mainInput">
-      <p class="inputName">AI搜</p>
-      <!-- <div class="selectText">
-        <el-select v-model="value" placeholder="请选择">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          >
-          </el-option>
-        </el-select>
-      </div> -->
-      <!-- 输入框 -->
-      <div class="inputBox">
-        <input
-          v-model="title"
-          placeholder="输入你想查找的论文信息"
-          type="text"
-          @keyup.enter="searchGpt"
-        />
-      </div>
-      <div @click="searchGpt" class="searchIconBox">
-        <span>
-          <img src="@/assets/images/search.png" alt="" />
+  <div class="container">
+    <div class="swiperListTitle" style="margin-top: 50px">
+      <p>
+        <span> 论文宝典下载</span>
+        <span class="rightIcon">
+          <img src="@/assets/images/index/home_title_bg.png" alt="" />
         </span>
-      </div>
+      </p>
     </div>
-    <!-- 中间行的轮播图 -->
-    <div
-      class="mdBox"
-      element-loading-text="内容搜索中..."
-      element-loading-spinner="el-icon-loading"
-      v-loading="loading"
-      v-if="moved"
-    >
-      <!-- <h6>结果分析</h6> -->
-      <div v-if="mdStatus" class="markdown-body">
-        <!-- <swiper3></swiper3> -->
-        <vue-markdown>
-          {{ markdownContent }}
-        </vue-markdown>
+    <div class="adBox">
+      <div
+        class="card"
+        v-for="(card, index) in references"
+        :key="index"
+        @click="openLink(card.link)"
+      >
+        <div class="image-container">
+          <img
+            :src="getAdvantageImage(index)"
+            alt="advantage image"
+            class="card-image"
+          />
+          <div class="content">
+            <h3>{{ card.name }}</h3>
+          </div>
+          <div class="btnClass">
+            <el-button type="primary" size="mini" plain
+              ><i class="el-icon-download"></i>下载</el-button
+            >
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
-<script>
-// require styles
-import "github-markdown-css";
 
-// import { mapGetters } from "vuex";
-import { gpt_search } from "@/api/user";
-// import swiper3 from "@/views/home/components/swiperThree.vue";
-// import eventBus from "@/utils/eventBus";
-import VueMarkdown from "vue-markdown";
+<script>
+import { references } from "@/api/paper";
+
 export default {
-  name: "swiperThree",
-  components: {
-    // swiper3,
-    VueMarkdown,
-  },
+  name: "References",
   data() {
     return {
-      loading: false,
-      mdStatus: false,
-      // 定义变量
-      markdownContent: "",
-      options: [
-        {
-          value: "选项1",
-          label: "综合",
-        },
-        {
-          value: "选项2",
-          label: "科学",
-        },
-        {
-          value: "选项3",
-          label: "政治",
-        },
+      references: [],
+      advantageList: [
+        require("@/assets/images/index/home_banner02_01_pc@2x.png"),
+        require("@/assets/images/index/home_banner02_02_pc@2x.png"),
+        require("@/assets/images/index/home_banner02_03_pc@2x.png"),
+        require("@/assets/images/index/home_banner02_04_pc@2x.png"),
+        require("@/assets/images/index/home_banner02_05_pc@2x.png"),
+        require("@/assets/images/index/home_banner02_06_pc@2x.png"),
       ],
-      title: "",
-      value: "综合",
-      swiperOptionNew: {
-        freeMode: true,
-        slidesPerView: 4,
-        spaceBetween: 30,
-        loop: true,
-        pagination: {
-          el: ".swiper-pagination",
-        },
-      },
-      moved: false, // New state to track input position
     };
   },
-
-  mounted() {
-    // eventBus.emit("sendOutline", 5); // 发布事件
-    // 页面初始化
-  },
   created() {
-    // eventBus.on("sendOutline", this.addE); // 订阅事件
-  },
-  beforeDestroy() {
-    // eventBus.off("sendOutline", this.addE); // 移除事件监听
-  },
-  computed: {
-    swiper() {
-      return this.$refs.mySwiper.swiper;
-    },
+    this.fetchReferences();
   },
   methods: {
-    // 定义方法
-
-    searchGpt: _.debounce(function () {
-      if (!this.title) {
-        this.$message({
-          type: "warning",
-          message: "请输入你要查询的信息",
-        });
-        return false;
+    async fetchReferences() {
+      try {
+        const res = await references();
+        console.log("res", res);
+        this.references = res.result;
+      } catch (error) {
+        console.error("Failed to fetch references:", error);
       }
-      this.mdStatus = false; // Trigger the animation and display
-      this.moved = true;
-      this.loading = true;
-      zhuge.track(`AI搜索页面,点击搜索`, {});
-
-      let data = {
-        title: this.title,
-      };
-      // this.markdownContent =
-      // '\n# 对对对\n## 相关信息\n"对对对"是近年来在中国社交媒体上流行的网络用语,具有以下几种主要使用场景:\n1. 敷衍应对\n- 当不想深入交谈或结束对话时使用\n- 通常连续重复"对"字三次\n- 语气平淡,表示不想继续谈话\n2. 认同附和\n- 表示完全同意对方观点\n- 用于加强肯定的语气\n- 常见于日常对话交流\n3. 网络梗衍生\n- 来源于2020年抖音平台的流行语\n- 常配合"噢噢噢"一起使用\n- 衍生出相关表情包和短视频\n4. 使用环境\n- 主要在非正式场合使用\n- 多见于年轻人之间的网络交流\n- 常用于微信、QQ等即时通讯软件\n5. 变体形式\n- "对对对对对"(重复更多次)\n- "对滴对滴对滴"\n- "对哦对哦对哦"\n此表达已成为中文互联网交流中的常用语,体现了网络用语的简洁性和趣味性特点。';
-      gpt_search(data)
-        .then((res) => {
-          this.mdStatus = true; // Trigger the animation and display
-
-          this.markdownContent = res.result;
-          this.loading = false;
-        })
-        .catch(() => {
-          this.loading = false;
-        });
-    }, 300),
+    },
+    getAdvantageImage(index) {
+      return this.advantageList[index % this.advantageList.length];
+    },
+    openLink(link) {
+      if (link) {
+        window.open(link, "_blank");
+      } else {
+        console.warn("Link is not available for this reference.");
+      }
+    },
   },
 };
 </script>
+
 <style lang="scss" scoped>
-// 引入scss
-@import "@/styles/variables.scss";
-// 搜索框
-@import "../home/components/index.scss";
-
-// 媒体查询
-// @media only screen and (max-width: 939px) {
-// }
-.exploreWrapper {
-  padding: 10px 16px 16px 0px;
-  min-height: 550px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  .mainInput.moved {
-    top: 20px;
-  }
-}
-
-// 搜索框
-.mainInput {
-  margin: 0px;
-  width: 89%;
-  max-width: none;
-  height: 56px;
-  border-radius: 32px;
-  position: absolute;
-  transition: all 0.5s ease;
-  top: 30%;
-}
-
-.mainInput .inputBox input {
-  height: 20px;
-  padding-left: 20px;
-}
-
-// swiper
-.sliderImgBox {
-  height: 195px;
-  background: skyblue;
-}
-
-.mdBox {
-  margin-top: 86px;
-  border-radius: 12px;
-  transition: all 0.6s ease;
-  position: relative;
+.card {
+  width: calc((100% - 40px) / 3);
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  border-radius: 8px;
   overflow: hidden;
-  padding: 15px 0px;
-  background-color: #fff;
-  padding-left: 20px;
-  min-height: 500px;
-  width: 90%;
-
-  h6 {
-    line-height: 2em;
-    margin-bottom: 8px;
-    font-size: 18px;
-    user-select: none;
-  }
-}
-
-.newSlider {
-  height: 510px;
-  background: #ffffff;
-  position: relative;
-  user-select: none;
-  cursor: default;
-  overflow: hidden;
-
-  .upToDate {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 76px;
-    height: 32px;
-    line-height: 30px;
-    text-align: center;
-    background: #ff4d4d;
-    border-radius: 8px 0px 8px 0px;
-    opacity: 0.9;
-    color: #fff;
-  }
-
-  .illustration {
-    width: calc(100% - 2px);
-    // border: 1px solid #CCCCCC;
-    outline: 1px solid #ffffff;
-    border-radius: 8px;
-  }
-
-  .txt {
-    padding: 20px 0px;
-    font-size: 14px;
-    color: #999;
-
-    .title {
-      color: #000000;
-      font-size: 18px;
-      padding-bottom: 8px;
-      text-decoration: underline;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      word-break: break-all;
-      overflow: hidden;
-    }
-
-    .text {
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 5;
-      word-break: break-all;
-      overflow: hidden;
-    }
-  }
-
-  .authorInfo {
-    position: absolute;
+  background-image: linear-gradient(
+    269deg,
+    #ffffff 0%,
+    #ffffff52 35%,
+    #ffffff00 100%
+  );
+  border-radius: 8px;
+  cursor: pointer; // 增加鼠标指针样式，提示用户可点击
+  .image-container {
+    position: relative;
     width: 100%;
-    top: 390px;
-    left: 0;
+    height: 140px;
 
-    .author {
-      color: #000000;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 1;
-      word-break: break-all;
-      overflow: hidden;
+    .card-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .info {
-      color: #999;
+    .content {
+      position: absolute;
+      top: 40px;
+      left: 30px;
+      color: #1b2126;
+
+      h3 {
+        font-family: PingFangSC-Semibold;
+        font-weight: 600;
+        font-size: 20px;
+        color: #1b2126;
+        letter-spacing: 0;
+        margin: 0;
+      }
+
+      p {
+        opacity: 0.5;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        font-size: 14px;
+        color: #1b2126;
+        letter-spacing: 0;
+        margin: 7px 0 0;
+      }
     }
   }
 }
-.searchIconBox:hover {
-  cursor: pointer;
+.adBox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 30px;
+  padding: 30px;
+}
+.swiperListTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  p {
+    text-align: center;
+    position: relative;
+    font-family: PingFangSC-SNaNpxibold;
+    font-weight: 600;
+    font-size: 32px;
+    color: #1b2126;
+    letter-spacing: 0;
+    text-align: center;
+  }
+  .rightIcon {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    position: absolute;
+    right: -10px;
+    top: -8px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+.btnClass {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
 }
 </style>
